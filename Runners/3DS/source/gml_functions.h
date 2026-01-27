@@ -8,6 +8,7 @@
 
 //input shortcuts
 #define gp_start KEY_START
+#define gp_select KEY_SELECT
 #define gp_face1 KEY_B
 #define gp_face2 KEY_A
 #define gp_face3 KEY_Y

@@ -67,7 +67,7 @@
         "sprite":"Sprite3"
       },
       {
-        "StepCode":"\r\n\r\nif (gamepad_button_check(4, gp_face1)){\r\n\ty+=2;\t\r\n}\r\n\r\nif (gamepad_button_check(4, gp_face4)){\r\n\ty-=2;\t\r\n}\r\n\r\nif (gamepad_button_check(4, gp_face2)){\r\n\tx+=2;\t\r\n}\r\n\r\nif (gamepad_button_check(4, gp_face3)){\r\n\tx-=2;\t\r\n}",
+        "StepCode":"\r\n\r\nif gamepad_button_check(4, gp_face1){\r\n\ty+=2;\t\r\n}\r\n\r\nif gamepad_button_check(4, gp_face4){\r\n\ty-=2;\t\r\n}\r\n\r\nif gamepad_button_check(4, gp_face2){\r\n\tx+=2;\t\r\n}\r\n\r\nif gamepad_button_check(4, gp_face3){\r\n\tx-=2;\t\r\n}\r\n\r\n\r\nif gamepad_button_check(4, gp_select){\r\n\tx = 300;\r\n}",
         "name":"obj_ralseiswag",
         "CreateCode":"x = 0;\r\ny = 0;",
         "sprite":"what"

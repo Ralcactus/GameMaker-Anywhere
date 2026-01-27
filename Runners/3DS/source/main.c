@@ -27,6 +27,7 @@ const char* CurrentRoom = "";
 int  sprite_object_id[MAX_SPRITES];
 static bool sprite_is_object[MAX_SPRITES];
 
+/*
 static int FindSpriteIndexByObjectId(int id)
 {
 	for (size_t i = 0; i < SpriteCount; i++)
@@ -36,7 +37,7 @@ static int FindSpriteIndexByObjectId(int id)
 	}
 	return -1;
 }
-
+*/
 
 #pragma region //Return values from the data.win
 //get the sprite via its t3s slot
@@ -388,13 +389,14 @@ int main()
 	//"Step" event
 	while (aptMainLoop())
 	{
-		RunGML();
-
 		//scan for inputs
 		hidScanInput();
 		g_keysDown = hidKeysDown();
 		g_keysHeld = hidKeysHeld();
 		g_keysUp = hidKeysUp();
+
+		//run the gml interpreter
+		RunGML();
 
 		//Quit force quit app
 		if (gamepad_button_check(gp_start))
