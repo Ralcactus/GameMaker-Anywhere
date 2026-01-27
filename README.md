@@ -14,6 +14,7 @@ A heavy work in progress port of gamemaker to several consoles (3ds only current
 </p>
 
 ## Current Progress
+Feel free to contribute! (i really need the help...)
 
 ### Complete
 - Setting X and Y  
@@ -25,10 +26,13 @@ A heavy work in progress port of gamemaker to several consoles (3ds only current
 - Pretty much everything else
 
 ## compiling
+(theres a pre compiled 3dsx and cia inside the output folder \Runners\3DS\output)
+
 compiling is currently only recommended with the test project, anything else is almost guaranteed not to work (for now)
 this assumes you have devkitpro and citro2d installed
-
 this process will be easier later, just needing you to click the yyp in data.win compiler project
+
+<br>
 
 1. download the repo and extract it to a location without spaces in the path. eg: D:\projects_and_stuff\GameMaker-Anywhere\
 2. using gamemaker 2024.14.2.213, open the data.win compiler project and run it 
