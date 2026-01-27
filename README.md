@@ -20,8 +20,8 @@ A heavy work in progress port of gamemaker to several consoles (3ds only current
 - Addition and subtraction  
 
 ### Todo
-- If statements  
-- Gamepad inputs (already "there" in `gml_functions` but the interpreter doesn’t execute it yet)  
+- If statements need to be improved
+- "&&" and "||" need to be added  
 - Pretty much everything else
 
 ## compiling
