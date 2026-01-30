@@ -20,9 +20,8 @@ Feel free to contribute! (i really need the help...)
 - Setting X and Y  
 - Addition and subtraction  
 
-### Todo
-- If statements need to be improved
-- "&&" and "||" need to be added  
+### Todo (sorted from least to most needed)
+- "&&" and "||" need to be added
 - Pretty much everything else
 
 ## compiling
