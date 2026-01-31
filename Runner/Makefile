@@ -15,3 +15,4 @@ nds:
 clean:
 	$(MAKE) -f platform/3ds/Makefile clean
 	$(MAKE) -f platform/wiiu/Makefile clean
+	$(MAKE) -f platform/nds/Makefile clean
