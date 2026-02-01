@@ -1,78 +1,11 @@
 {
-  "Sprites":{
-    "all_sprites":[
-      {
-        "name":"Sprite1",
-        "width":26.0,
-        "height":40.0,
-        "frames":[
-          "b9cdd7f0-d68c-4c8c-ab41-75f0afbaacb9"
-        ],
-        "yorigin":0.0,
-        "xorigin":0.0,
-        "origin":0.0,
-        "dir":"sprites\/Sprite1\/",
-        "SpriteNumber":0.0
-      },
-      {
-        "name":"Sprite2",
-        "width":40.0,
-        "height":47.0,
-        "frames":[
-          "31d7fcca-1dd6-4056-8ce1-c44dc5c17cf4"
-        ],
-        "yorigin":0.0,
-        "xorigin":0.0,
-        "origin":0.0,
-        "dir":"sprites\/Sprite2\/",
-        "SpriteNumber":1.0
-      },
-      {
-        "name":"Sprite3",
-        "width":64.0,
-        "height":64.0,
-        "frames":[
-          "d4a47c35-99ec-460a-8a1d-17659eff8a5d"
-        ],
-        "yorigin":0.0,
-        "xorigin":0.0,
-        "origin":0.0,
-        "dir":"sprites\/Sprite3\/",
-        "SpriteNumber":2.0
-      },
-      {
-        "name":"what",
-        "width":100.0,
-        "height":104.0,
-        "frames":[
-          "99e0bf6f-71b3-45b0-9ad7-99f97e4ee027"
-        ],
-        "yorigin":0.0,
-        "xorigin":0.0,
-        "origin":0.0,
-        "dir":"sprites\/what\/",
-        "SpriteNumber":3.0
-      }
-    ]
+  "GameMetadata":{
+    "titleId":"0123456789ABCDEF",
+    "publisher":"real publisher!!!!111",
+    "name":"undertale real?"
   },
   "FirstRoom":{
     "name":"Room1"
-  },
-  "Objects":{
-    "all_objects":[
-      {
-        "StepCode":"x-=5\ny+=5;",
-        "name":"obj_cat",
-        "CreateCode":"",
-        "sprite":"Sprite3"
-      },
-      {
-        "StepCode":"if (gamepad_button_check(4, gp_face1)) {\r\n    y += 5;\r\n}\r\n\r\nif (gamepad_button_check(4, gp_face4)) {\r\n    y -= 5;\r\n}\r\n\r\nif (gamepad_button_check(4, gp_face2)) {\r\n    x += 5;\r\n}\r\n\r\nif gamepad_button_check(4, gp_face3) {\r\n    x -= 5;\r\n}\r\n\r\nif (gamepad_button_check_pressed(4, gp_select)) {\r\n    x = 300;\r\n\ty = 400;\r\n}\r\n\r\nif (gamepad_button_check_released(4, gp_select)) {\r\n    y = 300;\r\n}\r\n",
-        "name":"obj_ralseiswag",
-        "CreateCode":"x = 0;\ny = 0;",
-        "sprite":"what"
-      }
-    ]
   },
   "Resources":{
     "all_resources":[
@@ -105,134 +38,206 @@
   "Rooms":{
     "all_rooms":[
       {
-        "name":"Room1",
-        "width":1366.0,
         "height":768.0,
         "layers":[
           {
-            "type":"GMRInstanceLayer",
-            "name":"Instances",
-            "visible":true,
+            "depth":0.0,
             "instances":[
               {
-                "name":"inst_72D6AFEE",
-                "scaleX":1.5415386,
                 "x":96.0,
                 "y":448.0,
-                "object":"obj_ralseiswag",
                 "rotation":0.0,
-                "scaleY":1.5538462
+                "scaleY":1.5538462,
+                "scaleX":1.5415386,
+                "name":"inst_72D6AFEE",
+                "object":"obj_ralseiswag"
               },
               {
-                "name":"inst_22EAA4C0",
-                "scaleX":1.0,
                 "x":1312.0,
                 "y":0.0,
-                "object":"obj_cat",
                 "rotation":0.0,
-                "scaleY":1.0
+                "scaleY":1.0,
+                "scaleX":1.0,
+                "name":"inst_22EAA4C0",
+                "object":"obj_cat"
               },
               {
-                "name":"inst_18424B3B",
-                "scaleX":1.0,
                 "x":1216.0,
                 "y":0.0,
-                "object":"obj_cat",
                 "rotation":0.0,
-                "scaleY":1.0
+                "scaleY":1.0,
+                "scaleX":1.0,
+                "name":"inst_18424B3B",
+                "object":"obj_cat"
               }
             ],
-            "depth":0.0
+            "visible":true,
+            "type":"GMRInstanceLayer",
+            "name":"Instances"
           },
           {
-            "type":"GMRAssetLayer",
-            "name":"Assets_1",
-            "visible":true,
+            "depth":100.0,
             "assets":[
               {
-                "scaleX":15.5,
                 "x":160.0,
                 "y":0.0,
-                "sprite":"Sprite3",
-                "type":"GMRSpriteGraphic",
                 "rotation":0.0,
-                "scaleY":3.5
+                "scaleY":3.5,
+                "scaleX":15.5,
+                "sprite":"Sprite3",
+                "type":"GMRSpriteGraphic"
               },
               {
-                "scaleX":4.6923075000000001,
                 "x":864.0,
                 "y":576.0,
-                "sprite":"Sprite1",
-                "type":"GMRSpriteGraphic",
                 "rotation":0.0,
-                "scaleY":5.0
+                "scaleY":5.0,
+                "scaleX":4.6923075000000001,
+                "sprite":"Sprite1",
+                "type":"GMRSpriteGraphic"
               },
               {
-                "scaleX":8.1999999999999993,
                 "x":1280.0,
                 "y":544.0,
-                "sprite":"Sprite2",
-                "type":"GMRSpriteGraphic",
                 "rotation":-202.22086999999999,
-                "scaleY":5.0851063999999999
+                "scaleY":5.0851063999999999,
+                "scaleX":8.1999999999999993,
+                "sprite":"Sprite2",
+                "type":"GMRSpriteGraphic"
               }
             ],
-            "depth":100.0
+            "visible":true,
+            "type":"GMRAssetLayer",
+            "name":"Assets_1"
           },
           {
-            "type":"GMRBackgroundLayer",
-            "name":"Background",
-            "visible":true,
+            "depth":200.0,
             "background":{
               "colour":4286001449.0,
               "sprite":""
             },
-            "depth":200.0
+            "visible":true,
+            "type":"GMRBackgroundLayer",
+            "name":"Background"
           }
-        ]
+        ],
+        "width":1366.0,
+        "name":"Room1"
       },
       {
-        "name":"Room2",
-        "width":1366.0,
         "height":768.0,
         "layers":[
           {
-            "type":"GMRInstanceLayer",
-            "name":"Instances",
-            "visible":true,
+            "depth":0.0,
             "instances":[
               {
-                "name":"inst_2771DE59",
-                "scaleX":5.9230770000000001,
                 "x":0.0,
                 "y":32.0,
-                "object":"obj_ralseiswag",
                 "rotation":0.0,
-                "scaleY":1.0
+                "scaleY":1.0,
+                "scaleX":5.9230770000000001,
+                "name":"inst_2771DE59",
+                "object":"obj_ralseiswag"
               },
               {
-                "name":"inst_36770735",
-                "scaleX":2.5,
                 "x":0.0,
                 "y":96.0,
-                "object":"obj_cat",
                 "rotation":0.0,
-                "scaleY":2.0
+                "scaleY":2.0,
+                "scaleX":2.5,
+                "name":"inst_36770735",
+                "object":"obj_cat"
               }
             ],
-            "depth":0.0
+            "visible":true,
+            "type":"GMRInstanceLayer",
+            "name":"Instances"
           },
           {
-            "type":"GMRBackgroundLayer",
-            "name":"Background",
-            "visible":true,
+            "depth":100.0,
             "background":{
               "colour":4278190080.0,
               "sprite":""
             },
-            "depth":100.0
+            "visible":true,
+            "type":"GMRBackgroundLayer",
+            "name":"Background"
           }
-        ]
+        ],
+        "width":1366.0,
+        "name":"Room2"
+      }
+    ]
+  },
+  "Sprites":{
+    "all_sprites":[
+      {
+        "xorigin":0.0,
+        "origin":0.0,
+        "dir":"sprites\/Sprite1\/",
+        "SpriteNumber":0.0,
+        "width":26.0,
+        "height":40.0,
+        "name":"Sprite1",
+        "frames":[
+          "b9cdd7f0-d68c-4c8c-ab41-75f0afbaacb9"
+        ],
+        "yorigin":0.0
+      },
+      {
+        "xorigin":0.0,
+        "origin":0.0,
+        "dir":"sprites\/Sprite2\/",
+        "SpriteNumber":1.0,
+        "width":40.0,
+        "height":47.0,
+        "name":"Sprite2",
+        "frames":[
+          "31d7fcca-1dd6-4056-8ce1-c44dc5c17cf4"
+        ],
+        "yorigin":0.0
+      },
+      {
+        "xorigin":0.0,
+        "origin":0.0,
+        "dir":"sprites\/Sprite3\/",
+        "SpriteNumber":2.0,
+        "width":64.0,
+        "height":64.0,
+        "name":"Sprite3",
+        "frames":[
+          "d4a47c35-99ec-460a-8a1d-17659eff8a5d"
+        ],
+        "yorigin":0.0
+      },
+      {
+        "xorigin":0.0,
+        "origin":0.0,
+        "dir":"sprites\/what\/",
+        "SpriteNumber":3.0,
+        "width":100.0,
+        "height":104.0,
+        "name":"what",
+        "frames":[
+          "99e0bf6f-71b3-45b0-9ad7-99f97e4ee027"
+        ],
+        "yorigin":0.0
+      }
+    ]
+  },
+  "Objects":{
+    "all_objects":[
+      {
+        "CreateCode":"",
+        "sprite":"Sprite3",
+        "StepCode":"x-=5\ny+=5;",
+        "name":"obj_cat"
+      },
+      {
+        "CreateCode":"x = 0;\ny = 0;",
+        "sprite":"what",
+        "StepCode":"if (gamepad_button_check(4, gp_face1)) {\n    y += 5;\n}\n\nif (gamepad_button_check(4, gp_face4)) {\n    y -= 5;\n}\n\nif (gamepad_button_check(4, gp_face2)) {\n    x += 5;\n}\n\nif gamepad_button_check(4, gp_face3) {\n    x -= 5;\n}\n\nif (gamepad_button_check_pressed(4, gp_select)) {\n    x = 300;\n\ty = 400;\n}\n\nif (gamepad_button_check_released(4, gp_select)) {\n    y = 300;\n}\n",
+        "name":"obj_ralseiswag"
       }
     ]
   }
