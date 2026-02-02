@@ -1,7 +1,4 @@
 main.o: D:/Projects/GitHub/GameMaker-Anywhere/Runner/source/main.c \
- C:/devkitPro/libctru/include/citro2d.h \
- C:/devkitPro/libctru/include/citro3d.h \
- C:/devkitPro/libctru/include/c3d/types.h \
  C:/devkitPro/libctru/include/3ds.h \
  C:/devkitPro/libctru/include/3ds/types.h \
  C:/devkitPro/libctru/include/3ds/result.h \
@@ -88,6 +85,9 @@ main.o: D:/Projects/GitHub/GameMaker-Anywhere/Runner/source/main.c \
  C:/devkitPro/libctru/include/3ds/font.h \
  C:/devkitPro/libctru/include/3ds/gdbhio_dev.h \
  C:/devkitPro/libctru/include/3ds/3dslink.h \
+ C:/devkitPro/libctru/include/citro2d.h \
+ C:/devkitPro/libctru/include/citro3d.h \
+ C:/devkitPro/libctru/include/c3d/types.h \
  C:/devkitPro/libctru/include/c3d/maths.h \
  C:/devkitPro/libctru/include/c3d/mtxstack.h \
  C:/devkitPro/libctru/include/c3d/uniforms.h \
@@ -112,10 +112,8 @@ main.o: D:/Projects/GitHub/GameMaker-Anywhere/Runner/source/main.c \
  D:/Projects/GitHub/GameMaker-Anywhere/Runner/source/cJSON.h \
  D:/Projects/GitHub/GameMaker-Anywhere/Runner/source/gml_functions.h \
  D:/Projects/GitHub/GameMaker-Anywhere/Runner/source/gml_runner.h \
- D:/Projects/GitHub/GameMaker-Anywhere/Runner/source/shortcut_functions.h
-C:/devkitPro/libctru/include/citro2d.h:
-C:/devkitPro/libctru/include/citro3d.h:
-C:/devkitPro/libctru/include/c3d/types.h:
+ D:/Projects/GitHub/GameMaker-Anywhere/Runner/source/shortcut_functions.h \
+ D:/Projects/GitHub/GameMaker-Anywhere/Runner/source/cross_platform.h
 C:/devkitPro/libctru/include/3ds.h:
 C:/devkitPro/libctru/include/3ds/types.h:
 C:/devkitPro/libctru/include/3ds/result.h:
@@ -202,6 +200,9 @@ C:/devkitPro/libctru/include/3ds/romfs.h:
 C:/devkitPro/libctru/include/3ds/font.h:
 C:/devkitPro/libctru/include/3ds/gdbhio_dev.h:
 C:/devkitPro/libctru/include/3ds/3dslink.h:
+C:/devkitPro/libctru/include/citro2d.h:
+C:/devkitPro/libctru/include/citro3d.h:
+C:/devkitPro/libctru/include/c3d/types.h:
 C:/devkitPro/libctru/include/c3d/maths.h:
 C:/devkitPro/libctru/include/c3d/mtxstack.h:
 C:/devkitPro/libctru/include/c3d/uniforms.h:
@@ -227,3 +228,4 @@ D:/Projects/GitHub/GameMaker-Anywhere/Runner/source/cJSON.h:
 D:/Projects/GitHub/GameMaker-Anywhere/Runner/source/gml_functions.h:
 D:/Projects/GitHub/GameMaker-Anywhere/Runner/source/gml_runner.h:
 D:/Projects/GitHub/GameMaker-Anywhere/Runner/source/shortcut_functions.h:
+D:/Projects/GitHub/GameMaker-Anywhere/Runner/source/cross_platform.h:

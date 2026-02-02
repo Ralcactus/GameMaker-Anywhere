@@ -1,3 +1,4 @@
+#include <3ds.h>
 #include <citro2d.h>
 #include <assert.h>
 #include <string.h>
@@ -6,11 +7,11 @@
 #include <time.h>
 #include "cJSON.h"
 #include <math.h>
-#include <3ds.h>
 #include "gml_functions.h"
 #include "gml_runner.h"
 #include "gml_runner.h"
 #include "shortcut_functions.h"
+#include "cross_platform.h"
 #include <stdbool.h>
 
 float cam_x = 0;
@@ -65,7 +66,7 @@ static cJSON* GetFirstRoomName(const char* json_text)
 
 #pragma region //Get room info (bg, width, height, ect)
 //return the current rooms background colour
-static u32 GetCurrentRoomBgColor(const char* json_text, const char* room_name)
+u32 GetCurrentRoomBgColor(const char* json_text, const char* room_name)
 {
 
 	u32 out = C2D_Color32f(255.0f, 255.0f, 255.0f, 1.0f);
@@ -111,8 +112,7 @@ static u32 GetCurrentRoomBgColor(const char* json_text, const char* room_name)
 			cJSON_Delete(root);
 			return out;
 		}
-
-		//no bg layer
+		
 		break;
 	}
 
@@ -399,32 +399,9 @@ int main()
 		if (gamepad_button_check(gp_start))
 			break;
 
-		#pragma region //draw frames
-		//Start the frame
-		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-
-		//top
-		C2D_TargetClear(top, GetCurrentRoomBgColor(data_json, CurrentRoom));
-		C2D_SceneBegin(top);
-
-		//camera
-		C2D_ViewReset();
-		C2D_ViewTranslate(-cam_x, -cam_y);
-		C2D_ViewScale(400 / cam_w, 240 / cam_h);
-
-		//draw sprites
-		for (size_t i = 0; i < SpriteCount; i++)
-			C2D_DrawSprite(&sprites[i].spr);
-
-		//finish view
-		C2D_ViewReset();
-		//gui drawing goes here...
-
-
-		//end frame
-		C3D_FrameEnd(0);
-
-		#pragma endregion
+		//render frames
+		if (is_running3DS())
+			scr_renderframe_3DS(top, cam_x, cam_y, cam_w, cam_h, SpriteCount, data_json, CurrentRoom);
 	}
 
 

@@ -1,9 +1,6 @@
-platform_specific.o: \
- D:/Projects/GitHub/GameMaker-Anywhere/Runner/source/platform_specific.c \
- D:/Projects/GitHub/GameMaker-Anywhere/Runner/source/shortcut_functions.h \
- C:/devkitPro/libctru/include/citro2d.h \
- C:/devkitPro/libctru/include/citro3d.h \
- C:/devkitPro/libctru/include/c3d/types.h \
+cross_platform.o: \
+ D:/Projects/GitHub/GameMaker-Anywhere/Runner/source/cross_platform.c \
+ D:/Projects/GitHub/GameMaker-Anywhere/Runner/source/cross_platform.h \
  C:/devkitPro/libctru/include/3ds.h \
  C:/devkitPro/libctru/include/3ds/types.h \
  C:/devkitPro/libctru/include/3ds/result.h \
@@ -90,6 +87,9 @@ platform_specific.o: \
  C:/devkitPro/libctru/include/3ds/font.h \
  C:/devkitPro/libctru/include/3ds/gdbhio_dev.h \
  C:/devkitPro/libctru/include/3ds/3dslink.h \
+ C:/devkitPro/libctru/include/citro2d.h \
+ C:/devkitPro/libctru/include/citro3d.h \
+ C:/devkitPro/libctru/include/c3d/types.h \
  C:/devkitPro/libctru/include/c3d/maths.h \
  C:/devkitPro/libctru/include/c3d/mtxstack.h \
  C:/devkitPro/libctru/include/c3d/uniforms.h \
@@ -110,11 +110,13 @@ platform_specific.o: \
  C:/devkitPro/libctru/include/c2d/spritesheet.h \
  C:/devkitPro/libctru/include/c2d/sprite.h \
  C:/devkitPro/libctru/include/c2d/text.h \
- C:/devkitPro/libctru/include/c2d/font.h
-D:/Projects/GitHub/GameMaker-Anywhere/Runner/source/shortcut_functions.h:
-C:/devkitPro/libctru/include/citro2d.h:
-C:/devkitPro/libctru/include/citro3d.h:
-C:/devkitPro/libctru/include/c3d/types.h:
+ C:/devkitPro/libctru/include/c2d/font.h \
+ D:/Projects/GitHub/GameMaker-Anywhere/Runner/source/shortcut_functions.h \
+ D:/Projects/GitHub/GameMaker-Anywhere/Runner/source/main.h \
+ D:/Projects/GitHub/GameMaker-Anywhere/Runner/source/cJSON.h \
+ D:/Projects/GitHub/GameMaker-Anywhere/Runner/source/gml_functions.h \
+ D:/Projects/GitHub/GameMaker-Anywhere/Runner/source/gml_runner.h
+D:/Projects/GitHub/GameMaker-Anywhere/Runner/source/cross_platform.h:
 C:/devkitPro/libctru/include/3ds.h:
 C:/devkitPro/libctru/include/3ds/types.h:
 C:/devkitPro/libctru/include/3ds/result.h:
@@ -201,6 +203,9 @@ C:/devkitPro/libctru/include/3ds/romfs.h:
 C:/devkitPro/libctru/include/3ds/font.h:
 C:/devkitPro/libctru/include/3ds/gdbhio_dev.h:
 C:/devkitPro/libctru/include/3ds/3dslink.h:
+C:/devkitPro/libctru/include/citro2d.h:
+C:/devkitPro/libctru/include/citro3d.h:
+C:/devkitPro/libctru/include/c3d/types.h:
 C:/devkitPro/libctru/include/c3d/maths.h:
 C:/devkitPro/libctru/include/c3d/mtxstack.h:
 C:/devkitPro/libctru/include/c3d/uniforms.h:
@@ -222,3 +227,8 @@ C:/devkitPro/libctru/include/c2d/spritesheet.h:
 C:/devkitPro/libctru/include/c2d/sprite.h:
 C:/devkitPro/libctru/include/c2d/text.h:
 C:/devkitPro/libctru/include/c2d/font.h:
+D:/Projects/GitHub/GameMaker-Anywhere/Runner/source/shortcut_functions.h:
+D:/Projects/GitHub/GameMaker-Anywhere/Runner/source/main.h:
+D:/Projects/GitHub/GameMaker-Anywhere/Runner/source/cJSON.h:
+D:/Projects/GitHub/GameMaker-Anywhere/Runner/source/gml_functions.h:
+D:/Projects/GitHub/GameMaker-Anywhere/Runner/source/gml_runner.h:
