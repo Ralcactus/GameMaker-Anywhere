@@ -323,8 +323,8 @@ static bool runner_apply_if_code(const char** p_cursor){
 #pragma endregion
 
 #pragma region //applying code
-//applys the x and y of the objects
-static void runner_apply_xy_code(int object_index, const char* code)
+//interpret x and y of the objects
+static void runner_interpret_xy(int object_index, const char* code)
 {
 	float current_x = sprites[object_index].spr.params.pos.x;
 	float current_y = sprites[object_index].spr.params.pos.y;
@@ -430,79 +430,20 @@ static void runner_apply_xy_code(int object_index, const char* code)
 			cursor++;
 	}
 
-	C2D_SpriteSetPos(&sprites[object_index].spr, current_x, current_y);
-}
-
-//changes the room (room_goto)
-static void runner_apply_roomgoto_code(int object_index, const char* code)
-{
-	float current_x = sprites[object_index].spr.params.pos.x;
-	float current_y = sprites[object_index].spr.params.pos.y;
-	const char* cursor = code;
-
-	while (cursor && *cursor)
-	{
-		//skip empty space
-		skip_emptyspace(&cursor);
-
-		if (*cursor == '{' || *cursor == '}')
-		{
-			cursor++;
-			continue;
-		}
-
-		if (runner_apply_if_code(&cursor))
-			continue;
-
-
-		//check if this is a room_goto function
-		if (strncmp(cursor, "room_goto", 9) != 0)
-		{
-			while (*cursor && *cursor != ';')
-				cursor++;
-
-			if (*cursor == ';')
-				cursor++;
-
-			continue;
-		}
-		cursor += 9;
-
-
-		//skip empty space
-		skip_emptyspace(&cursor);
-
-		if (*cursor == '(')
-			cursor++;
-
-		const char* RealRoom = cursor;
-		remove_all_chars(RealRoom, ';');
-		remove_all_chars(RealRoom, ')');
-
-		printf("cursor=%s\n", RealRoom);
-
-		CurrentRoom = RealRoom;
-		InitCurrentRoom(data_json);
-
-		if (*cursor == ')')
-			cursor++;
-
-		//continue if at the end of a line
-		if (*cursor == ';')
-			cursor++;
-
-		while (*cursor == '\n' || *cursor == '\r')
-			cursor++;
-	}
+	
 
 	C2D_SpriteSetPos(&sprites[object_index].spr, current_x, current_y);
 }
-
 
 #pragma endregion
 
-#pragma region //running step create ect
-//runs the create code
+#pragma region //passing on the gml code to the in interpreters
+
+void GML_interpret(const char* code, int object_def_index){
+	runner_interpret_xy(object_def_index, code);
+}
+
+//runs the create code (on object creation)
 void RunGML_create(const char* code, int object_def_index)
 {
 	//Select next object instance
@@ -521,12 +462,12 @@ void RunGML_create(const char* code, int object_def_index)
 			continue;
 		did_create[instance_index] = true;
 
-		//run the code
-		runner_apply_xy_code(instance_index, code);
-		runner_apply_roomgoto_code(instance_index, code);
+		//interpret the gml code
+		GML_interpret(code, instance_index);
 	}
 }
 
+//runs the step code (once per frame)
 void RunGML_step(const char* code, int object_def_index)
 {
 	//Select next object instance
@@ -544,10 +485,8 @@ void RunGML_step(const char* code, int object_def_index)
 
 		ran_this_frame[instance_index] = true;
 
-
-		//run the code
-		runner_apply_xy_code(instance_index, code);
-		runner_apply_roomgoto_code(instance_index, code);
+		//interpret the gml code
+		GML_interpret(code, instance_index);
 	}
 
 	for (int i = 0; i < (int)SpriteCount; i++){
@@ -557,7 +496,7 @@ void RunGML_step(const char* code, int object_def_index)
 
 
 
-//runs all the functions and submits the code for them
+//submits code for events
 void RunGML(){
 	const cJSON* objs = cJSON_GetObjectItemCaseSensitive(root, "Objects");
 	const cJSON* all  = cJSON_GetObjectItemCaseSensitive(objs, "all_objects");

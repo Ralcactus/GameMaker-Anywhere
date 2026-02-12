@@ -229,7 +229,7 @@
         "sprite":"Sprite3"
       },
       {
-        "StepCode":"if (gamepad_button_check(4, gp_face1)) {\n    y += 5;\n}\n\nif (gamepad_button_check(4, gp_face4)) {\n    y -= 5;\n}\n\nif (gamepad_button_check(4, gp_face2)) {\n    x += 5;\n}\n\nif gamepad_button_check(4, gp_face3) {\n    x -= 5;\n}\n\nif (gamepad_button_check_pressed(4, gp_select)) {\n    x = 300;\n\ty = 400;\n}\r\n\nif (gamepad_button_check_released(4, gp_select)) {\r\n    y = 300;\r\n}\r\n\r\nroom_goto(Room2);",
+        "StepCode":"if (gamepad_button_check(4, gp_face1)) {\n    y += 5;\n}\n\nif (gamepad_button_check(4, gp_face4)) {\n    y -= 5;\n}\n\nif (gamepad_button_check(4, gp_face2)) {\n    x += 5;\n}\n\nif gamepad_button_check(4, gp_face3) {\n    x -= 5;\n}\n\nif (gamepad_button_check_pressed(4, gp_select)) {\n    x = 300;\n\ty = 400;\n}\r\n\nif (gamepad_button_check_released(4, gp_select)) {\r\n    y = 300;\r\n}\r\n\r\n",
         "name":"obj_ralseiswag",
         "CreateCode":"x = 0;\ny = 0;",
         "sprite":"what"
