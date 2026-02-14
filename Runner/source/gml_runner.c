@@ -16,45 +16,6 @@ void GML_SetRoot(const cJSON* garrys_in_the_room_tonight)
 	root = garrys_in_the_room_tonight;
 }
 
-void remove_all_chars(char* string, char character) {
-    char *pr = string, *pw = string;
-    while (*pr) {
-        *pw = *pr++;
-        pw += (*pw != character);
-    }
-    *pw = '\0';
-}
-
-static int input_convertstring(const char* s, const char** out_end)
-{
-	*out_end = s + 8; 
-	if (strncmp(s, "gp_face1", 8) == 0){
-		return gp_face1; 
-	}
-
-	if (strncmp(s, "gp_face2", 8) == 0){
-		return gp_face2; 
-	}
-
-	if (strncmp(s, "gp_face3", 8) == 0){
-		return gp_face3; 
-	}
-
-	if (strncmp(s, "gp_face4", 8) == 0){
-		return gp_face4; 
-	}
-
-	if (strncmp(s, "gp_start", 8) == 0){
-		return gp_start; 
-	}
-
-	if (strncmp(s, "gp_select", 9) == 0){
-		return gp_select; 
-	}
-
-	return -4;
-}
-
 //return next object
 static int runner_next_object_index(int* cursor, int object_index)
 {
