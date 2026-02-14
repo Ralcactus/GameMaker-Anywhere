@@ -18,7 +18,7 @@ if (global.current_field >= 0) {
             global.title_id = keyboard_string;
             break;
             
-        case 2: //publisxher
+        case 2: //publisher
             global.publisher = keyboard_string;
             break;
     }

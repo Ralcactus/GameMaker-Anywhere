@@ -1,3 +1,4 @@
+//This is the script that creates the data.win, copys sprites, and makes the t3s for compiling
 function scr_compile(){
     global.exporting = true;
     var yyp = global.selected_yyp;

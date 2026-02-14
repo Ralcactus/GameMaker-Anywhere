@@ -2,7 +2,8 @@ draw_set_color(c_yellow);
 draw_text(10,30, "WIP! This only compiles the data.win\n" + 
 	"THIS DOES NOT COMPILE TO THE PLATFORMS CURRENTLY!\n" +
 	"you must place the data.win made by this into\nthe runner manually!\n" +
-	"(the export mode does nothing btw)")
+	/*"(the export mode does nothing btw)"*/"")
+
 draw_set_halign(fa_center);
 draw_set_valign(fa_top);
 draw_sprite(spr_logo, 0, room_width/2, 20);
@@ -111,7 +112,8 @@ for (var i = 0; i < array_length(fields); i++) {
 
 
 
-#region export modes
+#region export modes (temporally disabled!!!)
+/*
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
 draw_set_color(c_white);
@@ -147,6 +149,7 @@ for (var i = 0; i < array_length(modes); i++)
         global.export_mode = modes[i].number_ver;
     }
 }
+*/
 #endregion
 
 
