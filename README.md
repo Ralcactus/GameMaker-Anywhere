@@ -9,7 +9,7 @@ https://discord.gg/cc2YA2pChU
 </p>
 
 <br>
-s
+
 <p align="center">
   <img src="Github assets/example.gif" alt="The example gif" width="600" />
 </p>

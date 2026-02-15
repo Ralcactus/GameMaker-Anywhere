@@ -419,7 +419,7 @@ int main()
 		//run the gml interpreter
 		RunGML();
 
-		//Quit force quit app
+		//Force quit app
 		if (gamepad_button_check(gp_start))
 			break;
 

@@ -35,6 +35,47 @@ static int runner_next_object_index(int* cursor, int object_index)
 }
 #pragma endregion
 
+//convert a string of an input to a macro 
+static int input_convertstring(const char* string)
+{
+	if (strncmp(string, "gp_face1", 8) == 0)
+		return gp_face1; 
+
+	if (strncmp(string, "gp_face2", 8) == 0)
+		return gp_face2; 
+
+	if (strncmp(string, "gp_face3", 8) == 0)
+		return gp_face3; 
+
+	if (strncmp(string, "gp_face4", 8) == 0)
+		return gp_face4; 
+
+	if (strncmp(string, "gp_start", 8) == 0)
+		return gp_start; 
+
+	if (strncmp(string, "gp_select", 9) == 0)
+		return gp_select; 
+
+	if (strncmp(string, "gp_padl", 7) == 0)
+		return gp_padl;
+
+	if (strncmp(string, "gp_padr", 7) == 0)
+		return gp_padr; 
+
+	if (strncmp(string, "gp_padu", 7) == 0)
+		return gp_padu; 
+
+	if (strncmp(string, "gp_padd", 7) == 0)
+		return gp_padd; 
+
+		
+	return -4;
+}
+
+static void quick_printfakecursor(const char* fakecursor){
+	printf("fakecursor at:       %c\n", *fakecursor);
+}
+
 #pragma region //applying code
 /*Notes!
 - The cursor progresses 1 character at a time
@@ -56,7 +97,7 @@ static void runner_interpret_xy(int object_index, const char* code)
     while (*cursor != '\0')
     {
         char character = *cursor;
-		const char* fakecusor = cursor;
+		const char* fakecursor = cursor;
         //printf("current char: %c\n", character);
 
 		//is this a x statment?
@@ -65,31 +106,31 @@ static void runner_interpret_xy(int object_index, const char* code)
 			char postype = character;
 
 			//the next character
-			fakecusor++;
+			fakecursor++;
 
-			if (*fakecusor == ' ')
-				fakecusor++;
+			if (*fakecursor == ' ')
+				fakecursor++;
 
 
 			//is this a proper add statment
-			if (*fakecusor == '-' || *fakecusor == '+' || *fakecusor == '*' || *fakecusor == '='){
+			if (*fakecursor == '-' || *fakecursor == '+' || *fakecursor == '*' || *fakecursor == '='){
 				//store the operation
-				const char operationtype = *fakecusor;
-				fakecusor++;
+				const char operationtype = *fakecursor;
+				fakecursor++;
 
-				while (*fakecusor == ' ')
-					fakecusor++;
+				while (*fakecursor == ' ')
+					fakecursor++;
 
-				if (*fakecusor == '=')
-					fakecusor++;
+				if (*fakecursor == '=')
+					fakecursor++;
 
-				while (*fakecusor == ' ')
-					fakecusor++;
+				while (*fakecursor == ' ')
+					fakecursor++;
 
 				int thenumber = 0;
-				while (*fakecusor == '0' || *fakecusor == '1' || *fakecusor == '2' || *fakecusor == '3' || *fakecusor == '4' || *fakecusor == '5' || *fakecusor == '6' || *fakecusor == '7' || *fakecusor == '8' || *fakecusor == '9'){
-					thenumber = thenumber * 10 + (*fakecusor - '0');
-					fakecusor++;
+				while (*fakecursor == '0' || *fakecursor == '1' || *fakecursor == '2' || *fakecursor == '3' || *fakecursor == '4' || *fakecursor == '5' || *fakecursor == '6' || *fakecursor == '7' || *fakecursor == '8' || *fakecursor == '9'){
+					thenumber = thenumber * 10 + (*fakecursor - '0');
+					fakecursor++;
 				}
 
 
@@ -126,16 +167,25 @@ static void runner_interpret_xy(int object_index, const char* code)
 				}
 			}
 		}
-		if (fakecusor == cursor)
+		if (fakecursor == cursor)
 			cursor++;
 		else
-			cursor = fakecusor;
+			cursor = fakecursor;
 
 	}
 	C2D_SpriteSetPos(&sprites[object_index].spr, object_x, object_y);
 }
 
-//interpret x and y of the objects
+#pragma region //if interpreting
+
+//check if we are holding the button a if wants
+static void runner_interpret_input_held(const char* padindex, const char* button){
+	if (gamepad_button_check(input_convertstring(button))){
+		printf("Holding button:       %s\n", button);
+	}
+}
+
+//check for and handle if statments
 static void runner_interpret_if(int object_index, const char* code)
 {
     const char* cursor = code;
@@ -143,38 +193,82 @@ static void runner_interpret_if(int object_index, const char* code)
     while (*cursor != '\0')
     {
         char character = *cursor;
-		const char* fakecusor = cursor;
+		const char* fakecursor = cursor;
 
 
 		//is this a if statment?
 		if (character == 'i'){
-			fakecusor++;
+			fakecursor++;
 			
 			//is this a if statment pt2
-			if (*fakecusor == 'f')
-				fakecusor++;
+			if (*fakecursor == 'f')
+				fakecursor++;
 			else{
 				cursor+=2;
 				continue;
 			}
 
 			
-			if (*fakecusor == ' ')
-				fakecusor++;
-			if (*fakecusor == '(')
-				fakecusor++;
+			if (*fakecursor == ' ')
+				fakecursor++;
+			if (*fakecursor == '(')
+				fakecursor++;
 
-			printf("Inside If:       %c\n", *fakecusor);
 
+			//store the function characters
+			char function[256];
+			int i = 0;
+			while (*fakecursor != '(' && *fakecursor != '\0'){
+				//add each character to the buffer
+				function[i++] = *fakecursor;
+				fakecursor++;
+			}
+			function[i] = '\0';
+
+			//continue past the (
+			fakecursor++;
+			
+			//checking gamepad inputs (later add gamepad_button_check_pressed and gamepad_button_check_released!!)
+			if (strcmp(function, "gamepad_button_check") == 0){
+				//printf("INSIDE:       %s\n", function);
+				char padindex[256];
+				char button[256];
+
+				int pad_i = 0;
+				while (*fakecursor != ',' && *fakecursor != '\0'){
+					//add each character to the buffer
+					padindex[pad_i++] = *fakecursor;
+					fakecursor++;
+				}
+				padindex[pad_i] = '\0';
+
+				//skip comma
+				fakecursor++;
+
+				while (*fakecursor == ' ')
+					fakecursor++;
+
+				int button_i = 0;
+				while (*fakecursor != ')' && *fakecursor != '\0'){
+					//add each character to the buffer
+					button[button_i++] = *fakecursor;
+					fakecursor++;
+				}
+				button[button_i] = '\0';
+
+				runner_interpret_input_held(padindex, button);
+			}
 		}
 
-		if (fakecusor == cursor)
+		if (fakecursor == cursor)
 			cursor++;
 		else
-			cursor = fakecusor;
+			cursor = fakecursor;
 
 	}
 }
+#pragma endregion
+
 
 #pragma endregion
 

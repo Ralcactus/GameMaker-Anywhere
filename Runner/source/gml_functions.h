@@ -2,6 +2,18 @@
 #ifdef __3DS__
     #include <3ds.h>
     #include <citro2d.h>
+
+    //inputs
+    #define gp_start KEY_START
+    #define gp_select KEY_SELECT
+    #define gp_face1 KEY_B
+    #define gp_face2 KEY_A
+    #define gp_face3 KEY_Y
+    #define gp_face4 KEY_X
+    #define gp_padl KEY_DLEFT
+    #define gp_padr KEY_DRIGHT
+    #define gp_padu KEY_DUP
+    #define gp_padd KEY_DDOWN
 #endif
 
 #include <stdbool.h>
@@ -9,14 +21,6 @@
 
 //max sprites that can be drawn at a time
 #define MAX_SPRITES 1000
-
-//input shortcuts
-#define gp_start KEY_START
-#define gp_select KEY_SELECT
-#define gp_face1 KEY_B
-#define gp_face2 KEY_A
-#define gp_face3 KEY_Y
-#define gp_face4 KEY_X
 
 
 extern u32 g_keysDown;
