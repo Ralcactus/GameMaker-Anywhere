@@ -223,13 +223,13 @@
   "Objects":{
     "all_objects":[
       {
-        "StepCode":"x -= 5\ny += 5;",
+        "StepCode":"x-=5\ny+=5;",
         "name":"obj_cat",
         "CreateCode":"",
         "sprite":"Sprite3"
       },
       {
-        "StepCode":"if (gamepad_button_check(1, gp_padr)){\n    x+= 5;\n}\n\nif (gamepad_button_check(1, gp_padd)){\n    y +=5;\n}",
+        "StepCode":"if (gamepad_button_check(1, gp_padr)){\r\n\tx+= 5;\r\n}\r\n\r\nif (gamepad_button_check(1, gp_padu)){\r\n\ty -=5;\r\n}\r\n\r\nif (gamepad_button_check(1, gp_padl)){\r\n\tx -=5;\r\n}\r\n\r\nif (gamepad_button_check(1, gp_padd)){\r\n\ty +=5;\r\n}\r\n\r\n",
         "name":"obj_ralseiswag",
         "CreateCode":"x = 0;\ny = 0;",
         "sprite":"what"
@@ -237,8 +237,8 @@
     ]
   },
   "GameMetadata":{
-    "name":"sa",
-    "publisher":"aaaaaaaaaaaaa",
+    "name":"aaa",
+    "publisher":"aaaaaaaaaaaaaaaaaa",
     "titleId":"AAAAAAAAAAAAAAAA"
   }
 }

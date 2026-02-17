@@ -229,7 +229,7 @@
         "sprite":"Sprite3"
       },
       {
-        "StepCode":"x += 5;\r\ny += 5;\r\n",
+        "StepCode":"if (gamepad_button_check(1, gp_padr)){\r\n\tx+= 5;\r\n}\r\n\r\nif (gamepad_button_check(1, gp_padu)){\r\n\ty -=5;\r\n}\r\n\r\nif (gamepad_button_check(1, gp_padl)){\r\n\tx -=5;\r\n}\r\n\r\nif (gamepad_button_check(1, gp_padd)){\r\n\ty +=5;\r\n}\r\n\r\n",
         "name":"obj_ralseiswag",
         "CreateCode":"x = 0;\ny = 0;",
         "sprite":"what"
@@ -237,8 +237,8 @@
     ]
   },
   "GameMetadata":{
-    "name":"a",
-    "publisher":"aaaaaaaaaaaaa",
+    "name":"aaa",
+    "publisher":"aaaaaaaaaaaaaaaaaa",
     "titleId":"AAAAAAAAAAAAAAAA"
   }
 }
