@@ -39,7 +39,8 @@ once nds support is added, you may need another toolchain like BlocksDS and Wond
 DevkitARM has some strange issues when compiling certain nds libraries so its much easier to use BlocksDS
 
 <br>
-
+note: if you want to compile for a different device, instead of doing "make 3dsx" you can do "make insertdevicehere".
+for example, "make nds" would compile for NDS.
 1. download the repo and extract it to a location without spaces in the path. eg: D:\projects_and_stuff\GameMaker-Anywhere\
 2. using gamemaker, open the data.win compiler project and run it 
 3. select the yyp of the test project
