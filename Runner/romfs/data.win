@@ -229,7 +229,7 @@
         "sprite":"Sprite3"
       },
       {
-        "StepCode":"x+= 5;\r\ny +=5;\r\nif (gamepad_button_check(1, gp_face2))",
+        "StepCode":"if (gamepad_button_check(1, gp_padr)){\n    x+= 5;\n}\n\nif (gamepad_button_check(1, gp_padd)){\n    y +=5;\n}",
         "name":"obj_ralseiswag",
         "CreateCode":"x = 0;\ny = 0;",
         "sprite":"what"

@@ -84,8 +84,136 @@ static void quick_printfakecursor(const char* fakecursor){
 */
 
 /*TODO
-	In runner_interpret_xy add decimal supportfi
+	In runner_interpret_xy add decimal support
 */
+
+#pragma region //if interpreting
+
+//check if we are holding the button a if wants
+static bool runner_interpret_input_held(const char* padindex, const char* button){
+	if (gamepad_button_check(input_convertstring(button))){
+		printf("Holding button:       %s\n", button);
+
+		return true;
+	}
+	return false;
+}
+
+static bool runner_gamepad_button_check(const char* cursor){
+	char padindex[256];
+	char button[256];
+
+	int pad_i = 0;
+	while (*cursor != ',' && *cursor != '\0'){
+		//add each character to the buffer
+		padindex[pad_i++] = *cursor;
+		cursor++;
+	}
+	padindex[pad_i] = '\0';
+
+	cursor++;
+	while (*cursor == ' ')
+		cursor++;
+
+	int button_i = 0;
+	while (*cursor != ')' && *cursor != '\0'){
+		//add each character to the buffer
+		button[button_i++] = *cursor;
+		cursor++;
+	}
+	button[button_i] = '\0';
+
+	return runner_interpret_input_held(padindex, button);
+}
+
+static bool runner_if_middleman(const char* function, const char* args)
+{
+    if (strcmp(function, "gamepad_button_check") == 0)
+    {
+        return runner_gamepad_button_check(args);
+    }
+
+    return false;
+}
+
+//check for and handle if statments
+static bool runner_interpret_if(const char* code)
+{
+    const char* cursor = code;
+
+    while (*cursor != '\0')
+    {
+        char character = *cursor;
+		const char* fakecursor = cursor;
+
+
+		//is this a if statment?
+		if (character == 'i'){
+			fakecursor++;
+			
+			//is this a if statment pt2
+			if (*fakecursor == 'f')
+				fakecursor++;
+			else{
+				cursor+=2;
+				continue;
+			}
+
+			
+			if (*fakecursor == ' ')
+				fakecursor++;
+			if (*fakecursor == '(')
+				fakecursor++;
+
+
+			//store the function characters
+			char function[256];
+			int i = 0;
+			while (*fakecursor != '(' && *fakecursor != '\0'){
+				//add each character to the buffer
+				function[i++] = *fakecursor;
+				fakecursor++;
+			}
+			function[i] = '\0';
+
+			//continue past the (
+			fakecursor++;
+
+			return runner_if_middleman(function, fakecursor);
+		}
+
+		if (fakecursor == cursor)
+			cursor++;
+		else
+			cursor = fakecursor;
+
+	}
+
+	return false;
+}
+
+static const char* skip_block(const char* cursor)
+{
+    if (*cursor != '{')
+        return cursor;
+
+    int depth = 1;
+    cursor++; // skip first {
+
+    while (*cursor && depth > 0)
+    {
+        if (*cursor == '{')
+            depth++;
+        else if (*cursor == '}')
+            depth--;
+
+        cursor++;
+    }
+
+    return cursor;
+}
+
+#pragma endregion
 
 //interpret x and y of the objects
 static void runner_interpret_xy(int object_index, const char* code)
@@ -96,6 +224,23 @@ static void runner_interpret_xy(int object_index, const char* code)
 
     while (*cursor != '\0')
     {
+		bool if_result = runner_interpret_if(cursor);
+
+		if (if_result)
+		{
+			// Move cursor forward until '{'
+			while (*cursor && *cursor != '{')
+				cursor++;
+
+			if (*cursor == '{')
+				cursor++; // enter block
+		}
+		else
+		{
+			cursor = skip_block(cursor);
+		}
+
+
         char character = *cursor;
 		const char* fakecursor = cursor;
         //printf("current char: %c\n", character);
@@ -132,7 +277,6 @@ static void runner_interpret_xy(int object_index, const char* code)
 					thenumber = thenumber * 10 + (*fakecursor - '0');
 					fakecursor++;
 				}
-
 
 				//add value
 				if (operationtype == '+'){
@@ -176,107 +320,13 @@ static void runner_interpret_xy(int object_index, const char* code)
 	C2D_SpriteSetPos(&sprites[object_index].spr, object_x, object_y);
 }
 
-#pragma region //if interpreting
-
-//check if we are holding the button a if wants
-static void runner_interpret_input_held(const char* padindex, const char* button){
-	if (gamepad_button_check(input_convertstring(button))){
-		printf("Holding button:       %s\n", button);
-	}
-}
-
-//check for and handle if statments
-static void runner_interpret_if(int object_index, const char* code)
-{
-    const char* cursor = code;
-
-    while (*cursor != '\0')
-    {
-        char character = *cursor;
-		const char* fakecursor = cursor;
-
-
-		//is this a if statment?
-		if (character == 'i'){
-			fakecursor++;
-			
-			//is this a if statment pt2
-			if (*fakecursor == 'f')
-				fakecursor++;
-			else{
-				cursor+=2;
-				continue;
-			}
-
-			
-			if (*fakecursor == ' ')
-				fakecursor++;
-			if (*fakecursor == '(')
-				fakecursor++;
-
-
-			//store the function characters
-			char function[256];
-			int i = 0;
-			while (*fakecursor != '(' && *fakecursor != '\0'){
-				//add each character to the buffer
-				function[i++] = *fakecursor;
-				fakecursor++;
-			}
-			function[i] = '\0';
-
-			//continue past the (
-			fakecursor++;
-			
-			//checking gamepad inputs (later add gamepad_button_check_pressed and gamepad_button_check_released!!)
-			if (strcmp(function, "gamepad_button_check") == 0){
-				//printf("INSIDE:       %s\n", function);
-				char padindex[256];
-				char button[256];
-
-				int pad_i = 0;
-				while (*fakecursor != ',' && *fakecursor != '\0'){
-					//add each character to the buffer
-					padindex[pad_i++] = *fakecursor;
-					fakecursor++;
-				}
-				padindex[pad_i] = '\0';
-
-				//skip comma
-				fakecursor++;
-
-				while (*fakecursor == ' ')
-					fakecursor++;
-
-				int button_i = 0;
-				while (*fakecursor != ')' && *fakecursor != '\0'){
-					//add each character to the buffer
-					button[button_i++] = *fakecursor;
-					fakecursor++;
-				}
-				button[button_i] = '\0';
-
-				runner_interpret_input_held(padindex, button);
-			}
-		}
-
-		if (fakecursor == cursor)
-			cursor++;
-		else
-			cursor = fakecursor;
-
-	}
-}
-#pragma endregion
-
-
 #pragma endregion
 
 #pragma region //passing on the gml code to the interpreters
 
 void GML_interpret(const char* code, int object_def_index){
 	runner_interpret_xy(object_def_index, code);
-	runner_interpret_if(object_def_index, code);
+	//runner_interpret_if(object_def_index, code);
 }
 
 //runs the create code (on object creation)
@@ -329,8 +379,6 @@ void RunGML_step(const char* code, int object_def_index)
 		ran_this_frame[i] = false;
 	}
 }
-
-
 
 //submits code for events
 void RunGML(){
