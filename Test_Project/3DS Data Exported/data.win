@@ -229,16 +229,16 @@
         "sprite":"Sprite3"
       },
       {
-        "StepCode":"if (gamepad_button_check(1, gp_padr)){\r\n\tx+= 5;\r\n}\r\n\r\nif (gamepad_button_check(1, gp_padu)){\r\n\ty -=5;\r\n}\r\n\r\nif (gamepad_button_check(1, gp_padl)){\r\n\tx -=5;\r\n}\r\n\r\nif (gamepad_button_check(1, gp_padd)){\r\n\ty +=5;\r\n}\r\n\r\nif (gamepad_button_check_pressed(1, gp_face1)){\r\n\tx = 500;\r\n}\r\n\r\nif (gamepad_button_check_released(1, gp_face1)){\r\n\ty = 500;\r\n}\r\n\r\n",
+        "StepCode":"if (gamepad_button_check(4, gp_padr)){\r\n\tx+= 5;\r\n}\r\n\r\nif (gamepad_button_check(4, gp_padu)){\r\n\ty -=5;\r\n}\r\n\r\nif (gamepad_button_check(4, gp_padl)){\r\n\tx -=5;\r\n}\r\n\r\nif (gamepad_button_check(4, gp_padd)){\r\n\ty +=5;\r\n}\r\n\r\nif (gamepad_button_check_pressed(1, gp_face1)){\r\n\tx = 500;\r\n}\r\n\r\nif (gamepad_button_check_released(4, gp_face1)){\r\n\ty = 500;\r\n}\r\n\r\nif (x == 0){\r\n\tx = 500;\r\n}\r\n\r\nif (y == 0){\r\n\ty = 500;\r\n}\r\n\r\n",
         "name":"obj_ralseiswag",
-        "CreateCode":"x = 0;\ny = 0;",
+        "CreateCode":"x = 40;\ny = 40;\r\n",
         "sprite":"what"
       }
     ]
   },
   "GameMetadata":{
     "name":"a",
-    "publisher":"a",
+    "publisher":"aaaaaaaaaaaaaaaaaa",
     "titleId":"AAAAAAAAAAAAAAAA"
   }
 }

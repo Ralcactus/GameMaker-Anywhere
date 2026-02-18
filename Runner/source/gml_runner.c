@@ -131,7 +131,7 @@ static bool runner_gamepad_button_check(const char* cursor){
 #pragma region //gamepad_button_check_pressed
 static bool runner_interpret_input_pressed(const char* padindex, const char* button){
 	if (gamepad_button_check_pressed(input_convertstring(button))){
-		printf("Pressing button:       %s\n", button);
+		//printf("Pressing button:       %s\n", button);
 		return true;
 	}
 	return false;
@@ -204,7 +204,57 @@ static bool runner_gamepad_button_check_released(const char* cursor){
 
 #pragma endregion
 
-static bool runner_if_middleman(const char* function, const char* args)
+#pragma region //checking values
+
+#pragma region //check x value
+static bool runner_interpret_value_ismine(const char* value_tocheck, const char* operation, float object_x, float object_y, const char* type)
+{
+    float value = (float)atof(value_tocheck);
+    if (strcmp(operation, "==") == 0 || strcmp(operation, "=") == 0)
+    {
+        if ((strcmp(type, "x") == 0 && object_x == value) || (strcmp(type, "y") == 0 && object_y == value))
+            return true;
+    }
+
+    return false;
+}
+
+
+static bool runner_check_current_pos(const char* cursor, float object_x, float object_y, const char* type){
+	char operationtype[256];
+	char value_tocheck[256];
+
+	while (*cursor == ' ')
+		cursor++;
+
+	int operation_i = 0;
+	while (*cursor != ' ' && *cursor != '\0'){
+		//add each character to the buffer
+		operationtype[operation_i++] = *cursor;
+		cursor++;
+	}
+	operationtype[operation_i] = '\0';
+
+	cursor++;
+	while (*cursor == ' ')
+		cursor++;
+
+	int value_i = 0;
+	while (*cursor != ' ' && *cursor != ')' && *cursor != '\0'){
+		//add each character to the buffer
+		value_tocheck[value_i++] = *cursor;
+		cursor++;
+	}
+	value_tocheck[value_i] = '\0';
+	
+
+	return runner_interpret_value_ismine(value_tocheck, operationtype, object_x, object_y, type);
+}
+#pragma endregion
+
+#pragma endregion
+
+static bool runner_if_middleman(const char* function, const char* args, float object_x, float object_y)
 {
     if (strcmp(function, "gamepad_button_check") == 0)
         return runner_gamepad_button_check(args);
@@ -215,12 +265,15 @@ static bool runner_if_middleman(const char* function, const char* args)
     if (strcmp(function, "gamepad_button_check_released") == 0)
         return runner_gamepad_button_check_released(args);
 
+    if (strcmp(function, "x") == 0 || strcmp(function, "y") == 0)
+        return runner_check_current_pos(args, object_x, object_y, function);
+
 
     return false;
 }
 
 //check for and handle if statments
-static bool runner_interpret_if(const char* code)
+static bool runner_interpret_if(const char* code, float object_x, float object_y)
 {
     const char* cursor = code;
 
@@ -252,17 +305,18 @@ static bool runner_interpret_if(const char* code)
 			//store the function characters
 			char function[256];
 			int i = 0;
-			while (*fakecursor != '(' && *fakecursor != '\0'){
+			while (*fakecursor != '(' && *fakecursor != ' ' && *fakecursor != '\0'){
 				//add each character to the buffer
 				function[i++] = *fakecursor;
 				fakecursor++;
 			}
 			function[i] = '\0';
 
-			//continue past the (
-			fakecursor++;
+			//skip past the "(" or the " "
+			while (*fakecursor == '(' || *fakecursor == ' ')
+				fakecursor++;
 
-			return runner_if_middleman(function, fakecursor);
+			return runner_if_middleman(function, fakecursor, object_x, object_y);
 		}
 
 		if (fakecursor == cursor)
@@ -307,21 +361,28 @@ static void runner_interpret_xy(int object_index, const char* code)
 
     while (*cursor != '\0')
     {
-		bool if_result = runner_interpret_if(cursor);
-
-		if (if_result)
+		//is this an if??
+		if (cursor[0] == 'i' && cursor[1] == 'f')
 		{
-			// Move cursor forward until '{'
-			while (*cursor && *cursor != '{')
-				cursor++;
+			bool if_result = runner_interpret_if(cursor, object_x, object_y);
 
-			if (*cursor == '{')
-				cursor++; // enter block
+			if (if_result)
+			{
+				while (*cursor && *cursor != '{')
+					cursor++;
+
+				if (*cursor == '{')
+					cursor++; // enter block
+			}
+			else
+			{
+				while (*cursor && *cursor != '{')
+					cursor++;
+
+				cursor = skip_block(cursor);
+			}
 		}
-		else
-		{
-			cursor = skip_block(cursor);
-		}
+
 
 
         char character = *cursor;
@@ -349,8 +410,13 @@ static void runner_interpret_xy(int object_index, const char* code)
 				while (*fakecursor == ' ')
 					fakecursor++;
 
-				if (*fakecursor == '=')
+				if (*fakecursor == '='){
 					fakecursor++;
+				
+					//uh oh! this is a check statment! kill code!
+					if (*fakecursor == '=')
+						return;
+				}
 
 				while (*fakecursor == ' ')
 					fakecursor++;
