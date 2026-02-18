@@ -206,13 +206,42 @@ static bool runner_gamepad_button_check_released(const char* cursor){
 
 #pragma region //checking values
 
-#pragma region //check x value
+#pragma region //check pos value
 static bool runner_interpret_value_ismine(const char* value_tocheck, const char* operation, float object_x, float object_y, const char* type)
 {
+	//operation is ==/=, check is value is == or =
     float value = (float)atof(value_tocheck);
     if (strcmp(operation, "==") == 0 || strcmp(operation, "=") == 0)
     {
         if ((strcmp(type, "x") == 0 && object_x == value) || (strcmp(type, "y") == 0 && object_y == value))
+            return true;
+    }
+
+	//operation is >, check is value is >
+    if (strcmp(operation, ">") == 0)
+    {
+        if ((strcmp(type, "x") == 0 && object_x > value) || (strcmp(type, "y") == 0 && object_y > value))
+            return true;
+    }
+
+	//operation is >=, check is value is >=
+    if (strcmp(operation, ">=") == 0)
+    {
+        if ((strcmp(type, "x") == 0 && object_x >= value) || (strcmp(type, "y") == 0 && object_y >= value))
+            return true;
+    }
+
+	//operation is <, check is value is <
+    if (strcmp(operation, "<") == 0)
+    {
+        if ((strcmp(type, "x") == 0 && object_x < value) || (strcmp(type, "y") == 0 && object_y < value))
+            return true;
+    }
+
+	//operation is <=, check is value is <=
+    if (strcmp(operation, "<=") == 0)
+    {
+        if ((strcmp(type, "x") == 0 && object_x <= value) || (strcmp(type, "y") == 0 && object_y <= value))
             return true;
     }
 
