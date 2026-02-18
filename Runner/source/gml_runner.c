@@ -94,7 +94,7 @@ static void quick_printfakecursor(const char* fakecursor){
 #pragma region //gamepad_button_check
 static bool runner_interpret_input_held(const char* padindex, const char* button){
 	if (gamepad_button_check(input_convertstring(button))){
-		printf("Holding button:       %s\n", button);
+		//printf("Holding button:       %s\n", button);
 		return true;
 	}
 	return false;
@@ -168,7 +168,7 @@ static bool runner_gamepad_button_check_pressed(const char* cursor){
 #pragma region //gamepad_button_check_released
 static bool runner_interpret_input_released(const char* padindex, const char* button){
 	if (gamepad_button_check_released(input_convertstring(button))){
-		printf("Released button:       %s\n", button);
+		//printf("Released button:       %s\n", button);
 		return true;
 	}
 	return false;
