@@ -17,13 +17,25 @@
         "name":"Room2"
       },
       {
+        "name":"spr_hint"
+      },
+      {
+        "name":"spr_sillycat1"
+      },
+      {
+        "name":"spr_sillycat2"
+      },
+      {
         "name":"Sprite1"
       },
       {
         "name":"Sprite2"
       },
       {
-        "name":"Sprite3"
+        "name":"Sprite5"
+      },
+      {
+        "name":"Sprite6"
       },
       {
         "name":"what"
@@ -78,13 +90,13 @@
             "visible":true,
             "assets":[
               {
-                "scaleX":15.5,
+                "scaleX":5.5636362999999998,
                 "x":160.0,
                 "y":0.0,
-                "sprite":"Sprite3",
+                "sprite":"spr_sillycat2",
                 "type":"GMRSpriteGraphic",
                 "rotation":0.0,
-                "scaleY":3.5
+                "scaleY":1.1186046999999999
               },
               {
                 "scaleX":4.6923075000000001,
@@ -103,6 +115,15 @@
                 "type":"GMRSpriteGraphic",
                 "rotation":-202.22086999999999,
                 "scaleY":5.0851063999999999
+              },
+              {
+                "scaleX":4.0,
+                "x":352.0,
+                "y":-32.0,
+                "sprite":"spr_hint",
+                "type":"GMRSpriteGraphic",
+                "rotation":0.0,
+                "scaleY":4.0
               }
             ],
             "depth":100.0
@@ -125,40 +146,75 @@
         "height":768.0,
         "layers":[
           {
+            "type":"GMRAssetLayer",
+            "name":"Assets_1",
+            "visible":true,
+            "assets":[
+              {
+                "scaleX":12.199999999999999,
+                "x":0.0,
+                "y":256.0,
+                "sprite":"Sprite2",
+                "type":"GMRSpriteGraphic",
+                "rotation":0.0,
+                "scaleY":11.212766
+              },
+              {
+                "scaleX":2.9199999999999999,
+                "x":1088.0,
+                "y":480.0,
+                "sprite":"what",
+                "type":"GMRSpriteGraphic",
+                "rotation":0.0,
+                "scaleY":2.8461536999999999
+              },
+              {
+                "scaleX":4.6923075000000001,
+                "x":1248.0,
+                "y":288.0,
+                "sprite":"Sprite1",
+                "type":"GMRSpriteGraphic",
+                "rotation":0.0,
+                "scaleY":5.0
+              },
+              {
+                "scaleX":2.0,
+                "x":576.0,
+                "y":288.0,
+                "sprite":"Sprite5",
+                "type":"GMRSpriteGraphic",
+                "rotation":-178.80663000000001,
+                "scaleY":2.0
+              },
+              {
+                "scaleX":1.0,
+                "x":576.0,
+                "y":160.0,
+                "sprite":"Sprite6",
+                "type":"GMRSpriteGraphic",
+                "rotation":0.0,
+                "scaleY":1.0
+              }
+            ],
+            "depth":0.0
+          },
+          {
             "type":"GMRInstanceLayer",
             "name":"Instances",
             "visible":true,
             "instances":[
-              {
-                "name":"inst_2771DE59",
-                "scaleX":5.9230770000000001,
-                "x":0.0,
-                "y":32.0,
-                "object":"obj_ralseiswag",
-                "rotation":0.0,
-                "scaleY":1.0
-              },
-              {
-                "name":"inst_36770735",
-                "scaleX":2.5,
-                "x":320.0,
-                "y":256.0,
-                "object":"obj_cat",
-                "rotation":0.0,
-                "scaleY":2.0
-              }
             ],
-            "depth":0.0
+            "depth":100.0
           },
           {
             "type":"GMRBackgroundLayer",
             "name":"Background",
             "visible":true,
             "background":{
-              "colour":4278190080.0,
+              "colour":4294967295.0,
               "sprite":""
             },
-            "depth":100.0
+            "depth":200.0
           }
         ]
       }
@@ -166,6 +222,45 @@
   },
   "Sprites":{
     "all_sprites":[
+      {
+        "name":"spr_hint",
+        "width":200.0,
+        "height":100.0,
+        "frames":[
+          "f8d05cff-6d41-44e2-a9d9-6d7d37a0bf77"
+        ],
+        "yorigin":0.0,
+        "xorigin":0.0,
+        "origin":0.0,
+        "dir":"sprites\/spr_hint\/",
+        "SpriteNumber":0.0
+      },
+      {
+        "name":"spr_sillycat1",
+        "width":64.0,
+        "height":64.0,
+        "frames":[
+          "d4a47c35-99ec-460a-8a1d-17659eff8a5d"
+        ],
+        "yorigin":0.0,
+        "xorigin":0.0,
+        "origin":0.0,
+        "dir":"sprites\/spr_sillycat1\/",
+        "SpriteNumber":1.0
+      },
+      {
+        "name":"spr_sillycat2",
+        "width":220.0,
+        "height":215.0,
+        "frames":[
+          "29f0d738-eac4-4ac6-9f94-e6f181d0504a"
+        ],
+        "yorigin":0.0,
+        "xorigin":0.0,
+        "origin":0.0,
+        "dir":"sprites\/spr_sillycat2\/",
+        "SpriteNumber":2.0
+      },
       {
         "name":"Sprite1",
         "width":26.0,
@@ -177,7 +272,7 @@
         "xorigin":0.0,
         "origin":0.0,
         "dir":"sprites\/Sprite1\/",
-        "SpriteNumber":0.0
+        "SpriteNumber":3.0
       },
       {
         "name":"Sprite2",
@@ -190,20 +285,33 @@
         "xorigin":0.0,
         "origin":0.0,
         "dir":"sprites\/Sprite2\/",
-        "SpriteNumber":1.0
+        "SpriteNumber":4.0
       },
       {
-        "name":"Sprite3",
-        "width":64.0,
-        "height":64.0,
+        "name":"Sprite5",
+        "width":196.0,
+        "height":173.0,
         "frames":[
-          "d4a47c35-99ec-460a-8a1d-17659eff8a5d"
+          "45883563-73d5-4277-944f-d8594a391944"
         ],
         "yorigin":0.0,
         "xorigin":0.0,
         "origin":0.0,
-        "dir":"sprites\/Sprite3\/",
-        "SpriteNumber":2.0
+        "dir":"sprites\/Sprite5\/",
+        "SpriteNumber":5.0
+      },
+      {
+        "name":"Sprite6",
+        "width":409.0,
+        "height":405.0,
+        "frames":[
+          "184583d6-f653-4485-96f8-ee3c3af7d5fa"
+        ],
+        "yorigin":0.0,
+        "xorigin":0.0,
+        "origin":0.0,
+        "dir":"sprites\/Sprite6\/",
+        "SpriteNumber":6.0
       },
       {
         "name":"what",
@@ -216,7 +324,7 @@
         "xorigin":0.0,
         "origin":0.0,
         "dir":"sprites\/what\/",
-        "SpriteNumber":3.0
+        "SpriteNumber":7.0
       }
     ]
   },
@@ -226,10 +334,10 @@
         "StepCode":"x-=5\ny+=5;",
         "name":"obj_cat",
         "CreateCode":"",
-        "sprite":"Sprite3"
+        "sprite":"spr_sillycat1"
       },
       {
-        "StepCode":"if (gamepad_button_check(4, gp_padr)){\r\n\tx+= 5;\r\n}\r\n\r\nif (gamepad_button_check(4, gp_padu)){\r\n\ty -=5;\r\n}\r\n\r\nif (gamepad_button_check(4, gp_padl)){\r\n\tx -=5;\r\n}\r\n\r\nif (gamepad_button_check(4, gp_padd)){\r\n\ty +=5;\r\n}\r\n\r\nif (gamepad_button_check_pressed(1, gp_face1)){\r\n\tx = 500;\r\n}\r\n\r\nif (gamepad_button_check_released(4, gp_face1)){\r\n\ty = 500;\r\n}\r\n\r\nif (x <= 0){\r\n\tx = 500;\r\n}\r\n\r\nif (y <= 0){\r\n\ty = 500;\r\n}\r\n\r\n",
+        "StepCode":"if (gamepad_button_check(4, gp_padr)){\n\tx+= 5;\n}\n\nif (gamepad_button_check(4, gp_padu)){\n\ty -=5;\n}\n\nif (gamepad_button_check(4, gp_padl)){\n\tx -=5;\n}\n\r\nif (gamepad_button_check(4, gp_padd)){\r\n\ty +=5;\r\n}\n\r\nif (gamepad_button_check(4, gp_face2)){\r\n\troom_goto(Room2);\r\n}\r\n\n\r\n\r\n\r\nif (gamepad_button_check_pressed(4, gp_face1)){\n\tx = 500;\n}\n\nif (gamepad_button_check_released(4, gp_face1)){\n\ty = 500;\n}\n\nif (x == 0){\n\tx = 500;\n}\n\nif (y == 0){\n\ty = 500;\n}\n\n",
         "name":"obj_ralseiswag",
         "CreateCode":"x = 40;\ny = 40;\r\n",
         "sprite":"what"
@@ -238,7 +346,7 @@
   },
   "GameMetadata":{
     "name":"a",
-    "publisher":"aaaaaaaaaaaaaaaaaa",
+    "publisher":"a",
     "titleId":"AAAAAAAAAAAAAAAA"
   }
 }

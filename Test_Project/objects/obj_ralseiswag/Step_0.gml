@@ -14,7 +14,14 @@ if (gamepad_button_check(4, gp_padd)){
 	y +=5;
 }
 
-if (gamepad_button_check_pressed(1, gp_face1)){
+if (gamepad_button_check(4, gp_face2)){
+	room_goto(Room2);
+}
+
+
+
+
+if (gamepad_button_check_pressed(4, gp_face1)){
 	x = 500;
 }
 

@@ -384,6 +384,7 @@ static const char* skip_block(const char* cursor)
 
 #pragma endregion
 
+#pragma region //asigning values
 //interpret x and y of the objects
 static void runner_interpret_xy(int object_index, const char* code)
 {
@@ -500,6 +501,84 @@ static void runner_interpret_xy(int object_index, const char* code)
 	}
 	C2D_SpriteSetPos(&sprites[object_index].spr, object_x, object_y);
 }
+#pragma endregion
+
+static void runner_interpret_room_goto(int object_index, const char* code)
+{
+	float object_x = sprites[object_index].spr.params.pos.x;
+	float object_y = sprites[object_index].spr.params.pos.y;
+    const char* cursor = code;
+
+    while (*cursor != '\0')
+    {
+		//is this an if??
+		if (cursor[0] == 'i' && cursor[1] == 'f')
+		{
+			bool if_result = runner_interpret_if(cursor, object_x, object_y);
+
+			if (if_result)
+			{
+				while (*cursor && *cursor != '{')
+					cursor++;
+
+				if (*cursor == '{')
+					cursor++; // enter block
+			}
+			else
+			{
+				while (*cursor && *cursor != '{')
+					cursor++;
+
+				cursor = skip_block(cursor);
+			}
+		}
+
+
+
+        char character = *cursor;
+		const char* fakecursor = cursor;
+        //printf("current char: %c\n", character);
+
+		//is this a room_goto statment part 1
+		if (character == 'r'){
+			char function[256];
+			int i = 0;
+			while (*fakecursor != '(' && *fakecursor != ' ' && *fakecursor != '\0'){
+				//add each character to the buffer
+				function[i++] = *fakecursor;
+				fakecursor++;
+			}
+			function[i] = '\0';
+
+			//break if this doesn't have a bracket at the end
+			if (*fakecursor == ' ')
+				break;
+
+            //skip the (
+            fakecursor++;
+
+			char roomname[256];
+			int roomname_i = 0;
+			while (*fakecursor != ')' && *fakecursor != '\0'){
+				//add each character to the buffer
+				roomname[roomname_i++] = *fakecursor;
+				fakecursor++;
+			}
+			roomname[roomname_i] = '\0';
+
+			CurrentRoom = roomname;
+			InitCurrentRoom(data_json);
+			printf("Going to room: %s\n", CurrentRoom);
+
+            cursor = fakecursor;
+        }
+
+        if (fakecursor == cursor)
+            cursor++;
+        else
+            cursor = fakecursor;
+    }
+}
 
 #pragma endregion
 
@@ -507,6 +586,7 @@ static void runner_interpret_xy(int object_index, const char* code)
 
 void GML_interpret(const char* code, int object_def_index){
 	runner_interpret_xy(object_def_index, code);
+	runner_interpret_room_goto(object_def_index, code);
 }
 
 //runs the create code (on object creation)
