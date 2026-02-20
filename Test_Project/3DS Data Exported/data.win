@@ -337,7 +337,7 @@
         "sprite":"spr_sillycat1"
       },
       {
-        "StepCode":"if (gamepad_button_check(4, gp_padr)){\n\tx+= 5;\n}\n\nif (gamepad_button_check(4, gp_padu)){\n\ty -=5;\n}\n\nif (gamepad_button_check(4, gp_padl)){\n\tx -=5;\n}\n\r\nif (gamepad_button_check(4, gp_padd)){\r\n\ty +=5;\r\n}\n\r\nif (gamepad_button_check(4, gp_face2)){\r\n\troom_goto(Room2);\r\n}\r\n\n\r\n\r\n\r\nif (gamepad_button_check_pressed(4, gp_face1)){\n\tx = 500;\n}\n\nif (gamepad_button_check_released(4, gp_face1)){\n\ty = 500;\n}\n\nif (x == 0){\n\tx = 500;\n}\n\nif (y == 0){\n\ty = 500;\n}\n\n",
+        "StepCode":"if (gamepad_button_check(4, gp_padr)){\n\tx+= 5;\n}\n\nif (gamepad_button_check(4, gp_padu)){\n\ty -=5;\n}\n\nif (gamepad_button_check(4, gp_padl)){\n\tx -=5;\n}\r\n\nif (gamepad_button_check(4, gp_padd)){\r\n\ty +=5;\r\n}\r\n\r\nif (gamepad_button_check(4, gp_face2)){\r\n\troom_goto(Room2);\r\n}\r\n\r\nif (gamepad_button_check(4, gp_start)){\r\n\tgame_end();\r\n}\r\n\r\n\r\n\r\n\nif (gamepad_button_check_pressed(4, gp_face1)){\n\tx = 500;\n}\n\nif (gamepad_button_check_released(4, gp_face1)){\n\ty = 500;\n}\n\nif (x == 0){\n\tx = 500;\n}\n\nif (y == 0){\n\ty = 500;\n}\n\n",
         "name":"obj_ralseiswag",
         "CreateCode":"x = 40;\ny = 40;\r\n",
         "sprite":"what"
@@ -345,8 +345,8 @@
     ]
   },
   "GameMetadata":{
-    "name":"a",
-    "publisher":"a",
+    "name":"aaaaaaa",
+    "publisher":"aaaaaa",
     "titleId":"AAAAAAAAAAAAAAAA"
   }
 }

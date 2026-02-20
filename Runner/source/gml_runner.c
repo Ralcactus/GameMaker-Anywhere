@@ -78,17 +78,13 @@ static int input_convertstring(const char* string)
 
 #pragma endregion
 
-
-#pragma region //applying code
+#pragma region //interpreting code
 /*Notes!
 - The cursor progresses 1 character at a time
 - the fake cursor is used to check lines ahead of the current one
 - remember to set the normal cursor to the fake cursor after fake cursor is done!
 */
 
-/*TODO
-	In runner_interpret_xy add decimal support
-*/
 
 #pragma region //if interpreting
 
@@ -509,6 +505,7 @@ static void runner_interpret_xy(int object_index, const char* code)
 }
 #pragma endregion
 
+#pragma region //room stuff
 static void runner_interpret_room_goto(int object_index, const char* code)
 {
 	float object_x = sprites[object_index].spr.params.pos.x;
@@ -549,6 +546,8 @@ static void runner_interpret_room_goto(int object_index, const char* code)
 		if (character == 'r'){
 			char function[256];
 			int i = 0;
+
+			//is this a room_goto statment part 2
 			while (*fakecursor != '(' && *fakecursor != ' ' && *fakecursor != '\0'){
 				//add each character to the buffer
 				function[i++] = *fakecursor;
@@ -556,8 +555,8 @@ static void runner_interpret_room_goto(int object_index, const char* code)
 			}
 			function[i] = '\0';
 
-			//break if this doesn't have a bracket at the end
-			if (*fakecursor == ' ')
+			//break if this doesn't have a bracket at the end or isn't room_goto
+			if (*fakecursor != '(' || strcmp(function, "room_goto") != 0)
 				break;
 
             //skip the (
@@ -585,6 +584,83 @@ static void runner_interpret_room_goto(int object_index, const char* code)
             cursor = fakecursor;
     }
 }
+#pragma endregion
+
+#pragma region //random stuff
+static void runner_interpret_game_end(int object_index, const char* code)
+{
+	float object_x = sprites[object_index].spr.params.pos.x;
+	float object_y = sprites[object_index].spr.params.pos.y;
+    const char* cursor = code;
+
+    while (*cursor != '\0')
+    {
+		//is this an if??
+		if (cursor[0] == 'i' && cursor[1] == 'f')
+		{
+			bool if_result = runner_interpret_if(cursor, object_x, object_y);
+
+			if (if_result)
+			{
+				while (*cursor && *cursor != '{')
+					cursor++;
+
+				if (*cursor == '{')
+					cursor++; // enter block
+			}
+			else
+			{
+				while (*cursor && *cursor != '{')
+					cursor++;
+
+				cursor = skip_block(cursor);
+			}
+		}
+
+
+
+        char character = *cursor;
+		const char* fakecursor = cursor;
+        //printf("current char: %c\n", character);
+
+		//is this a game_end statment part 1
+		if (character == 'g'){
+			char function[256];
+			int i = 0;
+
+			//is this a game_end statment part 2
+			while (*fakecursor != '(' && *fakecursor != ' ' && *fakecursor != '\0'){
+				//add each character to the buffer
+				function[i++] = *fakecursor;
+				fakecursor++;
+			}
+			function[i] = '\0';
+
+			//break if this doesn't have a bracket at the end or isn't game_end
+			if (*fakecursor != '(' || strcmp(function, "game_end") != 0)
+				break;
+
+            //skip the (
+            fakecursor++;
+
+			//KILL THE GAME!!! EVILl!!!!!!!
+			EndGame = true;
+			printf("Quiting game! goodbye!\n");
+
+            cursor = fakecursor;
+        }
+
+        if (fakecursor == cursor)
+            cursor++;
+        else
+            cursor = fakecursor;
+    }
+}
+#pragma endregion
+
+
+
+
 
 #pragma endregion
 
@@ -593,6 +669,7 @@ static void runner_interpret_room_goto(int object_index, const char* code)
 void GML_interpret(const char* code, int object_def_index){
 	runner_interpret_xy(object_def_index, code);
 	runner_interpret_room_goto(object_def_index, code);
+	runner_interpret_game_end(object_def_index, code);
 }
 
 //runs the create code (on object creation)

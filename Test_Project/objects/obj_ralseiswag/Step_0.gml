@@ -18,6 +18,10 @@ if (gamepad_button_check(4, gp_face2)){
 	room_goto(Room2);
 }
 
+if (gamepad_button_check(4, gp_start)){
+	game_end();
+}
+
 
 
 

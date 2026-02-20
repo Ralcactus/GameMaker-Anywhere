@@ -21,6 +21,7 @@ float cam_x = 0;
 float cam_y = 0;
 float cam_w = 400;
 float cam_h = 240;
+bool EndGame = false;
 
 #ifdef __DKPRO__
 	u32 g_keysDown = 0;
@@ -419,8 +420,8 @@ int main()
 		//run the gml interpreter
 		RunGML();
 
-		//Force quit app
-		if (gamepad_button_check(gp_start))
+		//Quit quit app
+		if (EndGame)
 			break;
 
 		//render frames
