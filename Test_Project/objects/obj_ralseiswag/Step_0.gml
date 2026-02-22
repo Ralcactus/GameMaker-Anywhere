@@ -22,9 +22,6 @@ if (gamepad_button_check(4, gp_start)){
 	game_end();
 }
 
-
-
-
 if (gamepad_button_check_pressed(4, gp_face1)){
 	x = 500;
 }

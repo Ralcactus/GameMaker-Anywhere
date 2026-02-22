@@ -1,3 +1,5 @@
+global.compile_waiting_delete = false;
+global.compile_delete_started = false;
 global.selected_yyp = "";
 global.game_name = "";
 global.title_id = "";
@@ -25,7 +27,6 @@ keyboard_string = "";
 
 global.export_mode = 0; //1 = 3ds, 2 = wii u, 3 = nds
 modes = [
-    {label:"3DS", number_ver:0},
-    {label:"WII U", number_ver:1},
-    {label:"NDS", number_ver:2}
+    {label:"3DS cia", number_ver:0},
+	{label:"3DS 3dsx", number_ver:1}
 ];

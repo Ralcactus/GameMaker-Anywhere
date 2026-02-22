@@ -1,15 +1,50 @@
 //This is the script that creates the data.win, copys sprites, and makes the t3s for compiling
-function scr_compile(){
+function scr_compile()
+{
     global.exporting = true;
     var yyp = global.selected_yyp;
+
+	// create folders for exports
+	var runnerfolder = working_directory + "Runner";
+	var destination = "C:\\GM_Anywhere\\Runner";
+	var sprites_root = destination + "\\gfx\\";
+
+
+
+	//kill the previous build
+	if (global.compile_waiting_delete){
+	    if (!directory_exists("C:\\GM_Anywhere")){
+	        global.compile_waiting_delete = false;
+	        global.compile_delete_started = false;
+	    }
+	    else{
+	        alarm[0] = 1;
+	        exit;
+	    }
+	}
+
+    if (directory_exists("C:\\GM_Anywhere")){
+        if (!global.compile_delete_started){
+            global.compile_delete_started = true;
+            run_commandpowershell("C:\\", "Remove-Item -LiteralPath 'C:\\GM_Anywhere' -Recurse -Force -ErrorAction SilentlyContinue");
+            global.compile_waiting_delete = true;
+        }
+		
+        alarm[0] = 1;
+        exit;
+    }
+
+
     
-    // create folders for exports
-    var export_root  = filename_dir(yyp) + "\\3DS Data Exported\\";
-    var sprites_root = export_root + "gfx\\";
-    
-    directory_create(export_root);
-    directory_create(sprites_root);
-    
+	directory_create("C:\\GM_Anywhere");
+	directory_create(destination);
+	directory_create(sprites_root);
+	
+	//copy the runner to the compile folder on the C drive
+	var arguments = "\"" + runnerfolder + "\" \"" + destination + "\" /E /R:0 /W:0";
+	execute_shell("C:\\Windows\\System32\\robocopy.exe", arguments);
+	
+
     // create sprites.t3s
     var t3s_path = sprites_root + "sprites.t3s";
     var t3s_file = file_text_open_write(t3s_path);
@@ -131,6 +166,7 @@ function scr_compile(){
                 
                 file_copy(filename_dir(yyp) + "\\sprites\\" + yyfile.name + "\\" + frame_name + ".png", 
                          sprites_root + yyfile.name + "\\" + frame_name + ".png");
+						 
                 file_text_write_string(t3s_file, yyfile.name + "/" + frame_name + ".png\n");
             }
             
@@ -218,24 +254,19 @@ function scr_compile(){
         }
     };
     
-    var file = file_text_open_write(export_root + "data.win");
+	directory_create(destination + "\\romfs\\");
+    var file = file_text_open_write(destination + "\\romfs\\" + "data.win");
     file_text_write_string(file, json_stringify(export_json, true));
     file_text_close(file);
     file_text_close(t3s_file);
-    
-    var bat = file_text_open_write(export_root + "build_sprites_t3x.bat");
-    file_text_write_string(bat, "@echo off\n");
-    file_text_write_string(bat, "cd /d \"%~dp0gfx\"\n");
-    file_text_write_string(bat, "\"C:\\devkitPro\\tools\\bin\\tex3ds.exe\" -i sprites.t3s -o sprites.t3x\n");
-    file_text_write_string(bat, "echo Done.\n");
-    file_text_write_string(bat, "pause\n");
-    file_text_close(bat);
-    
-    show_message("Export Successful!\n\n" +
-                "Game: " + global.game_name + "\n" +
-                "Title ID: " + global.title_id + "\n" +
-                "Publisher: " + global.publisher + "\n\n" +
-                "Files exported to:\n" + export_root);
-    
-    game_end();
+	
+	//cia
+	if (global.export_mode = 0)
+		run_commandpowershell("C:\\GM_Anywhere\\Runner", "& make cia;");
+			
+	//3dsx
+	if (global.export_mode = 1)
+		run_commandpowershell("C:\\GM_Anywhere\\Runner", "& make 3dsx;");
+		
+	show_message("Compiling now!\nCheck " + destination + "\\output\\ " + " For the rom!")
 }
