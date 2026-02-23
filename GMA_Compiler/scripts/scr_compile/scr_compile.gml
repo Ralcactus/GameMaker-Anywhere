@@ -268,7 +268,7 @@ function scr_compile()
 	+ "APP_DESCRIPTION = " + "Created with GameMaker Anywhere!\n"
 	+ "APP_AUTHOR = " + global.publisher + "\n"
 	+ "APP_PRODUCT_CODE = " + "Your-Code\n"
-	+ "APP_UNIQUE_ID = " +"0x38192\n"
+	+ "APP_UNIQUE_ID = " +"0x" + global.title_id + "\n"
 	+ "APP_VERSION_MAJOR = " + "1\n"
 	+ "APP_VERSION_MINOR = " + "0\n"
 	+ "APP_VERSION_MICRO = " + "0\n");
@@ -280,11 +280,11 @@ function scr_compile()
 	}
 	
 	//cia
-	if (global.export_mode = 0)
+	if (global.export_mode == 0)
 		run_commandpowershell("C:\\GM_Anywhere\\Runner", "& make cia;");
 			
 	//3dsx
-	if (global.export_mode = 1)
+	if (global.export_mode == 1)
 		run_commandpowershell("C:\\GM_Anywhere\\Runner", "& make 3dsx;");
 		
 	show_message("Compiling now!\nCheck " + destination + "\\output\\ " + " For the rom!")
