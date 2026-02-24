@@ -653,50 +653,84 @@ static void runner_interpret_camera_set_view_pos(int object_index, const char* c
 
 			//skip the ,
             fakecursor++;
-			
-			char xpos[256];
-			int xpos_i = 0;
-			while (*fakecursor != ',' && *fakecursor != ')' && *fakecursor != '\0'){
-				//add each character to the buffer
-				xpos[xpos_i++] = *fakecursor;
-				fakecursor++;
-			}
-			xpos[xpos_i] = '\0';
 
-			//skip the ,
-            fakecursor++;
-
-			while (*fakecursor == ' ')
-				fakecursor++;
-
-			char ypos[256];
-			int ypos_i = 0;
-			while (*fakecursor != ',' && *fakecursor != ')' && *fakecursor != '\0'){
-				//add each character to the buffer
-				ypos[ypos_i++] = *fakecursor;
-				fakecursor++;
-			}
-			ypos[ypos_i] = '\0';
-
-			while (*fakecursor == ' ')
-				fakecursor++;
-													
+			//proper units
 			const float scale_x = (float)cam_w / screen_w;
 			const float scale_y = (float)cam_h / screen_h;
+			float camx_setto = 0;
+			float camy_setto = 0;
+			
+			int xpos_i = 0;
+			while (*fakecursor != ',' && *fakecursor != ')' && *fakecursor != '\0'){
+				if (*fakecursor == 'x'){
+					camx_setto = object_x / scale_x;
+				}
+				else if (*fakecursor == 'y'){
+					camx_setto = object_y / scale_y;
+				}
+				else if (*fakecursor == '+'){
+					fakecursor++;
+					while (*fakecursor == ' ')
+						fakecursor++;
+					
+					char values[256];
+					int values_i = 0;
+					while (*fakecursor != ',' && *fakecursor != ' ' && *fakecursor != '\0'){
+						//add each character to the buffer
+						values[values_i++] = *fakecursor;
+						fakecursor++;
+					}
+					values[values_i] = '\0';
+					
+					camx_setto+=strtof(values, NULL);
+					
+				}
+				fakecursor++;
+			}
 
-			if (strcmp(xpos, "x") == 0)
-				cam_x = object_x / scale_x;
-			else if (strcmp(xpos, "y") == 0)
-				cam_x = object_y / scale_x;
-			else
-				cam_x = (float)atof(xpos) / scale_x;
+			//skip the ,
+			if (*fakecursor == ',')
+            	fakecursor++;
 
-			if (strcmp(ypos, "x") == 0)
-				cam_y = object_x / scale_y;
-			else if (strcmp(ypos, "y") == 0)
-				cam_y = object_y / scale_y;
-			else
-				cam_y = (float)atof(ypos) / scale_y;
+			while (*fakecursor == ' ')
+				fakecursor++;
+
+			int ypos_i = 0;
+			while (*fakecursor != ',' && *fakecursor != ')' && *fakecursor != '\0'){
+				if (*fakecursor == 'x'){
+					camy_setto = object_x / scale_x;
+				}
+				else if (*fakecursor == 'y'){
+					camy_setto = object_y / scale_y;
+				}
+				else if (*fakecursor == '+'){
+					fakecursor++;
+					while (*fakecursor == ' ')
+						fakecursor++;
+					
+					char values[256];
+					int values_i = 0;
+					while (*fakecursor != ',' && *fakecursor != ' ' && *fakecursor != '\0'){
+						//add each character to the buffer
+						values[values_i++] = *fakecursor;
+						fakecursor++;
+					}
+					values[values_i] = '\0';
+					
+					camy_setto+=strtof(values, NULL);
+					
+				}
+				fakecursor++;
+			}
+
+			while (*fakecursor == ' ')
+				fakecursor++;
+				
+				
+			cam_x = camx_setto;
+			cam_y = camy_setto;
+
+
 
 
             cursor = fakecursor;
