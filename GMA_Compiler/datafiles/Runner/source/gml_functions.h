@@ -46,8 +46,18 @@
     extern u32 g_keysUp;
 #endif
 
+typedef struct{
+    char name[256];
+    float f;
+    bool b;
+    char s[256];
+}var;
+
 typedef struct
 {
+    float x;
+    float y;
+    int sprite_index;
     #ifdef __3DS__
     C2D_Sprite spr;
     #elif __RAYLIB__

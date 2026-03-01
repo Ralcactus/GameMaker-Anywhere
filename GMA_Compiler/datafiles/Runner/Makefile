@@ -8,6 +8,10 @@
 dc:
 	$(MAKE) -f platform/dc/Makefile $@
 
+#Windows
+win:
+	$(MAKE) -f platform/windows/Makefile $@
+
 #Wii U
 wuhb:
 	$(MAKE) -f platform/wiiu/Makefile $@

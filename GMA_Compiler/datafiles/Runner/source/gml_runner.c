@@ -6,6 +6,7 @@
 #include "gml_runner.h"
 #include <stdlib.h>
 #include <stdbool.h>
+#include <ctype.h>
 #include "main.h"
 #include "cross_platform.h"
 static const cJSON* root = NULL;
@@ -282,7 +283,7 @@ static bool runner_check_current_pos(const char* cursor, float object_x, float o
 
 #pragma endregion
 
-static bool runner_if_middleman(const char* function, const char* args, float object_x, float object_y)
+static bool runner_if_middleman(const char* function, const char* args, Sprite object)
 {
     if (strcmp(function, "gamepad_button_check") == 0)
         return runner_gamepad_button_check(args);
@@ -294,14 +295,14 @@ static bool runner_if_middleman(const char* function, const char* args, float ob
         return runner_gamepad_button_check_released(args);
 
     if (strcmp(function, "x") == 0 || strcmp(function, "y") == 0)
-        return runner_check_current_pos(args, object_x, object_y, function);
+        return runner_check_current_pos(args, object.x, object.y, function);
 
 
     return false;
 }
 
 //check for and handle if statments
-static bool runner_interpret_if(const char* code, float object_x, float object_y)
+static bool runner_interpret_if(const char* code, Sprite object)
 {
     const char* cursor = code;
 
@@ -344,7 +345,7 @@ static bool runner_interpret_if(const char* code, float object_x, float object_y
 			while (*fakecursor == '(' || *fakecursor == ' ')
 				fakecursor++;
 
-			return runner_if_middleman(function, fakecursor, object_x, object_y);
+			return runner_if_middleman(function, fakecursor, object);
 		}
 
 		if (fakecursor == cursor)
@@ -381,11 +382,41 @@ static const char* skip_block(const char* cursor)
 #pragma endregion
 
 #pragma region //asigning values
-//interpret x and y of the objects
-static void runner_interpret_xy(int object_index, const char* code)
+
+static void runner_var_middleman(int object_index, var value)
 {
-	float object_x = sprites[object_index].spr.params.pos.x;
-	float object_y = sprites[object_index].spr.params.pos.y;
+	bool isCustomVariable = false;
+
+	if(!isCustomVariable){
+		if (strcmp(value.name, "x") == 0){
+			sprites[object_index].x = value.f;
+
+			#ifdef __3DS__
+				sprites[object_index].spr.params.pos.x = sprites[object_index].x;
+			#elif __RAYLIB__
+				sprites[object_index].texture.x = sprites[object_index].x;
+			#endif
+		}
+
+		if (strcmp(value.name, "y") == 0){
+			sprites[object_index].y = value.f;
+
+			#ifdef __3DS__
+				sprites[object_index].spr.params.pos.y = sprites[object_index].y;
+			#elif __RAYLIB__
+				sprites[object_index].texture.y = sprites[object_index].y;
+			#endif
+		}
+			
+	}
+}
+
+//interpret variable of the objects
+static void runner_interpret_var(int object_index, const char* code, Sprite object)
+{
+	var value = {0};
+	bool isNumber = false;
+
     const char* cursor = code;
 
     while (*cursor != '\0')
@@ -393,7 +424,204 @@ static void runner_interpret_xy(int object_index, const char* code)
 		//is this an if??
 		if (cursor[0] == 'i' && cursor[1] == 'f')
 		{
-			bool if_result = runner_interpret_if(cursor, object_x, object_y);
+			bool if_result = runner_interpret_if(cursor, object);
+
+			if (if_result)
+			{
+				while (*cursor && *cursor != '{')
+					cursor++;
+
+				if (*cursor == '{')
+					cursor++; // enter block
+			}
+			else
+			{
+				while (*cursor && *cursor != '{')
+					cursor++;
+
+				cursor = skip_block(cursor);
+			}
+		}
+
+        char character = *cursor;
+		const char* fakecursor = cursor;
+        //printf("current char: %c\n", character);
+
+		//read name of variable
+		char identifier[256];
+		int id_i = 0;
+
+		while (isalnum(*fakecursor) || *fakecursor == '_')
+		{
+			identifier[id_i++] = *fakecursor;
+			fakecursor++;
+		}
+		identifier[id_i] = '\0';
+
+		//if nothing read, move on
+		if (id_i == 0)
+		{
+			cursor++;
+			continue;
+		}
+
+		//skip spaces
+		while (*fakecursor == ' ')
+			fakecursor++;
+
+		//if next char is '(' -> this is a function call
+		if (*fakecursor == '(')
+		{
+			int depth = 1;
+			fakecursor++; // skip '('
+
+			while (*fakecursor && depth > 0)
+			{
+				if (*fakecursor == '(') depth++;
+				else if (*fakecursor == ')') depth--;
+				fakecursor++;
+			}
+
+			cursor = fakecursor;
+			continue;
+		}
+
+		// set final variable name
+		strcpy(value.name, identifier);
+		//value.name[var_i] = '\0';
+		
+		if (*fakecursor == ' ')
+			fakecursor++;
+
+		//is this a proper add statment
+		if (*fakecursor == '-' || *fakecursor == '+' || *fakecursor == '*' || *fakecursor == '='){
+			//store the operation
+			const char operationtype = *fakecursor;
+			fakecursor++;
+
+			while (*fakecursor == ' ')
+				fakecursor++;
+
+			if (*fakecursor == '='){
+				fakecursor++;
+				
+				//uh oh! this is a check statment! kill code!
+				if (*fakecursor == '=')
+					return;
+			}
+
+			while (*fakecursor == ' ')
+				fakecursor++;
+
+			int thenumber = 0;
+			char thechar[256] = {'\0'};
+
+			if(*fakecursor == '0' || *fakecursor == '1' || *fakecursor == '2' || *fakecursor == '3' || *fakecursor == '4' || *fakecursor == '5' || *fakecursor == '6' || *fakecursor == '7' || *fakecursor == '8' || *fakecursor == '9'){
+				isNumber = true;
+				while (*fakecursor == '0' || *fakecursor == '1' || *fakecursor == '2' || *fakecursor == '3' || *fakecursor == '4' || *fakecursor == '5' || *fakecursor == '6' || *fakecursor == '7' || *fakecursor == '8' || *fakecursor == '9'){
+					thenumber = thenumber * 10 + (*fakecursor - '0');
+					fakecursor++;
+				}
+			} else if(*fakecursor == 'a' || *fakecursor == 'b' || *fakecursor == 'c' || *fakecursor == 'd' || *fakecursor == 'e' || *fakecursor == 'f' || *fakecursor == 'g' || *fakecursor == 'h' || *fakecursor == 'i' || *fakecursor == 'j' || *fakecursor == 'k' || *fakecursor == 'l' || *fakecursor == 'm' || *fakecursor == 'n' || *fakecursor == 'o' || *fakecursor == 'p' || *fakecursor == 'q' || *fakecursor == 'r' || *fakecursor == 's' || *fakecursor == 't' || *fakecursor == 'u' || *fakecursor == 'v' || *fakecursor == 'w' || *fakecursor == 'x' || *fakecursor == 'y' || *fakecursor == 'z'){
+				isNumber = false;
+				int var_i = 0;
+				while ((*fakecursor >= 'a' && *fakecursor <= 'z') || (*fakecursor >= 'A' && *fakecursor <= 'Z') || *fakecursor == '_' || (*fakecursor >= '0' && *fakecursor <= '9')){
+					thechar[var_i++] = *fakecursor;
+					fakecursor++;
+				}
+				thechar[var_i] = '\0';
+			} else {
+				//uh oh! this is not a number or variable we support! kill code!
+				return;
+			}
+
+			//Numbered value
+			if(isNumber){
+				//add value
+				if (operationtype == '+'){
+					value.f += thenumber;
+				}
+
+				//minus value
+				if (operationtype == '-'){
+					value.f -= thenumber;
+				}
+
+				//multiply value
+				if (operationtype == '*'){
+					value.f *= thenumber;
+				}
+
+				//divide value
+				if (operationtype == '/'){
+					value.f /= thenumber;
+				}
+
+				//set value
+				if (operationtype == '='){
+					value.f = thenumber;
+				}
+			} else {
+				//Boolean value
+				if(operationtype == '='){
+					//set value
+					if (strncmp(thechar, "true", 4) == 0){
+						value.b = true;
+					}
+					else if (strncmp(thechar, "false", 5) == 0){
+						value.b = false;
+					}
+
+					//Char value
+					if (*fakecursor == '\'' || *fakecursor == '"'){
+						char quote_type = *fakecursor;
+						fakecursor++;
+						if (*fakecursor != quote_type){
+							//uh oh! this is not a value we support! kill code!
+							return;
+						}
+						thechar[0] = *fakecursor;
+						thechar[1] = '\0';
+						fakecursor++;
+						if (*fakecursor != quote_type){
+							//uh oh! this is not a value we support! kill code!
+							return;
+						}
+							fakecursor++;
+							strcpy(value.s, thechar);
+					}
+				} else {
+					//no usual type of variable found lol
+					return;
+					}
+				
+			}
+		}
+		if (fakecursor == cursor)
+			cursor++;
+		else
+			cursor = fakecursor;
+
+	}
+
+	printf("Setting variable:       %s\n", value.name);
+	printf("Result of variable:       %f\n", value.f);
+	runner_var_middleman(object_index, value);
+}
+
+//interpret x and y of the objects
+static void runner_interpret_xy(int object_index, const char* code, Sprite object)
+{
+	object.x = sprites[object_index].spr.params.pos.x;
+	object.y = sprites[object_index].spr.params.pos.y;
+    const char* cursor = code;
+
+    while (*cursor != '\0')
+    {
+		//is this an if??
+		if (cursor[0] == 'i' && cursor[1] == 'f')
+		{
+			bool if_result = runner_interpret_if(cursor, object);
 
 			if (if_result)
 			{
@@ -459,33 +687,33 @@ static void runner_interpret_xy(int object_index, const char* code)
 				//add value
 				if (operationtype == '+'){
 					if (postype == 'x')
-						object_x += thenumber;
+						object.x += thenumber;
 					else
-						object_y += thenumber;
+						object.y += thenumber;
 				}
 
 				//minus value
 				if (operationtype == '-'){
 					if (postype == 'x')
-						object_x -= thenumber;
+						object.x -= thenumber;
 					else
-						object_y -= thenumber;
+						object.y -= thenumber;
 				}
 
 				//multiply value
 				if (operationtype == '*'){
 					if (postype == 'x')
-						object_x *= thenumber;
+						object.x *= thenumber;
 					else
-						object_y *= thenumber;
+						object.y *= thenumber;
 				}
 
 				//set value
 				if (operationtype == '='){
 					if (postype == 'x')
-						object_x = thenumber;
+						object.x = thenumber;
 					else
-						object_y = thenumber;
+						object.y = thenumber;
 				}
 			}
 		}
@@ -497,19 +725,19 @@ static void runner_interpret_xy(int object_index, const char* code)
 	}
 
 	#ifdef __3DS__
-		C2D_SpriteSetPos(&sprites[object_index].spr, object_x, object_y);
+		C2D_SpriteSetPos(&sprites[object_index].spr, object.x, object.y);
 	#elif __RAYLIB__
-		sprites[object_index].texture.x = object_x;
-		sprites[object_index].texture.y = object_y;
+		sprites[object_index].texture.x = object.x;
+		sprites[object_index].texture.y = object.y;
 	#endif
 }
 #pragma endregion
 
 #pragma region //room stuff
-static void runner_interpret_room_goto(int object_index, const char* code)
+static void runner_interpret_room_goto(int object_index, const char* code, Sprite object)
 {
-	float object_x = sprites[object_index].spr.params.pos.x;
-	float object_y = sprites[object_index].spr.params.pos.y;
+	object.x = sprites[object_index].spr.params.pos.x;
+	object.y = sprites[object_index].spr.params.pos.y;
     const char* cursor = code;
 
     while (*cursor != '\0')
@@ -517,7 +745,7 @@ static void runner_interpret_room_goto(int object_index, const char* code)
 		//is this an if??
 		if (cursor[0] == 'i' && cursor[1] == 'f')
 		{
-			bool if_result = runner_interpret_if(cursor, object_x, object_y);
+			bool if_result = runner_interpret_if(cursor, object);
 
 			if (if_result)
 			{
@@ -586,10 +814,10 @@ static void runner_interpret_room_goto(int object_index, const char* code)
 }
 #pragma endregion
 
-static void runner_interpret_camera_set_view_pos(int object_index, const char* code)
+static void runner_interpret_camera_set_view_pos(int object_index, const char* code, Sprite object)
 {
-	float object_x = sprites[object_index].spr.params.pos.x;
-	float object_y = sprites[object_index].spr.params.pos.y;
+	object.x = sprites[object_index].spr.params.pos.x;
+	object.y = sprites[object_index].spr.params.pos.y;
     const char* cursor = code;
 
     while (*cursor != '\0')
@@ -598,7 +826,7 @@ static void runner_interpret_camera_set_view_pos(int object_index, const char* c
 		//is this an if??
 		if (cursor[0] == 'i' && cursor[1] == 'f')
 		{
-			bool if_result = runner_interpret_if(cursor, object_x, object_y);
+			bool if_result = runner_interpret_if(cursor, object);
 
 			if (if_result)
 			{
@@ -663,10 +891,10 @@ static void runner_interpret_camera_set_view_pos(int object_index, const char* c
 			int xpos_i = 0;
 			while (*fakecursor != ',' && *fakecursor != ')' && *fakecursor != '\0'){
 				if (*fakecursor == 'x'){
-					camx_setto = object_x / scale_x;
+					camx_setto = object.x / scale_x;
 				}
 				else if (*fakecursor == 'y'){
-					camx_setto = object_y / scale_y;
+					camy_setto = object.y / scale_y;
 				}
 				else if (*fakecursor == '+'){
 					fakecursor++;
@@ -698,10 +926,10 @@ static void runner_interpret_camera_set_view_pos(int object_index, const char* c
 			int ypos_i = 0;
 			while (*fakecursor != ',' && *fakecursor != ')' && *fakecursor != '\0'){
 				if (*fakecursor == 'x'){
-					camy_setto = object_x / scale_x;
+					camy_setto = object.x / scale_x;
 				}
 				else if (*fakecursor == 'y'){
-					camy_setto = object_y / scale_y;
+					camy_setto = object.y / scale_y;
 				}
 				else if (*fakecursor == '+'){
 					fakecursor++;
@@ -744,10 +972,10 @@ static void runner_interpret_camera_set_view_pos(int object_index, const char* c
 }
 
 #pragma region //random stuff
-static void runner_interpret_game_end(int object_index, const char* code)
+static void runner_interpret_game_end(int object_index, const char* code, Sprite object)
 {
-	float object_x = sprites[object_index].spr.params.pos.x;
-	float object_y = sprites[object_index].spr.params.pos.y;
+	object.x = sprites[object_index].spr.params.pos.x;
+	object.y = sprites[object_index].spr.params.pos.y;
     const char* cursor = code;
 
     while (*cursor != '\0')
@@ -755,7 +983,7 @@ static void runner_interpret_game_end(int object_index, const char* code)
 		//is this an if??
 		if (cursor[0] == 'i' && cursor[1] == 'f')
 		{
-			bool if_result = runner_interpret_if(cursor, object_x, object_y);
+			bool if_result = runner_interpret_if(cursor, object);
 
 			if (if_result)
 			{
@@ -824,10 +1052,11 @@ static void runner_interpret_game_end(int object_index, const char* code)
 #pragma region //passing on the gml code to the interpreters
 
 void GML_interpret(const char* code, int object_def_index){
-	runner_interpret_xy(object_def_index, code);
-	runner_interpret_room_goto(object_def_index, code);
-	runner_interpret_game_end(object_def_index, code);
-	runner_interpret_camera_set_view_pos(object_def_index, code);
+	//runner_interpret_xy(object_def_index, code, sprites[object_def_index]);
+	runner_interpret_var(object_def_index, code, sprites[object_def_index]);
+	runner_interpret_room_goto(object_def_index, code, sprites[object_def_index]);
+	runner_interpret_game_end(object_def_index, code, sprites[object_def_index]);
+	runner_interpret_camera_set_view_pos(object_def_index, code, sprites[object_def_index]);
 }
 
 //runs the create code (on object creation)

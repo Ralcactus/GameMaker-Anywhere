@@ -64,6 +64,17 @@ int GetSpriteNumberByName(const cJSON* root, const char* sprite_name)
 	return -1;
 }
 
+//return the name of the game
+static cJSON* GetGameName(const char* json_text)
+{
+    cJSON* root = cJSON_Parse(json_text);
+    cJSON* Game_name = cJSON_GetObjectItemCaseSensitive(cJSON_GetObjectItemCaseSensitive(root, "GameMetadata"), "name");
+    cJSON* output = cJSON_CreateString(Game_name->valuestring);
+    cJSON_Delete(root);
+	
+    return output;
+}
+
 //return the room set to be the first loaded
 static cJSON* GetFirstRoomName(const char* json_text)
 {
@@ -441,7 +452,7 @@ int main()
 	#pragma endregion
 
 	#ifdef __RAYLIB__
-		InitWindow(GetCurrentRoomSize(data_json, "width"), GetCurrentRoomSize(data_json, "height"), "GameMaker Anywhere - Dreamcast");
+		InitWindow(GetCurrentRoomSize(data_json, "width"), GetCurrentRoomSize(data_json, "height"), GetGameName(data_json)->valuestring);
 		SetTargetFPS(60);
 
 		if (!IsAudioDeviceReady()) {
