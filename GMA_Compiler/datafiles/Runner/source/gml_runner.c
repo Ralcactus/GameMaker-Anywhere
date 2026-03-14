@@ -11,6 +11,14 @@
 #include "cross_platform.h"
 static const cJSON* root = NULL;
 
+#define MAX_CUSTOM_VARS 64
+
+static var custom_vars[MAX_SPRITES][MAX_CUSTOM_VARS];
+static int custom_var_count[MAX_SPRITES] = {0};
+
+static int runner_get_custom_var_index(int object_index, const char* name);
+static bool runner_resolve_numeric_token(int object_index, const char* token, float* out_value);
+
 static void quick_printfakecursor(const char* fakecursor){
 	printf("fakecursor at:       %c\n", *fakecursor);
 }
@@ -19,6 +27,12 @@ static void quick_printfakecursor(const char* fakecursor){
 //carry over the root from the main.c (probably better way i could've done this...)
 void GML_SetRoot(const cJSON* garrys_in_the_room_tonight){
 	root = garrys_in_the_room_tonight;
+}
+
+void GML_ResetCustomVariables(void)
+{
+	memset(custom_vars, 0, sizeof(custom_vars));
+	memset(custom_var_count, 0, sizeof(custom_var_count));
 }
 
 //return next object
@@ -278,11 +292,59 @@ static bool runner_check_current_pos(const char* cursor, float object_x, float o
 
 	return runner_interpret_value_ismine(value_tocheck, operationtype, object_x, object_y, type);
 }
+
+static bool runner_check_numeric_value(const char* cursor, int object_index, float current_value)
+{
+	char operationtype[256];
+	char value_tocheck[256];
+
+	while (*cursor == ' ')
+		cursor++;
+
+	int operation_i = 0;
+	while (*cursor != ' ' && *cursor != '\0'){
+		operationtype[operation_i++] = *cursor;
+		cursor++;
+	}
+	operationtype[operation_i] = '\0';
+
+	cursor++;
+	while (*cursor == ' ')
+		cursor++;
+
+	int value_i = 0;
+	while (*cursor != ' ' && *cursor != ')' && *cursor != '\0'){
+		value_tocheck[value_i++] = *cursor;
+		cursor++;
+	}
+	value_tocheck[value_i] = '\0';
+
+	float compare_value = 0.0f;
+	if (!runner_resolve_numeric_token(object_index, value_tocheck, &compare_value))
+		return false;
+
+	if (strcmp(operationtype, "==") == 0 || strcmp(operationtype, "=") == 0)
+		return current_value == compare_value;
+
+	if (strcmp(operationtype, ">") == 0)
+		return current_value > compare_value;
+
+	if (strcmp(operationtype, ">=") == 0)
+		return current_value >= compare_value;
+
+	if (strcmp(operationtype, "<") == 0)
+		return current_value < compare_value;
+
+	if (strcmp(operationtype, "<=") == 0)
+		return current_value <= compare_value;
+
+	return false;
+}
 #pragma endregion
 
 #pragma endregion
 
-static bool runner_if_middleman(const char* function, const char* args, Sprite object)
+static bool runner_if_middleman(const char* function, const char* args, int object_index, Sprite object)
 {
     if (strcmp(function, "gamepad_button_check") == 0)
         return runner_gamepad_button_check(args);
@@ -296,12 +358,15 @@ static bool runner_if_middleman(const char* function, const char* args, Sprite o
     if (strcmp(function, "x") == 0 || strcmp(function, "y") == 0)
         return runner_check_current_pos(args, object.x, object.y, function);
 
+    int custom_index = runner_get_custom_var_index(object_index, function);
+    if (custom_index >= 0)
+        return runner_check_numeric_value(args, object_index, custom_vars[object_index][custom_index].f);
 
     return false;
 }
 
 //check for and handle if statments
-static bool runner_interpret_if(const char* code, Sprite object)
+static bool runner_interpret_if(const char* code, int object_index, Sprite object)
 {
     const char* cursor = code;
 
@@ -344,7 +409,7 @@ static bool runner_interpret_if(const char* code, Sprite object)
 			while (*fakecursor == '(' || *fakecursor == ' ')
 				fakecursor++;
 
-			return runner_if_middleman(function, fakecursor, object);
+			return runner_if_middleman(function, fakecursor, object_index, object);
 		}
 
 		if (fakecursor == cursor)
@@ -395,32 +460,101 @@ static void runner_set_vars_to_object(int object_index, Sprite* object)
     #endif
 }
 
+static int runner_get_custom_var_index(int object_index, const char* name)
+{
+    if (object_index < 0 || object_index >= MAX_SPRITES || !name || name[0] == '\0')
+        return -1;
+
+    for (int i = 0; i < custom_var_count[object_index]; i++)
+    {
+        if (strcmp(custom_vars[object_index][i].name, name) == 0)
+            return i;
+    }
+
+    return -1;
+}
+
+static bool runner_builtin_var_value(int object_index, const char* name, float* out_value)
+{
+    if (!name || !out_value)
+        return false;
+
+    if (strcmp(name, "x") == 0)
+    {
+        *out_value = sprites[object_index].x;
+        return true;
+    }
+
+    if (strcmp(name, "y") == 0)
+    {
+        *out_value = sprites[object_index].y;
+        return true;
+    }
+
+    return false;
+}
+
+static bool runner_resolve_numeric_token(int object_index, const char* token, float* out_value)
+{
+    if (!token || !out_value || token[0] == '\0')
+        return false;
+
+    char* end = NULL;
+    float numeric = strtof(token, &end);
+    if (end && *end == '\0')
+    {
+        *out_value = numeric;
+        return true;
+    }
+
+    if (runner_builtin_var_value(object_index, token, out_value))
+        return true;
+
+    int custom_index = runner_get_custom_var_index(object_index, token);
+    if (custom_index >= 0)
+    {
+        *out_value = custom_vars[object_index][custom_index].f;
+        return true;
+    }
+
+    return false;
+}
+
 static void runner_var_middleman(int object_index, var value)
 {
-	bool isCustomVariable = false;
+    if (strcmp(value.name, "x") == 0){
+        sprites[object_index].x = value.f;
 
-	if(!isCustomVariable){
-		if (strcmp(value.name, "x") == 0){
-			sprites[object_index].x = value.f;
+        #ifdef __3DS__
+            sprites[object_index].spr.params.pos.x = sprites[object_index].x;
+        #elif __RAYLIB__
+            sprites[object_index].texture.x = sprites[object_index].x;
+        #endif
+        return;
+    }
 
-			#ifdef __3DS__
-				sprites[object_index].spr.params.pos.x = sprites[object_index].x;
-			#elif __RAYLIB__
-				sprites[object_index].texture.x = sprites[object_index].x;
-			#endif
-		}
+    if (strcmp(value.name, "y") == 0){
+        sprites[object_index].y = value.f;
 
-		if (strcmp(value.name, "y") == 0){
-			sprites[object_index].y = value.f;
+        #ifdef __3DS__
+            sprites[object_index].spr.params.pos.y = sprites[object_index].y;
+        #elif __RAYLIB__
+            sprites[object_index].texture.y = sprites[object_index].y;
+        #endif
+        return;
+    }
 
-			#ifdef __3DS__
-				sprites[object_index].spr.params.pos.y = sprites[object_index].y;
-			#elif __RAYLIB__
-				sprites[object_index].texture.y = sprites[object_index].y;
-			#endif
-		}
-			
-	}
+    int existing = runner_get_custom_var_index(object_index, value.name);
+    if (existing >= 0)
+    {
+        custom_vars[object_index][existing] = value;
+        return;
+    }
+
+    if (custom_var_count[object_index] < MAX_CUSTOM_VARS)
+    {
+        custom_vars[object_index][custom_var_count[object_index]++] = value;
+    }
 }
 
 //interpret variable of the objects
@@ -436,7 +570,7 @@ static void runner_interpret_var(int object_index, const char* code, Sprite obje
 		//is this an if??
 		if (cursor[0] == 'i' && cursor[1] == 'f')
 		{
-			bool if_result = runner_interpret_if(cursor, object);
+			bool if_result = runner_interpret_if(cursor, object_index, object);
 
 			if (if_result)
 			{
@@ -502,10 +636,8 @@ static void runner_interpret_var(int object_index, const char* code, Sprite obje
 		var value = {0};
 		strcpy(value.name, identifier);
 
-		if (strcmp(identifier, "x") == 0)
-			value.f = sprites[object_index].x;
-		if (strcmp(identifier, "y") == 0)
-			value.f = sprites[object_index].y;
+		if (!runner_resolve_numeric_token(object_index, identifier, &value.f))
+			value.f = 0.0f;
 
 		if (*fakecursor == ' ')
 			fakecursor++;
@@ -530,24 +662,40 @@ static void runner_interpret_var(int object_index, const char* code, Sprite obje
 			while (*fakecursor == ' ')
 				fakecursor++;
 
-			int thenumber = 0;
+			float rhs_number = 0.0f;
 			char thechar[256] = {'\0'};
+			char rhs_token[256] = {'\0'};
 
-			if(*fakecursor == '0' || *fakecursor == '1' || *fakecursor == '2' || *fakecursor == '3' || *fakecursor == '4' || *fakecursor == '5' || *fakecursor == '6' || *fakecursor == '7' || *fakecursor == '8' || *fakecursor == '9'){
+			int rhs_i = 0;
+			if (*fakecursor == '-' || *fakecursor == '+' || isdigit((unsigned char)*fakecursor))
+			{
+				while ((*fakecursor >= '0' && *fakecursor <= '9') || *fakecursor == '.' || *fakecursor == '-' || *fakecursor == '+')
+				{
+					rhs_token[rhs_i++] = *fakecursor;
+					fakecursor++;
+				}
+			}
+			else if ((*fakecursor >= 'a' && *fakecursor <= 'z') || (*fakecursor >= 'A' && *fakecursor <= 'Z') || *fakecursor == '_')
+			{
+				while ((*fakecursor >= 'a' && *fakecursor <= 'z') || (*fakecursor >= 'A' && *fakecursor <= 'Z') || *fakecursor == '_' || (*fakecursor >= '0' && *fakecursor <= '9'))
+				{
+					rhs_token[rhs_i++] = *fakecursor;
+					fakecursor++;
+				}
+			}
+			rhs_token[rhs_i] = '\0';
+
+			if (rhs_token[0] != '\0' && runner_resolve_numeric_token(object_index, rhs_token, &rhs_number))
+			{
 				isNumber = true;
-				while (*fakecursor == '0' || *fakecursor == '1' || *fakecursor == '2' || *fakecursor == '3' || *fakecursor == '4' || *fakecursor == '5' || *fakecursor == '6' || *fakecursor == '7' || *fakecursor == '8' || *fakecursor == '9'){
-					thenumber = thenumber * 10 + (*fakecursor - '0');
-					fakecursor++;
-				}
-			} else if(*fakecursor == 'a' || *fakecursor == 'b' || *fakecursor == 'c' || *fakecursor == 'd' || *fakecursor == 'e' || *fakecursor == 'f' || *fakecursor == 'g' || *fakecursor == 'h' || *fakecursor == 'i' || *fakecursor == 'j' || *fakecursor == 'k' || *fakecursor == 'l' || *fakecursor == 'm' || *fakecursor == 'n' || *fakecursor == 'o' || *fakecursor == 'p' || *fakecursor == 'q' || *fakecursor == 'r' || *fakecursor == 's' || *fakecursor == 't' || *fakecursor == 'u' || *fakecursor == 'v' || *fakecursor == 'w' || *fakecursor == 'x' || *fakecursor == 'y' || *fakecursor == 'z'){
+			}
+			else if (rhs_token[0] != '\0')
+			{
 				isNumber = false;
-				int var_i = 0;
-				while ((*fakecursor >= 'a' && *fakecursor <= 'z') || (*fakecursor >= 'A' && *fakecursor <= 'Z') || *fakecursor == '_' || (*fakecursor >= '0' && *fakecursor <= '9')){
-					thechar[var_i++] = *fakecursor;
-					fakecursor++;
-				}
-				thechar[var_i] = '\0';
-			} else {
+				strncpy(thechar, rhs_token, sizeof(thechar) - 1);
+			}
+			else
+			{
 				//uh oh! this is not a number or variable we support! kill code!
 				return;
 			}
@@ -556,27 +704,27 @@ static void runner_interpret_var(int object_index, const char* code, Sprite obje
 			if(isNumber){
 				//add value
 				if (operationtype == '+'){
-					value.f += thenumber;
+					value.f += rhs_number;
 				}
 
 				//minus value
 				if (operationtype == '-'){
-					value.f -= thenumber;
+					value.f -= rhs_number;
 				}
 
 				//multiply value
 				if (operationtype == '*'){
-					value.f *= thenumber;
+					value.f *= rhs_number;
 				}
 
 				//divide value
 				if (operationtype == '/'){
-					value.f /= thenumber;
+					value.f /= rhs_number;
 				}
 
 				//set value
 				if (operationtype == '='){
-					value.f = thenumber;
+					value.f = rhs_number;
 				}
 			} else {
 				//Boolean value
@@ -637,7 +785,7 @@ static void runner_interpret_xy(int object_index, const char* code, Sprite objec
 		//is this an if??
 		if (cursor[0] == 'i' && cursor[1] == 'f')
 		{
-			bool if_result = runner_interpret_if(cursor, object);
+			bool if_result = runner_interpret_if(cursor, object_index, object);
 
 			if (if_result)
 			{
@@ -761,7 +909,7 @@ static void runner_interpret_room_goto(int object_index, const char* code, Sprit
 		//is this an if??
 		if (cursor[0] == 'i' && cursor[1] == 'f')
 		{
-			bool if_result = runner_interpret_if(cursor, object);
+			bool if_result = runner_interpret_if(cursor, object_index, object);
 
 			if (if_result)
 			{
@@ -842,7 +990,7 @@ static void runner_interpret_game_end(int object_index, const char* code, Sprite
 		//is this an if??
 		if (cursor[0] == 'i' && cursor[1] == 'f')
 		{
-			bool if_result = runner_interpret_if(cursor, object);
+			bool if_result = runner_interpret_if(cursor, object_index, object);
 
 			if (if_result)
 			{
@@ -913,7 +1061,7 @@ static void runner_interpret_camera_set_view_pos(int object_index, const char* c
 		//is this an if??
 		if (cursor[0] == 'i' && cursor[1] == 'f')
 		{
-			bool if_result = runner_interpret_if(cursor, object);
+			bool if_result = runner_interpret_if(cursor, object_index, object);
 
 			if (if_result)
 			{

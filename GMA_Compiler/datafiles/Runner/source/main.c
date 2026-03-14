@@ -327,6 +327,7 @@ static void Runner_ClearRoomState(void)
     memset(sprites, 0, sizeof(sprites));
     memset(sprite_object_id, 0, sizeof(sprite_object_id));
     memset(sprite_is_object, 0, sizeof(sprite_is_object));
+    GML_ResetCustomVariables();
 }
 
 //Init the current room (create assets, objects, run creation code, ect)
