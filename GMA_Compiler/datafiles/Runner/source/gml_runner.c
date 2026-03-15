@@ -261,7 +261,6 @@ static bool runner_interpret_value_ismine(const char* value_tocheck, const char*
     return false;
 }
 
-
 static bool runner_check_current_pos(const char* cursor, float object_x, float object_y, const char* type){
 	char operationtype[256];
 	char value_tocheck[256];
@@ -365,7 +364,7 @@ static bool runner_if_middleman(const char* function, const char* args, int obje
     return false;
 }
 
-//check for and handle if statments
+//check for and handle if statements
 static bool runner_interpret_if(const char* code, int object_index, Sprite object)
 {
     const char* cursor = code;
@@ -376,11 +375,11 @@ static bool runner_interpret_if(const char* code, int object_index, Sprite objec
 		const char* fakecursor = cursor;
 
 
-		//is this a if statment?
+		//is this a if statement?
 		if (character == 'i'){
 			fakecursor++;
 			
-			//is this a if statment pt2
+			//is this a if statement pt2!!
 			if (*fakecursor == 'f')
 				fakecursor++;
 			else{

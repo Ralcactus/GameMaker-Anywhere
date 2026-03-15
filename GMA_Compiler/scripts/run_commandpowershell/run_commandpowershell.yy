@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"run_commandcmd",
+  "%Name":"run_commandpowershell",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"run_commandcmd",
+  "name":"run_commandpowershell",
   "parent":{
     "name":"Scripts",
     "path":"folders/Scripts.yy",
