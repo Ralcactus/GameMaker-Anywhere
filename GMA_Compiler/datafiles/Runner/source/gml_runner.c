@@ -947,8 +947,10 @@ static void runner_interpret_room_goto(int object_index, const char* code, Sprit
 			function[i] = '\0';
 
 			//break if this doesn't have a bracket at the end or isn't room_goto
-			if (*fakecursor != '(' || strcmp(function, "room_goto") != 0)
-				break;
+			if (*fakecursor != '(' || strcmp(function, "room_goto") != 0){
+				cursor++;
+				continue;
+			}
 
             //skip the (
             fakecursor++;
@@ -1028,9 +1030,10 @@ static void runner_interpret_game_end(int object_index, const char* code, Sprite
 			function[i] = '\0';
 
 			//break if this doesn't have a bracket at the end or isn't game_end
-			if (*fakecursor != '(' || strcmp(function, "game_end") != 0)
-				break;
-
+			if (*fakecursor != '(' || strcmp(function, "game_end") != 0){
+				cursor++;
+				continue;
+			}
             //skip the (
             fakecursor++;
 
@@ -1098,8 +1101,10 @@ static void runner_interpret_camera_set_view_pos(int object_index, const char* c
 			function[i] = '\0';
 
 			//break if this doesn't have a bracket at the end or isn't camera_set_view_pos
-			if (*fakecursor != '(' || strcmp(function, "camera_set_view_pos") != 0)
-				break;
+			if (*fakecursor != '(' || strcmp(function, "camera_set_view_pos") != 0){
+				cursor++;
+				continue;
+			}
 
             //skip the (
             fakecursor++;

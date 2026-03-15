@@ -137,7 +137,7 @@ function scr_compile()
                 if (_layer.resourceType == "GMRBackgroundLayer") {
                     layer_out.background = {
                         colour: _layer.colour,
-                        sprite: (_layer.spriteId != undefined && _layer.spriteId != null ? _layer.spriteId.name : "")
+                        sprite: (_layer.spriteId != undefined && _layer.spriteId != -4 ? _layer.spriteId.name : "")
                     };
                 }
                 
@@ -207,14 +207,16 @@ function scr_compile()
             
             if (file_exists(createpath)) {
                 var createinside_buffer = buffer_load(createpath);
-                create_code = buffer_read(createinside_buffer, buffer_string);
+				if (buffer_get_size(createinside_buffer) > 0)
+					create_code = buffer_read(createinside_buffer, buffer_string);
                 buffer_delete(createinside_buffer);
                 show_debug_message(create_code);
             }
             
             if (file_exists(steppath)) {
                 var createinside_buffer = buffer_load(steppath);
-                step_code = buffer_read(createinside_buffer, buffer_string);
+				if (buffer_get_size(createinside_buffer) > 0)
+					step_code = buffer_read(createinside_buffer, buffer_string);
                 buffer_delete(createinside_buffer);
                 show_debug_message(step_code);
             }
