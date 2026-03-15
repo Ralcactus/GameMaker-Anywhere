@@ -44,3 +44,4 @@ Meet the team!
 - FoxFore (coder)
 - Loaf (Logo designer)
 - Finlay (coder)
+- Samuel Venable (GameMaker extension developer)
