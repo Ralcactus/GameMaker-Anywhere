@@ -12,6 +12,7 @@
 #include "shortcut_functions.h"
 #include "cross_platform.h"
 #include <stdbool.h>
+#include <stdint.h>
 
 #ifdef __3DS__
     #include <3ds.h>
@@ -146,9 +147,12 @@
 
                 if (color && (color->type & cJSON_Number))
                 {
-                    u32 gm = (u32)color->valuedouble;
+                    #include <stdint.h>
+
+                    uint32_t gm = (uint32_t)color->valuedouble;
+
                     out.r = (gm) & 0xFF;
-                    out.g = (gm >>  8) & 0xFF;
+                    out.g = (gm >> 8) & 0xFF;
                     out.b = (gm >> 16) & 0xFF;
                     out.a = (gm >> 24) & 0xFF;
                 }
@@ -169,18 +173,45 @@
         ClearBackground(GetCurrentRoomBgColor(datajson, my_currentroom));
 
         //camera
-        Vector2 camoffset = {camerax - camera_width / 2, cameray - camera_height / 2};
-        BeginMode2D((Camera2D){camoffset, (Vector2){0, 0}, 0.0f, 400 / camera_width});
+        Camera2D cam = {0};
+        cam.target = (Vector2){camerax, cameray};
+        cam.offset = (Vector2){0, 0};
+        cam.rotation = 0.0f;
+        cam.zoom = 1.0f;
+
+        BeginMode2D(cam);
 
         //draw sprites
         for (size_t i = 0; i < currentsprite_count; i++)
-            DrawTextureRec(sprites[i].texture, (Rectangle){0, 0, (float)sprites[i].texture.width, (float)sprites[i].texture.height}, (Vector2){sprites[i].texture.width / 2.0f, sprites[i].texture.height / 2.0f}, WHITE);
+        {
+            Texture2D tex = sprites[i].texture;
 
+            DrawTexturePro(
+                tex,
+                (Rectangle){0, 0, (float)tex.width, (float)tex.height},
+                (Rectangle){
+                    sprites[i].x,
+                    sprites[i].y,
+                    tex.width * sprites[i].scale_x,
+                    tex.height * sprites[i].scale_y
+                },
+                (Vector2){0, 0},
+                sprites[i].rotation * (180.0f / M_PI),
+                WHITE
+            );
+        }
         EndMode2D();
         EndTextureMode();
     }
 
     void scr_drawroom_assets(size_t currentsprite_count, Texture2D Spritesheet, float sprite_x, float sprite_y, float sprite_scalex, float sprite_scaley, float sprite_rot, cJSON* root, cJSON* spr){
         sprites[currentsprite_count].texture = Spritesheet;
+
+        sprites[currentsprite_count].x = sprite_x;
+        sprites[currentsprite_count].y = sprite_y;
+        sprites[currentsprite_count].scale_x = sprite_scalex;
+        sprites[currentsprite_count].scale_y = sprite_scaley;
+        sprites[currentsprite_count].rotation = sprite_rot;
     }
+
 #endif

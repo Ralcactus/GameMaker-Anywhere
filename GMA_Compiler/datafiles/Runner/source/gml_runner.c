@@ -1,4 +1,6 @@
-#include <citro2d.h>
+#ifdef __3DS__
+    #include <citro2d.h>
+#endif
 #include "gml_functions.h"
 #include <stdio.h>
 #include "cJSON.h"
@@ -106,7 +108,8 @@ static int input_convertstring(const char* string)
 
 #pragma region //gamepad_button_check
 static bool runner_interpret_input_held(const char* padindex, const char* button){
-	if (gamepad_button_check(input_convertstring(button))){
+	int pad = atoi(padindex); //converts to int
+	if (gamepad_button_check(pad, input_convertstring(button))){
 		//printf("Holding button:       %s\n", button);
 		return true;
 	}
@@ -143,7 +146,8 @@ static bool runner_gamepad_button_check(const char* cursor){
 
 #pragma region //gamepad_button_check_pressed
 static bool runner_interpret_input_pressed(const char* padindex, const char* button){
-	if (gamepad_button_check_pressed(input_convertstring(button))){
+	int pad = atoi(padindex); //converts to int
+	if (gamepad_button_check_pressed(pad, input_convertstring(button))){
 		//printf("Pressing button:       %s\n", button);
 		return true;
 	}
@@ -180,7 +184,8 @@ static bool runner_gamepad_button_check_pressed(const char* cursor){
 
 #pragma region //gamepad_button_check_released
 static bool runner_interpret_input_released(const char* padindex, const char* button){
-	if (gamepad_button_check_released(input_convertstring(button))){
+	int pad = atoi(padindex); //converts to int
+	if (gamepad_button_check_released(pad, input_convertstring(button))){
 		//printf("Released button:       %s\n", button);
 		return true;
 	}
@@ -453,9 +458,6 @@ static void runner_set_vars_to_object(int object_index, Sprite* object)
     #ifdef __3DS__
         sprites[object_index].spr.params.pos.x = sprites[object_index].x;
         sprites[object_index].spr.params.pos.y = sprites[object_index].y;
-    #elif __RAYLIB__
-        sprites[object_index].texture.x = sprites[object_index].x;
-        sprites[object_index].texture.y = sprites[object_index].y;
     #endif
 }
 
@@ -526,8 +528,6 @@ static void runner_var_middleman(int object_index, var value)
 
         #ifdef __3DS__
             sprites[object_index].spr.params.pos.x = sprites[object_index].x;
-        #elif __RAYLIB__
-            sprites[object_index].texture.x = sprites[object_index].x;
         #endif
         return;
     }
@@ -537,8 +537,6 @@ static void runner_var_middleman(int object_index, var value)
 
         #ifdef __3DS__
             sprites[object_index].spr.params.pos.y = sprites[object_index].y;
-        #elif __RAYLIB__
-            sprites[object_index].texture.y = sprites[object_index].y;
         #endif
         return;
     }
@@ -772,135 +770,15 @@ static void runner_interpret_var(int object_index, const char* code, Sprite obje
 	}
 }
 
-//interpret x and y of the objects
-static void runner_interpret_xy(int object_index, const char* code, Sprite object)
-{
-	object.x = sprites[object_index].spr.params.pos.x;
-	object.y = sprites[object_index].spr.params.pos.y;
-    const char* cursor = code;
-
-    while (*cursor != '\0')
-    {
-		//is this an if??
-		if (cursor[0] == 'i' && cursor[1] == 'f')
-		{
-			bool if_result = runner_interpret_if(cursor, object_index, object);
-
-			if (if_result)
-			{
-				while (*cursor && *cursor != '{')
-					cursor++;
-
-				if (*cursor == '{')
-					cursor++; // enter block
-			}
-			else
-			{
-				while (*cursor && *cursor != '{')
-					cursor++;
-
-				cursor = skip_block(cursor);
-			}
-		}
-
-
-
-        char character = *cursor;
-		const char* fakecursor = cursor;
-        //printf("current char: %c\n", character);
-
-		//is this a x statment?
-		if (character == 'x' || character == 'y'){
-			//save if we are changing the x or y
-			char postype = character;
-
-			//the next character
-			fakecursor++;
-
-			if (*fakecursor == ' ')
-				fakecursor++;
-
-
-			//is this a proper add statment
-			if (*fakecursor == '-' || *fakecursor == '+' || *fakecursor == '*' || *fakecursor == '='){
-				//store the operation
-				const char operationtype = *fakecursor;
-				fakecursor++;
-
-				while (*fakecursor == ' ')
-					fakecursor++;
-
-				if (*fakecursor == '='){
-					fakecursor++;
-				
-					//uh oh! this is a check statment! kill code!
-					if (*fakecursor == '=')
-						return;
-				}
-
-				while (*fakecursor == ' ')
-					fakecursor++;
-
-				int thenumber = 0;
-				while (*fakecursor == '0' || *fakecursor == '1' || *fakecursor == '2' || *fakecursor == '3' || *fakecursor == '4' || *fakecursor == '5' || *fakecursor == '6' || *fakecursor == '7' || *fakecursor == '8' || *fakecursor == '9'){
-					thenumber = thenumber * 10 + (*fakecursor - '0');
-					fakecursor++;
-				}
-
-				//add value
-				if (operationtype == '+'){
-					if (postype == 'x')
-						object.x += thenumber;
-					else
-						object.y += thenumber;
-				}
-
-				//minus value
-				if (operationtype == '-'){
-					if (postype == 'x')
-						object.x -= thenumber;
-					else
-						object.y -= thenumber;
-				}
-
-				//multiply value
-				if (operationtype == '*'){
-					if (postype == 'x')
-						object.x *= thenumber;
-					else
-						object.y *= thenumber;
-				}
-
-				//set value
-				if (operationtype == '='){
-					if (postype == 'x')
-						object.x = thenumber;
-					else
-						object.y = thenumber;
-				}
-			}
-		}
-		if (fakecursor == cursor)
-			cursor++;
-		else
-			cursor = fakecursor;
-
-	}
-
-	#ifdef __3DS__
-		C2D_SpriteSetPos(&sprites[object_index].spr, object.x, object.y);
-	#elif __RAYLIB__
-		sprites[object_index].texture.x = object.x;
-		sprites[object_index].texture.y = object.y;
-	#endif
-}
 #pragma endregion
 
 #pragma region //room stuff
 static void runner_interpret_room_goto(int object_index, const char* code, Sprite object)
 {
-	object.x = sprites[object_index].spr.params.pos.x;
-	object.y = sprites[object_index].spr.params.pos.y;
+	#ifdef __3DS__
+		object.x = sprites[object_index].spr.params.pos.x;
+		object.y = sprites[object_index].spr.params.pos.y;
+	#endif
     const char* cursor = code;
 
     while (*cursor != '\0')
@@ -982,8 +860,10 @@ static void runner_interpret_room_goto(int object_index, const char* code, Sprit
 #pragma region //random stuff
 static void runner_interpret_game_end(int object_index, const char* code, Sprite object)
 {
-	object.x = sprites[object_index].spr.params.pos.x;
-	object.y = sprites[object_index].spr.params.pos.y;
+	#ifdef __3DS__
+		object.x = sprites[object_index].spr.params.pos.x;
+		object.y = sprites[object_index].spr.params.pos.y;
+	#endif
     const char* cursor = code;
 
     while (*cursor != '\0')
@@ -1053,8 +933,10 @@ static void runner_interpret_game_end(int object_index, const char* code, Sprite
 
 static void runner_interpret_camera_set_view_pos(int object_index, const char* code, Sprite object)
 {
-	object.x = sprites[object_index].spr.params.pos.x;
-	object.y = sprites[object_index].spr.params.pos.y;
+	#ifdef __3DS__
+		object.x = sprites[object_index].spr.params.pos.x;
+		object.y = sprites[object_index].spr.params.pos.y;
+	#endif
     const char* cursor = code;
 
     while (*cursor != '\0')

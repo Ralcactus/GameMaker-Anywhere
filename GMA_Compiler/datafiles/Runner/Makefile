@@ -10,7 +10,7 @@ dc:
 
 #Windows
 win:
-	$(MAKE) -f platform/windows/Makefile $@
+	mingw32-make -f platform/windows/Makefile
 
 #Wii U
 wuhb:

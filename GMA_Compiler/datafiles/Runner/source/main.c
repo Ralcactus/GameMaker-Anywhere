@@ -17,6 +17,11 @@
 #include <stdbool.h>
 #include "main.h"
 
+// Source - https://stackoverflow.com/a/5007971
+// Posted by Sven Marnach, modified by community. See post 'Timeline' for change history
+// Retrieved 2026-03-16, License - CC BY-SA 3.0
+
+
 float cam_x = 0;
 float cam_y = 0;
 float cam_w = 400;
@@ -38,7 +43,7 @@ bool EndGame = false;
 Sprite sprites[MAX_SPRITES];
 size_t SpriteCount = 0;
 const char* CurrentRoom = "";
-char* data_json = "";
+char* data_json = NULL;
 
 int  sprite_object_id[MAX_SPRITES];
 static bool sprite_is_object[MAX_SPRITES];
@@ -187,6 +192,17 @@ static void CreateCurrentRoomAssets(const char* json_text)
 				cJSON* scale_x = cJSON_GetObjectItemCaseSensitive(asset, "scaleX");
 				cJSON* scale_y = cJSON_GetObjectItemCaseSensitive(asset, "scaleY");
 				cJSON* rot = cJSON_GetObjectItemCaseSensitive(asset, "rotation");
+			
+				if (!cJSON_IsString(spr) ||
+					!cJSON_IsNumber(x) ||
+					!cJSON_IsNumber(y) ||
+					!cJSON_IsNumber(scale_x) ||
+					!cJSON_IsNumber(scale_y) ||
+					!cJSON_IsNumber(rot)) {
+					printf("Invalid asset entry in room JSON\n");
+					continue; // skip this asset safely
+				}
+
 				float float_x = (float)x->valuedouble;
 				float float_y = (float)y->valuedouble;
 				float float_scalex = (float)scale_x->valuedouble;
@@ -295,13 +311,12 @@ static void CreateCurrentRoomObjects(const char* json_text)
 						C2D_SpriteSetScale(&sp->spr, float_scalex, float_scaley);
 						C2D_SpriteSetRotation(&sp->spr, float_rot);
 					#elif __RAYLIB__
-						Texture2D* tex = &sprites[SpriteCount].texture;
-						tex->id = GetSpriteNumberByName(root, spriteName);
-						tex->x = float_x;
-						tex->y = float_y;
-						tex->width = 0; //will be set in the drawing function
-						tex->height = 0; //will be set in the drawing function
-						//raylib doesn't support rotation or scale in the texture struct, so these will be set in the drawing function as well
+						sprites[SpriteCount].texture = spriteSheet;
+						sprites[SpriteCount].x = float_x;
+						sprites[SpriteCount].y = float_y;
+						sprites[SpriteCount].scale_x = float_scalex;
+						sprites[SpriteCount].scale_y = float_scaley;
+						sprites[SpriteCount].rotation = float_rot;
 					#endif
 
 					//mark as an object and give an id
@@ -375,8 +390,6 @@ int main()
 		C3D_RenderTarget* top = NULL;
 	#endif
 
-	bool progCond = true;
-
 	#ifdef __3DS__
 		gfxInitDefault();
 		romfsInit();
@@ -400,9 +413,6 @@ int main()
 		// Load sprite sheet
 		spriteSheet = C2D_SpriteSheetLoad("romfs:/gfx/sprites.t3x");
 	#elif __RAYLIB__
-		// Load sprite sheet
-		spriteSheet = LoadTexture("assets/sprites.png");
-
 		//load the data.win
 		FILE* datawin = fopen("assets/data.gad", "rb");
 		fseek(datawin, 0, SEEK_END);
@@ -453,46 +463,48 @@ int main()
 	#pragma endregion
 
 	#ifdef __RAYLIB__
+		InitWindow(GetCurrentRoomSize(data_json, "width"),
+				GetCurrentRoomSize(data_json, "height"),
+				GetGameName(data_json)->valuestring);
+
+		RenderTexture2D target = LoadRenderTexture(GetRenderWidth(), GetRenderHeight());
+
+		SetTargetFPS(60);
+
+		if (!IsAudioDeviceReady()) {
+			InitAudioDevice();
+		}
+	#endif
+
+	#ifdef __RAYLIB__
 		while (!WindowShouldClose())
 	#elif __3DS__
 		while (aptMainLoop())
 	#endif
 	{
-		#ifdef __3DS__
-			//scan for inputs
-			hidScanInput();
-			g_keysDown = hidKeysDown();
-			g_keysHeld = hidKeysHeld();
-			g_keysUp = hidKeysUp();
-		#endif
+	#ifdef __RAYLIB__
+		BeginDrawing();
+		ClearBackground(BLACK);
+	#endif
 
-		#ifdef __RAYLIB__
-			InitWindow(GetCurrentRoomSize(data_json, "width"), GetCurrentRoomSize(data_json, "height"), GetGameName(data_json)->valuestring);
-			SetTargetFPS(60);
-
-			if (!IsAudioDeviceReady()) {
-				InitAudioDevice();
-			}
-
-			BeginDrawing();
-			ClearBackground(BLACK);
-		#endif
-
-		//run the gml interpreter
 		RunGML();
 
-		//Quit app
 		if (EndGame)
 			break;
 
-		//render frames
-		#ifdef __3DS__
-			scr_renderframe(top, cam_x, cam_y, cam_w, cam_h, SpriteCount, data_json, CurrentRoom);
-		#elif __RAYLIB__
-			scr_renderframe((RenderTexture2D){ .texture = { .id = 0 }, .depth = { .id = 0 } }, cam_x, cam_y, cam_w, cam_h, SpriteCount, data_json, CurrentRoom);
+	#ifdef __3DS__
+		scr_renderframe(top, cam_x, cam_y, cam_w, cam_h, SpriteCount, data_json, CurrentRoom);
+	#elif __RAYLIB__
+		scr_renderframe(target, cam_x, cam_y, cam_w, cam_h, SpriteCount, data_json, CurrentRoom);
+		DrawTextureRec(
+			target.texture,
+			(Rectangle){0, 0, (float)target.texture.width, -(float)target.texture.height}, // flip Y
+			(Vector2){0, 0},
+			WHITE
+		);
 
-			EndDrawing();
-		#endif
+		EndDrawing();
+	#endif
 	}
 
 	#pragma region //end app

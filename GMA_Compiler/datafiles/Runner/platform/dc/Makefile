@@ -1,92 +1,97 @@
-TOPDIR ?= $(CURDIR)
+#---------------------------------------------------------------------------------
+.SUFFIXES:
+#---------------------------------------------------------------------------------
 
-#---------------------------------------------------------------------------------
-# TARGET is the name of the output
-# BUILD is the directory where object files & intermediate files will be placed
-# SOURCES is a list of directories containing source code
-# DATA is a list of directories containing data files
-# INCLUDES is a list of directories containing header files
-# RESOURCES is the directory where AppInfo template.rsf etc can be found
-# OUTPUT is the directory where final executables will be placed
-# GRAPHICS is a list of directories containing graphics files
-# GFXBUILD is the directory where converted graphics files will be placed
-#   If set to $(BUILD), it will statically link in the converted
-#   files as if they were data files.
-#
-# NO_SMDH: if set to anything, no SMDH file is generated.
-# ROMFS is the directory which contains the RomFS, relative to the Makefile (Optional)
-# APP_TITLE is the name of the app stored in the SMDH file (Optional)
-# APP_DESCRIPTION is the description of the app stored in the SMDH file (Optional)
-# APP_AUTHOR is the author of the app stored in the SMDH file (Optional)
-# ICON is the filename of the icon (.png), relative to the project folder.
-#   If not set, it attempts to use one of the following (in this order):
-#     - <Project name>.png
-#     - icon.png
-#     - <libctru folder>/default_icon.png
-#---------------------------------------------------------------------------------
+TOPDIR      ?= $(CURDIR)
 
 TARGET      := $(notdir $(CURDIR))
 BUILD       := build
 SOURCES     := source
 DATA        := data
 INCLUDES    := include
-GRAPHICS    := gfx
 OUTPUT      := output
-RESOURCES   := resources
 ROMFS       := romfs
-GFXBUILD    := $(ROMFS)/gfx
-
-
-OBJS = source/*.c romdisk.o
-KOS_ROMDISK_DIR = romdisk
+KOS_ROMDISK_DIR := romdisk
 
 #---------------------------------------------------------------------------------
-# list of directories containing libraries, this must be the top level containing
-# include and lib
+# Toolchain
 #---------------------------------------------------------------------------------
 
-KOS_CFLAGS += -I${KOS_PORTS}/include/raylib
+CC      := kos-cc
+CXX     := kos-c++
+LD      := kos-c++
 
 #---------------------------------------------------------------------------------
-# options for code generation
+# Flags
 #---------------------------------------------------------------------------------
 
-CXX = kos-c++
-CC = kos-cc
+CFLAGS      += -Wall -O2 -std=gnu11 -D_DEFAULT_SOURCE -D__RAYLIB__
+CXXFLAGS    += -Wall -O2 -std=gnu++14 -fno-exceptions -fno-rtti -D_DEFAULT_SOURCE -D__RAYLIB__
 
-CFLAGS += -Wall -std=c++14 -D_DEFAULT_SOURCE -Wno-missing-braces -D__RAYLIB__
+INCLUDE     := $(foreach dir,$(INCLUDES),-I$(CURDIR)/$(dir)) \
+               -I$(KOS_PORTS)/include/raylib
+
+LIBS        := -lraylib -lGL -lm -lkosutils -lADX
+
+#---------------------------------------------------------------------------------
+# Source discovery
+#---------------------------------------------------------------------------------
+
+CFILES      := $(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.c)))
+CPPFILES    := $(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.cpp)))
+
+OFILES      := $(CFILES:.c=.o) $(CPPFILES:.cpp=.o)
+
+#---------------------------------------------------------------------------------
+# Build logic
+#---------------------------------------------------------------------------------
 
 ifneq ($(BUILD),$(notdir $(CURDIR)))
 
 export TOPDIR      := $(CURDIR)
 export OUTPUT_DIR  := $(TOPDIR)/$(OUTPUT)
 export OUTPUT_FILE := $(OUTPUT_DIR)/$(TARGET)
-export VPATH       := $(foreach dir,$(SOURCES),$(CURDIR)/$(dir)) \
-                      $(foreach dir,$(GRAPHICS),$(CURDIR)/$(dir)) \
-                      $(foreach dir,$(DATA),$(CURDIR)/$(dir))
-
+export VPATH       := $(foreach dir,$(SOURCES),$(CURDIR)/$(dir))
 export DEPSDIR     := $(CURDIR)/$(BUILD)
 
-all: rm-elf $(TARGET)
+.PHONY: all clean run
 
-include $(KOS_BASE)/Makefile.rules
+all: bootstrap
+	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 
-clean: rm-elf
-	-rm -f $(OBJS)
+dc: all
 
-rm-elf:
-	-rm -f $(TARGET) romdisk.*
+bootstrap:
+	@[ -d $(BUILD) ] || mkdir -p $(BUILD)
+	@[ -d $(OUTPUT) ] || mkdir -p $(OUTPUT)
+
+clean:
+	@echo clean ...
+	@rm -rf $(BUILD) $(OUTPUT)
+
+run: all
+	$(KOS_LOADER) $(OUTPUT_FILE).elf
 
 #---------------------------------------------------------------------------------
-# Libraries needed to link into the executable.
+else
+
+#---------------------------------------------------------------------------------
+# Inside build directory
 #---------------------------------------------------------------------------------
 
-$(TARGET): $(OBJS)
-	$(CXX) -o $(TARGET) $(OBJS) -lraylib -lGL -lm -lkosutils -lADX
+$(OUTPUT_FILE).elf: $(OFILES) $(KOS_ROMDISK_OBJ)
+	$(LD) -o $@ $(OFILES) $(KOS_ROMDISK_OBJ) $(LIBS)
+	@echo built ... $(notdir $@)
 
-run: $(TARGET)
-	$(KOS_LOADER) $(TARGET)
+%.o: %.c
+	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
-dist: $(TARGET)
-	-rm -f $(OBJS) romdisk.img
-	$(KOS_STRIP) $(TARGET)
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) $(INCLUDE) -c $< -o $@
+
+clean:
+	@rm -f *.o *.elf
+
+#---------------------------------------------------------------------------------
+endif
+#---------------------------------------------------------------------------------

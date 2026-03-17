@@ -10,8 +10,8 @@
 //check gamepad button is held
 
 #ifdef __DKPRO__
-	bool gamepad_button_check_pressed(u32 ButtonPressed) {
-		if (g_keysDown & ButtonPressed)
+	bool gamepad_button_check_pressed(int pad, u32 Button) {
+		if (g_keysDown & Button)
 			return true;
 		else
 			return false;
@@ -21,8 +21,8 @@
 //check gamepad button is pressed
 
 #ifdef __DKPRO__
-	bool gamepad_button_check(u32 ButtonPressed) {
-		if (g_keysHeld & ButtonPressed)
+	bool gamepad_button_check(int pad, u32 Button) {
+		if (g_keysHeld & Button)
 			return true;
 		else
 			return false;
@@ -32,12 +32,26 @@
 //check gamepad button is released
 
 #ifdef __DKPRO__
-	bool gamepad_button_check_released(u32 ButtonPressed) {
-		if (g_keysUp & ButtonPressed)
+	bool gamepad_button_check_released(int pad, u32 Button) {
+		if (g_keysUp & Button)
 			return true;
 		else
 			return false;
 	}
+#endif
+
+#ifdef __RAYLIB__
+    bool gamepad_button_check_pressed(int device, int button){
+        return IsGamepadButtonPressed(device, button);
+    }
+
+    bool gamepad_button_check(int device, int button){
+        return IsGamepadButtonDown(device, button);
+    }
+
+    bool gamepad_button_check_released(int device, int button){
+        return IsGamepadButtonReleased(device, button);
+    }
 #endif
 #pragma endregion
 

@@ -57,7 +57,10 @@ typedef struct
 {
     float x;
     float y;
-    int sprite_index;
+    float scale_x;
+    float scale_y;
+    float sprite_rot;
+    int rotation;
     #ifdef __3DS__
     C2D_Sprite spr;
     #elif __RAYLIB__
@@ -73,21 +76,13 @@ extern size_t SpriteCount;
 
 //input
 #ifdef __DKPRO__
-    bool gamepad_button_check_pressed(u32 Button);
-    bool gamepad_button_check(u32 Button);
-    bool gamepad_button_check_released(u32 Button);
+    bool gamepad_button_check_pressed(int pad, u32 Button);
+    bool gamepad_button_check(int pad, u32 Button);
+    bool gamepad_button_check_released(int pad, u32 Button);
 #elif __RAYLIB__
-    bool gamepad_button_check_pressed(int device, int button){
-        return IsGamepadButtonPressed(device, button);
-    }
-
-    bool gamepad_button_check(int device, int button){
-        return IsGamepadButtonDown(device, button);
-    }
-
-    bool gamepad_button_check_released(int device, int button){
-        return IsGamepadButtonReleased(device, button);
-    }
+    bool gamepad_button_check_pressed(int device, int button);
+    bool gamepad_button_check(int device, int button);
+    bool gamepad_button_check_released(int device, int button);
 #endif
 
 bool runner_sprite_is_object(int index);
