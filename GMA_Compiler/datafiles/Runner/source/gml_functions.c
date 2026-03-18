@@ -7,18 +7,6 @@
 #include <stdio.h>
 
 #pragma region //Input functions
-//check gamepad button is held
-
-#ifdef __DKPRO__
-	bool gamepad_button_check_pressed(int pad, u32 Button) {
-		if (g_keysDown & Button)
-			return true;
-		else
-			return false;
-	}
-#endif
-
-//check gamepad button is pressed
 
 #ifdef __DKPRO__
 	bool gamepad_button_check(int pad, u32 Button) {
@@ -27,18 +15,22 @@
 		else
 			return false;
 	}
-#endif
 
-//check gamepad button is released
-
-#ifdef __DKPRO__
 	bool gamepad_button_check_released(int pad, u32 Button) {
 		if (g_keysUp & Button)
 			return true;
 		else
 			return false;
 	}
+
+	bool gamepad_button_check_pressed(int pad, u32 Button) {
+		if (g_keysDown & Button)
+			return true;
+		else
+			return false;
+	}
 #endif
+
 
 #ifdef __RAYLIB__
     bool gamepad_button_check_pressed(int device, int button){
