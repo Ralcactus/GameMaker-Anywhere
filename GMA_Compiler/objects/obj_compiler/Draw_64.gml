@@ -129,7 +129,7 @@ if (btn_exp_hover && mouse_check_button_pressed(mb_left)){
 	else if (global.publisher == "")
 	    show_message("Please enter a publisher name!");
 	else
-		scr_compile();
+		scr_compileSETUP();
 }
 
 #region export modes

@@ -1,8 +1,6 @@
-function run_commandpowershell(_destination, _ps_block)
-{
-    var powershell = "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe";
-    var command = string_replace_all("Set-Location -LiteralPath '" + _destination + "';" + _ps_block, "\"", "\\\"");
-
-    file_text_enable_stddesc(true);
-    global.shellid = execute_shell(powershell, "-NoProfile -ExecutionPolicy Bypass -Command \"" + command + "\"");
+function run_commandpowershell(destination, command)
+{	
+    var REALCOMMAND = "powershell.exe -NoProfile -ExecutionPolicy Bypass -Command \"Set-Location -Path '" + destination + "'; " + command + "\"";
+   
+   return ProcessExecuteAsync(REALCOMMAND);
 }

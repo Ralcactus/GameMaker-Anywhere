@@ -1,44 +1,48 @@
+function scr_compileSETUP(){
+    global.exporting = true;
+	
+	if (directory_exists(destination)){
+		//delete the old build
+	    delete_powershell_window = run_commandpowershell("C:\\", "Remove-Item -LiteralPath 'C:\\GM_Anywhere' -Recurse -Force -ErrorAction SilentlyContinue");
+		scr_compileMIDDLE1();
+	}
+	else{
+		//copy the runner to the compile folder on the C drive
+		copy_powershell_window = run_commandpowershell("C:\\", "Copy-Item -Path \"" + runnerfolder + " -Destination \"" + destination + " -Recurse");
+		scr_compileMIDDLE2();
+	}
+}
+
+//delete old builds
+function scr_compileMIDDLE1(){
+	if (CompletionStatusFromExecutedProcess(delete_powershell_window)){
+		//copy the runner to the compile folder on the C drive
+		copy_powershell_window = run_commandpowershell("C:\\", "Copy-Item -Path \"" + runnerfolder + " -Destination \"" + destination + " -Recurse");
+		scr_compileMIDDLE2();
+		exit;
+	}
+	else
+		scr_compileMIDDLE1();
+}
+
+//copy runner
+function scr_compileMIDDLE2(){
+	if (CompletionStatusFromExecutedProcess(copy_powershell_window))
+		scr_compile();
+	else
+		scr_compileMIDDLE2();
+}
+
 //This is the script that creates the data.win, copys sprites, and makes the t3s for compiling
 function scr_compile()
 {
-    global.exporting = true;
-    var yyp = global.selected_yyp;
+	// create sprites.t3s
+	var t3s_path = destination + "\\gfx\\" + "sprites.t3s";
+	var t3s_file = file_text_open_write(t3s_path);
+	file_text_write_string(t3s_file, "--atlas\n");
 
-	// create folders for exports
-	var runnerfolder = working_directory + "Runner";
-	var destination = "C:\\GM_Anywhere\\Runner";
-	var sprites_root = destination + "\\gfx\\";
-
-
-
-	//kill the previous build
-    if (directory_exists("C:\\GM_Anywhere") && deletedlastcompile == false){
-        if (!deleting_lastcompile){
-            deleting_lastcompile = true;
-            run_commandpowershell("C:\\", "Remove-Item -LiteralPath 'C:\\GM_Anywhere' -Recurse -Force -ErrorAction SilentlyContinue");
-        }
-        exit;
-    }
-
-	deletedlastcompile = true;
-
-    
-	directory_create("C:\\GM_Anywhere");
-	directory_create(destination);
-	directory_create(sprites_root);
-	
-	//copy the runner to the compile folder on the C drive
-	var arguments = "\"" + runnerfolder + "\" \"" + destination + "\" /E /R:0 /W:0";
-	execute_shell("C:\\Windows\\System32\\robocopy.exe", arguments);
-	
-
-    // create sprites.t3s
-    var t3s_path = sprites_root + "sprites.t3s";
-    var t3s_file = file_text_open_write(t3s_path);
-    file_text_write_string(t3s_file, "--atlas\n");
-    
     // json parse
-    var yypbuffer = buffer_load(yyp);
+    var yypbuffer = buffer_load(global.selected_yyp);
     var yypdata = buffer_read(yypbuffer, buffer_string);
     buffer_delete(yypbuffer);
     var yyp_json = json_parse(yypdata);
@@ -59,7 +63,7 @@ function scr_compile()
         var _id = yyp_json.resources[i].id;
         array_push(all_resources, {name: _id.name});
         
-        var file_buffer = buffer_load(filename_dir(yyp) + "/" + _id.path);
+        var file_buffer = buffer_load(filename_dir(global.selected_yyp) + "/" + _id.path);
         var yyfileFAKE = buffer_read(file_buffer, buffer_string);
         buffer_delete(file_buffer);
         yyfileFAKE = string_replace_all(yyfileFAKE, ",}", "}");
@@ -144,9 +148,15 @@ function scr_compile()
         
         if (IsSprite) {
             show_debug_message("Sprite: " + yyfile.name);
-            
-            directory_create(sprites_root + yyfile.name + "\\");
-            
+            var spriteoutput;
+			
+			if (global.export_mode == Export.CIA || global.export_mode == Export._3DSX)
+	            spriteoutput = destination + "\\gfx\\";
+				
+			if (global.export_mode == Export.EXE)
+				spriteoutput = destination + "\\output\\sprites\\";
+				
+            directory_create(spriteoutput + yyfile.name + "\\");
             var sprite_rel_dir = "sprites/" + yyfile.name + "/";
             var sprite_frames = [];
             
@@ -154,8 +164,8 @@ function scr_compile()
                 var frame_name = yyfile.frames[f].name;
                 array_push(sprite_frames, frame_name);
                 
-                file_copy(filename_dir(yyp) + "\\sprites\\" + yyfile.name + "\\" + frame_name + ".png", 
-                         sprites_root + yyfile.name + "\\" + frame_name + ".png");
+                file_copy(filename_dir(global.selected_yyp) + "\\sprites\\" + yyfile.name + "\\" + frame_name + ".png", 
+                         spriteoutput + yyfile.name + "\\" + frame_name + ".png");
 						 
                 file_text_write_string(t3s_file, yyfile.name + "/" + frame_name + ".png\n");
             }
@@ -186,8 +196,8 @@ function scr_compile()
                     spr_name = sid.name;
             }
             
-            var steppath = filename_dir(filename_dir(yyp) + "/" + _id.path) + "/Step_0.gml";
-            var createpath = filename_dir(filename_dir(yyp) + "/" + _id.path) + "/Create_0.gml";
+            var steppath = filename_dir(filename_dir(global.selected_yyp) + "/" + _id.path) + "/Step_0.gml";
+            var createpath = filename_dir(filename_dir(global.selected_yyp) + "/" + _id.path) + "/Create_0.gml";
             
             var create_code = "";
             var step_code = "";
@@ -247,10 +257,24 @@ function scr_compile()
     };
     
 	//create the data file
-	directory_create(destination + "\\romfs\\");
-    var file = file_text_open_write(destination + "\\romfs\\" + "data.gad");
-    file_text_write_string(file, json_stringify(export_json, true));
-    file_text_close(file);
+	//3DS
+	if (global.export_mode == Export.CIA || global.export_mode == Export._3DSX){
+		directory_create(destination + "\\romfs\\");
+	    var file = file_text_open_write(destination + "\\romfs\\" + "data.gad");
+	    file_text_write_string(file, json_stringify(export_json, true));
+	    file_text_close(file);
+	}    
+	
+	//windows
+	if (global.export_mode == Export.EXE){
+		directory_create(destination + "\\output\\");
+	    var file = file_text_open_write(destination + "\\output\\" + "data.gad");
+	    file_text_write_string(file, json_stringify(export_json, true));
+	    file_text_close(file);
+	}
+	
+	
+	
     file_text_close(t3s_file);
 	
 	//create the 3ds app info
@@ -271,18 +295,20 @@ function scr_compile()
         file_copy(global.iconpath, destination + "\\resources\\icon.png");
 	}
 	
-	//cia
+	//3ds cia
 	if (global.export_mode == 0)
-		run_commandpowershell("C:\\GM_Anywhere\\Runner", "& make cia;");
+		compile_powershell_window = run_commandpowershell("C:\\GM_Anywhere\\Runner", "make cia");
 			
-	//3dsx
+	//3ds 3dsx
 	if (global.export_mode == 1)
-		run_commandpowershell("C:\\GM_Anywhere\\Runner", "& make 3dsx;");
-		
-	//reset vars
-	deletedlastcompile = false;
-	deleting_lastcompile = false;
+		compile_powershell_window = run_commandpowershell("C:\\GM_Anywhere\\Runner", "make 3dsx");
+					
+	//windows exe
+	if (global.export_mode == 2)
+		compile_powershell_window = run_commandpowershell("C:\\GM_Anywhere\\Runner", "make win");
 	
-	//finsih!!!	
-	show_message("Compiling now!\nCheck " + destination + "\\output\\ " + " For the rom!")
+	//finsih!!!
+	logging = true;
+	global.exporting = false;
+	//show_message("Compiling now!\nCheck " + destination + "\\output\\ " + " For the rom!")
 }

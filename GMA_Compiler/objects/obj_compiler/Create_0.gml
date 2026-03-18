@@ -1,5 +1,11 @@
-deleting_lastcompile = false;
-deletedlastcompile = false;
+//folders location for exports
+runnerfolder = working_directory + "Runner\\";
+destination = "C:\\GM_Anywhere\\Runner\\";
+
+logging = false;
+delete_powershell_window = -40;
+copy_powershell_window = -40;
+compile_powershell_window = -40;
 global.selected_yyp = "";
 global.game_name = "";
 global.title_id = "";
@@ -30,8 +36,15 @@ global.shellid = noone;
 
 keyboard_string = "";
 
+enum Export{
+	CIA = 0,
+	_3DSX = 1,
+	EXE = 2
+}
+
 global.export_mode = 0;
 modes = [
-    {label:"3DS cia", number_ver:0},
-	{label:"3DS 3dsx", number_ver:1}
+    {label:"3DS cia", number_ver: Export.CIA},
+	{label:"3DS 3dsx", number_ver: Export._3DSX},
+	{label:"Windows exe", number_ver: Export.EXE}
 ];

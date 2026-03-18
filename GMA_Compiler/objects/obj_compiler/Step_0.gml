@@ -1,4 +1,6 @@
-if (global.exporting) exit; //dont take input
+//dont take inputs
+if (global.exporting)
+	exit; 
 
 if (global.current_field >= 0) {
     switch(global.current_field) {
@@ -24,10 +26,12 @@ if (global.current_field >= 0) {
     }
 }
 
-if (deleting_lastcompile){
-	if (!directory_exists("C:\\GM_Anywhere")){
-		deleting_lastcompile = false;
-		deletedlastcompile = true;
-		scr_compile();
-	}
+if (CompletionStatusFromExecutedProcess(compile_powershell_window) && logging == true){
+	run_commandpowershell(destination+"\\output\\", "explorer .")
+	logging = false;
+}
+
+/*
+if (CompletionStatusFromExecutedProcess(pid)){
+	show_message("done");
 }
