@@ -1,4 +1,15 @@
 function scr_compileSETUP(){
+	//enviorment variable checks
+	if (environment_get_variable("DEVKITPRO") == ""){
+		show_message("DevKitPro is not installed!");
+		exit;
+	}
+	
+	if (!directory_exists("C:\\devkitPro\\portlibs\\3ds\\") && (global.export_mode == Export.CIA || global.export_mode == Export._3DSX)){
+		show_message("DevKitPro 3DS portlibs are not installed!");
+		exit;
+	}
+
     global.exporting = true;
 	
 	if (directory_exists(destination)){
