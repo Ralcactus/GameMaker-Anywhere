@@ -109,6 +109,36 @@
 #elif __RAYLIB__
     #include <raylib.h>
 
+    // Safely loads a Texture2D from the sprite section of the gad file by sprite name
+    Texture2D SafeLoadSpriteTexture(const cJSON* root, const char* spriteName) {
+        if (!root || !spriteName) return (Texture2D){0};
+        const cJSON* sprites = cJSON_GetObjectItemCaseSensitive(root, "Sprites");
+        if (!sprites) return (Texture2D){0};
+        const cJSON* all_sprites = cJSON_GetObjectItemCaseSensitive(sprites, "all_sprites");
+        if (!all_sprites) return (Texture2D){0};
+
+        const cJSON* sprite = NULL;
+        cJSON_ArrayForEach(sprite, all_sprites) {
+            const cJSON* name = cJSON_GetObjectItemCaseSensitive(sprite, "name");
+            if (!name || !name->valuestring) continue;
+            if (strcmp(name->valuestring, spriteName) == 0) {
+                const cJSON* dir = cJSON_GetObjectItemCaseSensitive(sprite, "dir");
+                const cJSON* frames = cJSON_GetObjectItemCaseSensitive(sprite, "frames");
+                if (!dir || !frames || cJSON_GetArraySize(frames) == 0) return (Texture2D){0};
+                const cJSON* frame = cJSON_GetArrayItem(frames, 0);
+                if (!frame || !frame->valuestring) return (Texture2D){0};
+                char path[512];
+                snprintf(path, sizeof(path), "%s%s.png", dir->valuestring, frame->valuestring);
+                if (FileExists(path)) {
+                    return LoadTexture(path);
+                } else {
+                    printf("Texture file not found: %s\n", path);
+                    return (Texture2D){0};
+                }
+            }
+        }
+        return (Texture2D){0};
+    }
     Color GetCurrentRoomBgColor(const char* json_text, const char* room_name)
     {
         Color out = WHITE;
@@ -196,7 +226,7 @@
                     tex.height * sprites[i].scale_y
                 },
                 (Vector2){0, 0},
-                sprites[i].rotation * (180.0f / M_PI),
+                -sprites[i].rotation,
                 WHITE
             );
         }
@@ -204,14 +234,26 @@
         EndTextureMode();
     }
 
-    void scr_drawroom_assets(size_t currentsprite_count, Texture2D Spritesheet, float sprite_x, float sprite_y, float sprite_scalex, float sprite_scaley, float sprite_rot, cJSON* root, cJSON* spr){
-        sprites[currentsprite_count].texture = Spritesheet;
-
-        sprites[currentsprite_count].x = sprite_x;
-        sprites[currentsprite_count].y = sprite_y;
-        sprites[currentsprite_count].scale_x = sprite_scalex;
-        sprites[currentsprite_count].scale_y = sprite_scaley;
-        sprites[currentsprite_count].rotation = sprite_rot;
+    void scr_drawroom_assets(size_t currentsprite_count,
+                            const cJSON* root,
+                            cJSON* spr,
+                            float sprite_x,
+                            float sprite_y,
+                            float sprite_scalex,
+                            float sprite_scaley,
+                            float sprite_rot) {
+        Sprite* sp = &sprites[currentsprite_count];
+        // Load the texture for this sprite using the sprite name from spr
+        if (spr && spr->valuestring) {
+            sp->texture = SafeLoadSpriteTexture(root, spr->valuestring);
+        } else {
+            sp->texture = (Texture2D){0};
+        }
+        sp->x = sprite_x;
+        sp->y = sprite_y;
+        sp->scale_x = sprite_scalex;
+        sp->scale_y = sprite_scaley;
+        sp->rotation = sprite_rot;
     }
 
 #endif

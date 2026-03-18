@@ -207,10 +207,20 @@ static void CreateCurrentRoomAssets(const char* json_text)
 				float float_y = (float)y->valuedouble;
 				float float_scalex = (float)scale_x->valuedouble;
 				float float_scaley = (float)scale_y->valuedouble;
-				float float_rot = (float)rot->valuedouble * (float)M_PI / -180;
-
-				//draw the sprite
-				scr_drawroom_assets(SpriteCount, spriteSheet, float_x, float_y, float_scalex, float_scaley, float_rot, root, spr);
+				#ifdef __3DS__
+					float float_rot = (float)rot->valuedouble * (float)M_PI / -180; // degrees to negative radians
+					scr_drawroom_assets(SpriteCount, spriteSheet, float_x, float_y, float_scalex, float_scaley, float_rot, root, spr);
+				#elif __RAYLIB__
+					float float_rot = (float)rot->valuedouble; // negative degrees for Raylib
+					scr_drawroom_assets(SpriteCount,          /* index we are filling          */
+						root,                /* full JSON root (needed by GetSpriteTexture) */
+						spr,                 /* the JSON node that holds the sprite name */
+						float_x,
+						float_y,
+						float_scalex,
+						float_scaley,
+						float_rot);
+				#endif
 
 				//set these to not have an object id
 				sprite_is_object[SpriteCount] = false;
@@ -302,16 +312,16 @@ static void CreateCurrentRoomObjects(const char* json_text)
 					float float_y = (float)y->valuedouble;
 					float float_scalex = (float)scale_x->valuedouble;
 					float float_scaley = (float)scale_y->valuedouble;
-					float float_rot = (float)rot->valuedouble * (float)M_PI / -180;
-
 					#ifdef __3DS__
+						float float_rot = (float)rot->valuedouble * (float)M_PI / -180; // degrees to negative radians
 						Sprite* sp = &sprites[SpriteCount];
 						C2D_SpriteFromSheet(&sp->spr, spriteSheet, GetSpriteNumberByName(root, spriteName));
 						C2D_SpriteSetPos(&sp->spr, float_x, float_y);
 						C2D_SpriteSetScale(&sp->spr, float_scalex, float_scaley);
 						C2D_SpriteSetRotation(&sp->spr, float_rot);
 					#elif __RAYLIB__
-						sprites[SpriteCount].texture = spriteSheet;
+						float float_rot = (float)rot->valuedouble; // negative degrees for Raylib
+						sprites[SpriteCount].texture = SafeLoadSpriteTexture(root, spriteName);
 						sprites[SpriteCount].x = float_x;
 						sprites[SpriteCount].y = float_y;
 						sprites[SpriteCount].scale_x = float_scalex;
@@ -345,6 +355,13 @@ static void Runner_ClearRoomState(void)
     GML_ResetCustomVariables();
 }
 
+void InitCurrentRoomObjects(const char* json_text)
+{
+	//create new objects and assets
+	CreateCurrentRoomAssets(json_text);
+	CreateCurrentRoomObjects(json_text);
+}
+
 //Init the current room (create assets, objects, run creation code, ect)
 void InitCurrentRoom(const char* json_text)
 {
@@ -354,11 +371,6 @@ void InitCurrentRoom(const char* json_text)
 
 	//clear the previous room
 	Runner_ClearRoomState();
-
-	//create new objects and assets
-	CreateCurrentRoomAssets(json_text);
-	CreateCurrentRoomObjects(json_text);
-
 
 	//set room size
 	cJSON_ArrayForEach(room, all_rooms)
@@ -414,7 +426,7 @@ int main()
 		spriteSheet = C2D_SpriteSheetLoad("romfs:/gfx/sprites.t3x");
 	#elif __RAYLIB__
 		//load the data.win
-		FILE* datawin = fopen("assets/data.gad", "rb");
+		FILE* datawin = fopen("data.gad", "rb");
 		fseek(datawin, 0, SEEK_END);
 		long size = ftell(datawin);
 		fseek(datawin, 0, SEEK_SET);
@@ -433,6 +445,22 @@ int main()
 
 	//load the first room
 	InitCurrentRoom(data_json);
+
+	#ifdef __RAYLIB__
+		InitWindow(GetCurrentRoomSize(data_json, "width"),
+			GetCurrentRoomSize(data_json, "height"),
+			GetGameName(data_json)->valuestring);
+
+		RenderTexture2D target = LoadRenderTexture(GetRenderWidth(), GetRenderHeight());
+
+		SetTargetFPS(60);
+
+		if (!IsAudioDeviceReady()) {
+			InitAudioDevice();
+		}
+	#endif
+
+	InitCurrentRoomObjects(data_json);
 		
 	cJSON* root = cJSON_Parse(data_json);
 	//carry root to gml_runner
@@ -461,20 +489,6 @@ int main()
 	//sily cat :D
 	//draw_sprite(0, spriteSheet, 50, 50);
 	#pragma endregion
-
-	#ifdef __RAYLIB__
-		InitWindow(GetCurrentRoomSize(data_json, "width"),
-				GetCurrentRoomSize(data_json, "height"),
-				GetGameName(data_json)->valuestring);
-
-		RenderTexture2D target = LoadRenderTexture(GetRenderWidth(), GetRenderHeight());
-
-		SetTargetFPS(60);
-
-		if (!IsAudioDeviceReady()) {
-			InitAudioDevice();
-		}
-	#endif
 
 	#ifdef __RAYLIB__
 		while (!WindowShouldClose())

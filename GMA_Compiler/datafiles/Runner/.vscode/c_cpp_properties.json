@@ -12,7 +12,8 @@
                 "_UNICODE",
                 "GRAPHICS_API_OPENGL_33",
                 "PLATFORM_DESKTOP",
-                "__RAYLIB__"
+                "__RAYLIB__",
+                "_USE_MATH_DEFINES"
             ],
             "compilerPath": "C:/raylib/w64devkit/bin/gcc.exe",
             "cStandard": "c99",

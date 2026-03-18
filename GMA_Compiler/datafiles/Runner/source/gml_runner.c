@@ -844,6 +844,7 @@ static void runner_interpret_room_goto(int object_index, const char* code, Sprit
 
 			CurrentRoom = roomname;
 			InitCurrentRoom(data_json);
+			InitCurrentRoomObjects(data_json);
 			printf("Going to room: %s\n", CurrentRoom);
 
             cursor = fakecursor;
@@ -936,6 +937,9 @@ static void runner_interpret_camera_set_view_pos(int object_index, const char* c
 	#ifdef __3DS__
 		object.x = sprites[object_index].spr.params.pos.x;
 		object.y = sprites[object_index].spr.params.pos.y;
+	#elif __RAYLIB__
+		int screen_w = GetRenderWidth();
+		int screen_h = GetRenderHeight();
 	#endif
     const char* cursor = code;
 

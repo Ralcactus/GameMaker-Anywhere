@@ -1,10 +1,6 @@
 #include "cJSON.h"
 #include <stdbool.h>
 
-#ifndef M_PI
-#    define M_PI 3.14159265358979323846
-#endif
-
 
 #ifdef __3DS__
     #include <3ds.h>
@@ -13,13 +9,8 @@
 #ifdef __RAYLIB__
 
     #include <raylib.h>
-    typedef struct {
-        char name[128];
-        Texture2D tex;
-        bool loaded;
-    } SpriteCache;
-
-    Texture2D GetSpriteTexture(const cJSON* root, const char* spriteName);
+#include <raylib.h>
+Texture2D GetSpriteTexture(const cJSON* root, const char* spriteName);
 #endif
 
 extern const char* CurrentRoom;
@@ -30,5 +21,8 @@ extern float cam_y;
 extern float cam_w;
 extern float cam_h;
 
+extern char* data_json;
+
 int GetSpriteNumberByName(const cJSON* root, const char* sprite_name);
 void InitCurrentRoom(const char* json_text);
+void InitCurrentRoomObjects(const char* json_text);
