@@ -167,6 +167,9 @@ function scr_compile()
 			if (global.export_mode == Export.EXE)
 				spriteoutput = destination + "\\output\\sprites\\";
 				
+			if (global.export_mode == Export.DC)
+				spriteoutput = destination + "\\romdisk\\sprites\\";
+				
             directory_create(spriteoutput + yyfile.name + "\\");
             var sprite_rel_dir = "sprites/" + yyfile.name + "/";
             var sprite_frames = [];
@@ -284,7 +287,13 @@ function scr_compile()
 	    file_text_close(file);
 	}
 	
-	
+	//Dreamcast
+	if (global.export_mode == Export.DC){
+		directory_create(destination + "\\romdisk\\");
+	    var file = file_text_open_write(destination + "\\romdisk\\" + "data.gad");
+	    file_text_write_string(file, json_stringify(export_json, true));
+	    file_text_close(file);
+	}
 	
     file_text_close(t3s_file);
 	

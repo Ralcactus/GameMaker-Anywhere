@@ -109,6 +109,15 @@
 #elif __RAYLIB__
     #include <raylib.h>
 
+    static bool FileExistsDC(const char *path) {
+        FILE *f = fopen(path, "rb");
+        if (f) {
+            fclose(f);
+            return true;
+        }
+        return false;
+    }
+
     // Safely loads a Texture2D from the sprite section of the gad file by sprite name
     Texture2D SafeLoadSpriteTexture(const cJSON* root, const char* spriteName) {
         if (!root || !spriteName) return (Texture2D){0};
@@ -128,9 +137,15 @@
                 const cJSON* frame = cJSON_GetArrayItem(frames, 0);
                 if (!frame || !frame->valuestring) return (Texture2D){0};
                 char path[512];
-                snprintf(path, sizeof(path), "%s%s.png", dir->valuestring, frame->valuestring);
-                if (FileExists(path)) {
-                    return LoadTexture(path);
+                #ifdef __DC__
+                    snprintf(path, sizeof(path), "/rd/%s%s.png", dir->valuestring, frame->valuestring);
+                    if (FileExists(path)) {
+                        return LoadTexture(path);
+                #else
+                    snprintf(path, sizeof(path), "%s%s.png", dir->valuestring, frame->valuestring);
+                    if (FileExists(path)) {
+                        return LoadTexture(path);
+                #endif
                 } else {
                     printf("Texture file not found: %s\n", path);
                     return (Texture2D){0};

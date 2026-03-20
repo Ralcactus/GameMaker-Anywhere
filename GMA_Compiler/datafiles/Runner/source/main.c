@@ -393,7 +393,7 @@ void InitCurrentRoom(const char* json_text)
 
 
 
-int main()
+int main(int argc, char **argv)
 {
 	#pragma region //init stuff
 	// Init libs
@@ -425,8 +425,22 @@ int main()
 		// Load sprite sheet
 		spriteSheet = C2D_SpriteSheetLoad("romfs:/gfx/sprites.t3x");
 	#elif __RAYLIB__
-		//load the data.win
-		FILE* datawin = fopen("data.gad", "rb");
+		// Open a safe default window first
+		InitWindow(640, 480, "Loading...");
+		SetTargetFPS(60);
+
+		printf("Loading data.gad...\n");
+
+		// Now load the file
+		#ifdef __DC__
+			FILE* datawin = fopen("/rd/data.gad", "rb");
+		#else
+			FILE* datawin = fopen("data.gad", "rb");
+		#endif
+		if (!datawin) {
+			printf("Failed to open data.gad\n");
+			return -1;
+		}
 		fseek(datawin, 0, SEEK_END);
 		long size = ftell(datawin);
 		fseek(datawin, 0, SEEK_SET);
@@ -435,7 +449,6 @@ int main()
 		data_json[size] = '\0';
 		fclose(datawin);
 	#endif
-
 
 	printf("\x1b[45m");
 	//set the current room
@@ -447,17 +460,22 @@ int main()
 	InitCurrentRoom(data_json);
 
 	#ifdef __RAYLIB__
-		InitWindow(GetCurrentRoomSize(data_json, "width"),
-			GetCurrentRoomSize(data_json, "height"),
-			GetGameName(data_json)->valuestring);
+
+		int newWidth  = (int)GetCurrentRoomSize(data_json, "width");
+		int newHeight = (int)GetCurrentRoomSize(data_json, "height");
+		const char* gameName = GetGameName(data_json)->valuestring;
+
+		// Resize the window to match the game data
+		SetWindowSize(newWidth, newHeight);
+		SetWindowTitle(gameName);
 
 		RenderTexture2D target = LoadRenderTexture(GetRenderWidth(), GetRenderHeight());
 
-		SetTargetFPS(60);
-
-		if (!IsAudioDeviceReady()) {
-			InitAudioDevice();
-		}
+		#ifndef __DC__
+			if (!IsAudioDeviceReady()) {
+				InitAudioDevice();
+			}
+		#endif
 	#endif
 
 	InitCurrentRoomObjects(data_json);
@@ -536,9 +554,12 @@ int main()
 	cJSON_Delete(root);
 
 	#ifdef __RAYLIB__
-		CloseAudioDevice();
+		#ifndef __DC__
+			CloseAudioDevice();
+		#endif
 		CloseWindow();
 	#endif
+
 
 	#pragma endregion
 }

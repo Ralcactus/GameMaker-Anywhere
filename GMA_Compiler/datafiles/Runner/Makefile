@@ -6,11 +6,11 @@
 
 #Dreamcast
 dc:
-	$(MAKE) -f platform/dc/Makefile $@
+	$(MAKE) -f platform/dc/Makefile
 
 #Windows
 win:
-	mingw32-make -f platform/windows/Makefile
+	C:/raylib/w64devkit/bin/mingw32-make -f platform/windows/Makefile
 
 #Wii U
 wuhb:

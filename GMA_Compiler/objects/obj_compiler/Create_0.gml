@@ -39,12 +39,14 @@ keyboard_string = "";
 enum Export{
 	CIA = 0,
 	_3DSX = 1,
-	EXE = 2
+	EXE = 2,
+	DC = 3
 }
 
 global.export_mode = 0;
 modes = [
     {label:"3DS cia", number_ver: Export.CIA},
 	{label:"3DS 3dsx", number_ver: Export._3DSX},
-	{label:"Windows exe", number_ver: Export.EXE}
+	{label:"Windows exe (Raylib)", number_ver: Export.EXE},
+	{label:"Dreamcast (DreamSDK & Raylib)", number_ver: Export.DC}
 ];
