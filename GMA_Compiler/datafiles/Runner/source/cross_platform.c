@@ -139,8 +139,12 @@
                 char path[512];
                 #ifdef __DC__
                     snprintf(path, sizeof(path), "/rd/%s%s.png", dir->valuestring, frame->valuestring);
-                    if (FileExists(path)) {
-                        return LoadTexture(path);
+                    if (FileExistsDC(path)) {
+                        Image img = LoadImage(path);
+                        ImageToPOT(&img, (Color){0, 0, 0, 0});
+                        Texture2D tex = LoadTextureFromImage(img);
+                        UnloadImage(img);
+                        return tex;
                 #else
                     snprintf(path, sizeof(path), "%s%s.png", dir->valuestring, frame->valuestring);
                     if (FileExists(path)) {
