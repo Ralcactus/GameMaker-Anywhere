@@ -1,0 +1,1 @@
+draw_sprite_tiled_ext(spr_secretPT_bg, 0, _x, _y, 1, 1, c_dkgray, 1);

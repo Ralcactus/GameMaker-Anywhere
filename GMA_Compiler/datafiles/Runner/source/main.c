@@ -514,6 +514,13 @@ int main(int argc, char **argv)
 		while (aptMainLoop())
 	#endif
 	{
+	
+	#ifdef __3DS__
+		hidScanInput();
+		g_keysDown = hidKeysDown();
+		g_keysHeld = hidKeysHeld();
+		g_keysUp   = hidKeysUp();
+	#endif
 	#ifdef __RAYLIB__
 		BeginDrawing();
 		ClearBackground(BLACK);
