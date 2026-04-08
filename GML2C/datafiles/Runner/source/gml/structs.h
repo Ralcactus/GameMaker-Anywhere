@@ -2,6 +2,12 @@
 #include <string.h>
 
 enum CollisionTypes{
+    AUTOMATIC,
+    FULL_IMAGE,
+    MANUAL
+};
+
+enum BBoxTypes{
     RECTANGLE,
     RECTANGLE_WITH_ROTATION,
     ELLIPSE,
@@ -20,15 +26,17 @@ typedef struct{
     //General metadata
     int width, height,
         originX, originY,
-        fps,
         frameSpd; //0 -> Frames per second, 1 -> Frames per game frame
+    
+    float fps;
 
     //Collision Mask
     int maskLeft,
     maskTop,
     maskRight,
     maskBottom,
-    type;
+    type,
+    bboxType;
     
     Frames* frames;
 } GMSprite;
