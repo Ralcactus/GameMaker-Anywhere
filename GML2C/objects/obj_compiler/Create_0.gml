@@ -1,6 +1,6 @@
 //folders location for exports
 runnerfolder = working_directory + "Runner\\";
-destination = "C:\\GM_Anywhere\\Compiled\\";
+destination = "C:\\GM_Anywhere\\Runner\\";
 
 logging = false;
 delete_powershell_window = -40;

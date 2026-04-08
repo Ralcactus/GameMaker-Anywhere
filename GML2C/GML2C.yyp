@@ -30,7 +30,6 @@
   ],
   "IncludedFiles":[
     {"$GMIncludedFile":"","%Name":".gitattributes","CopyToMask":-1,"filePath":"datafiles/Runner","name":".gitattributes","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
-    {"$GMIncludedFile":"","%Name":"main.d","CopyToMask":-1,"filePath":"datafiles/Runner/build","name":"main.d","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"main.code-workspace","CopyToMask":-1,"filePath":"datafiles/Runner","name":"main.code-workspace","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"Makefile","CopyToMask":-1,"filePath":"datafiles/Runner","name":"Makefile","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"Makefile","CopyToMask":-1,"filePath":"datafiles/Runner/platform/3ds","name":"Makefile","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
@@ -47,12 +46,13 @@
     {"$GMIncludedFile":"","%Name":"input.h","CopyToMask":-1,"filePath":"datafiles/Runner/source/cross_platform","name":"input.h","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"other.c","CopyToMask":-1,"filePath":"datafiles/Runner/source/cross_platform","name":"other.c","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"other.h","CopyToMask":-1,"filePath":"datafiles/Runner/source/cross_platform","name":"other.h","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"structs.h","CopyToMask":-1,"filePath":"datafiles/Runner/source/gml","name":"structs.h","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"main.c","CopyToMask":-1,"filePath":"datafiles/Runner/source","name":"main.c","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
   ],
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2024.14.2.213",
+    "IDEVersion":"2024.14.3.217",
   },
   "name":"GML2C",
   "resources":[
