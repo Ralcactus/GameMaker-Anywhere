@@ -521,60 +521,6 @@ function scr_compile()
 			
         }
     }
-    
-    // export json
-    var export_json = {
-        GameMetadata: {
-            name: global.game_name,
-            titleId: global.title_id,
-            publisher: global.publisher
-        },
-        
-        FirstRoom: {
-            name: first_room_name,
-        },
-        
-        Resources: {
-            all_resources
-        },
-        
-        Rooms: {
-            all_rooms
-        },
-        
-        Sprites: {
-            all_sprites
-        },
-        
-        Objects: { 
-            all_objects
-        }
-    };
-    
-	//create the data file
-	//3DS
-	if (global.export_mode == Export.CIA || global.export_mode == Export._3DSX){
-		directory_create(destination + "\\romfs\\");
-	    var file = file_text_open_write(destination + "\\romfs\\" + "data.gad");
-	    file_text_write_string(file, json_stringify(export_json, true));
-	    file_text_close(file);
-	}    
-	
-	//windows
-	if (global.export_mode == Export.EXE){
-		directory_create(destination + "\\output\\");
-	    var file = file_text_open_write(destination + "\\output\\" + "data.gad");
-	    file_text_write_string(file, json_stringify(export_json, true));
-	    file_text_close(file);
-	}
-	
-	//Dreamcast
-	if (global.export_mode == Export.DC){
-		directory_create(destination + "\\romdisk\\");
-	    var file = file_text_open_write(destination + "\\romdisk\\" + "data.gad");
-	    file_text_write_string(file, json_stringify(export_json, true));
-	    file_text_close(file);
-	}
 	
     file_text_close(t3s_file);
 	
