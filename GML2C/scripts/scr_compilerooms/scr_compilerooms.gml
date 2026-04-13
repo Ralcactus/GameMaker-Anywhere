@@ -245,9 +245,16 @@ function scr_compilerooms(i){
 
 	file_text_write_string(file, "};\n\n");
 
+	var firstroom = false;
+	if (!KnownFirstRoom){
+		firstroom = true;
+		KnownFirstRoom = true;	
+	}
+
 	//WRITE ROOM STRUCT
 	file_text_write_string(file,
 	"GMRoom " + safe_name + " = {\n" +
+	"    .firstRoom = " + string(firstroom) + ",\n" +
 	"    .id = " + string(i) + ",\n" +
 	"    .name = \"" + yyfile.name + "\",\n" +
 	"    .width = " + string(yyfile.roomSettings.Width) + ",\n" +

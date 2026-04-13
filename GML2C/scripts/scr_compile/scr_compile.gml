@@ -21,6 +21,7 @@ function scr_compileSETUP(){
 	_id = noone;
 	currentsprite_count = 0;
 	t3s_file = noone;
+	KnownFirstRoom = false;
 
 	if (directory_exists(destination)){
 		//delete the old build
@@ -92,8 +93,9 @@ function scr_compile()
 		if (yyfile.resourceType == "GMRoom") //asset is a room!
 			scr_compilerooms(i);
 		
-        if (yyfile.resourceType == "GMSprite") //asset is a sprite!
+        if (yyfile.resourceType == "GMSprite"){ //asset is a sprite!
 			scr_compilesprites();
+		}
 
         if (yyfile.resourceType == "GMObject") //asset is a object!
 			scr_compileobjects();

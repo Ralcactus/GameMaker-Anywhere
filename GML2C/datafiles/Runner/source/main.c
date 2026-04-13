@@ -33,7 +33,7 @@ int main(){
             break;
 
         if (gamepad_button_check(0, gp_select))
-            draw_sprite(3, 0, 100, 100);
+            draw_sprite(0, 0, 100, 100);
         scr_endframe();
     }
 
