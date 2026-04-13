@@ -68,7 +68,7 @@
     {"id":{"name":"obj_compiler","path":"objects/obj_compiler/obj_compiler.yy",},},
     {"id":{"name":"obj_icon_manager","path":"objects/obj_icon_manager/obj_icon_manager.yy",},},
     {"id":{"name":"obj_log","path":"objects/obj_log/obj_log.yy",},},
-    {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
+    {"id":{"name":"Compileroom","path":"rooms/Compileroom/Compileroom.yy",},},
     {"id":{"name":"run_commandpowershell","path":"scripts/run_commandpowershell/run_commandpowershell.yy",},},
     {"id":{"name":"sanitize_filename","path":"scripts/sanitize_filename/sanitize_filename.yy",},},
     {"id":{"name":"scr_compile","path":"scripts/scr_compile/scr_compile.yy",},},
@@ -86,7 +86,7 @@
   "resourceType":"GMProject",
   "resourceVersion":"2.0",
   "RoomOrderNodes":[
-    {"roomId":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
+    {"roomId":{"name":"Compileroom","path":"rooms/Compileroom/Compileroom.yy",},},
   ],
   "templateType":"game",
   "TextureGroups":[

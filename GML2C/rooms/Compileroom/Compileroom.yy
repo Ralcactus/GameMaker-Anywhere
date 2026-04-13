@@ -1,15 +1,15 @@
 {
   "$GMRoom":"v1",
-  "%Name":"Room1",
+  "%Name":"Compileroom",
   "creationCodeFile":"",
   "inheritCode":false,
   "inheritCreationOrder":false,
   "inheritLayers":false,
   "instanceCreationOrder":[
-    {"name":"inst_1B45388D","path":"rooms/Room1/Room1.yy",},
-    {"name":"inst_6C8DAB9C","path":"rooms/Room1/Room1.yy",},
-    {"name":"inst_15ADCA91","path":"rooms/Room1/Room1.yy",},
-    {"name":"inst_1930512B","path":"rooms/Room1/Room1.yy",},
+    {"name":"inst_1B45388D","path":"rooms/Compileroom/Compileroom.yy",},
+    {"name":"inst_6C8DAB9C","path":"rooms/Compileroom/Compileroom.yy",},
+    {"name":"inst_15ADCA91","path":"rooms/Compileroom/Compileroom.yy",},
+    {"name":"inst_1930512B","path":"rooms/Compileroom/Compileroom.yy",},
   ],
   "isDnd":false,
   "layers":[
@@ -23,7 +23,7 @@
         {"name":"g_TintCol","type":1,"value":"#FF666666",},
       ],"resourceType":"GMRBackgroundLayer","resourceVersion":"2.0","spriteId":{"name":"spr_secretPT_bg","path":"sprites/spr_secretPT_bg/spr_secretPT_bg.yy",},"stretch":false,"userdefinedAnimFPS":false,"userdefinedDepth":false,"visible":true,"vspeed":0.0,"vtiled":true,"x":0,"y":0,},
   ],
-  "name":"Room1",
+  "name":"Compileroom",
   "parent":{
     "name":"Rooms",
     "path":"folders/Rooms.yy",
