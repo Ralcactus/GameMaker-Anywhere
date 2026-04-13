@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_compile",
+  "%Name":"scr_compilecommand",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_compile",
+  "name":"scr_compilecommand",
   "parent":{
     "name":"compiler",
     "path":"folders/Scripts/compiler.yy",

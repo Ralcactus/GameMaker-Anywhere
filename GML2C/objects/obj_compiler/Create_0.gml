@@ -2,6 +2,15 @@
 runnerfolder = working_directory + "Runner\\";
 destination = "C:\\GM_Anywhere\\Runner\\";
 
+all_resources = [];
+all_rooms = [];
+all_sprites = [];
+all_objects = [];
+yyfile = noone;
+_id = noone;
+currentsprite_count = 0;
+t3s_file = noone;
+
 logging = false;
 delete_powershell_window = -40;
 copy_powershell_window = -40;
@@ -43,10 +52,11 @@ enum Export{
 	DC = 3
 }
 
-global.export_mode = 0;
+global.export_mode = Export._3DSX;
 modes = [
     {label:"3DS cia", number_ver: Export.CIA},
-	{label:"3DS 3dsx", number_ver: Export._3DSX},
-	{label:"Windows exe (Raylib)", number_ver: Export.EXE},
-	{label:"Dreamcast (DreamSDK & Raylib)", number_ver: Export.DC}
+	{label:"3DS 3dsx", number_ver: Export._3DSX}
+	//removed these for now
+	//{label:"Windows exe (Raylib)", number_ver: Export.EXE}, 
+	//{label:"Dreamcast (DreamSDK & Raylib)", number_ver: Export.DC}
 ];

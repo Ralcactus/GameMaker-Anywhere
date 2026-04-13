@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_compile",
+  "%Name":"sanitize_filename",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_compile",
+  "name":"sanitize_filename",
   "parent":{
-    "name":"compiler",
-    "path":"folders/Scripts/compiler.yy",
+    "name":"Scripts",
+    "path":"folders/Scripts.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
