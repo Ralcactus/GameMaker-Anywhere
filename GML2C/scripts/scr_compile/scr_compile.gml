@@ -51,9 +51,9 @@ function scr_compileMIDDLE1(){
 function scr_compileMIDDLE2(){
 	if (CompletionStatusFromExecutedProcess(copy_powershell_window)){
 		//make dirs
-		directory_create(destination + "\\rooms\\");
-		directory_create(destination + "\\objects\\");
-		directory_create(destination + "\\sprites\\");	
+		directory_create(destination + "\\source\\rooms\\");
+		directory_create(destination + "\\source\\objects\\");
+		directory_create(destination + "\\source\\sprites\\");	
 		
 		scr_compile();
 	}

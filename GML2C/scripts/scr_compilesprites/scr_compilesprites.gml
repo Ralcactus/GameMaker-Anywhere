@@ -1,6 +1,6 @@
 function scr_compilesprites(){
 	var safe_name = sanitize_filename(yyfile.name);
-	var file = file_text_open_write(destination + "\\sprites\\" + safe_name + ".c");
+	var file = file_text_open_write(destination + "source\\sprites\\" + safe_name + ".c");
     show_debug_message("Sprite: " + yyfile.name);
     var spriteoutput;
 			

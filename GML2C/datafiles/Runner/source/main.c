@@ -4,6 +4,8 @@
 #include "cross_platform/other.h"
 #include "cross_platform/file_manage.h"
 #include "cross_platform/drawing.h"
+#include "room_handler.h"
+char* CurrentRoom = "NULL"; //DO NOT CHANGE THIS! GM CHECKS FOR "NULL" TO EDIT IT!!!
 
 int main(){
     #ifdef __3DS__
@@ -20,6 +22,7 @@ int main(){
 
     printf("Hello World!\n");
     printf("Hold select to see cool picture!\n");
+    printf("First room: %s\n", CurrentRoom);
 
     //main loop
     #ifdef __3DS__
@@ -29,14 +32,18 @@ int main(){
     while (true){
     #endif
         scr_startframe(top);
-        if (gamepad_button_check(0, gp_start))
+        if (gamepad_button_check_pressed(0, gp_start))
             break;
 
         if (gamepad_button_check(0, gp_select))
-            draw_sprite(0, 0, 100, 100);
+            draw_sprite(0, 0, 0, 0);
         scr_endframe();
+
+        //do the room stuff
+        scr_handleroom(CurrentRoom);
     }
 
     ExitApplication();
     return 0;
 }
+

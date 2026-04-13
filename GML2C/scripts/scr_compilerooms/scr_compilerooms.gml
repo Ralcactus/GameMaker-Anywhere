@@ -1,6 +1,6 @@
 function scr_compilerooms(i){
 	var safe_name = sanitize_filename(yyfile.name);
-	var filepath = destination + "\\rooms\\" + safe_name + ".c";
+	var filepath = destination + "source\\rooms\\" + safe_name + ".c";
 	var file = file_text_open_write(filepath);
 
 	show_debug_message("Generating ROOM: " + yyfile.name);
@@ -248,7 +248,26 @@ function scr_compilerooms(i){
 	var firstroom = false;
 	if (!KnownFirstRoom){
 		firstroom = true;
-		KnownFirstRoom = true;	
+		KnownFirstRoom = true;
+		
+		//write the first room into main.c
+		var mainc = file_text_open_read(destination + "source\\main.c");
+		var lines = [];
+		var j = 0;
+		
+		while (!file_text_eof(mainc))
+		    lines[j++] = file_text_readln(mainc);
+
+		lines = string_split(string_replace_all(string_join_ext("", lines), "CurrentRoom = \"NULL\"", "CurrentRoom = \"" + safe_name + "\""), "\n");
+		file_text_close(mainc)
+
+		var mainc_write = file_text_open_write(destination + "source\\main.c");
+		for (var k = 0; k < array_length(lines); k++) {
+		    file_text_write_string(mainc_write, lines[k]);
+		    file_text_writeln(mainc_write);
+		}
+		
+		file_text_close(mainc_write);
 	}
 
 	//WRITE ROOM STRUCT
@@ -275,6 +294,58 @@ function scr_compilerooms(i){
 	"    .layers = " + safe_name + "_layers,\n" +
 	"    .layerCount = sizeof(" + safe_name + "_layers) / sizeof(GMLayer)\n" +
 	"};\n");
-
 	file_text_close(file);
+
+
+	//the code was getting big im putting the "run room code" in here! -Ralcactus
+	scr_compileroom_phase2();
+
+
+	//add entry to room handler and include it
+	//read existing file
+	var room_handlefile = file_text_open_read(destination + "source\\room_handler.c");
+	var file_content = "";
+	while (!file_text_eof(room_handlefile)) {
+	    file_content += file_text_read_string(room_handlefile) + "\n";
+	    file_text_readln(room_handlefile);
+	}
+	file_text_close(room_handlefile);
+
+	var lines = string_split(file_content, "\n");
+
+	//find closing bracket
+	var insert_at = -1;
+	for (var j = array_length(lines) - 1; j >= 0; j--) {
+	    if (string_trim(lines[j]) == "}") {
+	        insert_at = j;
+	        break;
+	    }
+	}
+
+	//find last #include line
+	var include_insert_at = -1;
+	for (var j = 0; j < array_length(lines); j++) {
+	    if (string_pos("#include", string_trim(lines[j])) == 1) {
+	        include_insert_at = j;
+	    }
+	}
+
+	//build new content
+	var new_content = "";
+	for (var j = 0; j < array_length(lines); j++) {
+	    if (j == include_insert_at) {
+	        new_content += "#include \"../rooms/" + safe_name + ".h\"\n";
+	    }
+	    if (j == insert_at) {
+	        new_content += "    if (strcmp(CurrentRoom, \"" + yyfile.name + "\") == 0){\n";
+	        new_content += "        scr_runroom_" + yyfile.name + "();\n";
+	        new_content += "    }\n";
+	    }
+	    new_content += lines[j] + "\n";
+	}
+
+	//write back full file
+	var room_handlefile_write = file_text_open_write(destination + "source\\room_handler.c");
+	file_text_write_string(room_handlefile_write, new_content);
+	file_text_close(room_handlefile_write);
 }
