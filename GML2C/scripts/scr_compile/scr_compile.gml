@@ -60,7 +60,7 @@ function scr_compileMIDDLE2(){
 		scr_compileMIDDLE2();
 }
 
-//This is the script that creates the data.win, copys sprites, and makes the t3s for compiling
+//This is the script that creates creates the code files and copys sprite data
 function scr_compile()
 {
 	//create sprites.t3s
@@ -89,18 +89,17 @@ function scr_compile()
         yyfile = json_parse(yyfileFAKE);
         
 		
-		if (yyfile.resourceType == "GMRoom") //asset is a room
+		if (yyfile.resourceType == "GMRoom") //asset is a room!
 			scr_compilerooms(i);
 		
-        if (yyfile.resourceType == "GMSprite") //asset is a sprite
+        if (yyfile.resourceType == "GMSprite") //asset is a sprite!
 			scr_compilesprites();
 
-        if (yyfile.resourceType == "GMObject") //asset is a object
+        if (yyfile.resourceType == "GMObject") //asset is a object!
 			scr_compileobjects();
     }
 	
     file_text_close(t3s_file);
-	
 	scr_write_metadata();
 
 	//finsih!!!
