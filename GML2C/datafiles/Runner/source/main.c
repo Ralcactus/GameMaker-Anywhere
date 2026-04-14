@@ -34,6 +34,9 @@ int main(){
     while (true){
     #endif
         scr_startframe(top);
+        
+        gamepad_scanner();
+
         if (gamepad_button_check_pressed(0, gp_start))
             break;
 
@@ -41,7 +44,6 @@ int main(){
         scr_handleroom(CurrentRoom);
 
         scr_endframe();
-
     }
 
     ExitApplication();

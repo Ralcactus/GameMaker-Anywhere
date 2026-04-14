@@ -19,6 +19,7 @@
     bool gamepad_button_check(int pad, u32 Button);
     bool gamepad_button_check_pressed(int pad, u32 Button);
     bool gamepad_button_check_released(int pad, u32 Button);
+    void gamepad_scanner();
 #endif
 
 //WII U
