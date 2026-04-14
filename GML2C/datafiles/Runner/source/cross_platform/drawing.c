@@ -2,6 +2,11 @@
 #include <string.h>
 #include "drawing.h"
 
+float view0_camXPos = 0;
+float view0_camYPos = 0;
+float view0_camWidth = 1366;
+float view0_camHeight = 768;
+
 //3ds
 #ifdef __3DS__
     #include <3ds.h>
@@ -16,13 +21,21 @@
         C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
         C2D_TargetClear(screen_target, C2D_Color32(0, 0, 0, 255));
         C2D_SceneBegin(screen_target);
+
+        //size and pos
+        C2D_ViewTranslate(-view0_camXPos, -view0_camYPos);
+        C2D_ViewScale(400 / view0_camWidth, 240 / view0_camHeight);
     }
 
     void scr_endframe(){
+        C2D_ViewReset();
+        //Gui drawing would go here
+
         C3D_FrameEnd(0);
     }
 
-    //subimg, rotation, color and alpha are stubs!
+    //subimg, color and alpha are stubs!
+    //Also rotation is a little weird idk how to fix it
     void draw_sprite(int sprite_index, int subimg, float draw_x, float draw_y){
         C2D_Sprite sprite;
         C2D_SpriteFromSheet(&sprite, spriteSheet, sprite_index);
