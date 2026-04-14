@@ -54,7 +54,7 @@ function scr_compileroom_phase2(packed_layers){
 		
 		//the actual func!
 		"void scr_runroom_" + yyfile.name +"(){\n" +
-		"	printf(\"RUNNING ROOM " + yyfile.name + "\\n\");\n\n" +
+		"	//printf(\"RUNNING ROOM " + yyfile.name + "\\n\");\n\n" +
 		
 		//draw assets
 		"	for (int i = 0; i < " + asset_layer + ".assetCount; i++)\n" +

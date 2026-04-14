@@ -24,6 +24,7 @@ function scr_compileobject_phase2(spr_name, create_code, step_code){
 	file_text_write_string(file, "static float y = 0;\n");
 	file_text_write_string(file, "static float image_xscale = 1;\n");
 	file_text_write_string(file, "static float image_yscale = 1;\n");
+	file_text_write_string(file, "static float sprite_index = " + spr_name + ";\n");
 	
 	#region EVENTS
 	//create
@@ -36,7 +37,7 @@ function scr_compileobject_phase2(spr_name, create_code, step_code){
 	file_text_write_string(file, "}\n");
 	//draw
 	file_text_write_string(file, "void " + safe_name + "_draw() {\n");
-	file_text_write_string(file, "draw_sprite_ext(" + spr_name + ", 0, x, y, image_xscale, image_yscale, 0, 0, 1);\n");
+	file_text_write_string(file, "draw_sprite_ext(sprite_index, 0, x, y, image_xscale, image_yscale, 0, 0, 1);\n");
 	file_text_write_string(file, "}\n\n");
 	#endregion
 	

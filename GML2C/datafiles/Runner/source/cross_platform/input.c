@@ -10,7 +10,7 @@
         hidScanInput();
         
         if (hidKeysHeld() & Button){
-            printf("holding %lu on pad %d\n", Button, pad);
+            //printf("holding %lu on pad %d\n", Button, pad);
             return true;
         }
         else
