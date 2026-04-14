@@ -10,6 +10,7 @@
     extern float view0_camYPos;
     extern float view0_camWidth;
     extern float view0_camHeight;
+    extern int bgcolor;
     
     //funcs
     void draw_sprite(int sprite_index, int subimg, float draw_x, float draw_y);

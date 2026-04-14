@@ -7,6 +7,7 @@
 #include "room_handler.h"
 #include "sprite_toid.h"
 
+int bgcolor = 0xFF000000;
 char* CurrentRoom = "NULL"; //DO NOT CHANGE THIS! GM CHECKS FOR "NULL" TO EDIT IT TO THE FIRST ROOM!!!
 
 int main(){
@@ -23,8 +24,7 @@ int main(){
     drawing_init();
 
     printf("Hello World!\n");
-    printf("Hold select to see cool picture!\n");
-    printf("First room: %s\n", CurrentRoom);
+    printf("Loading First room: %s\n", CurrentRoom);
 
     //main loop
     #ifdef __3DS__

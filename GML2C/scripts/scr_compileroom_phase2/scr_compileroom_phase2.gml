@@ -15,6 +15,15 @@ function scr_compileroom_phase2(packed_layers){
 	        break;
 	    }
 	}
+	
+	//i don't think this works with more then 1 bg layer!
+	var bg_layer_index;
+	for (var k = 0; k < array_length(packed_layers); k++){
+	    if (packed_layers[k].type == "GMRBackgroundLayer"){
+	        bg_layer_index = k;
+	        break;
+	    }
+	}
 
 	var object_scripts = "";
 	var unique_objects = {};
@@ -45,6 +54,7 @@ function scr_compileroom_phase2(packed_layers){
 	}
 	
 	var asset_layer = safe_name + "_asset_" + string(asset_layer_index);
+	var background_layer = safe_name + "_bg_" + string(bg_layer_index);
 
 	//write to the end of the room c file
 	var roomcfile = file_text_open_append(destination + "source\\rooms\\" + safe_name + ".c");
@@ -70,6 +80,8 @@ function scr_compileroom_phase2(packed_layers){
 		"		view0_camHeight = " + yyfile.name + ".height;\n" +
 		"	}\n\n" +
 		
+		//bg color
+		"		bgcolor = " + background_layer + ".color;\n" +
 		
 		//objects
 		object_scripts +

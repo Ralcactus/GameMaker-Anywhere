@@ -19,7 +19,8 @@ float view0_camHeight = 768;
 
     void scr_startframe(C3D_RenderTarget* screen_target){
         C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-        C2D_TargetClear(screen_target, C2D_Color32(0, 0, 0, 255));
+
+        C2D_TargetClear(screen_target, C2D_Color32((bgcolor >>  0) & 0xFF, (bgcolor >>  8) & 0xFF, (bgcolor >> 16) & 0xFF, (bgcolor >> 24) & 0xFF));
         C2D_SceneBegin(screen_target);
 
         //size and pos
