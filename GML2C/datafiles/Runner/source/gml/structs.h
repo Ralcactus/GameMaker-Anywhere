@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 
 enum CollisionTypes{
     AUTOMATIC,
@@ -59,13 +60,13 @@ enum LayerType {
 typedef struct{
     float x, y, rotation;
     float scaleX, scaleY;
-    Object* object;
+    int object;
 } LayerInstances;
 
 typedef struct{
     float x, y, rotation;
     float scaleX, scaleY;
-    GMSprite* sprite;
+    int sprite;
 } LayerAssets;
 
 typedef struct{
@@ -125,7 +126,7 @@ typedef struct{
     clearViewBackground,
     enableViews,
     inheritViewSettings;
-    GMViewPorts views[7];
+    GMViewPorts* views;
     int viewCount;
 
     //Physics
@@ -134,6 +135,6 @@ typedef struct{
     float pix2met;
     
     //Layers
-    GMLayer* layers;
+    const GMLayer* layers;
     size_t layerCount;
 } GMRoom;

@@ -22,10 +22,20 @@
         C3D_FrameEnd(0);
     }
 
+    //subimg, rotation, color and alpha are stubs!
     void draw_sprite(int sprite_index, int subimg, float draw_x, float draw_y){
         C2D_Sprite sprite;
         C2D_SpriteFromSheet(&sprite, spriteSheet, sprite_index);
         C2D_SpriteSetPos(&sprite, draw_x, draw_y);
+        C2D_DrawSprite(&sprite);
+    }
+    
+    void draw_sprite_ext(int sprite_index, int subimg, float draw_x, float draw_y, float scale_x, float scale_y, float rotation, float color, float alpha){
+        C2D_Sprite sprite;
+        C2D_SpriteFromSheet(&sprite, spriteSheet, sprite_index);
+        C2D_SpriteSetPos(&sprite, draw_x, draw_y);
+        C2D_SpriteSetScale(&sprite, scale_x, scale_y);
+        C2D_SpriteSetRotation(&sprite, rotation);
         C2D_DrawSprite(&sprite);
     }
     

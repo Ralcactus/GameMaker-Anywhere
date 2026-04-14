@@ -30,8 +30,8 @@ if (btn_sel_hover_prjfile && mouse_check_button_pressed(mb_left)) {
         buffer_delete(yypbuffer);
         var yyp_json = json_parse(yypdata);
         
-        if (yyp_json.MetaData.IDEVersion != "2024.14.2.213")
-            show_message("WARNING!\nThis project isn't 2024.14.2.213, it may not work!");
+        //if (yyp_json.MetaData.IDEVersion != "2024.14.2.213")
+            //show_message("WARNING!\nThis project isn't 2024.14.2.213, it may not work!");
     }
 }
 

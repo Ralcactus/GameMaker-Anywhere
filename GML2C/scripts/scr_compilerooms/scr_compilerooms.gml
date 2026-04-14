@@ -80,8 +80,13 @@ function scr_compilerooms(i){
     });
 
 	// Write file header
-	file_text_write_string(file, "#include \"../gml/structs.h\"\n\n");
 	file_text_write_string(file, "// Room: " + yyfile.name + "\n\n");
+	file_text_write_string(file, "#include \"../gml/structs.h\"\n");
+	file_text_write_string(file, "#include <stdbool.h>\n");
+	file_text_write_string(file, "#include <stdio.h>\n");
+	file_text_write_string(file, "#include <string.h>\n");
+	file_text_write_string(file, "#include \"../sprite_toid.h\"\n");
+	file_text_write_string(file, "#include \"../cross_platform/drawing.h\"\n\n");
 
 	// Write bg data
 	for (var k = 0; k < array_length(packed_layers); k++) {
@@ -92,7 +97,7 @@ function scr_compilerooms(i){
 
 		    file_text_write_string(file,
 		    "static GMLayerBackground " + cname + " = {\n" +
-		    "    .sprite = " + (_layer.background.sprite != "" ? "&spr_" + sanitize_filename(_layer.background.sprite) : "NULL") + ",\n" +
+		    "    .sprite = " + (_layer.background.sprite != "" ? "spr_" + sanitize_filename(_layer.background.sprite) : "NULL") + ",\n" +
 		    "    .color = " + string(_layer.background.colour) + ",\n" +
 		    "};\n\n");
 		}
@@ -118,7 +123,7 @@ function scr_compilerooms(i){
 		            ", .rotation=" + string(inst.rotation) +
 		            ", .scaleX=" + string(inst.scaleX) +
 		            ", .scaleY=" + string(inst.scaleY) +
-		            ", .object=&obj_" + objname +
+		            ", .object=" + objname +
 		            " },\n");
 		        }
 		    }
@@ -154,7 +159,7 @@ function scr_compilerooms(i){
 		            ", .rotation=" + string(asset.rotation) +
 		            ", .scaleX=" + string(asset.scaleX) +
 		            ", .scaleY=" + string(asset.scaleY) +
-		            ", .sprite=&spr_" + sanitize_filename(asset.sprite) +
+		            ", .sprite=" + sanitize_filename(asset.sprite) +
 		            " },\n");
 		        }
 		    }
@@ -273,7 +278,6 @@ function scr_compilerooms(i){
 	//WRITE ROOM STRUCT
 	file_text_write_string(file,
 	"GMRoom " + safe_name + " = {\n" +
-	"    .firstRoom = " + string(firstroom) + ",\n" +
 	"    .id = " + string(i) + ",\n" +
 	"    .name = \"" + yyfile.name + "\",\n" +
 	"    .width = " + string(yyfile.roomSettings.Width) + ",\n" +
@@ -298,7 +302,7 @@ function scr_compilerooms(i){
 
 
 	//the code was getting big im putting the "run room code" in here! -Ralcactus
-	scr_compileroom_phase2();
+	scr_compileroom_phase2(packed_layers);
 
 
 	//add entry to room handler and include it

@@ -9,6 +9,7 @@
 
     //funcs
     void draw_sprite(int sprite_index, int subimg, float draw_x, float draw_y);
+    void draw_sprite_ext(int sprite_index, int subimg, float draw_x, float draw_y, float scale_x, float scale_y, float rotation, float color, float alpha);
     void drawing_init();
     void scr_startframe(C3D_RenderTarget* screen_target);
     void scr_endframe();

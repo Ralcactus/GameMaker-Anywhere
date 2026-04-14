@@ -31,7 +31,7 @@
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2024.14.2.213",
+    "IDEVersion":"2024.14.4.222",
   },
   "name":"Test Project",
   "resources":[
@@ -41,6 +41,7 @@
     {"id":{"name":"Room2","path":"rooms/Room2/Room2.yy",},},
     {"id":{"name":"spr_familyguy","path":"sprites/spr_familyguy/spr_familyguy.yy",},},
     {"id":{"name":"spr_hint","path":"sprites/spr_hint/spr_hint.yy",},},
+    {"id":{"name":"spr_pizzy","path":"sprites/spr_pizzy/spr_pizzy.yy",},},
     {"id":{"name":"spr_ralsei_doctor","path":"sprites/spr_ralsei_doctor/spr_ralsei_doctor.yy",},},
     {"id":{"name":"spr_ralseicook","path":"sprites/spr_ralseicook/spr_ralseicook.yy",},},
     {"id":{"name":"spr_ralseising","path":"sprites/spr_ralseising/spr_ralseising.yy",},},

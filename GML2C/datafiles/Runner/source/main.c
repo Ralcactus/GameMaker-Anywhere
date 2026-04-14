@@ -5,6 +5,8 @@
 #include "cross_platform/file_manage.h"
 #include "cross_platform/drawing.h"
 #include "room_handler.h"
+#include "sprite_toid.h"
+
 char* CurrentRoom = "NULL"; //DO NOT CHANGE THIS! GM CHECKS FOR "NULL" TO EDIT IT!!!
 
 int main(){
@@ -37,10 +39,12 @@ int main(){
 
         if (gamepad_button_check(0, gp_select))
             draw_sprite(0, 0, 0, 0);
-        scr_endframe();
 
         //do the room stuff
         scr_handleroom(CurrentRoom);
+
+        scr_endframe();
+
     }
 
     ExitApplication();

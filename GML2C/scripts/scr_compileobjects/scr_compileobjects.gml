@@ -52,4 +52,8 @@ function scr_compileobjects(){
 	file_text_write_string(file, "}\n");
 
 	file_text_close(file);
+	
+	var spriteidh = file_text_open_append(destination + "source\\sprite_toid.h");
+	file_text_write_string(spriteidh, "#define " + yyfile.name + " " + string(0) + "\n");
+	file_text_close(spriteidh);
 }
