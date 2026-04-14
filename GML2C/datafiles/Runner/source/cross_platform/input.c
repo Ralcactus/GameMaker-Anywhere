@@ -22,7 +22,7 @@
         hidScanInput();
 
         if (hidKeysDown() & Button){
-            printf("holding %lu on pad %d\n", Button, pad);
+            printf("pressing %lu on pad %d\n", Button, pad);
             return true;
         }
         else
@@ -34,7 +34,7 @@
         hidScanInput();
 
         if (hidKeysUp() & Button){
-            printf("holding %lu on pad %d\n", Button, pad);
+            printf("releasing %lu on pad %d\n", Button, pad);
             return true;
         }
         else

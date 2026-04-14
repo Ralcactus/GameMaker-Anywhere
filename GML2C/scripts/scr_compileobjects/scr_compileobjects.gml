@@ -39,19 +39,10 @@ function scr_compileobjects(){
         CreateCode: create_code,
         StepCode: step_code
     });
-			
-	//basic c structure
-	file_text_write_string(file, "// Object: " + yyfile.name + "\n\n");
-
-	file_text_write_string(file, "void " + safe_name + "_create() {\n");
-	file_text_write_string(file, create_code + "\n");
-	file_text_write_string(file, "}\n\n");
-
-	file_text_write_string(file, "void " + safe_name + "_step() {\n");
-	file_text_write_string(file, step_code + "\n");
-	file_text_write_string(file, "}\n");
-
+		
 	file_text_close(file);
+	
+	scr_compileobject_phase2(spr_name, create_code, step_code);
 	
 	var spriteidh = file_text_open_append(destination + "source\\sprite_toid.h");
 	file_text_write_string(spriteidh, "#define " + yyfile.name + " " + string(0) + "\n");

@@ -67,6 +67,7 @@ typedef struct{
     float x, y, rotation;
     float scaleX, scaleY;
     int sprite;
+    
 } LayerAssets;
 
 typedef struct{
