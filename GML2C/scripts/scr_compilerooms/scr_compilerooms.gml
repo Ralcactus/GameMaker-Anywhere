@@ -352,4 +352,8 @@ function scr_compilerooms(i){
 	var room_handlefile_write = file_text_open_write(destination + "source\\room_handler.c");
 	file_text_write_string(room_handlefile_write, new_content);
 	file_text_close(room_handlefile_write);
+	
+	var roomto_idh = file_text_open_append(destination + "source\\room_tostring.h");
+	file_text_write_string(roomto_idh, "#define " + yyfile.name + " " + "\"" + yyfile.name + "\"" + "\n");
+	file_text_close(roomto_idh);
 }

@@ -9,6 +9,8 @@ function scr_compileobject_phase2(spr_name, create_code, step_code){
 	file_text_write_string(file, "#include \"../sprite_toid.h\"\n");
 	file_text_write_string(file, "#include \"../cross_platform/drawing.h\"\n\n");
 	file_text_write_string(file, "#include \"../cross_platform/input.h\"\n\n");
+	file_text_write_string(file, "#include \"../room_handler.h\"\n\n");
+	file_text_write_string(file, "#include \"../room_tostring.h\"\n\n");
 	
 	
 	//define variables

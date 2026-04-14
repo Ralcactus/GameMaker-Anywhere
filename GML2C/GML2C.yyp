@@ -52,6 +52,7 @@
     {"$GMIncludedFile":"","%Name":"main.c","CopyToMask":-1,"filePath":"datafiles/Runner/source","name":"main.c","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"room_handler.c","CopyToMask":-1,"filePath":"datafiles/Runner/source","name":"room_handler.c","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"room_handler.h","CopyToMask":-1,"filePath":"datafiles/Runner/source","name":"room_handler.h","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"room_tostring.h","CopyToMask":-1,"filePath":"datafiles/Runner/source","name":"room_tostring.h","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"sprite_toid.h","CopyToMask":-1,"filePath":"datafiles/Runner/source","name":"sprite_toid.h","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
   ],
   "isEcma":false,
