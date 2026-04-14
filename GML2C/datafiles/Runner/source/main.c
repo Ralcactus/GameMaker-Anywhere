@@ -7,7 +7,7 @@
 #include "room_handler.h"
 #include "sprite_toid.h"
 
-char* CurrentRoom = "NULL"; //DO NOT CHANGE THIS! GM CHECKS FOR "NULL" TO EDIT IT!!!
+char* CurrentRoom = "NULL"; //DO NOT CHANGE THIS! GM CHECKS FOR "NULL" TO EDIT IT TO THE FIRST ROOM!!!
 
 int main(){
     #ifdef __3DS__
@@ -36,9 +36,6 @@ int main(){
         scr_startframe(top);
         if (gamepad_button_check_pressed(0, gp_start))
             break;
-
-        if (gamepad_button_check(0, gp_select))
-            draw_sprite(0, 0, 0, 0);
 
         //do the room stuff
         scr_handleroom(CurrentRoom);
