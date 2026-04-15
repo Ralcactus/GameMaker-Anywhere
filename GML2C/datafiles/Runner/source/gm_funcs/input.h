@@ -20,6 +20,13 @@
     bool gamepad_button_check_pressed(int pad, u32 Button);
     bool gamepad_button_check_released(int pad, u32 Button);
     void gamepad_scanner();
+    int gamepad_get_device_count();
+    bool gamepad_is_connected(int pad);
+    void gamepad_set_vibration(int pad, int left_motor, int right_motor);
+
+    //touchscreen
+    float display_mouse_get_y();
+    float display_mouse_get_x();
 #endif
 
 //WII U

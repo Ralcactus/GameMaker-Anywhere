@@ -9,6 +9,8 @@
 #include "sprite_toid.h"
 
 int bgcolor = 0xFF000000;
+float room_width = 0;
+float room_height = 0;
 char* CurrentRoom = "NULL"; //DO NOT CHANGE THIS! GM CHECKS FOR "NULL" TO EDIT IT TO THE FIRST ROOM!!!
 int view_camera[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 
@@ -25,6 +27,7 @@ int main(){
     #endif
     drawing_init();
 
+    
     printf("Hello World!\n");
     printf("Loading First room: %s\n", CurrentRoom);
 

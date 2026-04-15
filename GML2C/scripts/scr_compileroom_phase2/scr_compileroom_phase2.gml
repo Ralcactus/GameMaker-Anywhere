@@ -80,6 +80,10 @@ function scr_compileroom_phase2(packed_layers){
 		"		view0_camHeight = " + yyfile.name + ".height;\n" +
 		"	}\n\n" +
 		
+		//room_width/room_height
+		"	room_width = " + yyfile.name + "_views[0].camWidth;\n" +
+		"	room_height = " + yyfile.name + "_views[0].camWidth;\n" +
+		
 		//bg color
 		"		bgcolor = " + background_layer + ".color;\n" +
 		
