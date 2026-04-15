@@ -6,15 +6,19 @@ float view0_camXPos = 0;
 float view0_camYPos = 0;
 float view0_camWidth = 1366;
 float view0_camHeight = 768;
+int drawcolor = c_white;
 
 //3ds
 #ifdef __3DS__
     #include <3ds.h>
     #include <citro2d.h>
     C2D_SpriteSheet spriteSheet;
+    static C2D_TextBuf g_textBuf;
 
     void drawing_init(){
         spriteSheet = C2D_SpriteSheetLoad("romfs:/gfx/sprites.t3x");
+        g_textBuf = C2D_TextBufNew(4096);
+        drawcolor = c_white;
     }
 
     void scr_startframe(C3D_RenderTarget* screen_target){
@@ -52,15 +56,28 @@ float view0_camHeight = 768;
         C2D_SpriteSetRotation(&sprite, rotation);
         C2D_DrawSprite(&sprite);
     }
-    
+
+    void draw_text(float _x, float _y, const char* text) {
+        C2D_Text bleh;
+        C2D_TextBuf buffer = C2D_TextBufNew(256);
+
+        C2D_TextParse(&bleh, buffer, text);
+        C2D_TextOptimize(&bleh);
+        C2D_DrawText(&bleh, C2D_WithColor, _x, _y, 0, 1, 1, C2D_Color32((drawcolor >>  0) & 0xFF, (drawcolor >>  8) & 0xFF, (drawcolor >> 16) & 0xFF, (drawcolor >> 24) & 0xFF));
+        C2D_TextBufDelete(buffer);
+    }
+
+    void draw_set_color(int color){
+        drawcolor = color;
+    }
+
+    void draw_set_colour(int color){
+        draw_set_color(color);
+    }
+
 #endif
 
 //wii u
 #ifdef __WIIU__
-
-    void draw_sprite()
-    {
-        //so empty...
-    }
-
+    //so empty...
 #endif

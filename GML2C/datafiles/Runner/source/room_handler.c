@@ -5,6 +5,7 @@
 
 void room_goto(char* room){
     CurrentRoom = room;
+    printf("room_goto %s\n", room);
 }
 
 
