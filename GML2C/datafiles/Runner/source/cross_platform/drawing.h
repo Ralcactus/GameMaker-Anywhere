@@ -32,10 +32,12 @@
     extern float view0_camYPos;
     extern float view0_camWidth;
     extern float view0_camHeight;
+    extern int view_camera[9];
     extern int bgcolor;
     extern int drawcolor;
 
     //funcs
+    //draw stuff
     void draw_sprite(int sprite_index, int subimg, float draw_x, float draw_y);
     void draw_sprite_ext(int sprite_index, int subimg, float draw_x, float draw_y, float scale_x, float scale_y, float rotation, float color, float alpha);
     void drawing_init();
@@ -44,6 +46,11 @@
     void draw_text(float _x, float _y, const char* text);
     void draw_set_colour(int color);
     void draw_set_color(int color);
+
+    //camera
+    void camera_set_view_pos(int viewID, float _x, float _y);
+    float camera_get_view_width(int viewID);
+    float camera_get_view_height(int viewID);
 #endif
 
 //WIIU

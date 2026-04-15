@@ -7,6 +7,7 @@ float view0_camYPos = 0;
 float view0_camWidth = 1366;
 float view0_camHeight = 768;
 int drawcolor = c_white;
+int view_camera[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 //3ds
 #ifdef __3DS__
@@ -28,8 +29,8 @@ int drawcolor = c_white;
         C2D_SceneBegin(screen_target);
 
         //size and pos
-        C2D_ViewTranslate(-view0_camXPos, -view0_camYPos);
         C2D_ViewScale(400 / view0_camWidth, 240 / view0_camHeight);
+        C2D_ViewTranslate(-view0_camXPos, -view0_camYPos);
     }
 
     void scr_endframe(){
@@ -73,6 +74,19 @@ int drawcolor = c_white;
 
     void draw_set_colour(int color){
         draw_set_color(color);
+    }
+
+    void camera_set_view_pos(int viewID, float _x, float _y){
+        view0_camXPos = _x;
+        view0_camYPos = _y;
+    }
+
+    float camera_get_view_width(int viewID){
+        return view0_camWidth;
+    }
+
+    float camera_get_view_height(int viewID){
+        return view0_camHeight;
     }
 
 #endif
