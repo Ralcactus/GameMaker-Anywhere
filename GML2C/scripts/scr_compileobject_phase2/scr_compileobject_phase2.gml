@@ -8,10 +8,11 @@ function scr_compileobject_phase2(spr_name, create_code, step_code, draw_code){
 	file_text_write_string(file, "#include <stdio.h>\n");
 	file_text_write_string(file, "#include <string.h>\n");
 	file_text_write_string(file, "#include \"../sprite_toid.h\"\n");
-	file_text_write_string(file, "#include \"../cross_platform/drawing.h\"\n\n");
-	file_text_write_string(file, "#include \"../cross_platform/input.h\"\n\n");
-	file_text_write_string(file, "#include \"../room_handler.h\"\n\n");
-	file_text_write_string(file, "#include \"../room_tostring.h\"\n\n");
+	file_text_write_string(file, "#include \"../gm_funcs/drawing.h\"\n");
+	file_text_write_string(file, "#include \"../gm_funcs/input.h\"\n");
+	file_text_write_string(file, "#include \"../gm_funcs/input.h\"\n");
+	file_text_write_string(file, "#include \"../room_tostring.h\"\n");
+	file_text_write_string(file, "#include \"../gm_funcs/misc.h\"\n\n");
 	
 	
 	//define variables

@@ -86,8 +86,9 @@ function scr_compilerooms(i){
 	file_text_write_string(file, "#include <stdio.h>\n");
 	file_text_write_string(file, "#include <string.h>\n");
 	file_text_write_string(file, "#include \"../sprite_toid.h\"\n");
-	file_text_write_string(file, "#include \"../cross_platform/drawing.h\"\n\n");
-
+	file_text_write_string(file, "#include \"../gm_funcs/drawing.h\"\n");
+	file_text_write_string(file, "#include \"../gm_funcs/misc.h\"\n\n");
+	
 	// Write bg data
 	for (var k = 0; k < array_length(packed_layers); k++) {
 		var _layer = packed_layers[k];

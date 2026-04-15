@@ -37,9 +37,9 @@ include $(DEVKITARM)/3ds_rules
 #---------------------------------------------------------------------------------
 TARGET      := $(notdir $(CURDIR))
 BUILD       := build
-SOURCES     := source source/cross_platform source/rooms source/objects
+SOURCES     := source source/cross_platform source/rooms source/objects source/gm_funcs
 DATA        := data
-INCLUDES    := include source/cross_platform
+INCLUDES    := source source/cross_platform source/rooms source/objects source/gm_funcs
 GRAPHICS    := gfx
 OUTPUT      := output
 RESOURCES   := resources

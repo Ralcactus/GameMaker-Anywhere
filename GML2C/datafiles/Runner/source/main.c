@@ -1,14 +1,16 @@
 #include <stdio.h>
 #include <string.h>
-#include "cross_platform/input.h"
+#include "gm_funcs/input.h"
 #include "cross_platform/other.h"
 #include "cross_platform/file_manage.h"
-#include "cross_platform/drawing.h"
+#include "gm_funcs/drawing.h"
+#include "gm_funcs/misc.h"
 #include "room_handler.h"
 #include "sprite_toid.h"
 
 int bgcolor = 0xFF000000;
 char* CurrentRoom = "NULL"; //DO NOT CHANGE THIS! GM CHECKS FOR "NULL" TO EDIT IT TO THE FIRST ROOM!!!
+int view_camera[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 int main(){
     #ifdef __3DS__

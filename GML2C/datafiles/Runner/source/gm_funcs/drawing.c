@@ -1,24 +1,18 @@
 #include <stdio.h>
 #include <string.h>
 #include "drawing.h"
+#include "misc.h"
 
-float view0_camXPos = 0;
-float view0_camYPos = 0;
-float view0_camWidth = 1366;
-float view0_camHeight = 768;
 int drawcolor = c_white;
-int view_camera[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 //3ds
 #ifdef __3DS__
     #include <3ds.h>
     #include <citro2d.h>
     C2D_SpriteSheet spriteSheet;
-    static C2D_TextBuf g_textBuf;
 
     void drawing_init(){
         spriteSheet = C2D_SpriteSheetLoad("romfs:/gfx/sprites.t3x");
-        g_textBuf = C2D_TextBufNew(4096);
         drawcolor = c_white;
     }
 
@@ -75,28 +69,6 @@ int view_camera[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 
     void draw_set_colour(int color){
         draw_set_color(color);
-    }
-
-    //camera funcs (kinda counts as drawing? i was too lazy to make a new file for it lol)
-    void camera_set_view_pos(int viewID, float _x, float _y){
-        view0_camXPos = _x;
-        view0_camYPos = _y;
-    }
-
-    float camera_get_view_width(int viewID){
-        return view0_camWidth;
-    }
-
-    float camera_get_view_height(int viewID){
-        return view0_camHeight;
-    }
-
-    float camera_get_view_x(int viewID){
-        return view0_camXPos;
-    }
-
-    float camera_get_view_y(int viewID){
-        return view0_camYPos;
     }
 
 #endif
