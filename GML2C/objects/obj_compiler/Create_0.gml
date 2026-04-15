@@ -2,6 +2,8 @@
 runnerfolder = working_directory + "Runner\\";
 destination = "C:\\GM_Anywhere\\Runner\\";
 
+var_names = [];
+var_defaults = [];
 KnownFirstRoom = false;
 all_resources = [];
 all_rooms = [];

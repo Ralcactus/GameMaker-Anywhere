@@ -1,6 +1,7 @@
 function scr_compileobject_phase2(spr_name, create_code, step_code){
 	var safe_name = sanitize_filename(yyfile.name);
 	var file = file_text_open_write(destination + "source\\objects\\" + safe_name + ".c");
+	init_builtin_variables(spr_name);
 	
 	file_text_write_string(file, "// Object: " + yyfile.name + "\n\n");
 	file_text_write_string(file, "#include <stdbool.h>\n");
@@ -15,16 +16,8 @@ function scr_compileobject_phase2(spr_name, create_code, step_code){
 	
 	//define variables
 	file_text_write_string(file, "static bool initialized[8] = {false};\n");
-	file_text_write_string(file, "static float saved_x[8] = {0};\n");
-	file_text_write_string(file, "static float saved_y[8] = {0};\n");
-	file_text_write_string(file, "static float saved_xscale[8] = {1};\n");
-	file_text_write_string(file, "static float saved_yscale[8] = {1};\n");
 	file_text_write_string(file, "static int " + safe_name + "_call_index = 0;\n");
-	file_text_write_string(file, "static float x = 0;\n");
-	file_text_write_string(file, "static float y = 0;\n");
-	file_text_write_string(file, "static float image_xscale = 1;\n");
-	file_text_write_string(file, "static float image_yscale = 1;\n");
-	file_text_write_string(file, "static float sprite_index = " + spr_name + ";\n");
+	scr_writevariables(file);
 	
 	#region EVENTS
 	//create
@@ -60,25 +53,25 @@ function scr_compileobject_phase2(spr_name, create_code, step_code){
 	//RUN THE EVENTS
 	file_text_write_string(file, "	int i = " + safe_name + "_call_index++;\n\n");
 	file_text_write_string(file, "	if (!initialized[i]){\n");
-	file_text_write_string(file, "		saved_x[i] = NEWX;\n");
-	file_text_write_string(file, "		saved_y[i] = NEWY;\n");
-	file_text_write_string(file, "		saved_xscale[i] = NEWXSCALE;\n");
-	file_text_write_string(file, "		saved_yscale[i] = NEWYSCALE;\n");
 	file_text_write_string(file, "		initialized[i] = true;\n");
 	file_text_write_string(file, "		" + safe_name + "_precreate(NEWX, NEWY, NEWXSCALE, NEWYSCALE);\n");
 	file_text_write_string(file, "		" + safe_name + "_create();\n");
+	
+	file_text_write_string(file, "	} else {\n");
+	for (var i = 0; i < array_length(var_names); i++) {
+		var vn = var_names[i];
+		file_text_write_string(file, "		" + vn + " = saved_" + vn + "[i];\n");
+	}
 	file_text_write_string(file, "	}\n\n");
-	file_text_write_string(file, "	x = saved_x[i];\n");
-	file_text_write_string(file, "	y = saved_y[i];\n\n");
-	file_text_write_string(file, "	image_xscale = saved_xscale[i];\n");
-	file_text_write_string(file, "	image_yscale = saved_yscale[i];\n\n");
+
 	file_text_write_string(file, "	" + safe_name + "_step();\n");
 	file_text_write_string(file, "	" + safe_name + "_draw();\n\n");
-	file_text_write_string(file, "	saved_x[i] = x;\n");
-	file_text_write_string(file, "	saved_y[i] = y;\n");
-	file_text_write_string(file, "	saved_xscale[i] = image_xscale;\n");
-	file_text_write_string(file, "	saved_yscale[i] = image_yscale;\n");
 	
+	for (var i = 0; i < array_length(var_names); i++) {
+		var vn = var_names[i];
+		file_text_write_string(file, "	saved_" + vn + "[i] = " + vn + ";\n");
+	}
+
 	file_text_write_string(file, "}\n\n");
 	file_text_close(file);
 }
