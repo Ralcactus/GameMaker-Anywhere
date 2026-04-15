@@ -68,6 +68,7 @@ int view_camera[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
         C2D_TextBufDelete(buffer);
     }
 
+
     void draw_set_color(int color){
         drawcolor = color;
     }
@@ -87,6 +88,14 @@ int view_camera[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 
     float camera_get_view_height(int viewID){
         return view0_camHeight;
+    }
+
+    float camera_get_view_x(int viewID){
+        return view0_camXPos;
+    }
+
+    float camera_get_view_y(int viewID){
+        return view0_camYPos;
     }
 
 #endif
