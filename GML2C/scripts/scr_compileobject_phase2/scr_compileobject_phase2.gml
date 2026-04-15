@@ -1,4 +1,4 @@
-function scr_compileobject_phase2(spr_name, create_code, step_code){
+function scr_compileobject_phase2(spr_name, create_code, step_code, draw_code){
 	var safe_name = sanitize_filename(yyfile.name);
 	var file = file_text_open_write(destination + "source\\objects\\" + safe_name + ".c");
 	init_builtin_variables(spr_name);
@@ -30,7 +30,10 @@ function scr_compileobject_phase2(spr_name, create_code, step_code){
 	file_text_write_string(file, "}\n");
 	//draw
 	file_text_write_string(file, "void " + safe_name + "_draw() {\n");
-	file_text_write_string(file, "draw_sprite_ext(sprite_index, 0, x, y, image_xscale, image_yscale, 0, 0, 1);\n");
+	if (draw_code == "")
+		file_text_write_string(file, "draw_sprite_ext(sprite_index, 0, x, y, image_xscale, image_yscale, 0, 0, 1);\n"); //change this to draw_self() later
+	else
+		file_text_write_string(file, draw_code + "\n");
 	file_text_write_string(file, "}\n\n");
 	#endregion
 	

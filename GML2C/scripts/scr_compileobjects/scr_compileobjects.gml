@@ -17,9 +17,11 @@ function scr_compileobjects(){
 
     var steppath = filename_dir(filename_dir(global.selected_yyp) + "/" + _id.path) + "/Step_0.gml";
     var createpath = filename_dir(filename_dir(global.selected_yyp) + "/" + _id.path) + "/Create_0.gml";
+    var drawpath = filename_dir(filename_dir(global.selected_yyp) + "/" + _id.path) + "/Draw_0.gml";
             
     var create_code = "";
     var step_code = "";
+	var draw_code = "";
             
     if (file_exists(createpath)) {
         var createinside_buffer = buffer_load(createpath);
@@ -36,17 +38,26 @@ function scr_compileobjects(){
         buffer_delete(createinside_buffer);
         show_debug_message(step_code);
     }
+                  
+    if (file_exists(drawpath)) {
+        var createinside_buffer = buffer_load(drawpath);
+		if (buffer_get_size(createinside_buffer) > 0)
+			draw_code = buffer_read(createinside_buffer, buffer_string);
+        buffer_delete(createinside_buffer);
+        show_debug_message(draw_code);
+    }
             
     array_push(all_objects, {
         name: yyfile.name,
         sprite: spr_name,
         CreateCode: create_code,
-        StepCode: step_code
+        StepCode: step_code,
+		DrawCode: draw_code
     });
 		
 	file_text_close(file);
 	
-	scr_compileobject_phase2(spr_name, create_code, step_code);
+	scr_compileobject_phase2(spr_name, create_code, step_code, draw_code);
 	
 	var spriteidh = file_text_open_append(destination + "source\\sprite_toid.h");
 	file_text_write_string(spriteidh, "#define " + yyfile.name + " " + string(0) + "\n");
