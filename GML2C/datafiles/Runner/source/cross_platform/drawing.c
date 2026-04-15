@@ -77,6 +77,7 @@ int view_camera[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
         draw_set_color(color);
     }
 
+    //camera funcs (kinda counts as drawing? i was too lazy to make a new file for it lol)
     void camera_set_view_pos(int viewID, float _x, float _y){
         view0_camXPos = _x;
         view0_camYPos = _y;
