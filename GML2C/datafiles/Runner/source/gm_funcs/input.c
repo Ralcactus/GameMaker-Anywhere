@@ -67,13 +67,13 @@
     float display_mouse_get_x(){
         touchPosition touch;
         hidTouchRead(&touch);
-        return touch.px*view0_camWidth/400+140;
+        return touch.px*view0_camWidth/400+140+view0_camXPos;
     }
 
     float display_mouse_get_y(){
         touchPosition touch;
         hidTouchRead(&touch);
-        return touch.py*view0_camHeight/240;
+        return touch.py*view0_camHeight/240+view0_camYPos;
     }
 #endif
 
