@@ -40,6 +40,7 @@
     {"$GMIncludedFile":"","%Name":"other.o","CopyToMask":-1,"filePath":"datafiles/Runner/build","name":"other.o","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"room_handler.d","CopyToMask":-1,"filePath":"datafiles/Runner/build","name":"room_handler.d","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"room_handler.o","CopyToMask":-1,"filePath":"datafiles/Runner/build","name":"room_handler.o","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"empty.png","CopyToMask":-1,"filePath":"datafiles/Runner/gfx/JUOEDESBGFIUFDSVIUFSDVBSAOPDSFIGHSDUIOGFSDIUFDSGFDSIUPFDSIFSDOPFSDAFSDASPFADOPSJSDJOIHFSDISFDOHIJUOEDESBGFIUFDSVIUFSDVBSAOPDSFIGHSDUIOGFSDIUFDSGFDSIUPFDSIFSDOPFSDAFSDASPFADOPSJSDJOIH","name":"empty.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"main.code-workspace","CopyToMask":-1,"filePath":"datafiles/Runner","name":"main.code-workspace","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"Makefile","CopyToMask":-1,"filePath":"datafiles/Runner","name":"Makefile","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"Makefile","CopyToMask":-1,"filePath":"datafiles/Runner/platform/3ds","name":"Makefile","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
