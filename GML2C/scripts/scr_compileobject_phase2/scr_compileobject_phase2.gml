@@ -12,7 +12,8 @@ function scr_compileobject_phase2(spr_name, create_code, step_code, draw_code){
 	file_text_write_string(file, "#include \"../gm_funcs/input.h\"\n");
 	file_text_write_string(file, "#include \"../gm_funcs/input.h\"\n");
 	file_text_write_string(file, "#include \"../room_tostring.h\"\n");
-	file_text_write_string(file, "#include \"../gm_funcs/misc.h\"\n\n");
+	file_text_write_string(file, "#include \"../gm_funcs/misc.h\"\n");
+	file_text_write_string(file, "#include \"../gm_funcs/collision.h\"\n\n");
 	
 	
 	//define variables
