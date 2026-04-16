@@ -3,6 +3,7 @@
 //camera funcs
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 #include "misc.h"
 
 float view0_camXPos = 0;
@@ -63,7 +64,7 @@ void window_post_message(){
 void window_center(){
     //No
 }
-void window_get_fullscreen(){
+bool window_get_fullscreen(){
     //No
     return true;
 }
