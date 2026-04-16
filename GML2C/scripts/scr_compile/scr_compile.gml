@@ -30,7 +30,7 @@ function scr_compileSETUP(){
 	}
 	else{
 		//copy the runner to the compile folder on the C drive
-		copy_powershell_window = run_commandpowershell("C:\\", "robocopy \"" + runnerfolder + "\" \"" + destination + "\" /E");
+		copy_powershell_window = run_commandpowershell("C:\\", "Copy-Item -Path \"" + runnerfolder + " -Destination \"" + destination + " -Recurse");
 		scr_compileMIDDLE2();
 	}
 }
@@ -39,7 +39,7 @@ function scr_compileSETUP(){
 function scr_compileMIDDLE1(){
 	if (CompletionStatusFromExecutedProcess(delete_powershell_window)){
 		//copy the runner to the compile folder on the C drive
-		copy_powershell_window = run_commandpowershell("C:\\", "robocopy \"" + runnerfolder + "\" \"" + destination + "\" /E");
+		copy_powershell_window = run_commandpowershell("C:\\", "Copy-Item -Path \"" + runnerfolder + " -Destination \"" + destination + " -Recurse");
 		scr_compileMIDDLE2();
 		exit;
 	}

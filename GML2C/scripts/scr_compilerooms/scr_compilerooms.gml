@@ -304,10 +304,10 @@ function scr_compilerooms(i){
 	"};\n");
 	file_text_close(file);
 
-	show_debug_message("a1");
+
 	//the code was getting big im putting the "run room code" in here! -Ralcactus
 	scr_compileroom_phase2(packed_layers);
-	show_debug_message("a");
+
 
 	//add entry to room handler and include it
 	//read existing file
