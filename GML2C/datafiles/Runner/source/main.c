@@ -13,6 +13,7 @@ float room_width = 0;
 float room_height = 0;
 char* CurrentRoom = "NULL"; //DO NOT CHANGE THIS! GM CHECKS FOR "NULL" TO EDIT IT TO THE FIRST ROOM!!!
 int view_camera[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+bool MarkedForClose = false;
 
 int main(){
     #ifdef __3DS__
@@ -41,14 +42,12 @@ int main(){
         scr_startframe(top);
         
         gamepad_scanner();
-
-        if (gamepad_button_check_pressed(0, gp_start))
-            break;
-
-        //do the room stuff
         scr_handleroom(CurrentRoom);
 
         scr_endframe();
+
+        if(MarkedForClose)
+            break;
     }
 
     ExitApplication();

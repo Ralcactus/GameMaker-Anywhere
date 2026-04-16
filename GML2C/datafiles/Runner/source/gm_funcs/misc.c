@@ -35,13 +35,6 @@ float camera_get_view_y(int viewID){
 
 #pragma endregion
 
-#pragma region //room
-void room_goto(char* room){
-    CurrentRoom = room;
-    printf("room_goto %s\n", room);
-}
-#pragma endregion
-
 #pragma region //window stuff
 void window_set_caption(char* caption){
     //No
@@ -73,6 +66,22 @@ void window_set_fullscreen(bool fullscreen){
 }
 #pragma endregion
 
+#pragma region //room
+
+void room_goto(char* room){
+    CurrentRoom = room;
+    printf("room_goto %s\n", room);
+}
+#pragma endregion
+
+#pragma region //game_ fucns
+void game_end(){
+    MarkedForClose = true;
+}
+void game_restart(){
+    //so empty...
+}
+#pragma endregion
 
 
 //3ds

@@ -8,7 +8,7 @@ extern int view_camera[9];
 extern char* CurrentRoom;
 extern float room_width;
 extern float room_height;
-
+extern bool MarkedForClose;
 
 
 #pragma once
@@ -37,13 +37,14 @@ extern float room_height;
     #define os_type os_unknown
 #endif
 
-//camera
+//camera_ funcs
 void camera_set_view_pos(int viewID, float _x, float _y);
 float camera_get_view_width(int viewID);
 float camera_get_view_height(int viewID);
 float camera_get_view_x(int viewID);
 float camera_get_view_y(int viewID);
 
+//window_ funcs
 void window_set_caption(char* caption);
 int window_device();
 int window_handle(char* caption);
@@ -51,6 +52,10 @@ bool window_has_focus();
 void window_post_message();
 bool window_get_fullscreen();
 void window_set_fullscreen(bool fullscreen);
+
+//game_ funcs
+void game_end();
+void game_restart();
 
 //room
 void room_goto(char* room);
