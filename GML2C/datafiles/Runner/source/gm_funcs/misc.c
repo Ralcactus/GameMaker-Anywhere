@@ -41,9 +41,36 @@ void room_goto(char* room){
 }
 #pragma endregion
 
-
-
-
+#pragma region //window stuff
+void window_set_caption(char* caption){
+    //No
+}
+int window_device(){
+    //No
+    return 0;
+}
+int window_handle(char* caption){
+    //No
+    return 0;
+}
+bool window_has_focus(){
+    //No
+    return true;
+}
+void window_post_message(){
+    //No
+}
+void window_center(){
+    //No
+}
+void window_get_fullscreen(){
+    //No
+    return true;
+}
+void window_set_fullscreen(bool fullscreen){
+    //No
+}
+#pragma endregion
 
 
 
