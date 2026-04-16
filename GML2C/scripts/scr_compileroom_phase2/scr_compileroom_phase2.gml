@@ -5,10 +5,10 @@ function scr_compileroom_phase2(packed_layers){
 		"void scr_runroom_" + yyfile.name +"();"
 	)
 	file_text_close(roomhfile)
-	
+
 
 	//i don't think this works with more then 1 asset layer!
-	var asset_layer_index;
+	var asset_layer_index = -1;
 	for (var k = 0; k < array_length(packed_layers); k++){
 	    if (packed_layers[k].type == "GMRAssetLayer"){
 	        asset_layer_index = k;
@@ -17,7 +17,7 @@ function scr_compileroom_phase2(packed_layers){
 	}
 	
 	//i don't think this works with more then 1 bg layer!
-	var bg_layer_index;
+	var bg_layer_index = -1;
 	for (var k = 0; k < array_length(packed_layers); k++){
 	    if (packed_layers[k].type == "GMRBackgroundLayer"){
 	        bg_layer_index = k;
@@ -29,7 +29,7 @@ function scr_compileroom_phase2(packed_layers){
 	var unique_objects = {};
 	var got_funcs = "";
 	var object_layer_index;
-	
+		
 	for (var k = 0; k < array_length(packed_layers); k++){
 		if (packed_layers[k].type == "GMRInstanceLayer"){
 			var instances = packed_layers[k].instances;
@@ -52,10 +52,10 @@ function scr_compileroom_phase2(packed_layers){
 			}
 		}
 	}
-	
+
 	var asset_layer = safe_name + "_asset_" + string(asset_layer_index);
 	var background_layer = safe_name + "_bg_" + string(bg_layer_index);
-
+	
 	//write to the end of the room c file
 	var roomcfile = file_text_open_append(destination + "source\\rooms\\" + safe_name + ".c");
 	file_text_write_string(roomcfile,
@@ -81,8 +81,8 @@ function scr_compileroom_phase2(packed_layers){
 		"	}\n\n" +
 		
 		//room_width/room_height
-		"	room_width = " + yyfile.name + "_views[0].camWidth;\n" +
-		"	room_height = " + yyfile.name + "_views[0].camWidth;\n" +
+		"	room_width = " + yyfile.name + ".width;\n" +
+		"	room_height = " + yyfile.name + ".height;\n" +
 		
 		//bg color
 		"		bgcolor = " + background_layer + ".color;\n" +

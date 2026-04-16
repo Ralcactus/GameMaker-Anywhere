@@ -24,7 +24,10 @@ function scr_compilerooms(i){
 		    if (variable_struct_exists(_layer, "instances") && is_array(_layer.instances)) {
 		        for (var j = 0; j < array_length(_layer.instances); j++) {
 		            var inst = _layer.instances[j];
-
+					
+					if (inst.objectId == undefined)
+						continue;
+					
 		            array_push(layer_out.instances, {
 		                object: inst.objectId.name,
 		                x: inst.x,
