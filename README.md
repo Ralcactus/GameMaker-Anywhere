@@ -14,6 +14,9 @@ https://discord.gg/cc2YA2pChU
   <img src="Github assets/example.gif" alt="The example gif" width="600" />
 </p>
 
+## How does this work?
+Rather then our old approach (interpreting gml directly) it converts it to C syntax and the C project has the functions and variables to make it run! (A little simplified)
+
 ## Credits
 Meet the team!
 - Ralcactus (coder and creator)
