@@ -12,6 +12,9 @@ extern bool MarkedForClose;
 
 
 #pragma once
+#define noone -4
+
+//OS
 //the actually useful stuff
 #define os_3ds "3DS"
 #define os_wiiu "WIIU"
@@ -29,7 +32,6 @@ extern bool MarkedForClose;
 #define os_switch "SWITCH"
 #define os_switch2 "SWITCH2"
 #define os_unknown "what_are_you_running_on_bro_:sob:"
-
 
 #ifdef __3DS__
     #define os_type os_3ds
