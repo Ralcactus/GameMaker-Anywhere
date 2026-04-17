@@ -90,7 +90,8 @@ function scr_compilerooms(i, yyp_json){
 	file_text_write_string(file, "#include <string.h>\n");
 	file_text_write_string(file, "#include \"../sprite_toid.h\"\n");
 	file_text_write_string(file, "#include \"../gm_funcs/drawing.h\"\n");
-	file_text_write_string(file, "#include \"../gm_funcs/misc.h\"\n\n");
+	file_text_write_string(file, "#include \"../gm_funcs/misc.h\"\n");
+	file_text_write_string(file, "#include \"../gm_funcs/audio.h\"\n\n");
 	
 	// Write bg data
 	for (var k = 0; k < array_length(packed_layers); k++) {
