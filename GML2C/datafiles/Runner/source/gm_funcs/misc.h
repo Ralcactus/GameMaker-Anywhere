@@ -19,6 +19,30 @@ extern bool MarkedForClose;
 #define os_3ds 100
 #define os_wiiu 101
 
+//enums
+enum AudioEffectType{
+    Bitcrusher,
+    Delay,
+    Gain,
+    HPF2,
+    LPF2,
+    Reverb1,
+    Tremolo,
+    PeakEQ,
+    HiShelf,
+    LoShelf,
+    EQ,
+    Compressor
+};
+
+enum AudioLFOType{
+    InvSawtooth,
+    Sawtooth,
+    Sine,
+    Square,
+    Triangle
+};
+
 //gm built in
 #define os_windows 0
 #define os_gxgames 24
