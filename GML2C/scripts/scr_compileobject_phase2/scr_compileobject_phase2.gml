@@ -60,6 +60,7 @@ function scr_compileobject_phase2(spr_name, create_code, step_code, draw_code){
 	file_text_write_string(file, "void " + safe_name + "_runevents(float NEWX, float NEWY, float NEWXSCALE, float NEWYSCALE) {\n");
 	
 	//RUN THE EVENTS
+	file_text_write_string(file, "	//printf(\"RUNNING OBJECT: " + safe_name + "\\n\");\n");
 	file_text_write_string(file, "	int i = " + safe_name + "_call_index++;\n\n");
 	file_text_write_string(file, "	if (!initialized[i]){\n");
 	file_text_write_string(file, "		initialized[i] = true;\n");

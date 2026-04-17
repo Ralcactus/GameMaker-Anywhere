@@ -65,7 +65,7 @@ function scr_compilerooms(i, yyp_json){
 		if (_layer.resourceType == "GMRBackgroundLayer") {
 		    layer_out.background = {
 		        colour: _layer.colour,
-		        sprite: (_layer.spriteId != undefined && _layer.spriteId != -4 ? _layer.spriteId.name : "")
+		        sprite: (_layer.spriteId != undefined  && _layer.spriteId != -4 ? _layer.spriteId.name : "")
 		    };
 		}
 
@@ -91,7 +91,8 @@ function scr_compilerooms(i, yyp_json){
 	file_text_write_string(file, "#include \"../sprite_toid.h\"\n");
 	file_text_write_string(file, "#include \"../gm_funcs/drawing.h\"\n");
 	file_text_write_string(file, "#include \"../gm_funcs/misc.h\"\n");
-	file_text_write_string(file, "#include \"../gm_funcs/audio.h\"\n\n");
+	file_text_write_string(file, "#include \"../gm_funcs/audio.h\"\n");
+	file_text_write_string(file, "#include \"../sprite_toid.h\"\n\n");
 	
 	// Write bg data
 	for (var k = 0; k < array_length(packed_layers); k++) {
@@ -102,7 +103,7 @@ function scr_compilerooms(i, yyp_json){
 
 		    file_text_write_string(file,
 		    "static GMLayerBackground " + cname + " = {\n" +
-		    "    .sprite = " + (_layer.background.sprite != "" ? "spr_" + sanitize_filename(_layer.background.sprite) : "NULL") + ",\n" +
+		    "    .sprite = " + (_layer.background.sprite != "" ? "(GMSprite *)" + sanitize_filename(_layer.background.sprite) : "NULL") + ",\n" +
 		    "    .color = " + string(_layer.background.colour) + ",\n" +
 		    "};\n\n");
 		}

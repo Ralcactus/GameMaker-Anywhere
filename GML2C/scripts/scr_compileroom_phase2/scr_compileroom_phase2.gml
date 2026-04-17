@@ -8,7 +8,7 @@ function scr_compileroom_phase2(packed_layers){
 
 
 	//i don't think this works with more then 1 asset layer!
-	var asset_layer_index = 40973;
+	var asset_layer_index = -1;
 	for (var k = 0; k < array_length(packed_layers); k++){
 	    if (packed_layers[k].type == "GMRAssetLayer"){
 	        asset_layer_index = k;
@@ -17,7 +17,7 @@ function scr_compileroom_phase2(packed_layers){
 	}
 	
 	//i don't think this works with more then 1 bg layer!
-	var bg_layer_index = 40973;
+	var bg_layer_index = -1;
 	for (var k = 0; k < array_length(packed_layers); k++){
 	    if (packed_layers[k].type == "GMRBackgroundLayer"){
 	        bg_layer_index = k;
@@ -56,6 +56,19 @@ function scr_compileroom_phase2(packed_layers){
 	var asset_layer = safe_name + "_asset_" + string(asset_layer_index);
 	var background_layer = safe_name + "_bg_" + string(bg_layer_index);
 	
+	var assetdraw_loop = "";
+	var bg_color_applycode = "";
+	
+	if (asset_layer_index != -1){
+		assetdraw_loop = "	for (int i = 0; i < " + asset_layer + ".assetCount; i++)\n" +
+						 "		draw_sprite_ext(" + asset_layer  + "_data" + "[i].sprite, 0, " + asset_layer  + "_data" + "[i].x, " + asset_layer  + "_data" + "[i].y, " + asset_layer  + "_data" + "[i].scaleX, " + asset_layer  + "_data" + "[i].scaleY, " + asset_layer  + "_data" + "[i].rotation, 0, 1);\n\n";
+	}
+	
+	if (bg_layer_index != -1){
+		bg_color_applycode = "	bgcolor = " + background_layer + ".color;\n";
+	}
+	
+	
 	//write to the end of the room c file
 	var roomcfile = file_text_open_append(destination + "source\\rooms\\" + safe_name + ".c");
 	file_text_write_string(roomcfile,
@@ -67,8 +80,7 @@ function scr_compileroom_phase2(packed_layers){
 		"	//printf(\"RUNNING ROOM " + yyfile.name + "\\n\");\n\n" +
 		
 		//draw assets
-		"	for (int i = 0; i < " + asset_layer + ".assetCount; i++)\n" +
-		"		draw_sprite_ext(" + asset_layer  + "_data" + "[i].sprite, 0, " + asset_layer  + "_data" + "[i].x, " + asset_layer  + "_data" + "[i].y, " + asset_layer  + "_data" + "[i].scaleX, " + asset_layer  + "_data" + "[i].scaleY, " + asset_layer  + "_data" + "[i].rotation, 0, 1);\n\n" +
+		assetdraw_loop+
 		
 		//room sizes
 		"	if (" + yyfile.name + "_views[0].visible == 1){\n" +
@@ -85,7 +97,7 @@ function scr_compileroom_phase2(packed_layers){
 		"	room_height = " + yyfile.name + ".height;\n" +
 		
 		//bg color
-		"		bgcolor = " + background_layer + ".color;\n" +
+		bg_color_applycode +
 		
 		//objects
 		object_scripts +

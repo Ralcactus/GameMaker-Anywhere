@@ -13,7 +13,9 @@ function scr_compilesprites(){
 	if (global.export_mode == Export.DC)
 		spriteoutput = destination + "\\romdisk\\sprites\\";
 				
-    directory_create(spriteoutput + yyfile.name + "\\");
+	if (global.copysprite)
+		directory_create(spriteoutput + yyfile.name + "\\");
+		
     var sprite_rel_dir = "sprites/" + yyfile.name + "/";
     var sprite_frames = [];
 			
@@ -33,9 +35,11 @@ function scr_compilesprites(){
 				
 		file_text_write_string(file,
 		"    { \"" + frame_name + "\" },\n");
-                
-        file_copy(filename_dir(global.selected_yyp) + "\\sprites\\" + yyfile.name + "\\" + frame_name + ".png", 
-                    spriteoutput + yyfile.name + "\\" + frame_name + ".png");
+         
+		if (global.copysprite){
+	        file_copy(filename_dir(global.selected_yyp) + "\\sprites\\" + yyfile.name + "\\" + frame_name + ".png", 
+	                    spriteoutput + yyfile.name + "\\" + frame_name + ".png");
+		}
 						 
         file_text_write_string(t3s_file, yyfile.name + "/" + frame_name + ".png\n");
     }

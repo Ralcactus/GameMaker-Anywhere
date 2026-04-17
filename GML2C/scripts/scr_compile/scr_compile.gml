@@ -107,5 +107,9 @@ function scr_compile()
 	//finsih!!!
 	logging = true;
 	global.exporting = false;
+	
+	if (!global.copysprite)
+		file_delete(t3s_path);
+	
 	scr_compilecommand();
 }

@@ -74,6 +74,7 @@
     {"id":{"name":"libxprocess","path":"extensions/libxprocess/libxprocess.yy",},},
     {"id":{"name":"obj_bg_manager","path":"objects/obj_bg_manager/obj_bg_manager.yy",},},
     {"id":{"name":"obj_compiler","path":"objects/obj_compiler/obj_compiler.yy",},},
+    {"id":{"name":"obj_debug_setting","path":"objects/obj_debug_setting/obj_debug_setting.yy",},},
     {"id":{"name":"obj_icon_manager","path":"objects/obj_icon_manager/obj_icon_manager.yy",},},
     {"id":{"name":"obj_log","path":"objects/obj_log/obj_log.yy",},},
     {"id":{"name":"Compileroom","path":"rooms/Compileroom/Compileroom.yy",},},

@@ -25,6 +25,8 @@ global.title_id = "";
 global.publisher = "";
 global.current_field = -1; // -1 = none, 0 = game name, 1 = title id, 2 = publisher
 global.exporting = false;
+global.copysprite = true;
+global.copycode = true;
 
 var xadd = 700;
 var yadd = 100;
