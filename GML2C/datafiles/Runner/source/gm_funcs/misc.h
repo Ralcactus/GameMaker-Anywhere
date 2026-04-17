@@ -14,11 +14,6 @@ extern bool MarkedForClose;
 #pragma once
 #define noone -4
 
-//OS
-//custom
-#define os_3ds 100
-#define os_wiiu 101
-
 //enums
 enum AudioEffectType{
     Bitcrusher,
@@ -42,6 +37,11 @@ enum AudioLFOType{
     Square,
     Triangle
 };
+
+//OS
+//custom
+#define os_3ds 100
+#define os_wiiu 101
 
 //gm built in
 #define os_windows 0
