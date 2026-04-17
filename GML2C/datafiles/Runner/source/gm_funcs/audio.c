@@ -13,7 +13,7 @@ void audio_listener_orientation(float lookat_x, float lookat_y, float lookat_z, 
 }
 
 void audio_emitter_create(){
-    return -1;
+    //so empty...
 }
 
 void audio_emitter_free(int emitter_id){
@@ -63,7 +63,6 @@ void audio_emitter_falloff(int emitter_id, float falloff_ref, float falloff_max,
 float audio_emitter_get_gain(int emitter_id){
     return 0;
 }
-
 
 void audio_emitter_gain(int emitter_id, float gain){
     //so empty...
