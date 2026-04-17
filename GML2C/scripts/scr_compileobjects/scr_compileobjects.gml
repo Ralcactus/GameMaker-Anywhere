@@ -10,10 +10,10 @@ function scr_compileobjects(){
         if (is_struct(sid) && variable_struct_exists(sid, "name"))
             spr_name = sid.name;
     }
-
-	//sprite isn't set (see the 2nd comment in sprite_toid.h to see why its so long)
+	
+	//object doesn't have a sprite
 	if (spr_name == "")
-		spr_name = "JUOEDESBGFIUFDSVIUFSDVBSAOPDSFIGHSDUIOGFSDIUFDSGFDSIUPFDSIFSDOPFSDAFSDASPFADOPSJSDJOIHFSDISFDOHIJUOEDESBGFIUFDSVIUFSDVBSAOPDSFIGHSDUIOGFSDIUFDSGFDSIUPFDSIFSDOPFSDAFSDASPFADOPSJSDJOIH";
+		spr_name = "-1";
 
     var steppath = filename_dir(filename_dir(global.selected_yyp) + "/" + _id.path) + "/Step_0.gml";
     var createpath = filename_dir(filename_dir(global.selected_yyp) + "/" + _id.path) + "/Create_0.gml";

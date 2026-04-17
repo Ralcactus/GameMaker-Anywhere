@@ -19,7 +19,7 @@ function scr_compileSETUP(){
     all_objects = [];
 	yyfile = noone;
 	_id = noone;
-	currentsprite_count = 0;
+	currentsprite_count = -1;
 	t3s_file = noone;
 	KnownFirstRoom = false;
 
@@ -54,7 +54,6 @@ function scr_compileMIDDLE2(){
 		directory_create(destination + "\\source\\rooms\\");
 		directory_create(destination + "\\source\\objects\\");
 		directory_create(destination + "\\source\\sprites\\");	
-		file_copy(runnerfolder +  + "\\gfx\\JUOEDESBGFIUFDSVIUFSDVBSAOPDSFIGHSDUIOGFSDIUFDSGFDSIUPFDSIFSDOPFSDAFSDASPFADOPSJSDJOIHFSDISFDOHIJUOEDESBGFIUFDSVIUFSDVBSAOPDSFIGHSDUIOGFSDIUFDSGFDSIUPFDSIFSDOPFSDAFSDASPFADOPSJSDJOIH\\empty.png" ,destination + "\\gfx\\JUOEDESBGFIUFDSVIUFSDVBSAOPDSFIGHSDUIOGFSDIUFDSGFDSIUPFDSIFSDOPFSDAFSDASPFADOPSJSDJOIHFSDISFDOHIJUOEDESBGFIUFDSVIUFSDVBSAOPDSFIGHSDUIOGFSDIUFDSGFDSIUPFDSIFSDOPFSDAFSDASPFADOPSJSDJOIH\\empty.png");
 		scr_compile();
 	}
 	else
@@ -69,10 +68,8 @@ function scr_compile()
 	var t3s_path = destination + "\\gfx\\" + "sprites.t3s";
 	t3s_file = file_text_open_write(t3s_path);
 	file_text_write_string(t3s_file, "--atlas\n");
-	var longass = "JUOEDESBGFIUFDSVIUFSDVBSAOPDSFIGHSDUIOGFSDIUFDSGFDSIUPFDSIFSDOPFSDAFSDASPFADOPSJSDJOIHFSDISFDOHIJUOEDESBGFIUFDSVIUFSDVBSAOPDSFIGHSDUIOGFSDIUFDSGFDSIUPFDSIFSDOPFSDAFSDASPFADOPSJSDJOIH";
 	currentsprite_count+=1;
-	file_text_write_string(t3s_file, longass + "/" + "empty" + ".png\n");
-	
+
     //json parse
     var yypbuffer = buffer_load(global.selected_yyp);
     var yypdata = buffer_read(yypbuffer, buffer_string);

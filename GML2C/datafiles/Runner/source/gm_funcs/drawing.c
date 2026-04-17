@@ -37,6 +37,9 @@ int drawcolor = c_white;
     //subimg, color and alpha are stubs!
     //Also rotation is a little weird idk how to fix it
     void draw_sprite(int sprite_index, int subimg, float draw_x, float draw_y){
+        if (sprite_index == -1)
+            return;
+
         C2D_Sprite sprite;
         C2D_SpriteFromSheet(&sprite, spriteSheet, sprite_index);
         C2D_SpriteSetPos(&sprite, draw_x, draw_y);
@@ -44,6 +47,9 @@ int drawcolor = c_white;
     }
     
     void draw_sprite_ext(int sprite_index, int subimg, float draw_x, float draw_y, float scale_x, float scale_y, float rotation, float color, float alpha){
+        if (sprite_index == -1)
+            return;
+
         C2D_Sprite sprite;
         C2D_SpriteFromSheet(&sprite, spriteSheet, sprite_index);
         C2D_SpriteSetPos(&sprite, draw_x, draw_y);
@@ -52,7 +58,7 @@ int drawcolor = c_white;
         C2D_DrawSprite(&sprite);
     }
 
-    void draw_text(float _x, float _y, const char* text) {
+    void draw_text(float _x, float _y, const char* text){
         C2D_Text bleh;
         C2D_TextBuf buffer = C2D_TextBufNew(256);
 

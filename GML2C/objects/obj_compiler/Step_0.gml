@@ -1,4 +1,4 @@
-//dont take inputs
+ //dont take inputs
 if (global.exporting)
 	exit; 
 
