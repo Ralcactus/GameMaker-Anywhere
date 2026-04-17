@@ -87,6 +87,7 @@
     {"id":{"name":"scr_compilesprites","path":"scripts/scr_compilesprites/scr_compilesprites.yy",},},
     {"id":{"name":"scr_getvariables","path":"scripts/scr_getvariables/scr_getvariables.yy",},},
     {"id":{"name":"scr_ifbracket_convert","path":"scripts/scr_ifbracket_convert/scr_ifbracket_convert.yy",},},
+    {"id":{"name":"scr_setto_convert","path":"scripts/scr_setto_convert/scr_setto_convert.yy",},},
     {"id":{"name":"scr_write_metadata","path":"scripts/scr_write_metadata/scr_write_metadata.yy",},},
     {"id":{"name":"syntax_convert","path":"scripts/syntax_convert/syntax_convert.yy",},},
     {"id":{"name":"spr_basicico","path":"sprites/spr_basicico/spr_basicico.yy",},},
