@@ -74,11 +74,11 @@ float mouse_y = 0;
 
     //touchscreen
     float display_mouse_get_x(){
-        return mouse_x;
+        return mouse_x-view0_camXPos;
     }
 
     float display_mouse_get_y(){
-        return mouse_y;
+        return mouse_y-view0_camYPos;;
     }
 #endif
 
