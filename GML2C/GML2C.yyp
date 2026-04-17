@@ -86,6 +86,7 @@
     {"id":{"name":"scr_compileroom_phase2","path":"scripts/scr_compileroom_phase2/scr_compileroom_phase2.yy",},},
     {"id":{"name":"scr_compilerooms","path":"scripts/scr_compilerooms/scr_compilerooms.yy",},},
     {"id":{"name":"scr_compilesprites","path":"scripts/scr_compilesprites/scr_compilesprites.yy",},},
+    {"id":{"name":"scr_customvariable_get","path":"scripts/scr_customvariable_get/scr_customvariable_get.yy",},},
     {"id":{"name":"scr_getvariables","path":"scripts/scr_getvariables/scr_getvariables.yy",},},
     {"id":{"name":"scr_ifbracket_convert","path":"scripts/scr_ifbracket_convert/scr_ifbracket_convert.yy",},},
     {"id":{"name":"scr_setto_convert","path":"scripts/scr_setto_convert/scr_setto_convert.yy",},},

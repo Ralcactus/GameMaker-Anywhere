@@ -1,2 +1,2 @@
-void scr_handleroom(char* CurrentRoom);
-void room_goto(char* room);
+void scr_handleroom(char* room);
+void room_goto(char* GOTOroom);

@@ -13,14 +13,16 @@ function scr_compileobject_phase2(spr_name, create_code, step_code, draw_code){
 	file_text_write_string(file, "#include \"../gm_funcs/input.h\"\n");
 	file_text_write_string(file, "#include \"../room_tostring.h\"\n");
 	file_text_write_string(file, "#include \"../gm_funcs/misc.h\"\n");
-	file_text_write_string(file, "#include \"../gm_funcs/collision.h\"\n\n");
+	file_text_write_string(file, "#include \"../gm_funcs/collision.h\"\n");
 	file_text_write_string(file, "#include \"../gm_funcs/audio.h\"\n\n");
-	
 	//define variables
 	file_text_write_string(file, "static bool initialized[8] = {false};\n");
 	file_text_write_string(file, "static int " + safe_name + "_call_index = 0;\n");
 	scr_writevariables(file);
-	
+	scr_customvariable_get(create_code);
+	scr_customvariable_get(step_code);
+	scr_customvariable_get(draw_code);
+		
 	#region EVENTS
 	//create
 	file_text_write_string(file, "void " + safe_name + "_create() {\n");

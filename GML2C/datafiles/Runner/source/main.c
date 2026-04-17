@@ -11,7 +11,7 @@
 int bgcolor = 0xFF000000;
 float room_width = 0;
 float room_height = 0;
-char* CurrentRoom = "NULL"; //DO NOT CHANGE THIS! GM CHECKS FOR "NULL" TO EDIT IT TO THE FIRST ROOM!!!
+char* room = "NULL"; //DO NOT CHANGE THIS! GM CHECKS FOR "NULL" TO EDIT IT TO THE FIRST ROOM!!!
 int view_camera[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 bool MarkedForClose = false;
 
@@ -30,7 +30,7 @@ int main(){
 
     
     printf("Hello World!\n");
-    printf("Loading First room: %s\n", CurrentRoom);
+    printf("Loading First room: %s\n", room);
 
     //main loop
     #ifdef __3DS__
@@ -42,7 +42,7 @@ int main(){
         scr_startframe(top);
         
         gamepad_scanner();
-        scr_handleroom(CurrentRoom);
+        scr_handleroom(room);
 
         scr_endframe();
 

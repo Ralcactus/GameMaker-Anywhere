@@ -5,7 +5,7 @@ extern float view0_camYPos;
 extern float view0_camWidth;
 extern float view0_camHeight;
 extern int view_camera[9];
-extern char* CurrentRoom;
+extern char* room;
 extern float room_width;
 extern float room_height;
 extern bool MarkedForClose;

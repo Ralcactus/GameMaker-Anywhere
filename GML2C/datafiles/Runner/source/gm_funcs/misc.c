@@ -68,13 +68,13 @@ void window_set_fullscreen(bool fullscreen){
 
 #pragma region //room
 
-void room_goto(char* room){
-    CurrentRoom = room;
+void room_goto(char* GOTOroom){
+    room = room;
     printf("room_goto %s\n", room);
 }
 #pragma endregion
 
-#pragma region //game_ fucns
+#pragma region //game_ funcs
 void game_end(){
     MarkedForClose = true;
 }
@@ -83,6 +83,11 @@ void game_restart(){
 }
 #pragma endregion
 
+#pragma region //these don't even deserve their own region lmao
+bool code_is_compiled(){
+    return true;
+}
+#pragma endregion
 
 //3ds
 #ifdef __3DS__

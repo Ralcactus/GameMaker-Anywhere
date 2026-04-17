@@ -267,7 +267,7 @@ function scr_compilerooms(i, yyp_json){
 		while (!file_text_eof(mainc))
 		    lines[j++] = file_text_readln(mainc);
 
-		lines = string_split(string_replace_all(string_join_ext("", lines), "CurrentRoom = \"NULL\"", "CurrentRoom = \"" + safe_name + "\""), "\n");
+		lines = string_split(string_replace_all(string_join_ext("", lines), "room = \"NULL\"", "room = \"" + safe_name + "\""), "\n");
 		file_text_close(mainc)
 
 		var mainc_write = file_text_open_write(destination + "source\\main.c");
@@ -345,7 +345,7 @@ function scr_compilerooms(i, yyp_json){
 	        new_content += "#include \"../rooms/" + safe_name + ".h\"\n";
 	    }
 	    if (j == insert_at) {
-	        new_content += "    if (strcmp(CurrentRoom, \"" + yyfile.name + "\") == 0){\n";
+	        new_content += "    if (strcmp(room, \"" + yyfile.name + "\") == 0){\n";
 	        new_content += "        scr_runroom_" + yyfile.name + "();\n";
 	        new_content += "    }\n";
 	    }
