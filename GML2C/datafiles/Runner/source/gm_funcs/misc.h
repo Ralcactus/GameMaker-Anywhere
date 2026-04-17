@@ -85,5 +85,8 @@ void game_restart();
 
 //room
 void room_goto(int room_id);
+void room_goto_previous();
+void room_goto_next();
 
+//other
 void show_message(char* message);

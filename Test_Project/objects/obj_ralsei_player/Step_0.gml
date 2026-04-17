@@ -24,7 +24,7 @@ if (gamepad_button_check_pressed(4, gp_start)){
 }
 
 if (gamepad_button_check_pressed(4, gp_face2))
-	room_goto(Ralsei_Love);
+	room_goto_next();
 
 if (gamepad_button_check(4, gp_face1))
 	show_message("hi this is a show_message prompt");

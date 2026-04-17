@@ -66,10 +66,15 @@ void window_set_fullscreen(bool fullscreen){
 }
 #pragma endregion
 
-#pragma region //room
-
+#pragma region //rooms
 void room_goto(int room_id){
     room = room_id;
+}
+void room_goto_next(){
+    room += 1;
+}
+void room_goto_previous(){
+    room -= 1;
 }
 #pragma endregion
 
