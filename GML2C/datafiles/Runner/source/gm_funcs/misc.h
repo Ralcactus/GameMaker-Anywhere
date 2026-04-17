@@ -15,23 +15,23 @@ extern bool MarkedForClose;
 #define noone -4
 
 //OS
-//the actually useful stuff
-#define os_3ds "3DS"
-#define os_wiiu "WIIU"
+//custom
+#define os_3ds 100
+#define os_wiiu 101
 
-//other
-#define os_windows "WINDOWS"
-#define os_gxgames "GXGAMES"
-#define os_linux "LINUX"
-#define os_macosx "MACOSX"
-#define os_tvos "TVOS"
-#define os_ps4 "PS4"
-#define os_ps5 "PS5"
-#define os_xboxseriesxs "XBOX"
-#define os_gdk "XBOX"
-#define os_switch "SWITCH"
-#define os_switch2 "SWITCH2"
-#define os_unknown "what_are_you_running_on_bro_:sob:"
+//gm built in
+#define os_windows 0
+#define os_gxgames 24
+#define os_linux 6
+#define os_macosx 1
+#define os_tvos 20
+#define os_ps4 14
+#define os_ps5 22
+#define os_xboxseriesxs 23
+#define os_gdk 23
+#define os_switch 21
+#define os_switch2 25
+#define os_unknown -1
 
 #ifdef __3DS__
     #define os_type os_3ds
