@@ -10,11 +10,16 @@
 #include "room_toid.h"
 
 int bgcolor = 0xFF000000;
-float room_width = 0;
-float room_height = 0;
-int room = -1; //DO NOT CHANGE THIS! GM CHECKS FOR "-1" TO EDIT IT TO THE FIRST ROOM!!!
 int view_camera[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 bool MarkedForClose = false;
+
+//room
+int room = -1; //DO NOT CHANGE THIS! GM CHECKS FOR "-1" TO EDIT IT TO THE FIRST ROOM!!!
+int room_first = -1; //asigned in main func
+float room_width = 0;
+float room_height = 0;
+
+
 
 int main(){
     #ifdef __3DS__
@@ -29,6 +34,8 @@ int main(){
     #endif
     drawing_init();
 
+    //variable init
+    room_first = room;
     
     printf("Hello World!\n");
 

@@ -76,6 +76,22 @@ void room_goto_next(){
 void room_goto_previous(){
     room -= 1;
 }
+
+int room_next(int room_id){
+    return room_id + 1;
+}
+
+int room_previous(int room_id){
+    return room_id - 1;
+}
+
+void room_set_height(int room_id, float height){
+    room_height = height;
+}
+void room_set_width(int room_id, float width){
+    room_width = width;
+}
+
 #pragma endregion
 
 #pragma region //game_ funcs
@@ -86,6 +102,7 @@ void game_restart(){
     //so empty...
 }
 #pragma endregion
+
 
 #pragma region //these don't even deserve their own region lmao
 bool code_is_compiled(){
