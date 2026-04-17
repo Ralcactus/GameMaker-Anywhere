@@ -8,7 +8,7 @@ function scr_compileroom_phase2(packed_layers){
 
 
 	//i don't think this works with more then 1 asset layer!
-	var asset_layer_index = -1;
+	var asset_layer_index = 40973;
 	for (var k = 0; k < array_length(packed_layers); k++){
 	    if (packed_layers[k].type == "GMRAssetLayer"){
 	        asset_layer_index = k;
@@ -17,7 +17,7 @@ function scr_compileroom_phase2(packed_layers){
 	}
 	
 	//i don't think this works with more then 1 bg layer!
-	var bg_layer_index = -1;
+	var bg_layer_index = 40973;
 	for (var k = 0; k < array_length(packed_layers); k++){
 	    if (packed_layers[k].type == "GMRBackgroundLayer"){
 	        bg_layer_index = k;
