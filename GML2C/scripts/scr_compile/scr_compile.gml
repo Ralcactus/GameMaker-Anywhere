@@ -22,6 +22,7 @@ function scr_compileSETUP(){
 	currentsprite_count = -1;
 	t3s_file = noone;
 	KnownFirstRoom = false;
+	roomid_count = 0;
 
 	if (directory_exists(destination)){
 		//delete the old build

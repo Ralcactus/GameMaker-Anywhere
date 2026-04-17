@@ -5,7 +5,7 @@ extern float view0_camYPos;
 extern float view0_camWidth;
 extern float view0_camHeight;
 extern int view_camera[9];
-extern char* room;
+extern int room;
 extern float room_width;
 extern float room_height;
 extern bool MarkedForClose;
@@ -84,6 +84,6 @@ void game_end();
 void game_restart();
 
 //room
-void room_goto(char* room);
+void room_goto(int room_id);
 
 void show_message(char* message);

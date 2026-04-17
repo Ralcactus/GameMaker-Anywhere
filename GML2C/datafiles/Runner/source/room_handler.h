@@ -1,2 +1,1 @@
-void scr_handleroom(char* room);
-void room_goto(char* GOTOroom);
+void scr_handleroom(int room_id);

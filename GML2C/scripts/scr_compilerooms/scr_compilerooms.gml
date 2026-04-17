@@ -267,7 +267,7 @@ function scr_compilerooms(i, yyp_json){
 		while (!file_text_eof(mainc))
 		    lines[j++] = file_text_readln(mainc);
 
-		lines = string_split(string_replace_all(string_join_ext("", lines), "room = \"NULL\"", "room = \"" + safe_name + "\""), "\n");
+		lines = string_split(string_replace_all(string_join_ext("", lines), "room = -1", "room = " + safe_name), "\n");
 		file_text_close(mainc)
 
 		var mainc_write = file_text_open_write(destination + "source\\main.c");
@@ -345,8 +345,9 @@ function scr_compilerooms(i, yyp_json){
 	        new_content += "#include \"../rooms/" + safe_name + ".h\"\n";
 	    }
 	    if (j == insert_at) {
-	        new_content += "    if (strcmp(room, \"" + yyfile.name + "\") == 0){\n";
+	        new_content += "    if (room == " + yyfile.name + "){\n";
 	        new_content += "        scr_runroom_" + yyfile.name + "();\n";
+			new_content += "		return;\n";
 	        new_content += "    }\n";
 	    }
 	    new_content += lines[j] + "\n";
@@ -357,7 +358,8 @@ function scr_compilerooms(i, yyp_json){
 	file_text_write_string(room_handlefile_write, new_content);
 	file_text_close(room_handlefile_write);
 	
-	var roomto_idh = file_text_open_append(destination + "source\\room_tostring.h");
-	file_text_write_string(roomto_idh, "#define " + yyfile.name + " " + "\"" + yyfile.name + "\"" + "\n");
+	var roomto_idh = file_text_open_append(destination + "source\\room_toid.h");
+	file_text_write_string(roomto_idh, "#define " + yyfile.name + " " + string(roomid_count) + "\n");
+	roomid_count += 1;
 	file_text_close(roomto_idh);
 }

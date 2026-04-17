@@ -68,9 +68,8 @@ void window_set_fullscreen(bool fullscreen){
 
 #pragma region //room
 
-void room_goto(char* GOTOroom){
-    room = room;
-    printf("room_goto %s\n", room);
+void room_goto(int room_id){
+    room = room_id;
 }
 #pragma endregion
 
