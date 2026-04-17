@@ -1,4 +1,4 @@
-function scr_compilerooms(i){
+function scr_compilerooms(i, yyp_json){
 	var safe_name = sanitize_filename(yyfile.name);
 	var filepath = destination + "source\\rooms\\" + safe_name + ".c";
 	var file = file_text_open_write(filepath);
@@ -253,9 +253,8 @@ function scr_compilerooms(i){
 	}
 
 	file_text_write_string(file, "};\n\n");
-
 	var firstroom = false;
-	if (!KnownFirstRoom){
+	if (yyp_json.RoomOrderNodes[0].roomId.name == safe_name){
 		firstroom = true;
 		KnownFirstRoom = true;
 		

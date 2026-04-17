@@ -94,11 +94,10 @@ function scr_compile()
         
 		
 		if (yyfile.resourceType == "GMRoom") //asset is a room!
-			scr_compilerooms(i);
+			scr_compilerooms(i, yyp_json);
 		
-        if (yyfile.resourceType == "GMSprite"){ //asset is a sprite!
+        if (yyfile.resourceType == "GMSprite") //asset is a sprite!
 			scr_compilesprites();
-		}
 
         if (yyfile.resourceType == "GMObject") //asset is a object!
 			scr_compileobjects();

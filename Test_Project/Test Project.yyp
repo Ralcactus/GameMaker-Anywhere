@@ -63,8 +63,8 @@
   "resourceType":"GMProject",
   "resourceVersion":"2.0",
   "RoomOrderNodes":[
-    {"roomId":{"name":"Main_Test","path":"rooms/Main_Test/Main_Test.yy",},},
     {"roomId":{"name":"Ralsei_Love","path":"rooms/Ralsei_Love/Ralsei_Love.yy",},},
+    {"roomId":{"name":"Main_Test","path":"rooms/Main_Test/Main_Test.yy",},},
     {"roomId":{"name":"Room3302323","path":"rooms/Room3302323/Room3302323.yy",},},
   ],
   "templateType":"game",
