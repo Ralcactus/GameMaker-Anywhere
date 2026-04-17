@@ -15,6 +15,9 @@
     #define gp_padu KEY_DUP
     #define gp_padd KEY_DDOWN
 
+    extern float mouse_x;
+    extern float mouse_y;
+    
     //funcs
     bool gamepad_button_check(int pad, u32 Button);
     bool gamepad_button_check_pressed(int pad, u32 Button);

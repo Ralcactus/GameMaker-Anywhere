@@ -32,7 +32,6 @@
   ],
   "IncludedFiles":[
     {"$GMIncludedFile":"","%Name":".gitattributes","CopyToMask":-1,"filePath":"datafiles/Runner","name":".gitattributes","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
-    {"$GMIncludedFile":"","%Name":"sprites.t3s","CopyToMask":-1,"filePath":"datafiles/Runner/gfx","name":"sprites.t3s","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"main.code-workspace","CopyToMask":-1,"filePath":"datafiles/Runner","name":"main.code-workspace","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"Makefile","CopyToMask":-1,"filePath":"datafiles/Runner","name":"Makefile","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"Makefile","CopyToMask":-1,"filePath":"datafiles/Runner/platform/3ds","name":"Makefile","resourceType":"GMIncludedFile","resourceVersion":"2.0",},

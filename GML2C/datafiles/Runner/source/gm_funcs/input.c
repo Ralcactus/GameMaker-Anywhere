@@ -1,7 +1,10 @@
 #include <stdio.h>
 #include <string.h>
 #include "misc.h"
+#include "input.h"
 
+float mouse_x = 0;
+float mouse_y = 0;
 
 //handle 3ds inputs
 #ifdef __3DS__
@@ -16,6 +19,12 @@
         keys_held = hidKeysHeld();
         keys_down = hidKeysDown();
         keys_up = hidKeysUp();
+
+        //touchscreen
+        touchPosition touch;
+        hidTouchRead(&touch);
+        mouse_x = touch.px*view0_camWidth/400+140+view0_camXPos;
+        mouse_y = touch.py*view0_camHeight/240+view0_camYPos;
     }
 
     #pragma region //gamepad_ funcs
@@ -65,15 +74,11 @@
 
     //touchscreen
     float display_mouse_get_x(){
-        touchPosition touch;
-        hidTouchRead(&touch);
-        return touch.px*view0_camWidth/400+140+view0_camXPos;
+        return mouse_x;
     }
 
     float display_mouse_get_y(){
-        touchPosition touch;
-        hidTouchRead(&touch);
-        return touch.py*view0_camHeight/240+view0_camYPos;
+        return mouse_y;
     }
 #endif
 
