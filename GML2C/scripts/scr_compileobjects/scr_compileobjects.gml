@@ -28,7 +28,10 @@ function scr_compileobjects(){
 		if (buffer_get_size(createinside_buffer) > 0)
 			create_code = buffer_read(createinside_buffer, buffer_string);
         buffer_delete(createinside_buffer);
+		create_code = syntax_convert(create_code);
+		
         show_debug_message(create_code);
+
     }
             
     if (file_exists(steppath)) {
@@ -36,6 +39,8 @@ function scr_compileobjects(){
 		if (buffer_get_size(createinside_buffer) > 0)
 			step_code = buffer_read(createinside_buffer, buffer_string);
         buffer_delete(createinside_buffer);
+		step_code = syntax_convert(step_code);
+		
         show_debug_message(step_code);
     }
                   
@@ -44,6 +49,8 @@ function scr_compileobjects(){
 		if (buffer_get_size(createinside_buffer) > 0)
 			draw_code = buffer_read(createinside_buffer, buffer_string);
         buffer_delete(createinside_buffer);
+		draw_code = syntax_convert(draw_code);
+		
         show_debug_message(draw_code);
     }
             
