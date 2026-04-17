@@ -18,7 +18,12 @@ if (gamepad_button_check(4, gp_padl)){
 	sprite_index = spr_ralsei_left;
 }
 
+if (gamepad_button_check(4, gp_face1)){
+	show_message("hi this is a show_message prompt");
+}
+
 if (gamepad_button_check_pressed(4, gp_start)){
+	show_message("goodbye!");
 	game_end();
 }
 

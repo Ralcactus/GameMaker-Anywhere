@@ -59,3 +59,5 @@ void game_restart();
 
 //room
 void room_goto(char* room);
+
+void show_message(char* message);

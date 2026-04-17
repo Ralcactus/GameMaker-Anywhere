@@ -89,6 +89,12 @@ void game_restart(){
     #include <3ds.h>
     #include <citro2d.h>
 
+    void show_message(char* message){
+        errorConf error;
+        errorInit(&error, ERROR_TEXT, CFG_LANGUAGE_EN);
+        errorText(&error, message);
+        errorDisp(&error);
+    }
 #endif
 
 //wii u
