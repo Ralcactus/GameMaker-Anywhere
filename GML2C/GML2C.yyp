@@ -76,7 +76,6 @@
     {"id":{"name":"libfilesystem","path":"extensions/libfilesystem/libfilesystem.yy",},},
     {"id":{"name":"libxprocess","path":"extensions/libxprocess/libxprocess.yy",},},
     {"id":{"name":"dropdown","path":"objects/dropdown/dropdown.yy",},},
-    {"id":{"name":"obj_bg_manager","path":"objects/obj_bg_manager/obj_bg_manager.yy",},},
     {"id":{"name":"obj_compile_button","path":"objects/obj_compile_button/obj_compile_button.yy",},},
     {"id":{"name":"obj_compiler","path":"objects/obj_compiler/obj_compiler.yy",},},
     {"id":{"name":"obj_debug_setting","path":"objects/obj_debug_setting/obj_debug_setting.yy",},},

@@ -2,6 +2,10 @@
 runnerfolder = working_directory + "Runner\\";
 destination = "C:\\GM_Anywhere\\Runner\\";
 
+//had to ban these because they are built in C funcs lol
+//just add them in the array and the compiler with throw a warning if its compiling something mentioning it
+banned_strings = ["clock"]
+
 var_names = [];
 var_defaults = [];
 all_resources = [];

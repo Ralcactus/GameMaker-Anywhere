@@ -14,7 +14,15 @@ function scr_compileobjects(){
 	//object doesn't have a sprite
 	if (spr_name == "")
 		spr_name = "-1";
-
+		
+	if (array_contains(banned_strings, safe_name)){
+		var answer = false;
+		show_debug_message("WARNING\nBanned string \"" + safe_name + "\" continue compiling this object? (will cause issues!)")
+		
+		if (answer = false)
+			exit;
+	}
+	
     var steppath = filename_dir(filename_dir(global.selected_yyp) + "/" + _id.path) + "/Step_0.gml";
     var createpath = filename_dir(filename_dir(global.selected_yyp) + "/" + _id.path) + "/Create_0.gml";
     var drawpath = filename_dir(filename_dir(global.selected_yyp) + "/" + _id.path) + "/Draw_0.gml";

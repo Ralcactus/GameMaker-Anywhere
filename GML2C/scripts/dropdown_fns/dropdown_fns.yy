@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"dropdown_fns",
   "parent":{
-    "name":"GML2C",
-    "path":"GML2C.yyp",
+    "name":"Scripts",
+    "path":"folders/Scripts.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

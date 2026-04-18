@@ -1,5 +1,17 @@
 function scr_compilesprites(){
 	var safe_name = sanitize_filename(yyfile.name);
+	
+	
+	if (array_contains(banned_strings, safe_name)){
+		var answer = show_question("WARNING\nBanned string \"" + safe_name + "\" continue compiling this sprite? (will cause issues!)")
+		
+		if (answer = false){
+			global.exporting = false;
+			return true; //cancel compile
+			exit;
+		}
+	}
+	
 	var file = file_text_open_write(destination + "source\\sprites\\" + safe_name + ".c");
     show_debug_message("Sprite: " + yyfile.name);
     var spriteoutput;
