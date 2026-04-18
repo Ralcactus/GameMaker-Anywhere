@@ -4,13 +4,13 @@ function scr_compilesprites(){
     show_debug_message("Sprite: " + yyfile.name);
     var spriteoutput;
 			
-	if (global.export_mode == Export.CIA || global.export_mode == Export._3DSX)
+	if (global.export_mode == "CIA" || global.export_mode == "3DSX")
 	    spriteoutput = destination + "\\gfx\\";
 				
-	if (global.export_mode == Export.EXE)
+	if (global.export_mode == "WINDOWS")
 		spriteoutput = destination + "\\output\\sprites\\";
 				
-	if (global.export_mode == Export.DC)
+	if (global.export_mode == "DREAMCAST")
 		spriteoutput = destination + "\\romdisk\\sprites\\";
 				
 	if (global.copysprite)

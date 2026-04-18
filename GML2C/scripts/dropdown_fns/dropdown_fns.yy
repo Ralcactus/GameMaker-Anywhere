@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"dropdown_fns",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"dropdown_fns",
+  "parent":{
+    "name":"GML2C",
+    "path":"GML2C.yyp",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

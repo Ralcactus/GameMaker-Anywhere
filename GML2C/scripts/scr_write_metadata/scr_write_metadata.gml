@@ -1,6 +1,6 @@
 function scr_write_metadata(){
 	//3DS
-	if (global.export_mode == Export._3DSX || global.export_mode == Export.CIA){
+	if (global.export_mode == "3DSX" || global.export_mode == "CIA"){
 		//app info
 		var appinfo = file_text_open_write(destination + "\\resources\\AppInfo");
 		file_text_write_string(appinfo, "APP_TITLE = " + global.game_name + "\n"

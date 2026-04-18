@@ -5,7 +5,7 @@ function scr_compileSETUP(){
 		exit;
 	}
 	
-	if (!directory_exists("C:\\devkitPro\\portlibs\\3ds\\") && (global.export_mode == Export.CIA || global.export_mode == Export._3DSX)){
+	if (!directory_exists("C:\\devkitPro\\portlibs\\3ds\\") && (global.export_mode == "CIA" || global.export_mode == "3DSX")){
 		show_message("DevKitPro 3DS portlibs are not installed!");
 		exit;
 	}
@@ -21,7 +21,6 @@ function scr_compileSETUP(){
 	_id = noone;
 	currentsprite_count = -1;
 	t3s_file = noone;
-	KnownFirstRoom = false;
 	roomid_count = 0;
 
 	if (directory_exists(destination)){

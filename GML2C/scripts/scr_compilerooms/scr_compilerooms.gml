@@ -258,7 +258,6 @@ function scr_compilerooms(i, yyp_json){
 	var firstroom = false;
 	if (yyp_json.RoomOrderNodes[0].roomId.name == safe_name){
 		firstroom = true;
-		KnownFirstRoom = true;
 		
 		//write the first room into main.c
 		var mainc = file_text_open_read(destination + "source\\main.c");
