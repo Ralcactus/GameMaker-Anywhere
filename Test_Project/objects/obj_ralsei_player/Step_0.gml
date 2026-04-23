@@ -1,23 +1,23 @@
 //move up
-if (gamepad_axis_value(4, gp_axislv) <= -0.1){
+if (gamepad_button_check(4, gp_padu)){
 	y -= 4;
 	sprite_index = spr_ralsei_up;
 }
 
 //move down
-if (gamepad_axis_value(4, gp_axislv)){
+if (gamepad_button_check(4, gp_padd)){
 	y += 4;
 	sprite_index = spr_ralsei_down;
 }
 
 //move right
-if (gamepad_axis_value(4, gp_axislh)){
+if (gamepad_button_check(4, gp_padr)){
 	x += 4;
 	sprite_index = spr_ralsei_right;
 }
 
 //move left
-if (gamepad_axis_value(4, gp_axislh) <= -0.1){
+if (gamepad_button_check(4, gp_padl)){
 	x -= 4;
 	sprite_index = spr_ralsei_left;
 }
