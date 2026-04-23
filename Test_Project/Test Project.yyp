@@ -38,6 +38,7 @@
   "resources":[
     {"id":{"name":"obj_analogtest","path":"objects/obj_analogtest/obj_analogtest.yy",},},
     {"id":{"name":"obj_cat","path":"objects/obj_cat/obj_cat.yy",},},
+    {"id":{"name":"obj_gamekiller","path":"objects/obj_gamekiller/obj_gamekiller.yy",},},
     {"id":{"name":"obj_ralsei_player","path":"objects/obj_ralsei_player/obj_ralsei_player.yy",},},
     {"id":{"name":"obj_sillydebug","path":"objects/obj_sillydebug/obj_sillydebug.yy",},},
     {"id":{"name":"MainTest","path":"rooms/MainTest/MainTest.yy",},},
