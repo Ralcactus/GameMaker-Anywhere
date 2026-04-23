@@ -231,7 +231,7 @@ function scr_compilerooms(i, yyp_json){
 		//Safe object reference
 		var objref = "NULL";
 		if (variable_struct_exists(v, "objectId") && is_struct(v.objectId) && variable_struct_exists(v.objectId, "name")) {
-			objref = "&obj_" + sanitize_filename(v.objectId.name);
+			objref = sanitize_filename(v.objectId.name);
 		}
 
 		file_text_write_string(file,

@@ -7,7 +7,7 @@ function syntax_convert(originalcode){
 
 		//weird if statements with no brackets around them
 		originalcode = scr_ifbracket_convert(i, char_code, originalcode);
-		originalcode = scr_setto_convert(i, char_code, originalcode);
+		//originalcode = scr_setto_convert(i, char_code, originalcode);
 	}
 	
 	return originalcode;

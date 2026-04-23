@@ -2,6 +2,20 @@
 #include <string.h>
 #include <stdbool.h>
 
+typedef enum {
+    VAR_FLOAT,
+    VAR_CHAR
+} VarType;
+
+// THIS MIGHT BE SCRAPPED IF THE CHAR TO FLOAT IDEA WORKS
+typedef struct{
+    VarType type;
+    union{
+        float f;
+        const char* c;
+    };
+} GMVar;
+
 enum CollisionTypes{
     AUTOMATIC,
     FULL_IMAGE,
