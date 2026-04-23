@@ -96,3 +96,5 @@ void room_set_width(int room_id, float width);
 //other
 void show_message(char* message);
 bool code_is_compiled();
+float display_get_width();
+float display_get_height();

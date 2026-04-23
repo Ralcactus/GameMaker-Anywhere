@@ -108,6 +108,14 @@ void game_restart(){
 bool code_is_compiled(){
     return true;
 }
+
+float display_get_width(){
+    return 400;
+}
+float display_get_height(){
+    return 240;
+}
+
 #pragma endregion
 
 //3ds

@@ -5,8 +5,8 @@
 
 float mouse_x = 0;
 float mouse_y = 0;
-float gamepad_button_threshold_0 = 0.5;
-
+float gamepad_button_deadzone_0 = 0.5;
+static circlePosition circle_pos = {0};
 
 //handle 3ds inputs
 #ifdef __3DS__
@@ -21,6 +21,7 @@ float gamepad_button_threshold_0 = 0.5;
         keys_held = hidKeysHeld();
         keys_down = hidKeysDown();
         keys_up = hidKeysUp();
+        hidCircleRead(&circle_pos);
 
         //touchscreen
         touchPosition touch;
@@ -84,36 +85,37 @@ float gamepad_button_threshold_0 = 0.5;
             return "";
     }
 
-    float gamepad_get_button_threshold(int pad){
-        if (pad == 0)
-            return gamepad_button_threshold_0;
-        else
-            return 0;
+    float gamepad_get_axis_deadzone(int pad){
+        return gamepad_button_deadzone_0;
     }
 
-    float gamepad_set_button_threshold(int pad, float threshold){
-        if (pad == 0)
-            return gamepad_button_threshold_0;
-        else
-            return 0;
+    void gamepad_set_axis_deadzone(int pad, float deadzone){
+        gamepad_button_deadzone_0 = deadzone;
     }
 
     float gamepad_button_value(int pad, int button){
-        if (pad == 0){
-            if (gamepad_button_check(pad, button))
-                return 1;
-            else
-                return 0;
-        }
+        if (gamepad_button_check(pad, button))
+            return 1;
         else
             return 0;
     }
 
     float gamepad_axis_count(int pad){
-        if (pad == 0)
-            return 1;
-        else
+        return 1;
+    }
+
+    float gamepad_axis_value(int pad, int axis){
+        float value = 0;
+
+        if (axis == gp_axislh)
+            value = circle_pos.dx / 154.0f;
+        else if (axis == gp_axislv)
+            value = circle_pos.dy / 154.0f * -1.0f;
+
+        if (value > -gamepad_button_deadzone_0 && value < gamepad_button_deadzone_0)
             return 0;
+
+        return value;
     }
 
     #pragma endregion

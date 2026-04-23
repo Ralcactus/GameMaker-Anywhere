@@ -14,10 +14,12 @@
     #define gp_padr KEY_DRIGHT
     #define gp_padu KEY_DUP
     #define gp_padd KEY_DDOWN
+    #define gp_axislh 32785
+    #define gp_axislv 32786
 
     extern float mouse_x;
     extern float mouse_y;
-    extern float gamepad_button_threshold_0; 
+    extern float gamepad_button_deadzone_0; 
 
     //funcs
     bool gamepad_button_check(int pad, u32 Button);
@@ -29,10 +31,11 @@
     void gamepad_set_vibration(int pad, int left_motor, int right_motor);
     bool gamepad_is_supported();
     char* gamepad_get_description(int pad);
-    float gamepad_get_button_threshold(int pad);
-    float gamepad_set_button_threshold(int pad, float threshold);
+    float gamepad_get_axis_deadzone(int pad);
+    void gamepad_set_axis_deadzone(int pad, float threshold);
     float gamepad_button_value(int pad, int button);
     float gamepad_axis_count(int pad);
+    float gamepad_axis_value(int pad, int axis);
 
     //touchscreen
     float display_mouse_get_y();
