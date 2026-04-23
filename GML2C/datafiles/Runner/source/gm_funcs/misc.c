@@ -116,6 +116,12 @@ float display_get_height(){
     return 240;
 }
 
+char* string(float value){
+    static char str[64];
+    snprintf(str, sizeof(str), "%f", value);
+    return str;
+}
+
 #pragma endregion
 
 //3ds

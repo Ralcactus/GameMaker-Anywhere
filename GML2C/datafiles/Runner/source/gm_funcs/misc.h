@@ -10,7 +10,7 @@ extern int room_first;
 extern float room_width;
 extern float room_height;
 extern bool MarkedForClose;
-
+extern float fps;
 
 #pragma once
 #define noone -4
@@ -98,3 +98,4 @@ void show_message(char* message);
 bool code_is_compiled();
 float display_get_width();
 float display_get_height();
+char* string(float value);

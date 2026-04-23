@@ -13,13 +13,17 @@ int bgcolor = 0xFF000000;
 int view_camera[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 bool MarkedForClose = false;
 
+float fps = 0;
+
+#ifdef __3DS__
+    u64 lastTick = 0;
+#endif
+
 //room
 int room = -1; //DO NOT CHANGE THIS! GM CHECKS FOR "-1" TO EDIT IT TO THE FIRST ROOM!!!
 int room_first = -1; //asigned in main func
 float room_width = 0;
 float room_height = 0;
-
-
 
 int main(){
     #ifdef __3DS__
@@ -29,7 +33,7 @@ int main(){
         C2D_Prepare();
         romfsInit();
         consoleInit(GFX_BOTTOM, NULL);
-
+        lastTick = svcGetSystemTick();
         C3D_RenderTarget* top = C2D_CreateScreenTarget(GFX_TOP, GFX_LEFT);
     #endif
     drawing_init();
@@ -47,7 +51,13 @@ int main(){
     while (true){
     #endif
         scr_startframe(top);
-        
+
+        #ifdef __3DS__
+            u64 now = svcGetSystemTick();
+            fps = (float)SYSCLOCK_ARM11 / (float)(now - lastTick);
+            lastTick = now;
+        #endif
+
         gamepad_scanner();
         scr_handleroom(room);
 

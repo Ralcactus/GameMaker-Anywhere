@@ -1,32 +1,30 @@
-if (gamepad_button_check(4, gp_padu)){
+//move up
+if (gamepad_axis_value(4, gp_axislv) <= -0.1){
 	y -= 4;
 	sprite_index = spr_ralsei_up;
 }
 
-if (gamepad_button_check(4, gp_padd)){
+//move down
+if (gamepad_axis_value(4, gp_axislv)){
 	y += 4;
 	sprite_index = spr_ralsei_down;
 }
 
-if (gamepad_button_check(4, gp_padr)){
+//move right
+if (gamepad_axis_value(4, gp_axislh)){
 	x += 4;
 	sprite_index = spr_ralsei_right;
 }
 
-if (gamepad_button_check(4, gp_padl)){
+//move left
+if (gamepad_axis_value(4, gp_axislh) <= -0.1){
 	x -= 4;
 	sprite_index = spr_ralsei_left;
 }
 
-if (gamepad_button_check_pressed(4, gp_start)){
-	show_message("goodbye!");
-	game_end();
+if (gamepad_button_check_pressed(4, gp_face2)){
+	room_goto(Room2);
 }
 
-if (gamepad_button_check_pressed(4, gp_face2))
-	room_goto_next();
-
-if (gamepad_button_check(4, gp_face1))
-	show_message("hi this is a show_message prompt");
-
+//camera
 camera_set_view_pos(view_camera[0], x-camera_get_view_width(view_camera[0])/2,y-camera_get_view_height(view_camera[0])/2);
