@@ -17,7 +17,8 @@
 
     extern float mouse_x;
     extern float mouse_y;
-    
+    extern float gamepad_button_threshold_0; 
+
     //funcs
     bool gamepad_button_check(int pad, u32 Button);
     bool gamepad_button_check_pressed(int pad, u32 Button);
@@ -26,6 +27,12 @@
     int gamepad_get_device_count();
     bool gamepad_is_connected(int pad);
     void gamepad_set_vibration(int pad, int left_motor, int right_motor);
+    bool gamepad_is_supported();
+    char* gamepad_get_description(int pad);
+    float gamepad_get_button_threshold(int pad);
+    float gamepad_set_button_threshold(int pad, float threshold);
+    float gamepad_button_value(int pad, int button);
+    float gamepad_axis_count(int pad);
 
     //touchscreen
     float display_mouse_get_y();

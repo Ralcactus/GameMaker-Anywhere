@@ -5,6 +5,8 @@
 
 float mouse_x = 0;
 float mouse_y = 0;
+float gamepad_button_threshold_0 = 0.5;
+
 
 //handle 3ds inputs
 #ifdef __3DS__
@@ -70,7 +72,54 @@ float mouse_y = 0;
         else
             return 0;
     }
+
+    bool gamepad_is_supported(){
+        return true;
+    }
+
+    char* gamepad_get_description(int pad){
+        if (pad == 0)
+            return "NINTENDO 3DS Controller";
+        else
+            return "";
+    }
+
+    float gamepad_get_button_threshold(int pad){
+        if (pad == 0)
+            return gamepad_button_threshold_0;
+        else
+            return 0;
+    }
+
+    float gamepad_set_button_threshold(int pad, float threshold){
+        if (pad == 0)
+            return gamepad_button_threshold_0;
+        else
+            return 0;
+    }
+
+    float gamepad_button_value(int pad, int button){
+        if (pad == 0){
+            if (gamepad_button_check(pad, button))
+                return 1;
+            else
+                return 0;
+        }
+        else
+            return 0;
+    }
+
+    float gamepad_axis_count(int pad){
+        if (pad == 0)
+            return 1;
+        else
+            return 0;
+    }
+
     #pragma endregion
+
+
+
 
     //touchscreen
     float display_mouse_get_x(){
