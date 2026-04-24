@@ -173,6 +173,11 @@ int drawcolor = c_white;
         //bg colour
         GXColor background = {(bgcolor >>  8) & 0xFF, (bgcolor >> 16) & 0xFF, (bgcolor >> 24) & 0xFF};
         GX_SetCopyClear(background, GX_MAX_Z24);
+
+        Mtx44 perspective;               //x pos                                             //y pos                                            //i don't know
+        guOrtho(perspective,             0+view0_camYPos,view0_camHeight+view0_camYPos,      0+view0_camXPos,view0_camWidth+view0_camXPos,       0,300);
+        GX_LoadProjectionMtx(perspective, GX_ORTHOGRAPHIC);
+
     }
 
     void scr_endframe(){
