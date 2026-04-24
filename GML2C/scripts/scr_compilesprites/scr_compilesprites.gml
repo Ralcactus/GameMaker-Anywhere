@@ -18,16 +18,10 @@ function scr_compilesprites(){
 			
 	if (global.export_mode == "CIA" || global.export_mode == "3DSX")
 	    spriteoutput = destination + "\\gfx\\";
-				
-	if (global.export_mode == "WINDOWS")
-		spriteoutput = destination + "\\output\\sprites\\";
-				
-	if (global.export_mode == "DREAMCAST")
-		spriteoutput = destination + "\\romdisk\\sprites\\";
-				
-	if (global.copysprite)
-		directory_create(spriteoutput + yyfile.name + "\\");
-		
+
+	if (global.export_mode == "GAMECUBE")
+		spriteoutput = destination + "\\gfx\\";
+
     var sprite_rel_dir = "sprites/" + yyfile.name + "/";
     var sprite_frames = [];
 			
@@ -49,13 +43,16 @@ function scr_compilesprites(){
 		"    { \"" + frame_name + "\" },\n");
          
 		if (global.copysprite){
-	        file_copy(filename_dir(global.selected_yyp) + "\\sprites\\" + yyfile.name + "\\" + frame_name + ".png", 
-	                    spriteoutput + yyfile.name + "\\" + frame_name + ".png");
-		}
-						 
-        file_text_write_string(t3s_file, yyfile.name + "/" + frame_name + ".png\n");
-    }
+			file_copy(filename_dir(global.selected_yyp) + "\\sprites\\" + yyfile.name + "\\" + frame_name + ".png", spriteoutput + frame_name + ".png");
 			
+			if (global.export_mode == "3DSX" || global.export_mode == "CIA")
+				file_text_write_string(t3s_file, frame_name + ".png\n");
+
+			if (global.export_mode == "GAMECUBE")
+				file_text_write_string(textures_gamecubefile, "<filepath=" + frame_name + ".png" + " id=\"" + yyfile.name + "FSDSDFFDGIOJHDFIOHEFAMILYGUY2DDD" + "\" colfmt=6 />\n"); //for the sprite name, were just gonna use the custom defines so i just made it strange
+		}
+    }
+	
 	file_text_write_string(file, "};\n\n");
             
     array_push(all_sprites, {

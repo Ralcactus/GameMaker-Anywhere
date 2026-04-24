@@ -6,7 +6,7 @@
 
 #Gamecube
 gamecube GameCube Gamecube NGC GCN:
-	$(MAKE) -f platform/gamecube/Makefile $@
+	$(MAKE) -f platform/gamecube/Makefile
 
 clean:
 	$(MAKE) -f platform/3ds/Makefile clean

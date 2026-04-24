@@ -6,7 +6,6 @@
 float mouse_x = 0;
 float mouse_y = 0;
 float gamepad_button_deadzone_0 = 0.5;
-static circlePosition circle_pos = {0};
 
 //handle 3ds inputs
 #ifdef __3DS__
@@ -15,6 +14,7 @@ static circlePosition circle_pos = {0};
     static u32 keys_held = 0;
     static u32 keys_down = 0;
     static u32 keys_up = 0;
+    static circlePosition circle_pos = {0};
 
     void gamepad_scanner(){
         hidScanInput();
@@ -85,14 +85,6 @@ static circlePosition circle_pos = {0};
             return "";
     }
 
-    float gamepad_get_axis_deadzone(int pad){
-        return gamepad_button_deadzone_0;
-    }
-
-    void gamepad_set_axis_deadzone(int pad, float deadzone){
-        gamepad_button_deadzone_0 = deadzone;
-    }
-
     float gamepad_button_value(int pad, int button){
         if (gamepad_button_check(pad, button))
             return 1;
@@ -133,23 +125,108 @@ static circlePosition circle_pos = {0};
     }
 #endif
 
-//handle Wii U inputs
-#ifdef __WIIU__
-    #include <vpad/input.h>
-    
+//handle Gamecube inputs
+#ifdef __gamecube__
+    static u32 keys_held = 0;
+    static u32 keys_down = 0;
+    static u32 keys_up = 0;
+
+    void gamepad_scanner(){
+        PAD_ScanPads();
+        keys_held = PAD_ButtonsHeld(0);
+        keys_down = PAD_ButtonsDown(0);
+        keys_up = PAD_ButtonsUp(0);
+
+        //mouse
+        mouse_x = 0;
+        mouse_y = 0;
+    }
+
+    #pragma region //gamepad_ funcs
     //controller button held
-    bool gamepad_button_check(int pad, VPADButtons Button){
-        return false;
+    bool gamepad_button_check(int pad, u32 Button){
+        if (keys_held & Button){
+            return true;
+        }
+        else
+            return false;
     }
 
-    //controller button pressed
-    bool gamepad_button_check_pressed(int pad, VPADButtons Button){
-        return false;
+    bool gamepad_button_check_pressed(int pad, u32 Button){
+        if (keys_down & Button){
+            return true;
+        }
+        else
+            return false;
     }
 
-    //controller button released
-    bool gamepad_button_check_released(int pad, VPADButtons Button){
-        return false;
+    bool gamepad_button_check_released(int pad, u32 Button){
+        if (keys_up & Button){
+            return true;
+        }
+        else
+            return false;
     }
 
+    void gamepad_set_vibration(int pad, int left_motor, int right_motor){
+        //So empty...
+    }
+    
+    int gamepad_get_device_count(){
+        return 1;
+    }
+
+    bool gamepad_is_connected(int pad){
+        return true;
+    }
+
+    bool gamepad_is_supported(){
+        return true;
+    }
+
+    char* gamepad_get_description(int pad){
+        if (pad == 0)
+            return "NINTENDO GAMECUBE Controller";
+        else
+            return "";
+    }
+
+
+    float gamepad_button_value(int pad, int button){
+        if (gamepad_button_check(pad, button))
+            return 1;
+        else
+            return 0;
+    }
+
+    float gamepad_axis_count(int pad){
+        return 2;
+    }
+
+    float gamepad_axis_value(int pad, int axis){
+        return 0;
+    }
+
+    #pragma endregion
+
+    //touchscreen
+    float display_mouse_get_x(){
+        return 0;
+    }
+
+    float display_mouse_get_y(){
+        return 0;
+    }
 #endif
+
+#pragma region //globals
+
+//funcs
+float gamepad_get_axis_deadzone(int pad){
+    return gamepad_button_deadzone_0;
+}
+
+void gamepad_set_axis_deadzone(int pad, float deadzone){
+    gamepad_button_deadzone_0 = deadzone;
+}
+#pragma endregion

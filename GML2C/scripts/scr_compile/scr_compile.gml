@@ -54,6 +54,7 @@ function scr_compileMIDDLE2(){
 		directory_create(destination + "\\source\\rooms\\");
 		directory_create(destination + "\\source\\objects\\");
 		directory_create(destination + "\\source\\sprites\\");	
+		directory_create(destination + "\\output\\");	
 		scr_compile();
 	}
 	else
@@ -65,10 +66,17 @@ function scr_compile()
 {
 	//create sprites.t3s
 	directory_create(destination + "\\gfx\\");
-	var t3s_path = destination + "\\gfx\\" + "sprites.t3s";
-	t3s_file = file_text_open_write(t3s_path);
-	file_text_write_string(t3s_file, "--atlas\n");
-	currentsprite_count+=1;
+	
+	if (global.export_mode == "3DSX" || global.export_mode == "CIA"){
+		t3s_file = file_text_open_write(destination + "\\gfx\\" + "sprites.t3s");
+		file_text_write_string(t3s_file, "--atlas\n");
+		currentsprite_count+=1;
+	}
+	
+	if (global.export_mode == "GAMECUBE"){
+		textures_gamecubefile = file_text_open_write(destination + "\\gfx\\" + "textures.scf");
+		currentsprite_count+=1;
+	}
 
     //json parse
     var yypbuffer = buffer_load(global.selected_yyp);
@@ -100,7 +108,12 @@ function scr_compile()
 			scr_compileobjects();
     }
 	
-    file_text_close(t3s_file);
+	if (global.export_mode == "3DSX" || global.export_mode == "CIA")
+		file_text_close(t3s_file);
+	
+	if (global.export_mode == "GAMECUBE")
+		file_text_close(textures_gamecubefile);
+		
 	scr_write_metadata();
 
 	//finsih!!!

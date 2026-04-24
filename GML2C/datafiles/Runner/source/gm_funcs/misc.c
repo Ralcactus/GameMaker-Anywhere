@@ -138,6 +138,8 @@ char* string(float value){
 #endif
 
 //wii u
-#ifdef __WIIU__
-    //so empty...
+#ifdef __gamecube__
+    void show_message(char* message){
+        //I don't think gamecube has a thing for this?
+    }
 #endif

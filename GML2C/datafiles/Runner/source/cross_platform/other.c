@@ -14,7 +14,7 @@
 #endif
 
 //wii u
-#ifdef __WIIU__
+#ifdef __gamecube__
 
     void ExitApplication()
     {

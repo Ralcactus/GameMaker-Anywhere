@@ -36,6 +36,11 @@ int main(){
         lastTick = svcGetSystemTick();
         C3D_RenderTarget* top = C2D_CreateScreenTarget(GFX_TOP, GFX_LEFT);
     #endif
+
+    #ifdef __gamecube__
+        PAD_Init();
+    #endif
+
     drawing_init();
 
     //variable init
@@ -46,13 +51,13 @@ int main(){
     //main loop
     #ifdef __3DS__
     while (aptMainLoop()){
-    #endif    
-    #ifdef __WIIU__
+    #elif defined(__gamecube__)
     while (true){
     #endif
-        scr_startframe(top);
-
         #ifdef __3DS__
+            scr_startframe(top);
+            
+            //get fps
             u64 now = svcGetSystemTick();
             fps = (float)SYSCLOCK_ARM11 / (float)(now - lastTick);
             lastTick = now;
@@ -63,7 +68,7 @@ int main(){
 
         scr_endframe();
 
-        if(MarkedForClose)
+        if (MarkedForClose)
             break;
     }
 

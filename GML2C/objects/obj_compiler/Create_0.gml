@@ -16,6 +16,7 @@ yyfile = noone;
 _id = noone;
 currentsprite_count = 0;
 t3s_file = noone;
+textures_gamecubefile = noone;
 roomid_count = 0;
 
 logging = false;

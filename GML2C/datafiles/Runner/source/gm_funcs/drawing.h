@@ -47,6 +47,10 @@ void draw_set_color(int color);
 #endif
 
 //WIIU
-#ifdef __WIIU__
-    //so empty...
+#ifdef __gamecube__
+    #include <gccore.h>
+    #include <ogc/tpl.h>
+
+    extern TPLFile spriteTPL;
+    #define DEFAULT_FIFO_SIZE	(256*1024)
 #endif
