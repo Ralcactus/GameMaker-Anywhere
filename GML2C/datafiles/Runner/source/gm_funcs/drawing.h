@@ -53,4 +53,6 @@ void draw_set_color(int color);
 
     extern TPLFile spriteTPL;
     #define DEFAULT_FIFO_SIZE	(256*1024)
+
+    void scr_startframe();
 #endif

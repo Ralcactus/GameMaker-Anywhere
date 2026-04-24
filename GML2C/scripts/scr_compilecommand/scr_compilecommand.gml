@@ -12,4 +12,4 @@ function scr_compilecommand(){
 	//Gamecube dol
 	if (global.export_mode == "GAMECUBE")
 		compile_powershell_window = run_commandpowershell("C:\\GM_Anywhere\\Runner", "make gamecube");
-}
+}	

@@ -119,10 +119,6 @@ int drawcolor = c_white;
 
         GX_Init(gp_fifo,DEFAULT_FIFO_SIZE);
 
-        // clears the bg to color and clears the z buffer
-        GXColor background = {0, 0, 0, 0xff};
-        GX_SetCopyClear(background, 0x00ffffff);
-
         // other gx setup
         GX_SetViewport(0,0,rmode->fbWidth,rmode->efbHeight,0,1);
         yscale = GX_GetYScaleFactor(rmode->efbHeight,rmode->xfbHeight);
@@ -171,6 +167,12 @@ int drawcolor = c_white;
         GX_SetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_CLEAR);
         GX_SetAlphaUpdate(GX_TRUE);
         GX_SetColorUpdate(GX_TRUE);
+    }
+
+    void scr_startframe(){
+        //bg colour
+        GXColor background = {(bgcolor >>  8) & 0xFF, (bgcolor >> 16) & 0xFF, (bgcolor >> 24) & 0xFF};
+        GX_SetCopyClear(background, GX_MAX_Z24);
     }
 
     void scr_endframe(){

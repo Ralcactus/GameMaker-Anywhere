@@ -63,6 +63,10 @@ int main(){
             lastTick = now;
         #endif
 
+        #ifdef __gamecube__
+            scr_startframe();
+        #endif
+
         gamepad_scanner();
         scr_handleroom(room);
 
