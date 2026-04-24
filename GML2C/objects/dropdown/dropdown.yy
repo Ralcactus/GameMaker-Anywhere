@@ -14,7 +14,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Dropdown",
-    "path":"folders/Objects/Other/Dropdown.yy",
+    "path":"folders/Objects/Dropdown.yy",
   },
   "parentObjectId":null,
   "persistent":false,

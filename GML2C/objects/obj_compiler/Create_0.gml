@@ -30,11 +30,4 @@ global.copycode = true;
 
 keyboard_string = "";
 
-enum Export{
-	CIA = 0,
-	_3DSX = 1,
-	EXE = 2,
-	DC = 3
-}
-
 global.export_mode = "3DSX";
