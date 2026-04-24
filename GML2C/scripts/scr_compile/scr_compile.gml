@@ -120,8 +120,8 @@ function scr_compile()
 	logging = true;
 	global.exporting = false;
 	
-	if (!global.copysprite)
+	if (!global.copysprite && (global.export_mode == "3DSX" || global.export_mode == "CIA"))
 		file_delete(t3s_path);
-	
+
 	scr_compilecommand();
 }

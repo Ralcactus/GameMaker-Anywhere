@@ -44,17 +44,17 @@ function scr_compilesprites(){
          
 		if (global.copysprite){
 			file_copy(filename_dir(global.selected_yyp) + "\\sprites\\" + yyfile.name + "\\" + frame_name + ".png", spriteoutput + frame_name + ".png");
-			
-			if (global.export_mode == "3DSX" || global.export_mode == "CIA")
-				file_text_write_string(t3s_file, frame_name + ".png\n");
-
-			if (global.export_mode == "GAMECUBE")
-				file_text_write_string(textures_gamecubefile, "<filepath=" + frame_name + ".png" + " id=\"" + yyfile.name + "FSDSDFFDGIOJHDFIOHEFAMILYGUY2DDD" + "\" colfmt=6 />\n"); //for the sprite name, were just gonna use the custom defines so i just made it strange
 		}
+		
+		if (global.export_mode == "3DSX" || global.export_mode == "CIA")
+			file_text_write_string(t3s_file, frame_name + ".png\n");
+
+		if (global.export_mode == "GAMECUBE")
+			file_text_write_string(textures_gamecubefile, "<filepath=" + frame_name + ".png" + " id=\"" + yyfile.name + "FSDSDFFDGIOJHDFIOHEFAMILYGUY2DDD" + "\" colfmt=6 />\n"); //for the sprite name, were just gonna use the custom defines so i just made it strange
     }
 	
 	file_text_write_string(file, "};\n\n");
-            
+
     array_push(all_sprites, {
         name: yyfile.name,
         dir: sprite_rel_dir,
@@ -101,6 +101,5 @@ function scr_compilesprites(){
 	var spriteidh = file_text_open_append(destination + "source\\sprite_toid.h");
 	file_text_write_string(spriteidh, "#define " + yyfile.name + " " + string(currentsprite_count) + "\n");
 	file_text_close(spriteidh);
-	
     currentsprite_count++;
 }
