@@ -111,18 +111,6 @@ float gamepad_button_deadzone_0 = 0.5;
     }
 
     #pragma endregion
-
-
-
-
-    //touchscreen
-    float display_mouse_get_x(){
-        return mouse_x-view0_camXPos;
-    }
-
-    float display_mouse_get_y(){
-        return mouse_y-view0_camYPos;;
-    }
 #endif
 
 //handle Gamecube inputs
@@ -185,13 +173,10 @@ float gamepad_button_deadzone_0 = 0.5;
     }
 
     char* gamepad_get_description(int pad){
-        if (pad == 0)
-            return "NINTENDO GAMECUBE Controller";
-        else
-            return "";
+        return "Nintendo Gamecube Controller"; //TODO - make this actually return a desc based on the thingy connected
     }
 
-
+    //analog buttons
     float gamepad_button_value(int pad, int button){
         if (gamepad_button_check(pad, button))
             return 1;
@@ -204,19 +189,22 @@ float gamepad_button_deadzone_0 = 0.5;
     }
 
     float gamepad_axis_value(int pad, int axis){
-        return 0;
+        float value = 0;
+
+        if (axis == gp_axislh)
+            value = (float)PAD_StickX(PAD_CHAN0)/128;
+        else if (axis == gp_axislv)
+            value = (float)PAD_StickY(PAD_CHAN0)/128*-1;
+
+        if (value > -gamepad_button_deadzone_0 && value < gamepad_button_deadzone_0)
+            return 0;
+
+        return value;
     }
+
 
     #pragma endregion
 
-    //touchscreen
-    float display_mouse_get_x(){
-        return 0;
-    }
-
-    float display_mouse_get_y(){
-        return 0;
-    }
 #endif
 
 #pragma region //globals
@@ -229,4 +217,15 @@ float gamepad_get_axis_deadzone(int pad){
 void gamepad_set_axis_deadzone(int pad, float deadzone){
     gamepad_button_deadzone_0 = deadzone;
 }
+
+//mouse stuff
+float display_mouse_get_x(){
+    return mouse_x-view0_camXPos;
+}
+
+float display_mouse_get_y(){
+    return mouse_y-view0_camYPos;;
+}
+
 #pragma endregion
+
