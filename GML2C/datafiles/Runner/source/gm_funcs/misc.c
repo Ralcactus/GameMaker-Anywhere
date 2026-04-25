@@ -137,9 +137,16 @@ char* string(float value){
     }
 #endif
 
-//wii u
+//gamecube
 #ifdef __gamecube__
     void show_message(char* message){
         //I don't think gamecube has a thing for this?
+    }
+#endif
+
+//wii
+#ifdef __wii__
+    void show_message(char* message){
+        //I don't think wii has a thing for this?
     }
 #endif

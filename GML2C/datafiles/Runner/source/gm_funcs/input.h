@@ -23,8 +23,30 @@
     bool gamepad_button_check_released(int pad, u32 Button);
 #endif
 
-//WII U
+//GAMECUBE
 #ifdef __gamecube__
+    #include <gccore.h>
+
+    #define gp_start PAD_BUTTON_START
+    #define gp_select PAD_BUTTON_SELECT
+    #define gp_face1 PAD_BUTTON_B
+    #define gp_face2 PAD_BUTTON_A
+    #define gp_face3 PAD_BUTTON_Y
+    #define gp_face4 PAD_BUTTON_X
+    #define gp_padl PAD_BUTTON_LEFT
+    #define gp_padr PAD_BUTTON_RIGHT
+    #define gp_padu PAD_BUTTON_UP
+    #define gp_padd PAD_BUTTON_DOWN
+    #define gp_axislh 32785
+    #define gp_axislv 32786
+
+    bool gamepad_button_check(int pad, u32 Button);
+    bool gamepad_button_check_pressed(int pad, u32 Button);
+    bool gamepad_button_check_released(int pad, u32 Button);
+#endif
+
+//WII
+#ifdef __wii__
     #include <gccore.h>
 
     #define gp_start PAD_BUTTON_START

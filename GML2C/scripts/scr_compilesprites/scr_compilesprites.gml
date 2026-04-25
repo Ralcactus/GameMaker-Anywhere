@@ -16,10 +16,7 @@ function scr_compilesprites(){
     show_debug_message("Sprite: " + yyfile.name);
     var spriteoutput;
 			
-	if (global.export_mode == "CIA" || global.export_mode == "3DSX")
-	    spriteoutput = destination + "\\gfx\\";
-
-	if (global.export_mode == "GAMECUBE")
+	if (global.export_mode == "GAMECUBE" || global.export_mode == "WII" || global.export_mode == "CIA" || global.export_mode == "3DSX")
 		spriteoutput = destination + "\\gfx\\";
 
     var sprite_rel_dir = "sprites/" + yyfile.name + "/";
@@ -49,8 +46,8 @@ function scr_compilesprites(){
 		if (global.export_mode == "3DSX" || global.export_mode == "CIA")
 			file_text_write_string(t3s_file, frame_name + ".png\n");
 
-		if (global.export_mode == "GAMECUBE")
-			file_text_write_string(textures_gamecubefile, "<filepath=" + frame_name + ".png" + " id=\"" + yyfile.name + "FSDSDFFDGIOJHDFIOHEFAMILYGUY2DDD" + "\" colfmt=6 />\n"); //for the sprite name, were just gonna use the custom defines so i just made it strange
+		if (global.export_mode == "GAMECUBE" || global.export_mode == "WII")
+			file_text_write_string(textures_dolfile, "<filepath=" + frame_name + ".png" + " id=\"" + yyfile.name + "FSDSDFFDGIOJHDFIOHEFAMILYGUY2DDD" + "\" colfmt=6 />\n"); //for the sprite name, were just gonna use the custom defines so i just made it strange
     }
 	
 	file_text_write_string(file, "};\n\n");

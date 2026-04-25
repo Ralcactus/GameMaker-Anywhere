@@ -9,6 +9,11 @@
 #include "sprite_toid.h"
 #include "room_toid.h"
 
+#ifdef __wii__
+    #include <gccore.h>
+    #include <wiiuse/wpad.h>
+#endif
+
 int bgcolor = 0xFF000000;
 int view_camera[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 bool MarkedForClose = false;
@@ -26,6 +31,9 @@ float room_width = 0;
 float room_height = 0;
 
 int main(){
+    //variable init
+    room_first = room;
+    
     #ifdef __3DS__
         gfxInitDefault();
         C3D_Init(C3D_DEFAULT_CMDBUF_SIZE);
@@ -37,21 +45,18 @@ int main(){
         C3D_RenderTarget* top = C2D_CreateScreenTarget(GFX_TOP, GFX_LEFT);
     #endif
 
-    #ifdef __gamecube__
+    #if defined(__gamecube__) || defined(__wii__)
         PAD_Init();
     #endif
 
     drawing_init();
-
-    //variable init
-    room_first = room;
     
     printf("Hello World!\n");
 
     //main loop
     #ifdef __3DS__
     while (aptMainLoop()){
-    #elif defined(__gamecube__)
+    #elif defined(__gamecube__) || defined(__wii__)
     while (SYS_MainLoop()){
     #endif
         #ifdef __3DS__
@@ -63,13 +68,12 @@ int main(){
             lastTick = now;
         #endif
 
-        #ifdef __gamecube__
+        #if defined(__gamecube__) || defined(__wii__)
             scr_startframe();
         #endif
 
         gamepad_scanner();
         scr_handleroom(room);
-
         scr_endframe();
         
         if (MarkedForClose)

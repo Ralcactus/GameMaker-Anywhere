@@ -13,8 +13,18 @@
 
 #endif
 
-//wii u
+//gamecube
 #ifdef __gamecube__
+
+    void ExitApplication()
+    {
+        //so empty...
+    }
+
+#endif
+
+//wii
+#ifdef __wii__
 
     void ExitApplication()
     {

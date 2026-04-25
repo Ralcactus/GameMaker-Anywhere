@@ -20,4 +20,4 @@ function example_selected(i) {
 
 }
 
-curt.li = ["3DSX", "CIA", "GAMECUBE"];
+curt.li = ["3DSX", "CIA", "GAMECUBE", "WII"];

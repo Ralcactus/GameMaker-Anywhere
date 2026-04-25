@@ -73,8 +73,8 @@ function scr_compile()
 		currentsprite_count+=1;
 	}
 	
-	if (global.export_mode == "GAMECUBE"){
-		textures_gamecubefile = file_text_open_write(destination + "\\gfx\\" + "textures.scf");
+	if (global.export_mode == "GAMECUBE" || global.export_mode == "WII"){
+		textures_dolfile = file_text_open_write(destination + "\\gfx\\" + "textures.scf");
 		currentsprite_count+=1;
 	}
 
@@ -111,8 +111,8 @@ function scr_compile()
 	if (global.export_mode == "3DSX" || global.export_mode == "CIA")
 		file_text_close(t3s_file);
 	
-	if (global.export_mode == "GAMECUBE")
-		file_text_close(textures_gamecubefile);
+	if (global.export_mode == "GAMECUBE" || global.export_mode == "WII")
+		file_text_close(textures_dolfile);
 		
 	scr_write_metadata();
 
