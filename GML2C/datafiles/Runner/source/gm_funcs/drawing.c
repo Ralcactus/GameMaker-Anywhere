@@ -74,7 +74,7 @@ int drawcolor = c_white;
 #endif
 
 //gamecube and wii
- #if defined(__gamecube__) || defined(__wii__)
+#if defined(__gamecube__) || defined(__wii__)
     #include <gccore.h>
     #include <ogc/tpl.h>
     #include "textures_tpl.h"
@@ -254,7 +254,6 @@ int drawcolor = c_white;
         //So empty...
     }
 #endif
-
 
 #pragma region //global funcs
 void draw_set_color(int color){

@@ -23,8 +23,8 @@
     bool gamepad_button_check_released(int pad, u32 Button);
 #endif
 
-//GAMECUBE AND WII
-#if defined(__gamecube__) || defined(__wii__)
+//GAMECUBE
+#ifdef __gamecube__
     #include <gccore.h>
 
     #define gp_start PAD_BUTTON_START
@@ -45,6 +45,28 @@
     bool gamepad_button_check_released(int pad, u32 Button);
 #endif
 
+//WII
+#ifdef __wii__
+    #include <gccore.h>
+    #include <wiiuse/wpad.h>
+    
+    #define gp_start WPAD_BUTTON_PLUS
+    #define gp_select WPAD_BUTTON_MINUS
+    #define gp_face1 WPAD_BUTTON_B
+    #define gp_face2 WPAD_BUTTON_A
+    #define gp_face3 WPAD_BUTTON_1
+    #define gp_face4 WPAD_BUTTON_2
+    #define gp_padl WPAD_BUTTON_LEFT
+    #define gp_padr WPAD_BUTTON_RIGHT
+    #define gp_padu WPAD_BUTTON_UP
+    #define gp_padd WPAD_BUTTON_DOWN
+    #define gp_axislh 32785
+    #define gp_axislv 32786
+
+    bool gamepad_button_check(int pad, u32 Button);
+    bool gamepad_button_check_pressed(int pad, u32 Button);
+    bool gamepad_button_check_released(int pad, u32 Button);
+#endif
 
 #pragma region //globals
 //vars

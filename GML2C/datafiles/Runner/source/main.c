@@ -45,9 +45,14 @@ int main(){
         C3D_RenderTarget* top = C2D_CreateScreenTarget(GFX_TOP, GFX_LEFT);
     #endif
 
-    #if defined(__gamecube__) || defined(__wii__)
+    #ifdef __gamecube__
         PAD_Init();
     #endif
+
+    #ifdef __wii__
+        WPAD_Init();
+    #endif
+
 
     drawing_init();
     

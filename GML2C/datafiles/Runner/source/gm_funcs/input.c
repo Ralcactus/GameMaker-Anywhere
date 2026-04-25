@@ -217,10 +217,10 @@ float gamepad_button_deadzone_0 = 0.5;
     static u32 keys_up = 0;
 
     void gamepad_scanner(){
-        PAD_ScanPads();
-        keys_held = PAD_ButtonsHeld(0);
-        keys_down = PAD_ButtonsDown(0);
-        keys_up = PAD_ButtonsUp(0);
+        WPAD_ScanPads();
+        keys_held = WPAD_ButtonsHeld(0);
+        keys_down = WPAD_ButtonsDown(0);
+        keys_up = WPAD_ButtonsUp(0);
         
         //mouse
         mouse_x = 0;

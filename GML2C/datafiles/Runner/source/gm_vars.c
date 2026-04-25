@@ -3,7 +3,7 @@
 #include "gml/structs.h"
 
 #pragma region //vars
-
+/*
 void free_var(GMVar* var){
     if (var->type == VAR_STRING){
         free(var->s);
@@ -30,6 +30,8 @@ GMVar set_var(VarType type, void* value){
     }
     return var;
 }
+*/
+
 
 /*
 set_var examples:
