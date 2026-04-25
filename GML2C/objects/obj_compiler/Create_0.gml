@@ -6,6 +6,9 @@ destination = "C:\\GM_Anywhere\\Runner\\";
 //just add them in the array and the compiler with throw a warning if its compiling something mentioning it
 banned_strings = ["clock"]
 
+global.SpriteWidths = [];
+global.SpriteHeights = [];
+
 var_names = [];
 var_defaults = [];
 all_resources = [];

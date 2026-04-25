@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <malloc.h>
 #include <math.h>
+#include "get_spriteinfo.h"
 
 int drawcolor = c_white;
 
@@ -196,9 +197,8 @@ int drawcolor = c_white;
         GX_LoadTexObj(&localTex, GX_TEXMAP0);
         GX_Begin(GX_TRIANGLESTRIP, GX_VTXFMT0, 4);
 
-        //make this actually get the sprite width and height later lol
-        int realsprite_width = 32;
-        int realsprite_height = 32;
+        int realsprite_width = sprite_get_width(sprite_index);
+        int realsprite_height = sprite_get_height(sprite_index);
 
         //Draw top Left
         GX_Position2f32(draw_x, draw_y);
@@ -227,9 +227,8 @@ int drawcolor = c_white;
         GX_LoadTexObj(&localTex, GX_TEXMAP0);
         GX_Begin(GX_TRIANGLESTRIP, GX_VTXFMT0, 4);
 
-        //make this actually get the sprite width and height later lol
-        int realsprite_width = 32*scale_x;
-        int realsprite_height = 32*scale_y;
+        int realsprite_width = sprite_get_width(sprite_index)*scale_x;
+        int realsprite_height = sprite_get_height(sprite_index)*scale_y;
 
         //Draw top Left
         GX_Position2f32(draw_x, draw_y);
@@ -262,5 +261,13 @@ void draw_set_color(int color){
 
 void draw_set_colour(int color){
     draw_set_color(color);
+}
+
+
+int sprite_get_width(int sprite_index){
+    return SpriteWidths[sprite_index];
+}
+int sprite_get_height(int sprite_index){
+    return SpriteHeights[sprite_index];
 }
 #pragma endregion

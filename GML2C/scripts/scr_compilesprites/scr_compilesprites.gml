@@ -1,6 +1,7 @@
 function scr_compilesprites(){
 	var safe_name = sanitize_filename(yyfile.name);
-	
+	var sprwidth = 0;
+	var sprheight = 0;
 	
 	if (array_contains(banned_strings, safe_name)){
 		var answer = show_question("WARNING\nBanned string \"" + safe_name + "\" continue compiling this sprite? (will cause issues!)")
@@ -40,6 +41,14 @@ function scr_compilesprites(){
 		"    { \"" + frame_name + "\" },\n");
          
 		if (global.copysprite){
+			var sprite = sprite_add(filename_dir(global.selected_yyp) + "\\sprites\\" + yyfile.name + "\\" + frame_name + ".png", 0, false, false, 0, 0);
+			sprwidth = sprite_get_width(sprite);
+			sprheight = sprite_get_height(sprite);
+			array_push(global.SpriteWidths, sprwidth);
+			array_push(global.SpriteHeights, sprheight);
+			sprite_delete(sprite);
+			
+			
 			file_copy(filename_dir(global.selected_yyp) + "\\sprites\\" + yyfile.name + "\\" + frame_name + ".png", spriteoutput + frame_name + ".png");
 		}
 		
@@ -98,5 +107,6 @@ function scr_compilesprites(){
 	var spriteidh = file_text_open_append(destination + "source\\sprite_toid.h");
 	file_text_write_string(spriteidh, "#define " + yyfile.name + " " + string(currentsprite_count) + "\n");
 	file_text_close(spriteidh);
+	
     currentsprite_count++;
 }

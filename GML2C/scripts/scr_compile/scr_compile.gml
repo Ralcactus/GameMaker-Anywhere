@@ -22,6 +22,8 @@ function scr_compileSETUP(){
 	currentsprite_count = -1;
 	t3s_file = noone;
 	roomid_count = 0;
+	global.SpriteWidths = [];
+	global.SpriteHeights = [];
 
 	if (directory_exists(destination)){
 		//delete the old build
@@ -117,6 +119,17 @@ function scr_compile()
 	if (global.export_mode == "GAMECUBE" || global.export_mode == "WII")
 		file_text_close(textures_dolfile);
 		
+	var spriteinfoC = file_text_open_append(destination + "source\\get_spriteinfo.h");
+	var realspritewidth_array = string_replace(global.SpriteWidths, "[", "{");
+	realspritewidth_array = string_replace(realspritewidth_array, "]", "}");
+	
+	var realspriteheight_array = string_replace(global.SpriteHeights, "[", "{");
+	realspriteheight_array = string_replace(realspriteheight_array, "]", "}");
+	
+	file_text_write_string(spriteinfoC, "static int SpriteWidths[] = " + string(realspritewidth_array) + ";\n");
+	file_text_write_string(spriteinfoC, "static int SpriteHeights[] = " + string(realspriteheight_array) + ";\n");
+	file_text_close(spriteinfoC);
+	
 	scr_write_metadata();
 
 	//finsih!!!
