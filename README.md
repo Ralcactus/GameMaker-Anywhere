@@ -4,7 +4,7 @@
 
 ## Info
 <p align="left">
-A work in progress open source port of gamemaker to several consoles (3ds only currently) using devkitpro and C.
+A work in progress open source port of gamemaker to several consoles (3ds and gamecube only currently) using devkitpro and C.
 https://discord.gg/cc2YA2pChU
 </p>
 
@@ -27,4 +27,4 @@ Meet the team!
 - Loaf (Logo designer)
 - Finlay (coder)
 - Samuel Venable (GameMaker extension developer)
-- Feel free to contribute! (i really need the help...)
+- Feel free to contribute! (we really need the help...)
