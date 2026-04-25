@@ -124,7 +124,7 @@ float gamepad_button_deadzone_0 = 0.5;
         keys_held = PAD_ButtonsHeld(0);
         keys_down = PAD_ButtonsDown(0);
         keys_up = PAD_ButtonsUp(0);
-
+        
         //mouse
         mouse_x = 0;
         mouse_y = 0;
@@ -157,7 +157,10 @@ float gamepad_button_deadzone_0 = 0.5;
     }
 
     void gamepad_set_vibration(int pad, int left_motor, int right_motor){
-        //So empty...
+        if (left_motor > 0 || right_motor > 0)
+            PAD_ControlMotor(pad, PAD_MOTOR_RUMBLE);
+        else
+            PAD_ControlMotor(pad, PAD_MOTOR_STOP);
     }
     
     int gamepad_get_device_count(){

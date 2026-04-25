@@ -71,7 +71,7 @@ int main(){
         scr_handleroom(room);
 
         scr_endframe();
-
+        
         if (MarkedForClose)
             break;
     }

@@ -1,1 +1,1 @@
-gamepad_set_axis_deadzone(4, 0.4);
+gamepad_set_axis_deadzone(0, 0.4);
