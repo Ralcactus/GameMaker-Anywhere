@@ -3,7 +3,7 @@ if (CompletionStatusFromExecutedProcess(compile_powershell_window) && logging ==
 	run_commandpowershell(destination+"\\output\\", "explorer .")
 	
 	if (global.export_mode == "WII"){
-		file_delete(destination + "\\output\\TheGame\\Runner.elf\\")
+		file_delete(destination + "\\output\\TheGame\\boot.elf\\")
 	}
 	
 	logging = false;
