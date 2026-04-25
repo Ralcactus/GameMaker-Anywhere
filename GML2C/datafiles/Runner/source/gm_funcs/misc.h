@@ -42,7 +42,8 @@ enum AudioLFOType{
 //OS
 //custom
 #define os_3ds 100
-#define os_wiiu 101
+#define os_gamecube 101
+#define os_wii 102
 
 //gm built in
 #define os_windows 0
@@ -59,9 +60,13 @@ enum AudioLFOType{
 #define os_unknown -1
 
 #ifdef __3DS__
-    #define os_type os_3ds
+    #define os_type os_3ds //3ds
+#elif defined(__gamecube__)
+    #define os_type os_gamecube //gamecube
+#elif defined(__wii__)
+    #define os_type os_wii //wii
 #else
-    #define os_type os_unknown
+    #define os_type os_unknown //tf are you running?
 #endif
 
 //camera_ funcs

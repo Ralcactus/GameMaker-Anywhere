@@ -137,16 +137,9 @@ char* string(float value){
     }
 #endif
 
-//gamecube
-#ifdef __gamecube__
+//gamecube and wii
+ #if defined(__gamecube__) || defined(__wii__)
     void show_message(char* message){
         //I don't think gamecube has a thing for this?
-    }
-#endif
-
-//wii
-#ifdef __wii__
-    void show_message(char* message){
-        //I don't think wii has a thing for this?
     }
 #endif

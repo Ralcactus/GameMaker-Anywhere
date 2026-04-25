@@ -13,22 +13,10 @@
 
 #endif
 
-//gamecube
-#ifdef __gamecube__
-
+//gamecube and wii
+#if defined(__gamecube__) || defined(__wii__)
     void ExitApplication()
     {
         //so empty...
     }
-
-#endif
-
-//wii
-#ifdef __wii__
-
-    void ExitApplication()
-    {
-        //so empty...
-    }
-
 #endif
