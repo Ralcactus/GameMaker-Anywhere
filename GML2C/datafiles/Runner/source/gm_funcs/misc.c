@@ -103,7 +103,6 @@ void game_restart(){
 }
 #pragma endregion
 
-
 #pragma region //these don't even deserve their own region lmao
 bool code_is_compiled(){
     return true;
@@ -120,6 +119,10 @@ char* string(float value){
     static char str[64];
     snprintf(str, sizeof(str), "%f", value);
     return str;
+}
+
+void show_debug_message(char* message){
+    printf("%s\n", message);
 }
 
 #pragma endregion
