@@ -255,9 +255,9 @@ float gamepad_button_deadzone_0 = 0.5;
 
     void gamepad_set_vibration(int pad, int left_motor, int right_motor){
         if (left_motor > 0 || right_motor > 0)
-            PAD_ControlMotor(pad, PAD_MOTOR_RUMBLE);
+            WPAD_Rumble(pad, PAD_MOTOR_RUMBLE);
         else
-            PAD_ControlMotor(pad, PAD_MOTOR_STOP);
+            WPAD_Rumble(pad, PAD_MOTOR_STOP);
     }
     
     int gamepad_get_device_count(){
