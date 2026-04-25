@@ -38,6 +38,8 @@ void draw_set_colour(int color);
 void draw_set_color(int color);
 int sprite_get_width(int sprite_index);
 int sprite_get_height(int sprite_index);
+int sprite_get_xoffset(int sprite_index);
+int sprite_get_yoffset(int sprite_index);
 
 //3DS
 #ifdef __3DS__

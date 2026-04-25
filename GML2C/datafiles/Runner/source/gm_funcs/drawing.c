@@ -46,7 +46,7 @@ int drawcolor = c_white;
 
         C2D_Sprite sprite;
         C2D_SpriteFromSheet(&sprite, spriteSheet, sprite_index);
-        C2D_SpriteSetPos(&sprite, draw_x, draw_y);
+        C2D_SpriteSetPos(&sprite, draw_x-sprite_get_xoffset(sprite_index), draw_y-sprite_get_yoffset(sprite_index));
         C2D_DrawSprite(&sprite);
     }
     
@@ -56,7 +56,7 @@ int drawcolor = c_white;
 
         C2D_Sprite sprite;
         C2D_SpriteFromSheet(&sprite, spriteSheet, sprite_index);
-        C2D_SpriteSetPos(&sprite, draw_x, draw_y);
+        C2D_SpriteSetPos(&sprite, draw_x-sprite_get_xoffset(sprite_index)*scale_x, draw_y-sprite_get_yoffset(sprite_index)*scale_y);
         C2D_SpriteSetScale(&sprite, scale_x, scale_y);
         C2D_SpriteSetRotation(&sprite, rotation);
         C2D_DrawSprite(&sprite);
@@ -201,19 +201,19 @@ int drawcolor = c_white;
         int realsprite_height = sprite_get_height(sprite_index);
 
         //Draw top Left
-        GX_Position2f32(draw_x, draw_y);
+        GX_Position2f32(draw_x-sprite_get_xoffset(sprite_index), draw_y-sprite_get_yoffset(sprite_index));
         GX_TexCoord2f32(0, 0);
 
         //Draw top Right
-        GX_Position2f32(draw_x+realsprite_width-1, draw_y);
+        GX_Position2f32(draw_x+realsprite_width-1-sprite_get_xoffset(sprite_index), draw_y-sprite_get_yoffset(sprite_index));
         GX_TexCoord2f32(1, 0);
 
         //Draw bottom Left
-        GX_Position2f32(draw_x, draw_y+realsprite_height-1);
+        GX_Position2f32(draw_x-sprite_get_xoffset(sprite_index), draw_y+realsprite_height-1-sprite_get_yoffset(sprite_index));
         GX_TexCoord2f32(0, 1);
 
         //Draw bottom Right
-        GX_Position2f32(draw_x+realsprite_width-1, draw_y+realsprite_height-1); 
+        GX_Position2f32(draw_x+realsprite_width-1-sprite_get_xoffset(sprite_index), draw_y+realsprite_height-1-sprite_get_yoffset(sprite_index)); 
         GX_TexCoord2f32(1, 1);
 
         GX_End();
@@ -231,19 +231,19 @@ int drawcolor = c_white;
         int realsprite_height = sprite_get_height(sprite_index)*scale_y;
 
         //Draw top Left
-        GX_Position2f32(draw_x, draw_y);
+        GX_Position2f32(draw_x-sprite_get_xoffset(sprite_index)*scale_x, draw_y-sprite_get_yoffset(sprite_index)*scale_y);
         GX_TexCoord2f32(0, 0);
 
         //Draw top Right
-        GX_Position2f32(draw_x+realsprite_width-1, draw_y);
+        GX_Position2f32(draw_x+realsprite_width-1-sprite_get_xoffset(sprite_index)*scale_x, draw_y-sprite_get_yoffset(sprite_index)*scale_y);
         GX_TexCoord2f32(1, 0);
 
         //Draw bottom Left
-        GX_Position2f32(draw_x, draw_y+realsprite_height-1);
+        GX_Position2f32(draw_x-sprite_get_xoffset(sprite_index)*scale_x, draw_y+realsprite_height-1-sprite_get_yoffset(sprite_index)*scale_y);
         GX_TexCoord2f32(0, 1);
 
         //Draw bottom Right
-        GX_Position2f32(draw_x+realsprite_width-1, draw_y+realsprite_height-1); 
+        GX_Position2f32(draw_x+realsprite_width-1-sprite_get_xoffset(sprite_index)*scale_x, draw_y+realsprite_height-1-sprite_get_yoffset(sprite_index)*scale_y); 
         GX_TexCoord2f32(1, 1);
 
         GX_End();
