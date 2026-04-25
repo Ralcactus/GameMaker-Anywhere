@@ -50,7 +50,7 @@ function scr_compilesprites(){
 			array_push(global.SpriteOriginY, yyfile.sequence.yorigin);
 			sprite_delete(sprite);
 			
-			
+			 
 			file_copy(filename_dir(global.selected_yyp) + "\\sprites\\" + yyfile.name + "\\" + frame_name + ".png", spriteoutput + frame_name + ".png");
 		}
 		
