@@ -77,6 +77,11 @@ int main(){
             scr_startframe();
         #endif
 
+        #ifdef __wii__
+            if (gamepad_button_check(0, WPAD_BUTTON_HOME))
+                MarkedForClose = true;
+        #endif
+
         gamepad_scanner();
         scr_handleroom(room);
         scr_endframe();

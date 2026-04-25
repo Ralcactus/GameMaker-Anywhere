@@ -54,7 +54,10 @@ function scr_compileMIDDLE2(){
 		directory_create(destination + "\\source\\rooms\\");
 		directory_create(destination + "\\source\\objects\\");
 		directory_create(destination + "\\source\\sprites\\");	
-		directory_create(destination + "\\output\\");	
+		directory_create(destination + "\\output\\");
+		if (global.export_mode == "WII")
+			directory_create(destination + "\\output\\TheGame\\");
+			
 		scr_compile();
 	}
 	else
