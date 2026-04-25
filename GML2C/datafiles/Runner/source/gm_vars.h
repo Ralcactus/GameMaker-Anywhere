@@ -2,7 +2,9 @@
 
 /*Example of how a variables has to be declaredn (FOR NOW, IDK IF THIS WOULD DO):
 
-extern float {var_name}
+    Format: GMVar {object_name}.{var_name};
 
-#define {obj_name}.{var_name} {var_name} */
+    if room/script: GMVar {var_name};
+
+*/
 #pragma once

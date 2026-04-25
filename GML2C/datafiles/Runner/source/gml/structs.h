@@ -4,6 +4,7 @@
 
 typedef enum {
     VAR_FLOAT,
+    VAR_STRING,
     VAR_CHAR
 } VarType;
 
@@ -11,8 +12,9 @@ typedef enum {
 typedef struct{
     VarType type;
     union{
-        float f;
-        const char* c;
+        float f; //Number
+        char* s; //String
+        char c; //Char
     };
 } GMVar;
 
