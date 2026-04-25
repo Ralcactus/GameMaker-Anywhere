@@ -52,7 +52,7 @@ int main(){
     #ifdef __3DS__
     while (aptMainLoop()){
     #elif defined(__gamecube__)
-    while (true){
+    while (SYS_MainLoop()){
     #endif
         #ifdef __3DS__
             scr_startframe(top);
