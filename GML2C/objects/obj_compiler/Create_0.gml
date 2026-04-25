@@ -8,6 +8,8 @@ banned_strings = ["clock"]
 
 global.SpriteWidths = [];
 global.SpriteHeights = [];
+global.SpriteOriginX = [];
+global.SpriteOriginY = [];
 
 var_names = [];
 var_defaults = [];

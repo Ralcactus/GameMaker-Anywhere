@@ -270,4 +270,11 @@ int sprite_get_width(int sprite_index){
 int sprite_get_height(int sprite_index){
     return SpriteHeights[sprite_index];
 }
+
+int sprite_get_xoffset(int sprite_index){
+    return SpriteOriginX[sprite_index];
+}
+int sprite_get_yoffset(int sprite_index){
+    return SpriteOriginY[sprite_index];
+}
 #pragma endregion

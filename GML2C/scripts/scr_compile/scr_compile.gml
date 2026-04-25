@@ -24,6 +24,8 @@ function scr_compileSETUP(){
 	roomid_count = 0;
 	global.SpriteWidths = [];
 	global.SpriteHeights = [];
+	global.SpriteOriginX = [];
+	global.SpriteOriginY = [];
 
 	if (directory_exists(destination)){
 		//delete the old build
@@ -120,14 +122,17 @@ function scr_compile()
 		file_text_close(textures_dolfile);
 		
 	var spriteinfoC = file_text_open_append(destination + "source\\get_spriteinfo.h");
-	var realspritewidth_array = string_replace(global.SpriteWidths, "[", "{");
-	realspritewidth_array = string_replace(realspritewidth_array, "]", "}");
+	var realspritewidth_array = string_replace(string_replace(global.SpriteWidths, "[", "{"), "]", "}");
+	var realspriteheight_array = string_replace(string_replace(global.SpriteHeights, "[", "{"), "]", "}");
 	
-	var realspriteheight_array = string_replace(global.SpriteHeights, "[", "{");
-	realspriteheight_array = string_replace(realspriteheight_array, "]", "}");
-	
+	var realspriteoriginX_array = string_replace(string_replace(global.SpriteOriginX, "[", "{"), "]", "}");
+	var realspriteoriginY_array = string_replace(string_replace(global.SpriteOriginY, "[", "{"), "]", "}");
+
 	file_text_write_string(spriteinfoC, "static int SpriteWidths[] = " + string(realspritewidth_array) + ";\n");
 	file_text_write_string(spriteinfoC, "static int SpriteHeights[] = " + string(realspriteheight_array) + ";\n");
+	file_text_write_string(spriteinfoC, "static int SpriteOriginX[] = " + string(realspriteoriginX_array) + ";\n");
+	file_text_write_string(spriteinfoC, "static int SpriteOriginY[] = " + string(realspriteoriginY_array) + ";\n");
+	
 	file_text_close(spriteinfoC);
 	
 	scr_write_metadata();

@@ -46,6 +46,8 @@ function scr_compilesprites(){
 			sprheight = sprite_get_height(sprite);
 			array_push(global.SpriteWidths, sprwidth);
 			array_push(global.SpriteHeights, sprheight);
+			array_push(global.SpriteOriginX, yyfile.sequence.xorigin);
+			array_push(global.SpriteOriginY, yyfile.sequence.yorigin);
 			sprite_delete(sprite);
 			
 			
