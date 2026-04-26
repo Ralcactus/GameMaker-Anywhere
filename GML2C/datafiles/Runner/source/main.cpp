@@ -14,7 +14,7 @@
     #include <wiiuse/wpad.h>
 #endif
 
-int bgcolor = 0xFF000000;
+unsigned int bgcolor = 0xFF000000;
 int view_camera[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 bool MarkedForClose = false;
 

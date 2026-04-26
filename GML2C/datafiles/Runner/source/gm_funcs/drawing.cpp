@@ -7,7 +7,7 @@
 #include <math.h>
 #include "get_spriteinfo.h"
 
-int drawcolor = c_white;
+unsigned int drawcolor = c_white;
 
 //3ds
 #ifdef __3DS__

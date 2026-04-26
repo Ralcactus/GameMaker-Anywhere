@@ -13,7 +13,7 @@ function scr_compilesprites(){
 		}
 	}
 	
-	var file = file_text_open_write(destination + "source\\sprites\\" + safe_name + ".c");
+	var file = file_text_open_write(destination + "source\\sprites\\" + safe_name + ".cpp");
     show_debug_message("Sprite: " + yyfile.name);
     var spriteoutput;
 			

@@ -78,7 +78,7 @@ float gamepad_button_deadzone_0 = 0.5;
         return true;
     }
 
-    char* gamepad_get_description(int pad){
+    const char* gamepad_get_description(int pad){
         if (pad == 0)
             return "NINTENDO 3DS Controller";
         else
@@ -175,7 +175,7 @@ float gamepad_button_deadzone_0 = 0.5;
         return true;
     }
 
-    char* gamepad_get_description(int pad){
+    const char* gamepad_get_description(int pad){
         return "Nintendo Gamecube Controller"; //TODO - make this actually return a desc based on the thingy connected
     }
 
@@ -272,7 +272,7 @@ float gamepad_button_deadzone_0 = 0.5;
         return true;
     }
 
-    char* gamepad_get_description(int pad){
+    const char* gamepad_get_description(int pad){
         return "Nintendo Wiimote"; //TODO - make this actually return a desc based on the thingy connected
     }
 

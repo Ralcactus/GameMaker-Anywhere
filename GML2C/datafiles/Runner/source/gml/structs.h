@@ -90,7 +90,7 @@ typedef struct{
 
     //Properties
     GMSprite* sprite;
-    int color;
+    unsigned int color;
     bool hTile, vTile, stretch;
     int offX, offY;
     float spdX, spdY;
@@ -139,10 +139,10 @@ typedef struct{
     bool persistent, inheritRmSettings;
 
     //Viewports and Camera
-    bool clearDisplayBuffer,
-    clearViewBackground,
-    enableViews,
-    inheritViewSettings;
+    bool enableViews;
+    bool clearDisplayBuffer;
+    bool clearViewBackground;
+    bool inheritViewSettings;
     GMViewPorts* views;
     int viewCount;
 

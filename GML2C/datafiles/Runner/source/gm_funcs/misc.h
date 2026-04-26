@@ -99,9 +99,9 @@ void room_set_height(int room_id, float height);
 void room_set_width(int room_id, float width);
 
 //other
-void show_message(char* message);
+void show_message(const char* message);
 bool code_is_compiled();
 float display_get_width();
 float display_get_height();
 char* string(float value);
-void show_debug_message(char* message);
+void show_debug_message(const char* message);

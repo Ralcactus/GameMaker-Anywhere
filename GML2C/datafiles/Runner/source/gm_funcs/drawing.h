@@ -23,8 +23,8 @@
 #define c_silver 4290822336
 
 //variables
-extern int bgcolor;
-extern int drawcolor;
+extern unsigned int bgcolor;
+extern unsigned int drawcolor;
 
 
 //funcs

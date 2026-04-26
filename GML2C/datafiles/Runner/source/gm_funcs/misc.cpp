@@ -121,7 +121,7 @@ char* string(float value){
     return str;
 }
 
-void show_debug_message(char* message){
+void show_debug_message(const char* message){
     printf("%s\n", message);
 }
 
@@ -132,7 +132,7 @@ void show_debug_message(char* message){
     #include <3ds.h>
     #include <citro2d.h>
 
-    void show_message(char* message){
+    void show_message(const char* message){
         errorConf error;
         errorInit(&error, ERROR_TEXT, CFG_LANGUAGE_EN);
         errorText(&error, message);
@@ -142,7 +142,7 @@ void show_debug_message(char* message){
 
 //gamecube and wii
  #if defined(__gamecube__) || defined(__wii__)
-    void show_message(char* message){
+    void show_message(const char* message){
         //I don't think gamecube has a thing for this?
     }
 #endif

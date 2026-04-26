@@ -1,6 +1,6 @@
 function scr_compileobjects(){
 	var safe_name = sanitize_filename(yyfile.name);
-	var file = file_text_open_write(destination + "source\\objects\\" + safe_name + ".c");
+	var file = file_text_open_write(destination + "source\\objects\\" + safe_name + ".cpp");
     show_debug_message("Object: " + yyfile.name);
             
     var spr_name = "";

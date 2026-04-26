@@ -70,7 +70,7 @@ function scr_compileroom_phase2(packed_layers){
 	
 	
 	//write to the end of the room c file
-	var roomcfile = file_text_open_append(destination + "source\\rooms\\" + safe_name + ".c");
+	var roomcfile = file_text_open_append(destination + "source\\rooms\\" + safe_name + ".cpp");
 	file_text_write_string(roomcfile,
 		//got the funcs
 		"\n" + got_funcs + "\n" +
