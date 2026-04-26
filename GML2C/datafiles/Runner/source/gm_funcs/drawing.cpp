@@ -186,7 +186,7 @@ unsigned int drawcolor = c_white;
         VIDEO_SetNextFramebuffer(frameBuffer[fb]);
         VIDEO_Flush();
         VIDEO_WaitVSync();
-        fb = 1;
+        fb ^= 1;
     }
 
     void draw_sprite(int sprite_index, int subimg, float draw_x, float draw_y){
