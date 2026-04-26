@@ -95,6 +95,7 @@
     {"id":{"name":"obj_titleid_input","path":"objects/obj_titleid_input/obj_titleid_input.yy",},},
     {"id":{"name":"Compileroom","path":"rooms/Compileroom/Compileroom.yy",},},
     {"id":{"name":"dropdown_fns","path":"scripts/dropdown_fns/dropdown_fns.yy",},},
+    {"id":{"name":"get_variables","path":"scripts/get_variables/get_variables.yy",},},
     {"id":{"name":"run_commandpowershell","path":"scripts/run_commandpowershell/run_commandpowershell.yy",},},
     {"id":{"name":"sanitize_filename","path":"scripts/sanitize_filename/sanitize_filename.yy",},},
     {"id":{"name":"scr_compile","path":"scripts/scr_compile/scr_compile.yy",},},

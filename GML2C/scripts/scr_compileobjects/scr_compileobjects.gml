@@ -2,7 +2,6 @@ function scr_compileobjects(){
 	var safe_name = sanitize_filename(yyfile.name);
 	var file = file_text_open_write(destination + "source\\objects\\" + safe_name + ".cpp");
     show_debug_message("Object: " + yyfile.name);
-            
     var spr_name = "";
             
     if (variable_struct_exists(yyfile, "spriteId")){
@@ -63,7 +62,10 @@ function scr_compileobjects(){
 	        show_debug_message(draw_code);
 	    }
 	}
-            
+	get_variables(create_code);
+	get_variables(step_code);
+	get_variables(draw_code);
+	
     array_push(all_objects, {
         name: yyfile.name,
         sprite: spr_name,
