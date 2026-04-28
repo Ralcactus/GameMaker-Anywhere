@@ -1,4 +1,4 @@
-global.OutputDrive = "D:\\";
+global.OutputDrive = "C:\\";
 
 //folders location for exports
 runnerfolder = working_directory + "Runner\\";
@@ -35,6 +35,7 @@ global.exporting = false;
 //debug
 global.copysprite = true;
 global.copycode = true;
+global.skip_installchecks = false;
 
 keyboard_string = "";
 
