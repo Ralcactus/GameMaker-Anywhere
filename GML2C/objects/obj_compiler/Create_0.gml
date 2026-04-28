@@ -1,6 +1,8 @@
+global.OutputDrive = "D:\\";
+
 //folders location for exports
 runnerfolder = working_directory + "Runner\\";
-destination = "C:\\GM_Anywhere\\Runner\\";
+destination = global.OutputDrive + "GM_Anywhere\\Runner\\";
 
 //had to ban these because they are built in C funcs lol (probably change this to something better...)
 //just add them in the array and the compiler with throw a warning if its compiling something mentioning it

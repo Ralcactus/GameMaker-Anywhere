@@ -5,7 +5,7 @@ function scr_compileSETUP(){
 		exit;
 	}
 	
-	if (!directory_exists("C:\\devkitPro\\portlibs\\3ds\\") && (global.export_mode == "CIA" || global.export_mode == "3DSX")){
+	if (!directory_exists(global.OutputDrive + "devkitPro\\portlibs\\3ds\\") && (global.export_mode == "CIA" || global.export_mode == "3DSX")){
 		show_message("DevKitPro 3DS portlibs are not installed!");
 		exit;
 	}
@@ -29,12 +29,12 @@ function scr_compileSETUP(){
 
 	if (directory_exists(destination)){
 		//delete the old build
-	    delete_powershell_window = run_commandpowershell("C:\\", "Remove-Item -LiteralPath 'C:\\GM_Anywhere' -Recurse -Force -ErrorAction SilentlyContinue");
+	    delete_powershell_window = run_commandpowershell(global.OutputDrive, "Remove-Item -LiteralPath '" + global.OutputDrive + "GM_Anywhere' -Recurse -Force -ErrorAction SilentlyContinue");
 		scr_compileMIDDLE1();
 	}
 	else{
 		//copy the runner to the compile folder on the C drive
-		copy_powershell_window = run_commandpowershell("C:\\", "Copy-Item -Path \"" + runnerfolder + " -Destination \"" + destination + " -Recurse");
+		copy_powershell_window = run_commandpowershell(global.OutputDrive, "Copy-Item -Path \"" + runnerfolder + " -Destination \"" + destination + " -Recurse");
 		scr_compileMIDDLE2();
 	}
 }
@@ -43,7 +43,7 @@ function scr_compileSETUP(){
 function scr_compileMIDDLE1(){
 	if (CompletionStatusFromExecutedProcess(delete_powershell_window)){
 		//copy the runner to the compile folder on the C drive
-		copy_powershell_window = run_commandpowershell("C:\\", "Copy-Item -Path \"" + runnerfolder + " -Destination \"" + destination + " -Recurse");
+		copy_powershell_window = run_commandpowershell(global.OutputDrive, "Copy-Item -Path \"" + runnerfolder + " -Destination \"" + destination + " -Recurse");
 		scr_compileMIDDLE2();
 		exit;
 	}
