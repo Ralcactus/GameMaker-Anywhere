@@ -1,6 +1,5 @@
-function get_variables(code){
+function get_variables(caught, code){
 	var write = "";
-	var varknown_array = [];
 	
 	for (var i = 1; i < string_length(code); i += 1){
 		var cursor = string_char_at(code, i);
@@ -41,12 +40,12 @@ function get_variables(code){
 				variablename += string_char_at(code, j);
 			}
 			
-			if (array_contains(varknown_array, variablename))
-				break;
+			if (array_contains(caught, variablename))
+				continue;
 
 
 			write += "std::variant<const char*, float, int> " + variablename + ";\n";
-			array_push(varknown_array, variablename);
+			array_push(caught, variablename);
 			//show_message(variablename)
 		}
 	}

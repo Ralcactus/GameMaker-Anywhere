@@ -9,7 +9,6 @@ function scr_compilesprites(){
 		if (answer = false){
 			global.exporting = false;
 			return true; //cancel compile
-			exit;
 		}
 	}
 	

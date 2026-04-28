@@ -52,7 +52,7 @@ function init_builtin_variables(spr_name){
 
 }
 
-function scr_writevariables(file){
+function scr_write_builtinvariables(file){
 	//handle the saved variable
 	for (var i = 0; i < array_length(var_names); i++){
 		var vn = var_names[i];

@@ -23,8 +23,11 @@ function scr_compileobject_phase2(spr_name, create_code, step_code, draw_code){
 	
 	
 	//other stuff
-	scr_writevariables(file);
-	file_text_write_string(file, get_variables(create_code));
+	scr_write_builtinvariables(file);
+	var caught = variable_clone(var_names); //caugt means we've already declared the variable
+	file_text_write_string(file, get_variables(caught, create_code));
+	file_text_write_string(file, get_variables(caught, step_code));
+	file_text_write_string(file, get_variables(caught, draw_code));
 		
 	#region EVENTS
 	//create
