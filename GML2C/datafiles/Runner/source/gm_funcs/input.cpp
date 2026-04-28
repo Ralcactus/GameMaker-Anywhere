@@ -215,7 +215,8 @@ float gamepad_button_deadzone_0 = 0.5;
     static u32 keys_held = 0;
     static u32 keys_down = 0;
     static u32 keys_up = 0;
-
+    #include <wiiuse/wpad.h>
+    
     void gamepad_scanner(){
         WPAD_ScanPads();
         keys_held = WPAD_ButtonsHeld(0);
@@ -223,8 +224,11 @@ float gamepad_button_deadzone_0 = 0.5;
         keys_up = WPAD_ButtonsUp(0);
         
         //mouse
-        mouse_x = 0;
-        mouse_y = 0;
+        WPADData* data = WPAD_Data(0);
+        if (data->data_present && data->ir.valid){
+            mouse_x = data->ir.x;
+            mouse_y = data->ir.y;
+        }
     }
 
     #pragma region //gamepad_ funcs

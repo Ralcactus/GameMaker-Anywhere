@@ -51,6 +51,7 @@ int main(){
 
     #ifdef __wii__
         WPAD_Init();
+        WPAD_SetDataFormat(WPAD_CHAN_0, WPAD_FMT_BTNS_ACC_IR);
     #endif
 
 

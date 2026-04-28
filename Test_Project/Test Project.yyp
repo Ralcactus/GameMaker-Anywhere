@@ -59,7 +59,6 @@
     {"id":{"name":"spr_sillycat2","path":"sprites/spr_sillycat2/spr_sillycat2.yy",},},
     {"id":{"name":"spr_touchand","path":"sprites/spr_touchand/spr_touchand.yy",},},
     {"id":{"name":"spr_woag","path":"sprites/spr_woag/spr_woag.yy",},},
-    {"id":{"name":"what","path":"sprites/what/what.yy",},},
   ],
   "resourceType":"GMProject",
   "resourceVersion":"2.0",
