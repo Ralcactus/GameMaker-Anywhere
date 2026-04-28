@@ -226,8 +226,8 @@ float gamepad_button_deadzone_0 = 0.5;
         //mouse
         WPADData* data = WPAD_Data(0);
         if (data->data_present && data->ir.valid){
-            mouse_x = data->ir.x;
-            mouse_y = data->ir.y;
+            mouse_x = data->ir.x*view0_camWidth/640+140+view0_camXPos;
+            mouse_y = data->ir.y*view0_camHeight/480+view0_camYPos;
         }
     }
 
