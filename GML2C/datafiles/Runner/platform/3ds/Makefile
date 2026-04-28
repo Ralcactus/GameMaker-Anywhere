@@ -60,7 +60,7 @@ RSF             := $(TOPDIR)/$(RESOURCES)/template.rsf
 ARCH        := -march=armv6k -mtune=mpcore -mfloat-abi=hard -mtp=soft
 COMMON      := -Wall -O2 -mword-relocations -fomit-frame-pointer -ffunction-sections $(ARCH) $(INCLUDE) -D__3DS__ -D__DKPRO__
 CFLAGS      := $(COMMON) -std=gnu99
-CXXFLAGS    := $(COMMON) -fno-rtti -fno-exceptions -std=gnu++11
+CXXFLAGS    := $(COMMON) -fno-rtti -fno-exceptions -std=gnu++17
 ASFLAGS     := $(ARCH)
 LDFLAGS     = -specs=3dsx.specs $(ARCH) -Wl,-Map,$(notdir $*.map)
 

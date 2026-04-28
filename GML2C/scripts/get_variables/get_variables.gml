@@ -1,4 +1,7 @@
 function get_variables(code){
+	var write = "";
+	var varknown_array = [];
+	
 	for (var i = 1; i < string_length(code); i += 1){
 		var cursor = string_char_at(code, i);
 		
@@ -37,11 +40,18 @@ function get_variables(code){
 					
 				variablename += string_char_at(code, j);
 			}
+			
+			if (array_contains(varknown_array, variablename))
+				break;
 
-			show_debug_message(variablename);
+
+			write += "std::variant<const char*, float, int> " + variablename + ";\n";
+			array_push(varknown_array, variablename);
 			//show_message(variablename)
 		}
 	}
+	
+	return write;
 }
 
 function valid_variablename(letter){

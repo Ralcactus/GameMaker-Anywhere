@@ -62,9 +62,6 @@ function scr_compileobjects(){
 	        show_debug_message(draw_code);
 	    }
 	}
-	get_variables(create_code);
-	get_variables(step_code);
-	get_variables(draw_code);
 	
     array_push(all_objects, {
         name: yyfile.name,
@@ -79,6 +76,6 @@ function scr_compileobjects(){
 	scr_compileobject_phase2(spr_name, create_code, step_code, draw_code);
 	
 	var spriteidh = file_text_open_append(destination + "source\\sprite_toid.h");
-	file_text_write_string(spriteidh, "#define " + yyfile.name + " " + string(0) + "\n");
+	file_text_write_string(spriteidh, "#define " + yyfile.name + " " + string(-4) + "\n");
 	file_text_close(spriteidh);
 }
