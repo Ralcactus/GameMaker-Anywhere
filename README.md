@@ -1,31 +1,35 @@
-<p align="center">
-  <img src="Github assets/gamemaker_anywhere_logo.png" alt="GameMaker Anywhere logo" width="300" />
-</p>
-
-## Info
-<p align="left">
-A work in progress open source port of gamemaker to several consoles using devkitpro and C++.
-https://discord.gg/cc2YA2pChU
-</p>
-
-<br>
-
-<p align="center">
-  <img src="Github assets/example.gif" alt="The example gif" width="600" />
-</p>
-
-## How does this work?
-Rather then our old approach (interpreting gml directly) it converts it to C syntax and the C project has the functions and variables to make it run! (A little simplified)
-
-## Currently supported
-Check out the [wiki](https://github.com/Ralcactus/GameMaker-Anywhere/wiki/Currently-added-features) to see what you can use!
-(also current consoles are wii, gamecube, and 3ds! we intend on supporting ps1 onwards later)
-
-## Credits
-Meet the team!
-- Ralcactus (coder and creator)
-- FoxFore (coder)
-- Loaf (Logo designer)
-- Finlay (coder)
-- Samuel Venable (GameMaker extension developer)
-- Feel free to contribute! (we really need the help...)
+  <p align="center">
+    <img src="Github assets/gamemaker_anywhere_logo.png" alt="GameMaker Anywhere logo" width="300" />
+  </p>
+  
+  ## Info
+  <p align="left">
+  A work in progress open source port of gamemaker to several consoles using devkitpro and C++.
+  https://discord.gg/cc2YA2pChU
+  </p>
+  
+  <br>
+  
+  <p align="center">
+    <img src="Github assets/example.gif" alt="The example gif" width="600" />
+  </p>
+  
+  ## How does this work?
+  Rather then our old approach (interpreting gml directly) it converts it to C syntax and the C project has the functions and variables to make it run! (A little simplified)
+  
+  ## Currently supported
+  Check out the [wiki](https://github.com/Ralcactus/GameMaker-Anywhere/wiki/Currently-added-features) to see what you can use!
+  (also current consoles are wii, gamecube, and 3ds!) <br>
+  
+  ## future
+  we intend on supporting from the Sega Saturn onwards, as well as custom functions for gma 
+  
+  ## Credits
+  Meet the team!
+  - Ralcactus (coder and creator)
+  - FoxFore (coder)
+  - Loaf (Logo designer)
+  - Finlay (coder)
+  - Samuel Venable (GameMaker extension developer)
+  - Feel free to contribute! (we really need the help...)
+  
