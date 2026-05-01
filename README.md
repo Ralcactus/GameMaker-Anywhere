@@ -19,6 +19,7 @@ Rather then our old approach (interpreting gml directly) it converts it to C syn
 
 ## Currently supported
 Check out the [wiki](https://github.com/Ralcactus/GameMaker-Anywhere/wiki/Currently-added-features) to see what you can use!
+(also current consoles are wii, gamecube, and 3ds! we intend on supporting ps1 onwards later)
 
 ## Credits
 Meet the team!
