@@ -51,8 +51,6 @@
     {"$GMIncludedFile":"","%Name":"file_manage.h","CopyToMask":-1,"filePath":"datafiles/Runner/source/cross_platform","name":"file_manage.h","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"other.cpp","CopyToMask":-1,"filePath":"datafiles/Runner/source/cross_platform","name":"other.cpp","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"other.h","CopyToMask":-1,"filePath":"datafiles/Runner/source/cross_platform","name":"other.h","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
-    {"$GMIncludedFile":"","%Name":"customfuncs.cpp","CopyToMask":-1,"filePath":"datafiles/Runner/source/custom funcs","name":"customfuncs.cpp","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
-    {"$GMIncludedFile":"","%Name":"customfuncs.h","CopyToMask":-1,"filePath":"datafiles/Runner/source/custom funcs","name":"customfuncs.h","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"customfuncs.cpp","CopyToMask":-1,"filePath":"datafiles/Runner/source/custom_funcs","name":"customfuncs.cpp","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"customfuncs.h","CopyToMask":-1,"filePath":"datafiles/Runner/source/custom_funcs","name":"customfuncs.h","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"get_spriteinfo.h","CopyToMask":-1,"filePath":"datafiles/Runner/source","name":"get_spriteinfo.h","resourceType":"GMIncludedFile","resourceVersion":"2.0",},

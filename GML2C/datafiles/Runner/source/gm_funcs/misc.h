@@ -97,11 +97,14 @@ int room_next(int room_id);
 int room_previous(int room_id);
 void room_set_height(int room_id, float height);
 void room_set_width(int room_id, float width);
+void room_restart();
 
 //other
 void show_message(const char* message);
+bool show_question(const char* message);
 bool code_is_compiled();
 float display_get_width();
 float display_get_height();
 char* string(float value);
 void show_debug_message(const char* message);
+void show_error(const char* message, bool abort);

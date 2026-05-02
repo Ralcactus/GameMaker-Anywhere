@@ -92,6 +92,10 @@ void room_set_width(int room_id, float width){
     room_width = width;
 }
 
+void room_restart(){
+    room_goto(room);
+}
+
 #pragma endregion
 
 #pragma region //game_ funcs
@@ -138,6 +142,17 @@ void show_debug_message(const char* message){
         errorText(&error, message);
         errorDisp(&error);
     }
+
+    bool show_question(const char* message){
+        return false;
+    }
+
+    void show_error(const char* message, bool abort){
+        show_message(message);
+
+        if (abort)
+            game_end();
+    }
 #endif
 
 //gamecube and wii
@@ -145,4 +160,14 @@ void show_debug_message(const char* message){
     void show_message(const char* message){
         //I don't think gamecube has a thing for this?
     }
+    
+    bool show_question(const char* message){
+        return false;
+    }
+
+    void show_error(const char* message, bool abort){
+        if (abort)
+            game_end();
+    }
 #endif
+
