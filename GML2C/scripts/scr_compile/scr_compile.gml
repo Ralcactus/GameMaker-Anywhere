@@ -116,6 +116,9 @@ function scr_compile()
 
         if (yyfile.resourceType == "GMObject") //asset is a object!
 			scr_compileobjects();
+			
+        if (yyfile.resourceType == "GMScript") //asset is a script!
+			scr_compilescript();
     }
 	
 	if (global.export_mode == "3DSX" || global.export_mode == "CIA")

@@ -18,10 +18,10 @@ include $(DEVKITPPC)/gamecube_rules
 #---------------------------------------------------------------------------------
 TARGET		:=	$(notdir $(CURDIR))
 BUILD		:=	build
-SOURCES		:= source source/cross_platform source/rooms source/objects source/gm_funcs
+SOURCES		:= source source/cross_platform source/rooms source/objects source/gm_funcs source/custom_funcs
 DATA		:=
 TEXTURES	:=	gfx 
-INCLUDES	:= source source/cross_platform source/rooms source/objects source/gm_funcs
+INCLUDES	:= source source/cross_platform source/rooms source/objects source/gm_funcs source/custom_funcs
 
 #---------------------------------------------------------------------------------
 # options for code generation

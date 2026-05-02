@@ -43,6 +43,7 @@
     {"id":{"name":"obj_sillydebug","path":"objects/obj_sillydebug/obj_sillydebug.yy",},},
     {"id":{"name":"MainTest","path":"rooms/MainTest/MainTest.yy",},},
     {"id":{"name":"Room2","path":"rooms/Room2/Room2.yy",},},
+    {"id":{"name":"scr_bleh","path":"scripts/scr_bleh/scr_bleh.yy",},},
     {"id":{"name":"spr_familyguy","path":"sprites/spr_familyguy/spr_familyguy.yy",},},
     {"id":{"name":"spr_funfact","path":"sprites/spr_funfact/spr_funfact.yy",},},
     {"id":{"name":"spr_hint","path":"sprites/spr_hint/spr_hint.yy",},},
