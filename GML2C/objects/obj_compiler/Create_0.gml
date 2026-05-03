@@ -18,6 +18,8 @@ global.SpriteBoxBOTTOM = [];
 global.SpriteBoxLEFT = [];
 global.SpriteBoxRIGHT = [];
 
+global.ObjectIdOBJECT = [];
+currentobject_count = 0;
 object_count = 0;
 var_names = [];
 var_defaults = [];

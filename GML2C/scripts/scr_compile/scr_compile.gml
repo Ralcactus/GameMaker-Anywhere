@@ -26,6 +26,7 @@ function scr_compileSETUP(){
 	t3s_file = noone;
 	roomid_count = 0;
 	object_count = 0;
+	currentobject_count = 0;
 	
 	global.SpriteWidths = [];
 	global.SpriteHeights = [];
@@ -36,6 +37,7 @@ function scr_compileSETUP(){
 	global.SpriteBoxBOTTOM = [];
 	global.SpriteBoxLEFT = [];
 	global.SpriteBoxRIGHT = [];
+	global.ObjectIdOBJECT = [];
 
 	if (directory_exists(destination)){
 		//delete the old build

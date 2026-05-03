@@ -41,6 +41,7 @@
     {"id":{"name":"obj_gamekiller","path":"objects/obj_gamekiller/obj_gamekiller.yy",},},
     {"id":{"name":"obj_ralsei_player","path":"objects/obj_ralsei_player/obj_ralsei_player.yy",},},
     {"id":{"name":"obj_sillydebug","path":"objects/obj_sillydebug/obj_sillydebug.yy",},},
+    {"id":{"name":"obj_switcher","path":"objects/obj_switcher/obj_switcher.yy",},},
     {"id":{"name":"MainTest","path":"rooms/MainTest/MainTest.yy",},},
     {"id":{"name":"Room2","path":"rooms/Room2/Room2.yy",},},
     {"id":{"name":"scr_bleh","path":"scripts/scr_bleh/scr_bleh.yy",},},

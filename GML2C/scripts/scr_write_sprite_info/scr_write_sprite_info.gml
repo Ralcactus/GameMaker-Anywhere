@@ -1,3 +1,4 @@
+//this needs to be cleaned up so bad, its so messy
 function scr_write_sprite_info(){
 	var spriteinfoC = file_text_open_append(destination + "source\\get_spriteinfo.cpp");
 	var realspritewidth_array = string_replace(string_replace(global.SpriteWidths, "[", "{"), "]", "}");
@@ -80,6 +81,10 @@ function scr_write_sprite_info(){
 	
 	var real_ObjectIDS_array = string_replace(string_replace(string(ObjectIDS), "[", "{"), "]", "}");
 	file_text_write_string(spriteinfoC, "int otherobject_id[] = " + string(real_ObjectIDS_array) + ";\n");
+	
+	var real_objectoid_array = string_replace(string_replace(global.ObjectIdOBJECT, "[", "{"), "]", "}");
+	real_objectoid_array = string_replace_all(real_objectoid_array, "\"", "");
+	file_text_write_string(spriteinfoC, "int IDtoObject[] = " + string(real_objectoid_array) + ";\n");
 	
 	file_text_close(spriteinfoC);
 }

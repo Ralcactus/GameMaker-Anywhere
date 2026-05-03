@@ -21,3 +21,4 @@ extern int SpriteCollideRIGHT[];
 extern int otherobject_sprite[];
 extern int otherobject_id[];
 extern int object_count;
+extern int IDtoObject[];

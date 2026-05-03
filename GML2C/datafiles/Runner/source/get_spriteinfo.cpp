@@ -4,5 +4,6 @@
 #include "room_handler.h"
 #include "misc.h"
 #include "room_toid.h"
+#include "sprite_toid.h"
 //all the info is written in gml2c
 

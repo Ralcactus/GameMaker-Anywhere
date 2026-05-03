@@ -134,6 +134,7 @@ function scr_compilerooms(i, yyp_json){
 		            " },\n");
 					
 					object_count++;
+					array_push(global.ObjectIdOBJECT, inst.object);
 		        }
 		    }
 
