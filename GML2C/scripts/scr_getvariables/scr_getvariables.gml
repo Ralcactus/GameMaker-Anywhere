@@ -14,7 +14,7 @@ function init_builtin_variables(spr_name){
 	
 	//stubs (you can read and write to these but they do nothing)
 	//General Variables
-	add_variable("id", "0");
+	add_variable("id", "-4");
 	add_variable("visible", "false");
 	add_variable("solid", "false");
 	add_variable("persistent", "false");

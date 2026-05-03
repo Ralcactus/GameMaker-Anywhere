@@ -13,6 +13,12 @@ global.SpriteHeights = [];
 global.SpriteOriginX = [];
 global.SpriteOriginY = [];
 
+global.SpriteBoxTOP = [];
+global.SpriteBoxBOTTOM = [];
+global.SpriteBoxLEFT = [];
+global.SpriteBoxRIGHT = [];
+
+object_count = 0;
 var_names = [];
 var_defaults = [];
 all_resources = [];

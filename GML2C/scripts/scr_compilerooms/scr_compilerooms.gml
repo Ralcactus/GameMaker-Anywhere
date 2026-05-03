@@ -130,7 +130,10 @@ function scr_compilerooms(i, yyp_json){
 		            ", .scaleX=" + string(inst.scaleX) +
 		            ", .scaleY=" + string(inst.scaleY) +
 		            ", .object=" + objname +
+		            ", .id=" + string(100000+object_count) +
 		            " },\n");
+					
+					object_count++;
 		        }
 		    }
 

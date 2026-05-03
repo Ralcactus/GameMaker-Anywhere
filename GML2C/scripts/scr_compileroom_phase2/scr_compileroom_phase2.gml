@@ -40,12 +40,13 @@ function scr_compileroom_phase2(packed_layers){
 				var datastruct = safe_name + "_inst_" + string(object_layer_index) + "_data[" + string(j) + "]";
 				object_scripts += "	" + instances[j].object + "_runevents(" + 
 				datastruct + ".x, " + datastruct + ".y, " + //x y
-				datastruct + ".scaleX, " + datastruct + ".scaleY" + ");\n" //xscale yscale
+				datastruct + ".scaleX, " + datastruct + ".scaleY, " + //xscale yscale
+				datastruct + ".id" + ");\n" //id
 				
 				//get the functions for actual real
 				if (!variable_struct_exists(unique_objects, instances[j].object)){
 					unique_objects[$ instances[j].object] = true;
-					got_funcs += "extern void " + instances[j].object + "_runevents(float, float, float, float);\n";
+					got_funcs += "extern void " + instances[j].object + "_runevents(float, float, float, float, float);\n";
 					got_funcs += "extern void " + instances[j].object + "_reset_frame();\n";
 					object_scripts = "\t" + instances[j].object + "_reset_frame();\n" + object_scripts;
 				}

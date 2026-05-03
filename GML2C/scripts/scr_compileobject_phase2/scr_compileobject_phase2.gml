@@ -16,6 +16,7 @@ function scr_compileobject_phase2(spr_name, create_code, step_code, draw_code){
 	file_text_write_string(file, "#include \"../gm_funcs/collision.h\"\n");
 	file_text_write_string(file, "#include \"../gm_funcs/audio.h\"\n");
 	file_text_write_string(file, "#include \"../custom_funcs/customfuncs.h\"\n");
+	file_text_write_string(file, "#include \"../get_spriteinfo.h\"\n");
 	file_text_write_string(file, "#include <variant>\n\n");
 	//define variables
 	file_text_write_string(file, "static bool initialized[8] = {false};\n");
@@ -37,7 +38,7 @@ function scr_compileobject_phase2(spr_name, create_code, step_code, draw_code){
 	file_text_write_string(file, "}\n\n");
 	//step
 	file_text_write_string(file, "void " + safe_name + "_step() {\n");
-	file_text_write_string(file, step_code + "\n");
+	file_text_write_string(file, step_code + "\n" + "get_current_object_touching(x, y, image_xscale, image_yscale, sprite_index);\n");
 	file_text_write_string(file, "}\n");
 	//draw
 	file_text_write_string(file, "void " + safe_name + "_draw() {\n");
@@ -49,11 +50,12 @@ function scr_compileobject_phase2(spr_name, create_code, step_code, draw_code){
 	#endregion
 	
 	//pre-create 
-	file_text_write_string(file, "void " + safe_name + "_precreate(float NEWX, float NEWY, float NEWXSCALE, float NEWYSCALE) {\n");
+	file_text_write_string(file, "void " + safe_name + "_precreate(float NEWX, float NEWY, float NEWXSCALE, float NEWYSCALE, float NEWID) {\n");
 	file_text_write_string(file, "x = NEWX;\n");
 	file_text_write_string(file, "y = NEWY;\n");
 	file_text_write_string(file, "image_xscale = NEWXSCALE;\n");
 	file_text_write_string(file, "image_yscale = NEWYSCALE;\n");
+	file_text_write_string(file, "id = NEWID;\n");
 	file_text_write_string(file, "}\n\n");
 	
 	//reset frame
@@ -62,14 +64,14 @@ function scr_compileobject_phase2(spr_name, create_code, step_code, draw_code){
 	file_text_write_string(file, "}\n\n");
 	
 	//the event runner
-	file_text_write_string(file, "void " + safe_name + "_runevents(float NEWX, float NEWY, float NEWXSCALE, float NEWYSCALE) {\n");
+	file_text_write_string(file, "void " + safe_name + "_runevents(float NEWX, float NEWY, float NEWXSCALE, float NEWYSCALE, float NEWID) {\n");
 	
 	//RUN THE EVENTS
 	file_text_write_string(file, "	//printf(\"RUNNING OBJECT: " + safe_name + "\\n\");\n");
 	file_text_write_string(file, "	int i = " + safe_name + "_call_index++;\n\n");
 	file_text_write_string(file, "	if (!initialized[i]){\n");
 	file_text_write_string(file, "		initialized[i] = true;\n");
-	file_text_write_string(file, "		" + safe_name + "_precreate(NEWX, NEWY, NEWXSCALE, NEWYSCALE);\n");
+	file_text_write_string(file, "		" + safe_name + "_precreate(NEWX, NEWY, NEWXSCALE, NEWYSCALE, NEWID);\n");
 	file_text_write_string(file, "		" + safe_name + "_create();\n");
 	
 	file_text_write_string(file, "	} else {\n");
@@ -81,6 +83,9 @@ function scr_compileobject_phase2(spr_name, create_code, step_code, draw_code){
 
 	file_text_write_string(file, "	" + safe_name + "_step();\n");
 	file_text_write_string(file, "	" + safe_name + "_draw();\n\n");
+	
+	file_text_write_string(file, "	" + "otherobject_x[(int)id - 100000] = x;" + "\n");
+	file_text_write_string(file, "	" + "otherobject_y[(int)id - 100000] = y;" + "\n\n");
 	
 	for (var i = 0; i < array_length(var_names); i++) {
 		var vn = var_names[i];

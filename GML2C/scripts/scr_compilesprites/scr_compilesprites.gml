@@ -49,6 +49,12 @@ function scr_compilesprites(){
 		array_push(global.SpriteHeights, sprheight);
 		array_push(global.SpriteOriginX, yyfile.sequence.xorigin);
 		array_push(global.SpriteOriginY, yyfile.sequence.yorigin);
+		
+		//collide box
+		array_push(global.SpriteBoxTOP, yyfile.bbox_top);
+		array_push(global.SpriteBoxBOTTOM, yyfile.bbox_bottom);
+		array_push(global.SpriteBoxLEFT, yyfile.bbox_left);
+		array_push(global.SpriteBoxRIGHT, yyfile.bbox_right);
 		sprite_delete(sprite);
 		
 		if (global.export_mode == "3DSX" || global.export_mode == "CIA")

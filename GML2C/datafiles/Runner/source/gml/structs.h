@@ -77,6 +77,7 @@ typedef struct{
     float x, y, rotation;
     float scaleX, scaleY;
     int object;
+    float id;
 } LayerInstances;
 
 typedef struct{
