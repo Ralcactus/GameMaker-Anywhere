@@ -12,7 +12,7 @@ global.SpriteWidths = [];
 global.SpriteHeights = [];
 global.SpriteOriginX = [];
 global.SpriteOriginY = [];
-bool
+
 var_names = [];
 var_defaults = [];
 all_resources = [];

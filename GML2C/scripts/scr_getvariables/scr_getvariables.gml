@@ -47,7 +47,7 @@ function init_builtin_variables(spr_name){
 	add_variable("image_blend", "0");
 	add_variable("image_index", "0");
 	add_variable("image_number", "0");
-	add_variable("image_speed", "0");	
+	add_variable("image_speed", "0");
 
 
 }
