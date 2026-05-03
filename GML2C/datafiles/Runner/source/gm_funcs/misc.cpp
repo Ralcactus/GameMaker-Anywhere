@@ -129,6 +129,30 @@ void show_debug_message(const char* message){
     printf("%s\n", message);
 }
 
+float lerp(float value, float to_goto, float speed){
+    return value + speed * (to_goto - value);
+}
+
+float clamp(float value, float min, float max){
+    if (value < min)
+        return min;
+
+    if (value > max)
+        return max;
+
+    return value;
+}
+
+float sign(float number){
+    if (number > 0)
+        return 1;
+    else if (number < 0)
+        return -1;
+    else
+        return 0;
+}
+
+
 #pragma endregion
 
 //3ds

@@ -108,3 +108,6 @@ float display_get_height();
 char* string(float value);
 void show_debug_message(const char* message);
 void show_error(const char* message, bool abort);
+float clamp(float value, float min, float max);
+float lerp(float value, float to_goto, float speed);
+float sign(float number);
