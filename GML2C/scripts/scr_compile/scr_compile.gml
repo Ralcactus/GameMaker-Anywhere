@@ -46,6 +46,11 @@ function scr_compileSETUP(){
 function scr_compileMIDDLE1(){
 	if (CompletionStatusFromExecutedProcess(delete_powershell_window)){
 		//copy the runner to the compile folder on the C drive
+		if (directory_exists(destination)){
+			show_message("ERROR!\nthe previous build could not be deleted fully. Is the folder in use?")
+			exit;
+		}
+		
 		copy_powershell_window = run_commandpowershell(global.OutputDrive, "Copy-Item -Path \"" + runnerfolder + " -Destination \"" + destination + " -Recurse");
 		scr_compileMIDDLE2();
 		exit;
@@ -57,6 +62,12 @@ function scr_compileMIDDLE1(){
 //copy runner
 function scr_compileMIDDLE2(){
 	if (CompletionStatusFromExecutedProcess(copy_powershell_window)){
+
+		if (!directory_exists(destination)){
+			show_message("ERROR!\nthe cpp project could not be copied! Is the folder in use?")
+			exit;
+		}		
+		
 		//make dirs
 		directory_create(destination + "\\source\\rooms\\");
 		directory_create(destination + "\\source\\objects\\");
