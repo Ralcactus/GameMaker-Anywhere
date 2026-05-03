@@ -13,4 +13,4 @@ int instance_place(float _x, float _y, int object);
 int instance_position(float _x, float _y, int object);
 
 //helper funcs not gm
-void get_current_object_touching(int x, int y, float xscale, float yscale, int sprite_index);
+int get_current_object_touching(int x, int y, float xscale, float yscale, int sprite_index, int selfid);

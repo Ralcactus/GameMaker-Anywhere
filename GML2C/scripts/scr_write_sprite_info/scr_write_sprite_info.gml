@@ -42,6 +42,44 @@ function scr_write_sprite_info(){
 
 	file_text_write_string(spriteinfoC, "int otherobject_x[] = " + object_x + "\n");
 	file_text_write_string(spriteinfoC, "int otherobject_y[] = " + object_y + "\n");
+
+
+	var object_xscale = "{"
+	for (var i = 0; i < object_count; i += 1){
+		if (i != object_count-1)
+			object_xscale+= "1,"
+		else
+			object_xscale+= "1};"
+		
+	}
+	var object_yscale = "{"
+	for (var i = 0; i < object_count; i += 1){
+		if (i != object_count-1)
+			object_yscale+= "1,"
+		else
+			object_yscale+= "1};"
+		
+	}
+	file_text_write_string(spriteinfoC, "int otherobject_xscale[] = " + object_xscale + "\n");
+	file_text_write_string(spriteinfoC, "int otherobject_yscale[] = " + object_yscale + "\n");
+	
+	var object_sprite = "{"
+	for (var i = 0; i < object_count; i += 1){
+		if (i != object_count-1)
+			object_sprite+= "-4,"
+		else
+			object_sprite+= "-4};"
+		
+	}
+	file_text_write_string(spriteinfoC, "int otherobject_sprite[] = " + object_sprite + "\n");
+	file_text_write_string(spriteinfoC, "int object_count = " + string(object_count) + ";\n");
+	
+	var ObjectIDS = [];
+	for (var i = 0; i < object_count; i += 1)
+		array_push(ObjectIDS, i);
+	
+	var real_ObjectIDS_array = string_replace(string_replace(string(ObjectIDS), "[", "{"), "]", "}");
+	file_text_write_string(spriteinfoC, "int otherobject_id[] = " + string(real_ObjectIDS_array) + ";\n");
 	
 	file_text_close(spriteinfoC);
 }

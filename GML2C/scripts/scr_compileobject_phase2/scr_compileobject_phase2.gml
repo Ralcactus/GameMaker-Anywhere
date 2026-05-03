@@ -38,7 +38,7 @@ function scr_compileobject_phase2(spr_name, create_code, step_code, draw_code){
 	file_text_write_string(file, "}\n\n");
 	//step
 	file_text_write_string(file, "void " + safe_name + "_step() {\n");
-	file_text_write_string(file, step_code + "\n" + "get_current_object_touching(x, y, image_xscale, image_yscale, sprite_index);\n");
+	file_text_write_string(file, step_code + "\n" + "get_current_object_touching(x, y, image_xscale, image_yscale, sprite_index, (int)id);\n");
 	file_text_write_string(file, "}\n");
 	//draw
 	file_text_write_string(file, "void " + safe_name + "_draw() {\n");
@@ -80,12 +80,15 @@ function scr_compileobject_phase2(spr_name, create_code, step_code, draw_code){
 		file_text_write_string(file, "		" + vn + " = saved_" + vn + "[i];\n");
 	}
 	file_text_write_string(file, "	}\n\n");
-
-	file_text_write_string(file, "	" + safe_name + "_step();\n");
-	file_text_write_string(file, "	" + safe_name + "_draw();\n\n");
 	
 	file_text_write_string(file, "	" + "otherobject_x[(int)id - 100000] = x;" + "\n");
-	file_text_write_string(file, "	" + "otherobject_y[(int)id - 100000] = y;" + "\n\n");
+	file_text_write_string(file, "	" + "otherobject_y[(int)id - 100000] = y;" + "\n");
+	file_text_write_string(file, "	" + "otherobject_xscale[(int)id - 100000] = image_xscale;" + "\n");
+	file_text_write_string(file, "	" + "otherobject_yscale[(int)id - 100000] = image_yscale;" + "\n");
+	file_text_write_string(file, "	" + "otherobject_sprite[(int)id - 100000] = sprite_index;" + "\n\n");
+	
+	file_text_write_string(file, "	" + safe_name + "_step();\n");
+	file_text_write_string(file, "	" + safe_name + "_draw();\n\n");
 	
 	for (var i = 0; i < array_length(var_names); i++) {
 		var vn = var_names[i];
