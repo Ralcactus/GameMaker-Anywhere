@@ -39,19 +39,17 @@ function scr_compilesprites(){
 		file_text_write_string(file,
 		"    { \"" + frame_name + "\" },\n");
          
-		if (global.copysprite){
-			var sprite = sprite_add(filename_dir(global.selected_yyp) + "\\sprites\\" + yyfile.name + "\\" + frame_name + ".png", 0, false, false, 0, 0);
-			sprwidth = sprite_get_width(sprite);
-			sprheight = sprite_get_height(sprite);
-			array_push(global.SpriteWidths, sprwidth);
-			array_push(global.SpriteHeights, sprheight);
-			array_push(global.SpriteOriginX, yyfile.sequence.xorigin);
-			array_push(global.SpriteOriginY, yyfile.sequence.yorigin);
-			sprite_delete(sprite);
-			
-			 
+		if (global.copysprite)
 			file_copy(filename_dir(global.selected_yyp) + "\\sprites\\" + yyfile.name + "\\" + frame_name + ".png", spriteoutput + frame_name + ".png");
-		}
+
+		var sprite = sprite_add(filename_dir(global.selected_yyp) + "\\sprites\\" + yyfile.name + "\\" + frame_name + ".png", 0, false, false, 0, 0);
+		sprwidth = sprite_get_width(sprite);
+		sprheight = sprite_get_height(sprite);
+		array_push(global.SpriteWidths, sprwidth);
+		array_push(global.SpriteHeights, sprheight);
+		array_push(global.SpriteOriginX, yyfile.sequence.xorigin);
+		array_push(global.SpriteOriginY, yyfile.sequence.yorigin);
+		sprite_delete(sprite);
 		
 		if (global.export_mode == "3DSX" || global.export_mode == "CIA")
 			file_text_write_string(t3s_file, frame_name + ".png\n");

@@ -17,4 +17,3 @@
 #include <variant>
 
 #define function void
-

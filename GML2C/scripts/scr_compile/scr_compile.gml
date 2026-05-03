@@ -121,19 +121,21 @@ function scr_compile()
 			scr_compilescript();
     }
 	
+	
 	if (global.export_mode == "3DSX" || global.export_mode == "CIA")
 		file_text_close(t3s_file);
 	
 	if (global.export_mode == "GAMECUBE" || global.export_mode == "WII")
 		file_text_close(textures_dolfile);
 		
+	
 	var spriteinfoC = file_text_open_append(destination + "source\\get_spriteinfo.h");
 	var realspritewidth_array = string_replace(string_replace(global.SpriteWidths, "[", "{"), "]", "}");
 	var realspriteheight_array = string_replace(string_replace(global.SpriteHeights, "[", "{"), "]", "}");
 	
 	var realspriteoriginX_array = string_replace(string_replace(global.SpriteOriginX, "[", "{"), "]", "}");
 	var realspriteoriginY_array = string_replace(string_replace(global.SpriteOriginY, "[", "{"), "]", "}");
-
+	
 	file_text_write_string(spriteinfoC, "static int SpriteWidths[] = " + string(realspritewidth_array) + ";\n");
 	file_text_write_string(spriteinfoC, "static int SpriteHeights[] = " + string(realspriteheight_array) + ";\n");
 	file_text_write_string(spriteinfoC, "static int SpriteOriginX[] = " + string(realspriteoriginX_array) + ";\n");
@@ -146,9 +148,9 @@ function scr_compile()
 	//finsih!!!
 	logging = true;
 	global.exporting = false;
-	
+
 	if (!global.copysprite && (global.export_mode == "3DSX" || global.export_mode == "CIA"))
-		file_delete(t3s_path);
+		file_delete(destination + "\\gfx\\" + "sprites.t3s");
 
 	scr_compilecommand();
 }
