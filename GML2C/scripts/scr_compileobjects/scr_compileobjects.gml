@@ -29,14 +29,16 @@ function scr_compileobjects(){
     var create_code = "";
     var step_code = "";
 	var draw_code = "";
-          
+    
+	init_builtin_variables(spr_name);
+	
 	if (global.copycode == true){
 	    if (file_exists(createpath)) {
 	        var createinside_buffer = buffer_load(createpath);
 			if (buffer_get_size(createinside_buffer) > 0)
 				create_code = buffer_read(createinside_buffer, buffer_string);
 	        buffer_delete(createinside_buffer);
-			create_code = syntax_convert(create_code);
+			create_code = syntax_convert(create_code, safe_name);
 		
 	        show_debug_message(create_code);
 
@@ -47,7 +49,7 @@ function scr_compileobjects(){
 			if (buffer_get_size(createinside_buffer) > 0)
 				step_code = buffer_read(createinside_buffer, buffer_string);
 	        buffer_delete(createinside_buffer);
-			step_code = syntax_convert(step_code);
+			step_code = syntax_convert(step_code, safe_name);
 			
 	        show_debug_message(step_code);
 	    }
@@ -57,7 +59,7 @@ function scr_compileobjects(){
 			if (buffer_get_size(createinside_buffer) > 0)
 				draw_code = buffer_read(createinside_buffer, buffer_string);
 	        buffer_delete(createinside_buffer);
-			draw_code = syntax_convert(draw_code);
+			draw_code = syntax_convert(draw_code, safe_name);
 		
 	        show_debug_message(draw_code);
 	    }

@@ -44,7 +44,7 @@ function get_variables(caught, code){
 				continue;
 
 
-			write += "std::variant<const char*, float, int> " + variablename + ";\n";
+			write += "std::variant<const char*, float, bool, int> " + variablename + ";\n";
 			array_push(caught, variablename);
 			//show_message(variablename)
 		}

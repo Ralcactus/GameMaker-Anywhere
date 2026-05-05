@@ -53,19 +53,10 @@ function init_builtin_variables(spr_name){
 }
 
 function scr_write_builtinvariables(file){
-	//handle the saved variable
-	for (var i = 0; i < array_length(var_names); i++){
-		var vn = var_names[i];
-		var vd = var_defaults[i];
-		file_text_write_string(file, "static float saved_" + vn + "[8] = {" + vd + "};\n");
-	}
-	
 	//handle the real variable
 	for (var i = 0; i < array_length(var_names); i++)
-		file_text_write_string(file, "static float " + var_names[i] + " = " + var_defaults[i] + ";\n");
+		file_text_write_string(file, "std::variant<const char*, bool, float, int> " + var_names[i] + " = " + var_defaults[i] + ";\n");
 }
-
-
 
 function add_variable(name, value){
 	array_push(var_names, name);
