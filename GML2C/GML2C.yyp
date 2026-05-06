@@ -65,8 +65,6 @@
     {"$GMIncludedFile":"","%Name":"input.h","CopyToMask":-1,"filePath":"datafiles/Runner/source/gm_funcs","name":"input.h","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"misc.cpp","CopyToMask":-1,"filePath":"datafiles/Runner/source/gm_funcs","name":"misc.cpp","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"misc.h","CopyToMask":-1,"filePath":"datafiles/Runner/source/gm_funcs","name":"misc.h","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
-    {"$GMIncludedFile":"","%Name":"gm_vars.cpp","CopyToMask":-1,"filePath":"datafiles/Runner/source","name":"gm_vars.cpp","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
-    {"$GMIncludedFile":"","%Name":"gm_vars.h","CopyToMask":-1,"filePath":"datafiles/Runner/source","name":"gm_vars.h","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"structs.h","CopyToMask":-1,"filePath":"datafiles/Runner/source/gml","name":"structs.h","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"main.cpp","CopyToMask":-1,"filePath":"datafiles/Runner/source","name":"main.cpp","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"room_handler.cpp","CopyToMask":-1,"filePath":"datafiles/Runner/source","name":"room_handler.cpp","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
