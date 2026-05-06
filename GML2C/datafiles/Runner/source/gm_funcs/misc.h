@@ -69,6 +69,13 @@ enum AudioLFOType{
     #define os_type os_unknown //tf are you running?
 #endif
 
+#ifdef __3DS__
+    #define LoopOS aptMainLoop()
+#elif defined(__gamecube__) || defined(__wii__)
+    #define LoopOS SYS_MainLoop()
+#endif
+
+
 //camera_ funcs
 void camera_set_view_pos(int viewID, float _x, float _y);
 float camera_get_view_width(int viewID);

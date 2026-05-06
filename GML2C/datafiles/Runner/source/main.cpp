@@ -60,11 +60,7 @@ int main(){
     printf("Hello World!\n");
 
     //main loop
-    #ifdef __3DS__
-    while (aptMainLoop()){
-    #elif defined(__gamecube__) || defined(__wii__)
-    while (SYS_MainLoop()){
-    #endif
+    while (LoopOS){
         #ifdef __3DS__
             scr_startframe(top);
             
