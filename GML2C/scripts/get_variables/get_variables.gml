@@ -1,6 +1,4 @@
-function get_variables(caught, code){
-	var write = "";
-	
+function scr_write_customvariables(code){
 	for (var i = 1; i < string_length(code); i += 1){
 		var cursor = string_char_at(code, i);
 		
@@ -40,17 +38,13 @@ function get_variables(caught, code){
 				variablename += string_char_at(code, j);
 			}
 			
-			if (array_contains(caught, variablename))
+			if (array_contains(var_names, variablename))
 				continue;
 
-
-			write += "std::variant<const char*, float, bool, int> " + variablename + ";\n";
-			array_push(caught, variablename);
+			add_variable(variablename, "-4");
 			//show_message(variablename)
 		}
 	}
-	
-	return write;
 }
 
 function valid_variablename(letter){

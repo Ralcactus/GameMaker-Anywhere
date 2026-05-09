@@ -52,7 +52,7 @@ function init_builtin_variables(spr_name){
 
 }
 
-function scr_write_builtinvariables(file){
+function scr_write_variables(file){
 	//handle the real variable
 	for (var i = 0; i < array_length(var_names); i++)
 		file_text_write_string(file, "GMvar " + var_names[i] + " = " + var_defaults[i] + ";\n");

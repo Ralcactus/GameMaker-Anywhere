@@ -29,9 +29,7 @@ function scr_compileobjects(){
     var create_code = "";
     var step_code = "";
 	var draw_code = "";
-    
-	init_builtin_variables(spr_name);
-	
+
 	if (global.copycode == true){
 	    if (file_exists(createpath)) {
 	        var createinside_buffer = buffer_load(createpath);
@@ -64,6 +62,11 @@ function scr_compileobjects(){
 	        show_debug_message(draw_code);
 	    }
 	}
+	
+	init_builtin_variables(spr_name);
+	scr_write_customvariables(create_code);
+	scr_write_customvariables(step_code);
+	scr_write_customvariables(draw_code);
 	
     array_push(all_objects, {
         name: yyfile.name,

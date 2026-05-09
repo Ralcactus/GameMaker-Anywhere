@@ -1,24 +1,24 @@
 //move up
 if (gamepad_button_check(0, gp_padu)){
-	y -= 4;
+	vsp = -4;
 	sprite_index = spr_ralsei_up;
 }
 
 //move down
 if (gamepad_button_check(0, gp_padd)){
-	y += 4;
+	vsp = 4;
 	sprite_index = spr_ralsei_down;
 }
 
 //move right
 if (gamepad_button_check(0, gp_padr)){
-	x += 4;
+	hsp = 4;
 	sprite_index = spr_ralsei_right;
 }
 
 //move left
 if (gamepad_button_check(0, gp_padl)){
-	x -= 4;
+	hsp = -4;
 	sprite_index = spr_ralsei_left;
 }
 
@@ -27,5 +27,19 @@ if (gamepad_button_check_pressed(0, gp_face2)){
 	room_goto(Room2);
 }
 
+x += hsp;
+y += vsp;
+if (hsp > 0)
+	hsp-=0.1;
+	
+if (hsp < 0)
+	hsp+=0.1;
+	
+if (vsp > 0)
+	vsp-=0.1;
+	
+if (vsp < 0)
+	vsp+=0.1;
+	
 //camera
 camera_set_view_pos(view_camera[0], x-camera_get_view_width(view_camera[0])/2,y-camera_get_view_height(view_camera[0])/2);

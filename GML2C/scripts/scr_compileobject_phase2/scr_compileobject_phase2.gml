@@ -25,7 +25,6 @@ function scr_compileobject_phase2(spr_name, create_code, step_code, draw_code){
 	for (var i = 0; i < array_length(var_names); i += 1)
 		file_text_write_string(file, "#define " + var_names[i] + " " + safe_name + "_variableholder." + string(var_names[i]) + "\n");
 	
-	
 	#region EVENTS
 	//create
 	file_text_write_string(file, "void " + safe_name + "_create() {\n");
@@ -82,7 +81,9 @@ function scr_compileobject_phase2(spr_name, create_code, step_code, draw_code){
 	
 	//define variables
 	file_text_write_string(variable_handler, "struct {\n");
-	scr_write_builtinvariables(variable_handler);
+	
+	scr_write_variables(variable_handler);
+	
 	file_text_write_string(variable_handler, "}" + safe_name + "_variableholder; \n");
 	file_text_close(variable_handler);
 }
