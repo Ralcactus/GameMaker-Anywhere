@@ -79,11 +79,10 @@ function scr_compileobject_phase2(spr_name, create_code, step_code, draw_code){
 
 	
 	var variable_handler = file_text_open_append(destination + "source\\variable_handler.h");
+	
 	//define variables
 	file_text_write_string(variable_handler, "struct {\n");
-	
 	scr_write_builtinvariables(variable_handler);
-	
 	file_text_write_string(variable_handler, "}" + safe_name + "_variableholder; \n");
 	file_text_close(variable_handler);
 }
