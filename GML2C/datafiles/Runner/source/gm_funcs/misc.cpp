@@ -129,10 +129,6 @@ void show_debug_message(const char* message){
     printf("%s\n", message);
 }
 
-float lerp(float value, float to_goto, float speed){
-    return value + speed * (to_goto - value);
-}
-
 float clamp(float value, float min, float max){
     if (value < min)
         return min;
@@ -176,6 +172,11 @@ float sign(float number){
 
         if (abort)
             game_end();
+    }
+
+    //wii and gamecube already have these lol
+    float lerp(float value, float to_goto, float speed){
+        return value + speed * (to_goto - value);
     }
 #endif
 

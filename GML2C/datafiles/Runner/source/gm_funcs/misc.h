@@ -116,5 +116,9 @@ char* string(float value);
 void show_debug_message(const char* message);
 void show_error(const char* message, bool abort);
 float clamp(float value, float min, float max);
-float lerp(float value, float to_goto, float speed);
 float sign(float number);
+
+#if __3DS__
+    //wii and gamecube already have this lol
+    float lerp(float value, float to_goto, float speed);
+#endif
