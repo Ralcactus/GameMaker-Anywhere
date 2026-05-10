@@ -17,13 +17,16 @@ function scr_compileobject_phase2(spr_name, create_code, step_code, draw_code){
 	file_text_write_string(file, "#include \"../custom_funcs/customfuncs.h\"\n");
 	file_text_write_string(file, "#include \"../get_spriteinfo.h\"\n");
 	file_text_write_string(file, "#include \"../variable_handler.h\"\n");
-	file_text_write_string(file, "#include <variant>\n\n");
+	file_text_write_string(file, "#include <variant>\n");
+	file_text_write_string(file, "#include <vector>\n\n");
+	file_text_write_string(file, "std::vector<" + safe_name + "_variableholder> vector_" + safe_name + ";\n");
+	file_text_write_string(file, "static " + safe_name + "_variableholder* self; \n");
 	file_text_write_string(file, "static bool initialized[8] = {false};\n");
 	file_text_write_string(file, "static int " + safe_name + "_call_index = 0;\n");
 	file_text_write_string(file, "static int objectid_collided = 0;\n");
 		
 	for (var i = 0; i < array_length(var_names); i += 1)
-		file_text_write_string(file, "#define " + var_names[i] + " " + safe_name + "_variableholder." + string(var_names[i]) + "\n");
+		file_text_write_string(file, "#define " + var_names[i] + " " + "self->" + string(var_names[i]) + "\n");
 	
 	#region EVENTS
 	//create
@@ -44,12 +47,23 @@ function scr_compileobject_phase2(spr_name, create_code, step_code, draw_code){
 	#endregion
 	
 	//pre-create 
+	file_text_write_string(file, "#undef x\n");
+	file_text_write_string(file, "#undef y\n");
+	file_text_write_string(file, "#undef image_xscale\n");
+	file_text_write_string(file, "#undef image_yscale\n");
+	file_text_write_string(file, "#undef id\n");
+	
 	file_text_write_string(file, "void " + safe_name + "_precreate(float NEWX, float NEWY, float NEWXSCALE, float NEWYSCALE, float NEWID) {\n");
-	file_text_write_string(file, "x = NEWX;\n");
-	file_text_write_string(file, "y = NEWY;\n");
-	file_text_write_string(file, "image_xscale = NEWXSCALE;\n");
-	file_text_write_string(file, "image_yscale = NEWYSCALE;\n");
-	file_text_write_string(file, "id = NEWID;\n");
+	file_text_write_string(file, safe_name + "_variableholder inst;\n");
+	file_text_write_string(file, "inst.x = NEWX;\n");
+	file_text_write_string(file, "inst.y = NEWY;\n");
+	file_text_write_string(file, "inst.image_xscale = NEWXSCALE;\n");
+	file_text_write_string(file, "inst.image_yscale = NEWYSCALE;\n");
+	file_text_write_string(file, "inst.id = NEWID;\n");
+	file_text_write_string(file, "inst.is_objInited = true;\n");
+	file_text_write_string(file, "vector_" + safe_name + ".push_back(inst);\n");
+	file_text_write_string(file, "self = &vector_" + safe_name + ".back();\n");
+	file_text_write_string(file, safe_name + "_create();\n");
 	file_text_write_string(file, "}\n\n");
 	
 	//reset frame
@@ -62,16 +76,18 @@ function scr_compileobject_phase2(spr_name, create_code, step_code, draw_code){
 	
 	//RUN THE EVENTS
 	file_text_write_string(file, "	//printf(\"RUNNING OBJECT: " + safe_name + "\\n\");\n");
-	file_text_write_string(file, "	int i = " + safe_name + "_call_index++;\n\n");
-	file_text_write_string(file, "	if (!initialized[i]){\n");
-	file_text_write_string(file, "		initialized[i] = true;\n");
-	file_text_write_string(file, "		" + safe_name + "_precreate(NEWX, NEWY, NEWXSCALE, NEWYSCALE, NEWID);\n");
-	file_text_write_string(file, "		" + safe_name + "_create();\n");
+	file_text_write_string(file, "	//int i = " + safe_name + "_call_index++;\n\n");
+	file_text_write_string(file, "	for(size_t j = 0; j < vector_" + safe_name + ".size(); j++){\n");
+	file_text_write_string(file, "		self = &vector_" + safe_name + "[j];\n");
+	file_text_write_string(file, "		if (!self->is_objInited){\n");
+	file_text_write_string(file, "			//self->is_objInited = true;\n");
+	file_text_write_string(file, "			" + safe_name + "_precreate(NEWX, NEWY, NEWXSCALE, NEWYSCALE, NEWID);\n");
+	file_text_write_string(file, "			//" + safe_name + "_create();\n");
 	
+	file_text_write_string(file, "		}");
+	file_text_write_string(file, "		" + safe_name + "_step();\n");
+	file_text_write_string(file, "		" + safe_name + "_draw();\n\n");
 	file_text_write_string(file, "	}");
-	
-	file_text_write_string(file, "	" + safe_name + "_step();\n");
-	file_text_write_string(file, "	" + safe_name + "_draw();\n\n");
 
 	file_text_write_string(file, "}\n\n");
 	file_text_close(file);
@@ -80,10 +96,12 @@ function scr_compileobject_phase2(spr_name, create_code, step_code, draw_code){
 	var variable_handler = file_text_open_append(destination + "source\\variable_handler.h");
 	
 	//define variables
-	file_text_write_string(variable_handler, "struct {\n");
+	file_text_write_string(variable_handler, "struct " + safe_name + "_variableholder {\n");
+	file_text_write_string(variable_handler, "bool is_objInited = false;\n");
 	
 	scr_write_variables(variable_handler);
 	
-	file_text_write_string(variable_handler, "}" + safe_name + "_variableholder; \n");
+	file_text_write_string(variable_handler, "};\n");
+	file_text_write_string(variable_handler, "extern std::vector<" + safe_name + "_variableholder> vector_" + safe_name + ";\n");
 	file_text_close(variable_handler);
 }

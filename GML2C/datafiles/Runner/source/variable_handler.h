@@ -1,3 +1,8 @@
+#include <vector>
+#include <variant>
+
+#pragma once
+
 struct GMvar{
     std::variant<const char*, bool, float, int> value;
 

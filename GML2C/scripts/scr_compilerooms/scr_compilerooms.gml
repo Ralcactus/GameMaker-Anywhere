@@ -103,8 +103,8 @@ function scr_compilerooms(i, yyp_json){
 
 		    file_text_write_string(file,
 		    "static GMLayerBackground " + cname + " = {\n" +
-		    "    .sprite = " + (_layer.background.sprite != "" ? "(GMSprite *)" + sanitize_filename(_layer.background.sprite) : "NULL") + ",\n" +
-		    "    .color = " + string(_layer.background.colour) + ",\n" +
+		    /*"    .sprite = " +*/ (_layer.background.sprite != "" ? "(GMSprite *)" + sanitize_filename(_layer.background.sprite) : "NULL") + ",\n" +
+		    /*"    .color = " +*/ string(_layer.background.colour) /*+ ",\n"*/ +
 		    "};\n\n");
 		}
 	}
@@ -124,13 +124,13 @@ function scr_compilerooms(i, yyp_json){
 		            var objname = sanitize_filename(inst.object);
 
 		            file_text_write_string(file,
-		            "    { .x=" + string(inst.x) +
-		            ", .y=" + string(inst.y) +
-		            ", .rotation=" + string(inst.rotation) +
-		            ", .scaleX=" + string(inst.scaleX) +
-		            ", .scaleY=" + string(inst.scaleY) +
-		            ", .object=" + objname +
-		            ", .id=" + string(100000+object_count) +
+		            "    { " /*+ ".x="*/ + string(inst.x) +
+		            ", " /*+ ".y="*/ + string(inst.y) +
+		            ", " /*+ ".rotation="*/ + string(inst.rotation) +
+		            ", " /*+ ".scaleX="*/ + string(inst.scaleX) +
+		            ", " /*+ ".scaleY="*/ + string(inst.scaleY) +
+		            ", " /*+ ".object="*/ + objname +
+		            ", " /*+ ".id="*/ + string(100000+object_count) +
 		            " },\n");
 					
 					object_count++;
@@ -144,8 +144,8 @@ function scr_compilerooms(i, yyp_json){
 
 		    file_text_write_string(file,
 		    "static GMLayerInstance " + cname + " = {\n" +
-		    "    .instances = " + cname + "_data,\n" +
-		    "    .instanceCount = " + string(count) + "\n" +
+		    /*"    .instances = " +*/ cname + "_data,\n" +
+		    /*"    .instanceCount = " +*/ string(count) + "\n" +
 		    "};\n\n");
 		}
 	}
@@ -164,12 +164,12 @@ function scr_compilerooms(i, yyp_json){
 		            var asset = _layer.assets[j];
 
 		            file_text_write_string(file,
-		            "    { .x=" + string(asset.x) +
-		            ", .y=" + string(asset.y) +
-		            ", .rotation=" + string(asset.rotation) +
-		            ", .scaleX=" + string(asset.scaleX) +
-		            ", .scaleY=" + string(asset.scaleY) +
-		            ", .sprite=" + sanitize_filename(asset.sprite) +
+		            "    { " /*+ ".x="*/ + string(asset.x) +
+		            ", " /*+ ".y="*/ + string(asset.y) +
+		            ", " /*+ ".rotation="*/ + string(asset.rotation) +
+		            ", " /*+ ".scaleX="*/ + string(asset.scaleX) +
+		            ", " /*+ ".scaleY="*/ + string(asset.scaleY) +
+		            ", " /*+ ".sprite="*/ + sanitize_filename(asset.sprite) +
 		            " },\n");
 		        }
 		    }
@@ -180,8 +180,8 @@ function scr_compilerooms(i, yyp_json){
 
 		    file_text_write_string(file,
 		    "static GMLayerAsset " + cname + " = {\n" +
-		    "    .assets = " + cname + "_data,\n" +
-		    "    .assetCount = " + string(count) + "\n" +
+		    /*"    .assets = " +*/ cname + "_data,\n" +
+		    /*"    .assetCount = " +*/ string(count) + "\n" +
 		    "};\n\n");
 		}
 	}
@@ -228,34 +228,37 @@ function scr_compilerooms(i, yyp_json){
 
 	//Write array
 	file_text_write_string(file, "static GMViewPorts " + view_array_name + "[] = {\n");
+	var coma = ",";
 
 	for (var k = 0; k < view_count; k++) {
 		var v = yyfile.views[k];
 
 		//Safe object reference
-		var objref = "NULL";
+		var objref = "0";
 		if (variable_struct_exists(v, "objectId") && is_struct(v.objectId) && variable_struct_exists(v.objectId, "name")) {
 			objref = sanitize_filename(v.objectId.name);
 		}
+		
+		if(k == view_count - 1) coma = "";
 
 		file_text_write_string(file,
 		"    {\n" +
-		"        .camXPos=" + string(v.xview) + ",\n" +
-		"        .camYPos=" + string(v.yview) + ",\n" +
-		"        .camWidth=" + string(v.wview) + ",\n" +
-		"        .camHeight=" + string(v.hview) + ",\n" +
-		"        .viewXPos=" + string(v.xport) + ",\n" +
-		"        .viewYPos=" + string(v.yport) + ",\n" +
-		"        .viewWidth=" + string(v.wport) + ",\n" +
-		"        .viewHeight=" + string(v.hport) + ",\n" +
-		"        .objFHBorder=" + string(v.hborder) + ",\n" +
-		"        .objFVBorder=" + string(v.vborder) + ",\n" +
-		"        .hSpd=" + string(v.hspeed) + ",\n" +
-		"        .vSpd=" + string(v.vspeed) + ",\n" +
-		"        .inherit=" + string(v.inherit) + ",\n" +
-		"        .visible=" + string(v.visible) + ",\n" +
-		"        .object=" + objref + "\n" +
-		"    },\n");
+		/*"        .camXPos=" +*/ string(v.xview) + ",\n" +
+		/*"        .camYPos=" +*/ string(v.yview) + ",\n" +
+		/*"        .camWidth=" +*/ string(v.wview) + ",\n" +
+		/*"        .camHeight=" +*/ string(v.hview) + ",\n" +
+		/*"        .viewXPos=" +*/ string(v.xport) + ",\n" +
+		/*"        .viewYPos=" +*/ string(v.yport) + ",\n" +
+		/*"        .viewWidth=" +*/ string(v.wport) + ",\n" +
+		/*"        .viewHeight=" +*/ string(v.hport) + ",\n" +
+		/*"        .objFHBorder=" +*/ string(v.hborder) + ",\n" +
+		/*"        .objFVBorder=" +*/ string(v.vborder) + ",\n" +
+		/*"        .hSpd=" +*/ string(v.hspeed) + ",\n" +
+		/*"        .vSpd=" +*/ string(v.vspeed) + ",\n" +
+		/*"        .inherit=" +*/ string(v.inherit) + ",\n" +
+		/*"        .visible=" +*/ string(v.visible) + ",\n" +
+		/*"        .object=" +*/ objref + "\n" +
+		"    }" + coma + "\n");
 	}
 
 	file_text_write_string(file, "};\n\n");
@@ -286,25 +289,25 @@ function scr_compilerooms(i, yyp_json){
 	//WRITE ROOM STRUCT
 	file_text_write_string(file,
 	"GMRoom " + safe_name + " = {\n" +
-	"    .id = " + string(i) + ",\n" +
-	"    .name = \"" + yyfile.name + "\",\n" +
-	"    .width = " + string(yyfile.roomSettings.Width) + ",\n" +
-	"    .height = " + string(yyfile.roomSettings.Height) + ",\n" +
-	"    .persistent = " + string(yyfile.roomSettings.persistent) + ",\n" +
-	"    .inheritRmSettings = " + string(yyfile.roomSettings.inheritRoomSettings) + ",\n" +
-	"    .enableViews = " + string(yyfile.viewSettings.enableViews) + ",\n" +
-	"    .clearDisplayBuffer = " + string(yyfile.viewSettings.clearDisplayBuffer) + ",\n" +
-	"    .clearViewBackground = " + string(yyfile.viewSettings.clearViewBackground) + ",\n" +
-	"    .inheritViewSettings = " + string(yyfile.viewSettings.inheritViewSettings) + ",\n" +
-	"    .views = " + view_array_name + ",\n" +
-	"    .viewCount = " + string(view_count) + ",\n" +
-	"    .inheritPhySettings = " + string(yyfile.physicsSettings.inheritPhysicsSettings) + ",\n" +
-	"    .phyEnabled = " + string(yyfile.physicsSettings.PhysicsWorld) + ",\n" +
-	"    .gravX = " + string(yyfile.physicsSettings.PhysicsWorldGravityX) + ",\n" +
-	"    .gravY = " + string(yyfile.physicsSettings.PhysicsWorldGravityY) + ",\n" +
-	"    .pix2met = " + string(yyfile.physicsSettings.PhysicsWorldPixToMetres) + ",\n" +
-	"    .layers = " + safe_name + "_layers,\n" +
-	"    .layerCount = sizeof(" + safe_name + "_layers) / sizeof(GMLayer)\n" +
+	/*"    .id = " +*/ string(i) + ",\n" +
+	/*"    .name = " +*/ "\"" + yyfile.name + "\",\n" +
+	/*"    .width = " +*/ string(yyfile.roomSettings.Width) + ",\n" +
+	/*"    .height = " +*/ string(yyfile.roomSettings.Height) + ",\n" +
+	/*"    .persistent = " +*/ string(yyfile.roomSettings.persistent) + ",\n" +
+	/*"    .inheritRmSettings = " +*/ string(yyfile.roomSettings.inheritRoomSettings) + ",\n" +
+	/*"    .enableViews = " +*/ string(yyfile.viewSettings.enableViews) + ",\n" +
+	/*"    .clearDisplayBuffer = " +*/ string(yyfile.viewSettings.clearDisplayBuffer) + ",\n" +
+	/*"    .clearViewBackground = " +*/ string(yyfile.viewSettings.clearViewBackground) + ",\n" +
+	/*"    .inheritViewSettings = " +*/ string(yyfile.viewSettings.inheritViewSettings) + ",\n" +
+	/*"    .views = " +*/ view_array_name + ",\n" +
+	/*"    .viewCount = " +*/ string(view_count) + ",\n" +
+	/*"    .inheritPhySettings = " +*/ string(yyfile.physicsSettings.inheritPhysicsSettings) + ",\n" +
+	/*"    .phyEnabled = " +*/ string(yyfile.physicsSettings.PhysicsWorld) + ",\n" +
+	/*"    .gravX = " +*/ string(yyfile.physicsSettings.PhysicsWorldGravityX) + ",\n" +
+	/*"    .gravY = " +*/ string(yyfile.physicsSettings.PhysicsWorldGravityY) + ",\n" +
+	/*"    .pix2met = " +*/ string(yyfile.physicsSettings.PhysicsWorldPixToMetres) + ",\n" +
+	/*"    .layers = " +*/ safe_name + "_layers,\n" +
+	/*"    .layerCount = " +*/ "sizeof(" + safe_name + "_layers) / sizeof(GMLayer)\n" +
 	"};\n");
 	file_text_close(file);
 

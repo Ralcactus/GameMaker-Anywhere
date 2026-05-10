@@ -8,16 +8,6 @@ typedef enum {
     VAR_CHAR
 } VarType;
 
-// THIS MIGHT BE SCRAPPED IF THE CHAR TO FLOAT IDEA WORKS
-typedef struct{
-    VarType type;
-    union{
-        float f; //Number
-        char* s; //String
-        char c; //Char
-    };
-} GMVar;
-
 enum CollisionTypes{
     AUTOMATIC,
     FULL_IMAGE,
@@ -128,7 +118,7 @@ typedef struct{
 
     bool inherit, visible;
 
-    Object* object;
+    int object;
 } GMViewPorts;
 
 typedef struct{
