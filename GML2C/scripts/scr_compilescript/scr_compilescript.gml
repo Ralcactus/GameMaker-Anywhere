@@ -16,7 +16,16 @@ function scr_compilescript(){
 		var bracket_open  = string_pos_ext("(", gml_code, pos);
 		var bracket_close = string_pos_ext(")", gml_code, bracket_open);
         
-		if (bracket_open > 0 && bracket_close > 0) {
+		var prev_char = "";
+		var next_char = "";
+		if (pos > 1){
+			prev_char = string_copy(gml_code, pos-1, 1);
+			next_char = string_copy(gml_code, pos+1, 1);
+		}
+		var prev_valid = !isAlpha(prev_char) && !isDigit(prev_char) && prev_char != "_";
+		var next_valid = !isAlpha(next_char) && !isDigit(next_char) && next_char != "_";
+		
+		if (bracket_open > 0 && bracket_close > 0 && prev_valid && next_valid){
 			var sig = string_copy(gml_code, pos, (bracket_close - pos)+1);
 			file_text_write_string(customfuncsH, sig + ";\n");
 		}
