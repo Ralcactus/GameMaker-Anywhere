@@ -1,4 +1,7 @@
 function scr_compilescript(){
+	if (!global.copycode)
+		exit;
+	
 	show_debug_message("Script: " + yyfile.name);
 	show_debug_message(filename_dir(global.selected_yyp) + "\\scripts\\" + yyfile.name + "\\" + yyfile.name + ".gml");
 	
