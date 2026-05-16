@@ -1,4 +1,4 @@
-function scr_write_customvariables(code){
+function scr_write_customvariables(code, only_global = false){
 	for (var i = 1; i < string_length(code); i += 1){
 		var cursor = string_char_at(code, i);
 		
@@ -38,13 +38,39 @@ function scr_write_customvariables(code){
 				variablename += string_char_at(code, j);
 			}
 			
-			if (array_contains(var_names, variablename))
-				continue;
+			//check if global variable
+			var isglobalvar = false;
+			var pre = "";
+			for (var k = highlight - 7; k < highlight; k++) {
+				if (k < 1)
+					continue;
+				pre += string_char_at(code, k);
+			}
 
-			add_variable(variablename, "-4");
+			if (string_copy(pre, string_length(pre), 1) == "."){
+				if (string_copy(pre, 1, 6) == "global")
+					isglobalvar = true;
+			}
+
+			if (!isglobalvar){
+				if (array_contains(var_names, variablename))
+					continue;
+
+				add_variable(variablename, "-4");
+			}
+			else{
+				if (array_contains(globalvar_names, variablename))
+					continue;
+				
+				array_push(globalvar_names, variablename);
+			}
+			
 			//show_message(variablename)
 		}
 	}
+	
+	if (only_global == false)
+		scr_write_customvariables(code, true);
 }
 
 function valid_variablename(letter){

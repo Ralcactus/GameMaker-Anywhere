@@ -23,6 +23,7 @@ currentobject_count = -1;
 object_count = 0;
 var_names = [];
 var_defaults = [];
+globalvar_names = [];
 all_resources = [];
 all_rooms = [];
 all_sprites = [];

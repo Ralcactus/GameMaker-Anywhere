@@ -58,6 +58,12 @@ function scr_write_variables(file){
 		file_text_write_string(file, "GMvar " + var_names[i] + " = " + var_defaults[i] + ";\n");
 }
 
+function scr_write_globalvariable(file){
+	//handle the real variable
+	for (var i = 0; i < array_length(globalvar_names); i++)
+		file_text_write_string(file, "GMvar " + globalvar_names[i] + " = 0;\n");
+}
+
 function add_variable(name, value){
 	array_push(var_names, name);
 	array_push(var_defaults, value);

@@ -13,6 +13,9 @@ function scr_compilescript(){
 	
 	file_text_write_string(customfuncsCPP, gml_code + "\n");
 	
+	scr_write_customvariables(gml_code, true);
+	
+	
 	//h file
 	var pos = string_pos("function", gml_code);
 	while (pos > 0){

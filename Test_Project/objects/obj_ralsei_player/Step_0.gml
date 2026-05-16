@@ -26,7 +26,7 @@ if (gamepad_button_check_pressed(0, gp_face2)){
 	gamepad_set_vibration(0, 1, 1);
 	room_goto(Room2);
 }
-
+show_debug_message(string(global.teh));
 x += hsp;
 y += vsp;
 if (hsp > 0)

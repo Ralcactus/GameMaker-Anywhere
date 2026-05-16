@@ -4,3 +4,4 @@ y+=gamepad_axis_value(0, gp_axislv)*5;
 
 scr_blahhhh();
 scr_gehhhh();
+global.teh += 0.5;

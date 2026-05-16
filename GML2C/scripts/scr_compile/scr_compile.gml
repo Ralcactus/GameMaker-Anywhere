@@ -20,6 +20,7 @@ function scr_compileSETUP(){
     all_rooms = [];
     all_sprites = [];
     all_objects = [];
+	globalvar_names = [];
 	yyfile = noone;
 	_id = noone;
 	currentsprite_count = -1;
@@ -151,6 +152,7 @@ function scr_compile()
 	
 	scr_write_sprite_info();
 	scr_write_metadata();
+	scr_write_global_variables();
 
 	//finsih!!!
 	logging = true;
