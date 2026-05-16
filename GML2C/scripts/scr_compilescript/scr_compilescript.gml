@@ -23,7 +23,7 @@ function scr_compilescript(){
 		var next_char = "";
 		if (pos > 1){
 			prev_char = string_copy(gml_code, pos-1, 1);
-			next_char = string_copy(gml_code, pos+1, 1);
+			next_char = string_copy(gml_code, pos+8, 1);
 		}
 		var prev_valid = !isAlpha(prev_char) && !isDigit(prev_char) && prev_char != "_";
 		var next_valid = !isAlpha(next_char) && !isDigit(next_char) && next_char != "_";
@@ -33,7 +33,7 @@ function scr_compilescript(){
 			file_text_write_string(customfuncsH, sig + ";\n");
 		}
 
-		pos = string_pos_ext("function", gml_code, pos + 1);
+		pos = string_pos_ext("function", gml_code, pos + 8);
 	}
 	
 	file_text_close(customfuncsCPP);
