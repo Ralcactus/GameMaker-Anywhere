@@ -2,18 +2,18 @@
 
 #3DS
 3dsx cia:
-	$(MAKE) -f platform/3ds/Makefile $@
+	$(MAKE) -f platform/3ds/makefile $@
 
 #Gamecube
 gamecube GameCube Gamecube NGC GCN:
-	$(MAKE) -f platform/gamecube/Makefile
+	$(MAKE) -f platform/gamecube/makefile
 
 #Wii
 wii Wii WII:
-	$(MAKE) -f platform/wii/Makefile
+	$(MAKE) -f platform/wii/makefile
 
 clean:
-	$(MAKE) -f platform/3ds/Makefile clean
-	$(MAKE) -f platform/wiiu/Makefile clean
-	$(MAKE) -f platform/gamecube/Makefile clean
-	$(MAKE) -f platform/wii/Makefile clean
+	$(MAKE) -f platform/3ds/makefile clean
+	$(MAKE) -f platform/wiiu/makefile clean
+	$(MAKE) -f platform/gamecube/makefile clean
+	$(MAKE) -f platform/wii/makefile clean

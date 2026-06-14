@@ -1,6 +1,6 @@
 function scr_compileobjects(){
 	var safe_name = sanitize_filename(yyfile.name);
-	var file = file_text_open_write(destination + "source\\objects\\" + safe_name + ".cpp");
+	var file = file_text_open_write(destination + "source/objects/" + safe_name + ".cpp");
     show_debug_message("Object: " + yyfile.name);
     var spr_name = "";
             
@@ -80,7 +80,7 @@ function scr_compileobjects(){
 	
 	scr_compileobject_phase2(spr_name, create_code, step_code, draw_code);
 	
-	var spriteidh = file_text_open_append(destination + "source\\sprite_toid.h");
+	var spriteidh = file_text_open_append(destination + "source/sprite_toid.h");
 	file_text_write_string(spriteidh, "#define " + yyfile.name + " " + string(currentobject_count*-1) + "\n");
 	file_text_close(spriteidh);
 	

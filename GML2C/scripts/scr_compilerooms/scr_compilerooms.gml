@@ -1,6 +1,6 @@
 function scr_compilerooms(i, yyp_json){
 	var safe_name = sanitize_filename(yyfile.name);
-	var filepath = destination + "source\\rooms\\" + safe_name + ".cpp";
+	var filepath = destination + "source/rooms/" + safe_name + ".cpp";
 	var file = file_text_open_write(filepath);
 
 	show_debug_message("Generating ROOM: " + yyfile.name);
@@ -39,6 +39,7 @@ function scr_compilerooms(i, yyp_json){
 		        }
 		    }
 		}
+		show_debug_message("Packed layer: " + _layer.resourceType);
 
 		// Asset layer
 		if (_layer.resourceType == "GMRAssetLayer") {
@@ -60,7 +61,7 @@ function scr_compilerooms(i, yyp_json){
                 }
             }
         }
-
+		show_debug_message("asset layer: " + _layer.resourceType);
 		// Background layer
 		if (_layer.resourceType == "GMRBackgroundLayer") {
 		    layer_out.background = {
@@ -80,6 +81,7 @@ function scr_compilerooms(i, yyp_json){
 		viewport0_width: yyfile.views[0].wview,
 		viewport0_height: yyfile.views[0].hview,
         layers: packed_layers
+
     });
 
 	// Write file header
@@ -93,7 +95,9 @@ function scr_compilerooms(i, yyp_json){
 	file_text_write_string(file, "#include \"../gm_funcs/misc.h\"\n");
 	file_text_write_string(file, "#include \"../gm_funcs/audio.h\"\n");
 	file_text_write_string(file, "#include \"../sprite_toid.h\"\n\n");
-	
+
+	show_debug_message("write file header: " + yyfile.name);
+
 	// Write bg data
 	for (var k = 0; k < array_length(packed_layers); k++) {
 		var _layer = packed_layers[k];
@@ -101,13 +105,13 @@ function scr_compilerooms(i, yyp_json){
 		if (_layer.type == "GMRBackgroundLayer" && variable_struct_exists(_layer, "background")) {
 		    var cname = safe_name + "_bg_" + string(k);
 
-		    file_text_write_string(file,
-		    "static GMLayerBackground " + cname + " = {\n" +
-		    /*"    .sprite = " +*/ (_layer.background.sprite != "" ? "(GMSprite *)" + sanitize_filename(_layer.background.sprite) : "NULL") + ",\n" +
-		    /*"    .color = " +*/ string(_layer.background.colour) /*+ ",\n"*/ +
-		    "};\n\n");
+		    file_text_write_string(file, "static GMLayerBackground " + cname + " = {\n");
+			file_text_write_string(file, (_layer.background.sprite != "" ? "(GMSprite *)" + sanitize_filename(_layer.background.sprite) : "NULL") + ",\n");
+			file_text_write_string(file, string(_layer.background.colour) + "\n");
+			file_text_write_string(file, "};\n\n");
 		}
 	}
+	show_debug_message("write bg data: " + yyfile.name);
 
 	// Write instance data
 	for (var k = 0; k < array_length(packed_layers); k++) {
@@ -123,15 +127,14 @@ function scr_compilerooms(i, yyp_json){
 		            var inst = _layer.instances[j];
 		            var objname = sanitize_filename(inst.object);
 
-		            file_text_write_string(file,
-		            "    { " /*+ ".x="*/ + string(inst.x) +
-		            ", " /*+ ".y="*/ + string(inst.y) +
-		            ", " /*+ ".rotation="*/ + string(inst.rotation) +
-		            ", " /*+ ".scaleX="*/ + string(inst.scaleX) +
-		            ", " /*+ ".scaleY="*/ + string(inst.scaleY) +
-		            ", " /*+ ".object="*/ + objname +
-		            ", " /*+ ".id="*/ + string(100000+object_count) +
-		            " },\n");
+		            file_text_write_string(file, "    { ");
+					file_text_write_string(file, string(inst.x) + ", ");
+					file_text_write_string(file, string(inst.y) + ", ");
+					file_text_write_string(file, string(inst.rotation) + ", ");
+					file_text_write_string(file, string(inst.scaleX) + ", ");
+					file_text_write_string(file, string(inst.scaleY) + ", ");
+					file_text_write_string(file, objname + ", ");
+					file_text_write_string(file, string(100000+object_count) + " },\n");
 					
 					object_count++;
 					array_push(global.ObjectIdOBJECT, inst.object);
@@ -142,13 +145,13 @@ function scr_compilerooms(i, yyp_json){
 
 		    var count = (variable_struct_exists(_layer, "instances") ? array_length(_layer.instances) : 0);
 
-		    file_text_write_string(file,
-		    "static GMLayerInstance " + cname + " = {\n" +
-		    /*"    .instances = " +*/ cname + "_data,\n" +
-		    /*"    .instanceCount = " +*/ string(count) + "\n" +
-		    "};\n\n");
+		    file_text_write_string(file, "static GMLayerInstance " + cname + " = {\n");
+			file_text_write_string(file, cname + "_data,\n");
+			file_text_write_string(file, string(count) + "\n");
+			file_text_write_string(file, "};\n\n");
 		}
 	}
+	show_debug_message("write instance data: " + yyfile.name);
 			
 	// Write asset data
 	for (var k = 0; k < array_length(packed_layers); k++) {
@@ -163,14 +166,13 @@ function scr_compilerooms(i, yyp_json){
 		        for (var j = 0; j < array_length(_layer.assets); j++) {
 		            var asset = _layer.assets[j];
 
-		            file_text_write_string(file,
-		            "    { " /*+ ".x="*/ + string(asset.x) +
-		            ", " /*+ ".y="*/ + string(asset.y) +
-		            ", " /*+ ".rotation="*/ + string(asset.rotation) +
-		            ", " /*+ ".scaleX="*/ + string(asset.scaleX) +
-		            ", " /*+ ".scaleY="*/ + string(asset.scaleY) +
-		            ", " /*+ ".sprite="*/ + sanitize_filename(asset.sprite) +
-		            " },\n");
+		            file_text_write_string(file, "    { ");
+					file_text_write_string(file, string(asset.x) + ", ");
+					file_text_write_string(file, string(asset.y) + ", ");
+					file_text_write_string(file, string(asset.rotation) + ", ");
+					file_text_write_string(file, string(asset.scaleX) + ", ");
+					file_text_write_string(file, string(asset.scaleY) + ", ");
+					file_text_write_string(file, sanitize_filename(asset.sprite) + " },\n");
 		        }
 		    }
 
@@ -178,13 +180,13 @@ function scr_compilerooms(i, yyp_json){
 
 		    var count = (variable_struct_exists(_layer, "assets") ? array_length(_layer.assets) : 0);
 
-		    file_text_write_string(file,
-		    "static GMLayerAsset " + cname + " = {\n" +
-		    /*"    .assets = " +*/ cname + "_data,\n" +
-		    /*"    .assetCount = " +*/ string(count) + "\n" +
-		    "};\n\n");
+		    file_text_write_string(file, "static GMLayerAsset " + cname + " = {\n");
+			file_text_write_string(file, cname + "_data,\n");
+			file_text_write_string(file, string(count) + "\n");
+			file_text_write_string(file, "};\n\n");
 		}
 	}
+	show_debug_message("write asset data: " + yyfile.name);
 
 	// Write layer array
 	file_text_write_string(file, "static const GMLayer " + safe_name + "_layers[] = {\n");
@@ -210,10 +212,11 @@ function scr_compilerooms(i, yyp_json){
 		    dataref = "&" + safe_name + "_asset_" + string(k);
 		}
 
-		file_text_write_string(file,
-		    "    { " + ctype + ", " + string(_layer.depth) + ", " + dataref + " },\n"
-		);
+		file_text_write_string(file, "    { " + ctype + ", ");
+		file_text_write_string(file, string(_layer.depth) + ", ");
+		file_text_write_string(file, dataref + " },\n");
 	}
+	show_debug_message("write layer array: " + yyfile.name);
 
 	file_text_write_string(file, "};\n\n");
 			
@@ -241,92 +244,78 @@ function scr_compilerooms(i, yyp_json){
 		
 		if(k == view_count - 1) coma = "";
 
-		file_text_write_string(file,
-		"    {\n" +
-		/*"        .camXPos=" +*/ string(v.xview) + ",\n" +
-		/*"        .camYPos=" +*/ string(v.yview) + ",\n" +
-		/*"        .camWidth=" +*/ string(v.wview) + ",\n" +
-		/*"        .camHeight=" +*/ string(v.hview) + ",\n" +
-		/*"        .viewXPos=" +*/ string(v.xport) + ",\n" +
-		/*"        .viewYPos=" +*/ string(v.yport) + ",\n" +
-		/*"        .viewWidth=" +*/ string(v.wport) + ",\n" +
-		/*"        .viewHeight=" +*/ string(v.hport) + ",\n" +
-		/*"        .objFHBorder=" +*/ string(v.hborder) + ",\n" +
-		/*"        .objFVBorder=" +*/ string(v.vborder) + ",\n" +
-		/*"        .hSpd=" +*/ string(v.hspeed) + ",\n" +
-		/*"        .vSpd=" +*/ string(v.vspeed) + ",\n" +
-		/*"        .inherit=" +*/ string(v.inherit) + ",\n" +
-		/*"        .visible=" +*/ string(v.visible) + ",\n" +
-		/*"        .object=" +*/ objref + "\n" +
-		"    }" + coma + "\n");
+		file_text_write_string(file, "    {\n");
+		file_text_write_string(file, string(v.xview) + ",\n");
+		file_text_write_string(file, string(v.yview) + ",\n");
+		file_text_write_string(file, string(v.wview) + ",\n");
+		file_text_write_string(file, string(v.hview) + ",\n");
+		file_text_write_string(file, string(v.xport) + ",\n");
+		file_text_write_string(file, string(v.yport) + ",\n");
+		file_text_write_string(file, string(v.wport) + ",\n");
+		file_text_write_string(file, string(v.hport) + ",\n");
+		file_text_write_string(file, string(v.hborder) + ",\n");
+		file_text_write_string(file, string(v.vborder) + ",\n");
+		file_text_write_string(file, string(v.hspeed) + ",\n");
+		file_text_write_string(file, string(v.vspeed) + ",\n");
+		file_text_write_string(file, string(v.inherit) + ",\n");
+		file_text_write_string(file, string(v.visible) + ",\n");
+		file_text_write_string(file, objref + "\n");
+		file_text_write_string(file, "    }" + coma + "\n");
 	}
+	show_debug_message("write view array: " + yyfile.name);
 
 	file_text_write_string(file, "};\n\n");
 	var firstroom = false;
 	if (yyp_json.RoomOrderNodes[0].roomId.name == safe_name){
 		firstroom = true;
 		
-		//write the first room into main.cpp
-		var mainc = file_text_open_read(destination + "source\\main.cpp");
-		var lines = [];
-		var j = 0;
+		//read main.cpp using buffer 
+		var mainc_buf = buffer_load(destination + "source/main.cpp");
+		var mainc_str = buffer_read(mainc_buf, buffer_string);
+		buffer_delete(mainc_buf);
 		
-		while (!file_text_eof(mainc))
-		    lines[j++] = file_text_readln(mainc);
-
-		lines = string_split(string_replace_all(string_join_ext("", lines), "room = -1", "room = " + safe_name), "\n");
-		file_text_close(mainc)
-
-		var mainc_write = file_text_open_write(destination + "source\\main.cpp");
-		for (var k = 0; k < array_length(lines); k++) {
-		    file_text_write_string(mainc_write, lines[k]);
-		    file_text_writeln(mainc_write);
-		}
+		mainc_str = string_replace_all(mainc_str, "room = -1", "room = " + safe_name);
 		
+		var mainc_write = file_text_open_write(destination + "source/main.cpp");
+		file_text_write_string(mainc_write, mainc_str);
 		file_text_close(mainc_write);
 	}
 
 	//WRITE ROOM STRUCT
-	file_text_write_string(file,
-	"GMRoom " + safe_name + " = {\n" +
-	/*"    .id = " +*/ string(i) + ",\n" +
-	/*"    .name = " +*/ "\"" + yyfile.name + "\",\n" +
-	/*"    .width = " +*/ string(yyfile.roomSettings.Width) + ",\n" +
-	/*"    .height = " +*/ string(yyfile.roomSettings.Height) + ",\n" +
-	/*"    .persistent = " +*/ string(yyfile.roomSettings.persistent) + ",\n" +
-	/*"    .inheritRmSettings = " +*/ string(yyfile.roomSettings.inheritRoomSettings) + ",\n" +
-	/*"    .enableViews = " +*/ string(yyfile.viewSettings.enableViews) + ",\n" +
-	/*"    .clearDisplayBuffer = " +*/ string(yyfile.viewSettings.clearDisplayBuffer) + ",\n" +
-	/*"    .clearViewBackground = " +*/ string(yyfile.viewSettings.clearViewBackground) + ",\n" +
-	/*"    .inheritViewSettings = " +*/ string(yyfile.viewSettings.inheritViewSettings) + ",\n" +
-	/*"    .views = " +*/ view_array_name + ",\n" +
-	/*"    .viewCount = " +*/ string(view_count) + ",\n" +
-	/*"    .inheritPhySettings = " +*/ string(yyfile.physicsSettings.inheritPhysicsSettings) + ",\n" +
-	/*"    .phyEnabled = " +*/ string(yyfile.physicsSettings.PhysicsWorld) + ",\n" +
-	/*"    .gravX = " +*/ string(yyfile.physicsSettings.PhysicsWorldGravityX) + ",\n" +
-	/*"    .gravY = " +*/ string(yyfile.physicsSettings.PhysicsWorldGravityY) + ",\n" +
-	/*"    .pix2met = " +*/ string(yyfile.physicsSettings.PhysicsWorldPixToMetres) + ",\n" +
-	/*"    .layers = " +*/ safe_name + "_layers,\n" +
-	/*"    .layerCount = " +*/ "sizeof(" + safe_name + "_layers) / sizeof(GMLayer)\n" +
-	"};\n");
+	file_text_write_string(file, "GMRoom " + safe_name + " = {\n");
+	file_text_write_string(file, string(i) + ",\n");
+	file_text_write_string(file, "\"" + yyfile.name + "\",\n");
+	file_text_write_string(file, string(yyfile.roomSettings.Width) + ",\n");
+	file_text_write_string(file, string(yyfile.roomSettings.Height) + ",\n");
+	file_text_write_string(file, string(yyfile.roomSettings.persistent) + ",\n");
+	file_text_write_string(file, string(yyfile.roomSettings.inheritRoomSettings) + ",\n");
+	file_text_write_string(file, string(yyfile.viewSettings.enableViews) + ",\n");
+	file_text_write_string(file, string(yyfile.viewSettings.clearDisplayBuffer) + ",\n");
+	file_text_write_string(file, string(yyfile.viewSettings.clearViewBackground) + ",\n");
+	file_text_write_string(file, string(yyfile.viewSettings.inheritViewSettings) + ",\n");
+	file_text_write_string(file, view_array_name + ",\n");
+	file_text_write_string(file, string(view_count) + ",\n");
+	file_text_write_string(file, string(yyfile.physicsSettings.inheritPhysicsSettings) + ",\n");
+	file_text_write_string(file, string(yyfile.physicsSettings.PhysicsWorld) + ",\n");
+	file_text_write_string(file, string(yyfile.physicsSettings.PhysicsWorldGravityX) + ",\n");
+	file_text_write_string(file, string(yyfile.physicsSettings.PhysicsWorldGravityY) + ",\n");
+	file_text_write_string(file, string(yyfile.physicsSettings.PhysicsWorldPixToMetres) + ",\n");
+	file_text_write_string(file, safe_name + "_layers,\n");
+	file_text_write_string(file, "sizeof(" + safe_name + "_layers) / sizeof(GMLayer)\n");
+	file_text_write_string(file, "};\n");
 	file_text_close(file);
-
+	show_debug_message("write room struct: " + yyfile.name);
 
 	//the code was getting big im putting the "run room code" in here! -Ralcactus
 	scr_compileroom_phase2(packed_layers);
+	show_debug_message("run room phase2: " + yyfile.name);
 
-
-	//add entry to room handler and include it
-	//read existing file
-	var room_handlefile = file_text_open_read(destination + "source\\room_handler.cpp");
-	var file_content = "";
-	while (!file_text_eof(room_handlefile)) {
-	    file_content += file_text_read_string(room_handlefile) + "\n";
-	    file_text_readln(room_handlefile);
-	}
-	file_text_close(room_handlefile);
-
-	var lines = string_split(file_content, "\n");
+	show_debug_message("CP: opening room_handler");
+	var _rh_buf = buffer_load(destination + "source/room_handler.cpp");
+	var _rh_str = buffer_read(_rh_buf, buffer_string);
+	buffer_delete(_rh_buf);
+	var lines = string_split(_rh_str, "\n");
+	show_debug_message("CP: lines read=" + string(array_length(lines)));
 
 	//find closing bracket
 	var insert_at = -1;
@@ -346,26 +335,23 @@ function scr_compilerooms(i, yyp_json){
 	}
 
 	//build new content
-	var new_content = "";
+	var room_handlefile_write = file_text_open_write(destination + "source/room_handler.cpp");
 	for (var j = 0; j < array_length(lines); j++) {
 	    if (j == include_insert_at) {
-	        new_content += "#include \"../rooms/" + safe_name + ".h\"\n";
+	        file_text_write_string(room_handlefile_write, "#include \"../rooms/" + safe_name + ".h\"\n");
 	    }
 	    if (j == insert_at) {
-	        new_content += "    if (room == " + yyfile.name + "){\n";
-	        new_content += "        scr_runroom_" + yyfile.name + "();\n";
-			new_content += "		return;\n";
-	        new_content += "    }\n";
+	        file_text_write_string(room_handlefile_write, "    if (room == " + yyfile.name + "){\n");
+	        file_text_write_string(room_handlefile_write, "        scr_runroom_" + yyfile.name + "();\n");
+	        file_text_write_string(room_handlefile_write, "        return;\n");
+	        file_text_write_string(room_handlefile_write, "    }\n");
 	    }
-	    new_content += lines[j] + "\n";
+	    file_text_write_string(room_handlefile_write, lines[j] + "\n");
 	}
-
-	//write back full file
-	var room_handlefile_write = file_text_open_write(destination + "source\\room_handler.cpp");
-	file_text_write_string(room_handlefile_write, new_content);
 	file_text_close(room_handlefile_write);
+	show_debug_message("write room handler: " + yyfile.name);
 	
-	var roomto_idh = file_text_open_append(destination + "source\\room_toid.h");
+	var roomto_idh = file_text_open_append(destination + "source/room_toid.h");
 	file_text_write_string(roomto_idh, "#define " + yyfile.name + " " + string(roomid_count) + "\n");
 	roomid_count += 1;
 	file_text_close(roomto_idh);

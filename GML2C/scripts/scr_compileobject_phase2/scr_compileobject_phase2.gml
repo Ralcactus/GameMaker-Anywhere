@@ -1,6 +1,6 @@
 function scr_compileobject_phase2(spr_name, create_code, step_code, draw_code){
 	var safe_name = sanitize_filename(yyfile.name);
-	var file = file_text_open_write(destination + "source\\objects\\" + safe_name + ".cpp");
+	var file = file_text_open_write(destination + "source/objects/" + safe_name + ".cpp");
 	
 	file_text_write_string(file, "// Object: " + yyfile.name + "\n\n");
 	file_text_write_string(file, "#include <stdbool.h>\n");
@@ -93,7 +93,7 @@ function scr_compileobject_phase2(spr_name, create_code, step_code, draw_code){
 	file_text_close(file);
 
 	
-	var variable_handler = file_text_open_append(destination + "source\\variable_handler.h");
+	var variable_handler = file_text_open_append(destination + "source/variable_handler.h");
 	
 	//define variables
 	file_text_write_string(variable_handler, "struct " + safe_name + "_variableholder {\n");

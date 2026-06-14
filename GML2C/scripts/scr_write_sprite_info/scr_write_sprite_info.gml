@@ -1,6 +1,6 @@
 //this needs to be cleaned up so bad, its so messy
 function scr_write_sprite_info(){
-	var spriteinfoC = file_text_open_append(destination + "source\\get_spriteinfo.cpp");
+	var spriteinfoC = file_text_open_append(destination + "source/get_spriteinfo.cpp");
 	var realspritewidth_array = string_replace(string_replace(global.SpriteWidths, "[", "{"), "]", "}");
 	var realspriteheight_array = string_replace(string_replace(global.SpriteHeights, "[", "{"), "]", "}");
 	

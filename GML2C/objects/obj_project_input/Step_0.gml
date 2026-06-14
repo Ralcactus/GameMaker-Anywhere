@@ -17,10 +17,15 @@ if (point_in_rectangle(mouse_x, mouse_y, x+sprite_width+10, y, x +sprite_width+1
 				keyboard_string = yyp;
 		
 	        //check version
-	        var yypbuffer = buffer_load(yyp);
-	        var yypdata = buffer_read(yypbuffer, buffer_string);
-	        buffer_delete(yypbuffer);
-	        var yyp_json = json_parse(yypdata);
+			
+	        var yypdata = "";
+			var yyp_file = file_text_open_read(yyp);
+			while (!file_text_eof(yyp_file))
+			{
+				yypdata += file_text_readln(yyp_file) + "\n";
+			}
+			file_text_close(yyp_file);
+			var yyp_json = json_parse(yypdata);
         
 	        //if (yyp_json.MetaData.IDEVersion != "2024.14.2.213")
 	            //show_message("WARNING!\nThis project isn't 2024.14.2.213, it may not work!");

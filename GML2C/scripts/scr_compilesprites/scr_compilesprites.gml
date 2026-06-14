@@ -12,12 +12,12 @@ function scr_compilesprites(){
 		}
 	}
 	
-	var file = file_text_open_write(destination + "source\\sprites\\" + safe_name + ".cpp");
+	var file = file_text_open_write(destination + "source/sprites/" + safe_name + ".cpp");
     show_debug_message("Sprite: " + yyfile.name);
     var spriteoutput;
 			
 	if (global.export_mode == "GAMECUBE" || global.export_mode == "WII" || global.export_mode == "CIA" || global.export_mode == "3DSX")
-		spriteoutput = destination + "\\gfx\\";
+		spriteoutput = destination + "/gfx/";
 
     var sprite_rel_dir = "sprites/" + yyfile.name + "/";
     var sprite_frames = [];
@@ -39,10 +39,10 @@ function scr_compilesprites(){
 		file_text_write_string(file,
 		"    { \"" + frame_name + "\" },\n");
          
-		if (global.copysprite)
-			file_copy(filename_dir(global.selected_yyp) + "\\sprites\\" + yyfile.name + "\\" + frame_name + ".png", spriteoutput + frame_name + ".png");
+		show_debug_message("Copying sprite frame: " + frame_name);
+		file_copy(filename_dir(global.selected_yyp) + "/sprites/" + yyfile.name + "/" + frame_name + ".png", spriteoutput + frame_name + ".png");
 
-		var sprite = sprite_add(filename_dir(global.selected_yyp) + "\\sprites\\" + yyfile.name + "\\" + frame_name + ".png", 0, false, false, 0, 0);
+		var sprite = sprite_add(filename_dir(global.selected_yyp) + "/sprites/" + yyfile.name + "/" + frame_name + ".png", 0, false, false, 0, 0);
 		sprwidth = sprite_get_width(sprite);
 		sprheight = sprite_get_height(sprite);
 		array_push(global.SpriteWidths, sprwidth);
@@ -109,7 +109,7 @@ function scr_compilesprites(){
 			
 	file_text_close(file);
             
-	var spriteidh = file_text_open_append(destination + "source\\sprite_toid.h");
+	var spriteidh = file_text_open_append(destination + "source/sprite_toid.h");
 	file_text_write_string(spriteidh, "#define " + yyfile.name + " " + string(currentsprite_count) + "\n");
 	file_text_close(spriteidh);
 	
