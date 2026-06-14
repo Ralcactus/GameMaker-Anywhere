@@ -1,11 +1,11 @@
 function scr_compileroom_phase2(packed_layers){
 	var safe_name = sanitize_filename(yyfile.name);
-	var roomhfile = file_text_open_write(destination + "source\\rooms\\" + safe_name + ".h");
+	var roomhfile = file_text_open_write(destination + "source/rooms/" + safe_name + ".h");
 	file_text_write_string(roomhfile, 
 		"void scr_runroom_" + yyfile.name +"();"
 	)
 	file_text_close(roomhfile)
-
+	show_debug_message("close file");
 
 	//i don't think this works with more then 1 asset layer!
 	var asset_layer_index = -1;
@@ -15,6 +15,7 @@ function scr_compileroom_phase2(packed_layers){
 	        break;
 	    }
 	}
+	show_debug_message("asset layer");
 	
 	//i don't think this works with more then 1 bg layer!
 	var bg_layer_index = -1;
@@ -24,6 +25,7 @@ function scr_compileroom_phase2(packed_layers){
 	        break;
 	    }
 	}
+	show_debug_message("bg layer: " + string(bg_layer_index));
 
 	var object_scripts = "";
 	var unique_objects = {};
@@ -53,6 +55,7 @@ function scr_compileroom_phase2(packed_layers){
 			}
 		}
 	}
+	show_debug_message("instance layers: " + string(object_layer_index));
 
 	var asset_layer = safe_name + "_asset_" + string(asset_layer_index);
 	var background_layer = safe_name + "_bg_" + string(bg_layer_index);
@@ -69,41 +72,28 @@ function scr_compileroom_phase2(packed_layers){
 		bg_color_applycode = "	bgcolor = " + background_layer + ".color;\n";
 	}
 	
-	
+	show_debug_message("write to room c file: " + yyfile.name);
+
 	//write to the end of the room c file
-	var roomcfile = file_text_open_append(destination + "source\\rooms\\" + safe_name + ".cpp");
-	file_text_write_string(roomcfile,
-		//got the funcs
-		"\n" + got_funcs + "\n" +
-		
-		//the actual func!
-		"void scr_runroom_" + yyfile.name +"(){\n" +
-		"	//printf(\"RUNNING ROOM " + yyfile.name + "\\n\");\n\n" +
-		
-		//draw assets
-		assetdraw_loop+
-		
-		//room sizes
-		"	if (" + yyfile.name + "_views[0].visible == 1){\n" +
-		"		view0_camWidth = " + yyfile.name + "_views[0].camWidth;\n" +
-		"		view0_camHeight = " + yyfile.name + "_views[0].camHeight;\n" +
-		"	}\n" +
-		"	else{\n" +
-		"		view0_camWidth = " + yyfile.name + ".width;\n" +
-		"		view0_camHeight = " + yyfile.name + ".height;\n" +
-		"	}\n\n" +
-		
-		//room_width/room_height
-		"	room_width = " + yyfile.name + ".width;\n" +
-		"	room_height = " + yyfile.name + ".height;\n" +
-		
-		//bg color
-		bg_color_applycode +
-		
-		//objects
-		object_scripts +
-		"}\n"
-	);
+	var roomcfile = file_text_open_append(destination + "source/rooms/" + safe_name + ".cpp");
+	//sorry for lack of comments in this chunk, but at least it doesnt crash now?
+	file_text_write_string(roomcfile, "\n" + got_funcs + "\n");
+	file_text_write_string(roomcfile, "void scr_runroom_" + yyfile.name + "(){\n");
+	file_text_write_string(roomcfile, "   //printf(\"RUNNING ROOM " + yyfile.name + "\\n\");\n\n");
+	file_text_write_string(roomcfile, assetdraw_loop);
+	file_text_write_string(roomcfile, "   if (" + yyfile.name + "_views[0].visible == 1){\n");
+	file_text_write_string(roomcfile, "       view0_camWidth = " + yyfile.name + "_views[0].camWidth;\n");
+	file_text_write_string(roomcfile, "       view0_camHeight = " + yyfile.name + "_views[0].camHeight;\n");
+	file_text_write_string(roomcfile, "   }\n   else{\n");
+	file_text_write_string(roomcfile, "       view0_camWidth = " + yyfile.name + ".width;\n");
+	file_text_write_string(roomcfile, "       view0_camHeight = " + yyfile.name + ".height;\n");
+	file_text_write_string(roomcfile, "   }\n\n");
+	file_text_write_string(roomcfile, "   room_width = " + yyfile.name + ".width;\n");
+	file_text_write_string(roomcfile, "   room_height = " + yyfile.name + ".height;\n");
+	file_text_write_string(roomcfile, bg_color_applycode);
+	file_text_write_string(roomcfile, object_scripts);
+	file_text_write_string(roomcfile, "}\n");
+	show_debug_message("close file: " + yyfile.name);
 	file_text_close(roomcfile)
-	
+		
 }

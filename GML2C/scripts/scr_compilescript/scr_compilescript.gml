@@ -3,11 +3,11 @@ function scr_compilescript(){
 		exit;
 	
 	show_debug_message("Script: " + yyfile.name);
-	show_debug_message(filename_dir(global.selected_yyp) + "\\scripts\\" + yyfile.name + "\\" + yyfile.name + ".gml");
+	show_debug_message(filename_dir(global.selected_yyp) + "/scripts/" + yyfile.name + "/" + yyfile.name + ".gml");
 	
-	var customfuncsCPP = file_text_open_append(destination + "source\\custom_funcs\\customfuncs.cpp");
-	var customfuncsH = file_text_open_append(destination + "source\\custom_funcs\\customfuncs.h");
-	var gmlfilebuffer = buffer_load(filename_dir(global.selected_yyp) + "\\scripts\\" + yyfile.name + "\\" + yyfile.name + ".gml");
+	var customfuncsCPP = file_text_open_append(destination + "source/custom_funcs/customfuncs.cpp");
+	var customfuncsH = file_text_open_append(destination + "source/custom_funcs/customfuncs.h");
+	var gmlfilebuffer = buffer_load(filename_dir(global.selected_yyp) + "/scripts/" + yyfile.name + "/" + yyfile.name + ".gml");
     var gml_code = buffer_read(gmlfilebuffer, buffer_string);
     buffer_delete(gmlfilebuffer);
 	

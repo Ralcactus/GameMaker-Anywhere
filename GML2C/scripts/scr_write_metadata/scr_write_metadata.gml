@@ -2,7 +2,7 @@ function scr_write_metadata(){
 	//3DS
 	if (global.export_mode == "3DSX" || global.export_mode == "CIA"){
 		//app info
-		var appinfo = file_text_open_write(destination + "\\resources\\AppInfo");
+		var appinfo = file_text_open_write(destination + "/resources/AppInfo");
 		file_text_write_string(appinfo, 
 		"APP_TITLE = " + global.game_name + "\n"
 		+ "APP_DESCRIPTION = " + "Created with GameMaker Anywhere!\n"
@@ -16,15 +16,15 @@ function scr_write_metadata(){
 		
 		//copy icon
 		if (global.iconpath != ""){
-			file_delete(destination + "\\resources\\icon.png")
-	        file_copy(global.iconpath, destination + "\\resources\\icon.png");
+			file_delete(destination + "/resources/icon.png")
+	        file_copy(global.iconpath, destination + "/resources/icon.png");
 		}
 	}	
 	
 	//WII
 	if (global.export_mode == "WII"){
 		//app info
-		var metadataxml = file_text_open_write(destination + "\\output\\TheGame\\meta.xml");
+		var metadataxml = file_text_open_write(destination + "/output/TheGame/meta.xml");
 		file_text_write_string(metadataxml, 
 		"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n"
 		+ "<app version=\"1\">\n"
@@ -36,7 +36,7 @@ function scr_write_metadata(){
 		+ "</app>\n");
 		file_text_close(metadataxml);
 		
-		file_copy(working_directory + "Other\\wii_icon.png", destination + "output\\TheGame\\icon.png")
+		file_copy(working_directory + "Other/wii_icon.png", destination + "output/TheGame/icon.png")
 	}
 	
 
