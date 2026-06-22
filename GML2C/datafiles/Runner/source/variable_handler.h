@@ -89,3 +89,41 @@ struct GMvar{
     bool operator<= (float o) const { return (float)*this <= o; }
     bool operator>= (float o) const { return (float)*this >= o; }
 };
+
+struct Object{
+    GMvar x = 0;
+    GMvar y = 0;
+    GMvar sprite_index = 0;
+    GMvar image_xscale = 1;
+    GMvar image_yscale = 1;
+    GMvar id = -4;
+    GMvar visible = false;
+    GMvar solid = false;
+    GMvar persistent = false;
+    GMvar depth = 0;
+    GMvar layer = -4;
+    GMvar on_ui_layer = false;
+    GMvar collision_space = -4;
+    GMvar direction = 0;
+    GMvar friction = 0;
+    GMvar gravity = 0;
+    GMvar gravity_direction = 0;
+    GMvar hspeed = 0;
+    GMvar vspeed = 0;
+    GMvar speed = 0;
+    GMvar xstart = 0;
+    GMvar ystart = 0;
+    GMvar xprevious = 0;
+    GMvar yprevious = 0;
+    GMvar object_index = 0;
+    GMvar sprite_width = 0;
+    GMvar sprite_height = 0;
+    GMvar sprite_xoffset = 0;
+    GMvar sprite_yoffset = 0;
+    GMvar image_alpha = 0;
+    GMvar image_angle = 0;
+    GMvar image_blend = 0;
+    GMvar image_index = 0;
+    GMvar image_number = 0;
+    GMvar image_speed = 0;
+};
