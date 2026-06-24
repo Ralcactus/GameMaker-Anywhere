@@ -1,5 +1,7 @@
 #include <vector>
+#include <algorithm>
 #include <variant>
+#include <cstdint>
 
 #pragma once
 
@@ -90,40 +92,99 @@ struct GMvar{
     bool operator>= (float o) const { return (float)*this >= o; }
 };
 
-struct Object{
-    GMvar x = 0;
-    GMvar y = 0;
-    GMvar sprite_index = 0;
-    GMvar image_xscale = 1;
-    GMvar image_yscale = 1;
-    GMvar id = -4;
-    GMvar visible = false;
-    GMvar solid = false;
-    GMvar persistent = false;
-    GMvar depth = 0;
-    GMvar layer = -4;
-    GMvar on_ui_layer = false;
-    GMvar collision_space = -4;
-    GMvar direction = 0;
-    GMvar friction = 0;
-    GMvar gravity = 0;
-    GMvar gravity_direction = 0;
-    GMvar hspeed = 0;
-    GMvar vspeed = 0;
-    GMvar speed = 0;
-    GMvar xstart = 0;
-    GMvar ystart = 0;
-    GMvar xprevious = 0;
-    GMvar yprevious = 0;
-    GMvar object_index = 0;
-    GMvar sprite_width = 0;
-    GMvar sprite_height = 0;
-    GMvar sprite_xoffset = 0;
-    GMvar sprite_yoffset = 0;
-    GMvar image_alpha = 0;
-    GMvar image_angle = 0;
-    GMvar image_blend = 0;
-    GMvar image_index = 0;
-    GMvar image_number = 0;
-    GMvar image_speed = 0;
+struct VarNode{
+    uint16_t vId;
+    GMvar value;
 };
+
+struct Object{
+    std::vector<VarNode> vars;
+
+    GMvar& GetVar(uint16_t index){
+
+        // find var in sorted vector using binary search
+        auto it = std::lower_bound(vars.begin(), vars.end(), index, [](const VarNode& node, uint16_t id){
+            return node.vId < id;
+        });
+
+        // var already exists
+        if (it != vars.end() && it->vId == index)
+            return it->value;
+
+        // create var while keeping vector sorted
+        it = vars.insert(it, {index, GMvar()});
+
+        return it->value;
+    }
+};
+
+inline VarNode globVar_x = {0, 0};
+#define varId_x globVar_x.vId
+inline VarNode globVar_y = {1, 0};
+#define varId_y globVar_y.vId
+inline VarNode globVar_sprite_index = {2, -1};
+#define varId_sprite_index globVar_sprite_index.vId
+inline VarNode globVar_image_xscale = {3, 1};
+#define varId_image_xscale globVar_image_xscale.vId
+inline VarNode globVar_image_yscale = {4, 1};
+#define varId_image_yscale globVar_image_yscale.vId
+inline VarNode globVar_id = {5, -4};
+#define varId_id globVar_id.vId
+inline VarNode globVar_visible = {6, false};
+#define varId_visible globVar_visible.vId
+inline VarNode globVar_solid = {7, false};
+#define varId_solid globVar_solid.vId
+inline VarNode globVar_persistent = {8, false};
+#define varId_persistent globVar_persistent.vId
+inline VarNode globVar_depth = {9, 0};
+#define varId_depth globVar_depth.vId
+inline VarNode globVar_layer = {10, -4};
+#define varId_layer globVar_layer.vId
+inline VarNode globVar_on_ui_layer = {11, false};
+#define varId_on_ui_layer globVar_on_ui_layer.vId
+inline VarNode globVar_collision_space = {12, -4};
+#define varId_collision_space globVar_collision_space.vId
+inline VarNode globVar_direction = {13, 0};
+#define varId_direction globVar_direction.vId
+inline VarNode globVar_friction = {14, 0};
+#define varId_friction globVar_friction.vId
+inline VarNode globVar_gravity = {15, 0};
+#define varId_gravity globVar_gravity.vId
+inline VarNode globVar_gravity_direction = {16, 0};
+#define varId_gravity_direction globVar_gravity_direction.vId
+inline VarNode globVar_hspeed = {17, 0};
+#define varId_hspeed globVar_hspeed.vId
+inline VarNode globVar_vspeed = {18, 0};
+#define varId_vspeed globVar_vspeed.vId
+inline VarNode globVar_speed = {19, 0};
+#define varId_speed globVar_speed.vId
+inline VarNode globVar_xstart = {20, 0};
+#define varId_xstart globVar_xstart.vId
+inline VarNode globVar_ystart = {21, 0};
+#define varId_ystart globVar_ystart.vId
+inline VarNode globVar_xprevious = {22, 0};
+#define varId_xprevious globVar_xprevious.vId
+inline VarNode globVar_yprevious = {23, 0};
+#define varId_yprevious globVar_yprevious.vId
+inline VarNode globVar_object_index = {24, 0};
+#define varId_object_index globVar_object_index.vId
+inline VarNode globVar_sprite_width = {25, 0};
+#define varId_sprite_width globVar_sprite_width.vId
+inline VarNode globVar_sprite_height = {26, 0};
+#define varId_sprite_height globVar_sprite_height.vId
+inline VarNode globVar_sprite_xoffset = {27, 0};
+#define varId_sprite_xoffset globVar_sprite_xoffset.vId
+inline VarNode globVar_sprite_yoffset = {28, 0};
+#define varId_sprite_yoffset globVar_sprite_yoffset.vId
+inline VarNode globVar_image_alpha = {29, 0};
+#define varId_image_alpha globVar_image_alpha.vId
+inline VarNode globVar_image_angle = {30, 0};
+#define varId_image_angle globVar_image_angle.vId
+inline VarNode globVar_image_blend = {31, 0};
+#define varId_image_blend globVar_image_blend.vId
+inline VarNode globVar_image_index = {32, 0};
+#define varId_image_index globVar_image_index.vId
+inline VarNode globVar_image_number = {33, 0};
+#define varId_image_number globVar_image_number.vId
+inline VarNode globVar_image_speed = {34, 0};
+#define varId_image_speed globVar_image_speed.vId

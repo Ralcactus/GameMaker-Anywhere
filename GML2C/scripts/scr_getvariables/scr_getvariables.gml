@@ -58,6 +58,18 @@ function scr_write_variables(file){
 		file_text_write_string(file, "GMvar " + var_names[i] + " = " + var_defaults[i] + ";\n");
 }
 
+function scr_write_variables_general(file){
+	//handle the real variable
+	for (var i = 0; i < array_length(general_varnames); i++){
+		if(array_contains(varname_written, general_varnames[i]))
+			continue;
+		
+		file_text_write_string(file, "inline VarNode globVar_" + general_varnames[i] + " = {" + string(i+35) + ", " + general_vardefaults[i] + "};\n");
+		file_text_write_string(file, "#define varId_" + general_varnames[i] + " globVar_" + general_varnames[i] +/* " = " + var_defaults[i] +*/ ".vId\n");
+		array_push(varname_written, general_varnames[i]);
+	}
+}
+
 function scr_write_globalvariable(file){
 	//handle the real variable
 	for (var i = 0; i < array_length(globalvar_names); i++)
@@ -67,4 +79,9 @@ function scr_write_globalvariable(file){
 function add_variable(name, value){
 	array_push(var_names, name);
 	array_push(var_defaults, value);
+}
+
+function add_variable_general(name, value){
+	array_push(general_varnames, name);
+	array_push(general_vardefaults, value);
 }

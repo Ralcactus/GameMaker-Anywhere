@@ -19,15 +19,25 @@ function scr_compileobject_phase2(spr_name, create_code, step_code, draw_code){
 	file_text_write_string(file, "#include \"../variable_handler.h\"\n");
 	file_text_write_string(file, "#include <variant>\n");
 	file_text_write_string(file, "#include <vector>\n\n");
-	file_text_write_string(file, "std::vector<" + safe_name + "_variableholder> vector_" + safe_name + ";\n");
-	file_text_write_string(file, "static " + safe_name + "_variableholder* self; \n");
+	/*file_text_write_string(file, "std::vector<" + safe_name + "_variableholder> vector_" + safe_name + ";\n");
+	file_text_write_string(file, "static " + safe_name + "_variableholder* self; \n");*/
+	file_text_write_string(file, "std::vector<Object> vector_" + safe_name + ";\n");
+	file_text_write_string(file, "static Object* self; \n");
+	
 	file_text_write_string(file, "static int " + safe_name + "_call_index = 0;\n");
 	file_text_write_string(file, "static int objectid_collided = 0;\n");
 		
 	for (var i = 0; i < array_length(var_names); i += 1)
-		file_text_write_string(file, "#define " + var_names[i] + " " + "self->" + string(var_names[i]) + "\n");
+		file_text_write_string(file, "#define " + var_names[i] + " " + "self->GetVar(varId_" + string(var_names[i]) + ")\n");
 	
 	#region EVENTS
+	//config
+	file_text_write_string(file, "void " + safe_name + "_config() {\n");
+	file_text_write_string(file, "sprite_index = " + spr_name +";\n");
+	file_text_write_string(file, "visible = " + string(yyfile.visible) +";\n");
+	file_text_write_string(file, "solid = " + string(yyfile.solid) +";\n");
+	file_text_write_string(file, "persistent = " + string(yyfile.persistent) +";\n");
+	file_text_write_string(file, "}\n\n");
 	//create
 	file_text_write_string(file, "void " + safe_name + "_create() {\n");
 	file_text_write_string(file, create_code + "\n");
@@ -53,14 +63,16 @@ function scr_compileobject_phase2(spr_name, create_code, step_code, draw_code){
 	file_text_write_string(file, "#undef id\n");
 	
 	file_text_write_string(file, "void " + safe_name + "_precreate(float NEWX, float NEWY, float NEWXSCALE, float NEWYSCALE, float NEWID) {\n");
-	file_text_write_string(file, safe_name + "_variableholder inst;\n");
-	file_text_write_string(file, "inst.x = NEWX;\n");
-	file_text_write_string(file, "inst.y = NEWY;\n");
-	file_text_write_string(file, "inst.image_xscale = NEWXSCALE;\n");
-	file_text_write_string(file, "inst.image_yscale = NEWYSCALE;\n");
-	file_text_write_string(file, "inst.id = NEWID;\n");
+	//file_text_write_string(file, safe_name + "_variableholder inst;\n");
+	file_text_write_string(file, "Object inst;\n");
+	file_text_write_string(file, "inst.GetVar(varId_x) = NEWX;\n");
+	file_text_write_string(file, "inst.GetVar(varId_y) = NEWY;\n");
+	file_text_write_string(file, "inst.GetVar(varId_image_xscale) = NEWXSCALE;\n");
+	file_text_write_string(file, "inst.GetVar(varId_image_yscale) = NEWYSCALE;\n");
+	file_text_write_string(file, "inst.GetVar(varId_id) = NEWID;\n");
 	file_text_write_string(file, "vector_" + safe_name + ".push_back(inst);\n");
 	file_text_write_string(file, "self = &vector_" + safe_name + ".back();\n");
+	file_text_write_string(file, safe_name + "_config();\n");
 	file_text_write_string(file, safe_name + "_create();\n");
 	file_text_write_string(file, "}\n\n");
 	
@@ -76,7 +88,7 @@ function scr_compileobject_phase2(spr_name, create_code, step_code, draw_code){
 	file_text_write_string(file, "	//printf(\"RUNNING OBJECT: " + safe_name + "\\n\");\n");
 	file_text_write_string(file, "	bool found = false;\n");
 	file_text_write_string(file, "	for(size_t j = 0; j < vector_"+safe_name+".size(); j++){\n");
-	file_text_write_string(file, "		if(vector_"+safe_name+"[j].id == NEWID){\n");
+	file_text_write_string(file, "		if(vector_"+safe_name+"[j].GetVar(varId_id) == NEWID){\n");
 	file_text_write_string(file, "			found = true;\n")
 	file_text_write_string(file, "			break;\n");
 	file_text_write_string(file, "		}\n");
@@ -96,11 +108,11 @@ function scr_compileobject_phase2(spr_name, create_code, step_code, draw_code){
 	var variable_handler = file_text_open_append(destination + "source/variable_handler.h");
 	
 	//define variables
-	file_text_write_string(variable_handler, "struct " + safe_name + "_variableholder {\n");
+	//file_text_write_string(variable_handler, "struct " + safe_name + "_variableholder {\n");
 	
-	scr_write_variables(variable_handler);
+	scr_write_variables_general(variable_handler);
 	
-	file_text_write_string(variable_handler, "};\n");
-	file_text_write_string(variable_handler, "extern std::vector<" + safe_name + "_variableholder> vector_" + safe_name + ";\n");
+	/*file_text_write_string(variable_handler, "};\n");
+	file_text_write_string(variable_handler, "extern std::vector<" + safe_name + "_variableholder> vector_" + safe_name + ";\n");*/
 	file_text_close(variable_handler);
 }

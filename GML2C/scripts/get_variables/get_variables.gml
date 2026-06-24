@@ -57,6 +57,11 @@ function scr_write_customvariables(code, only_global = false){
 					continue;
 
 				add_variable(variablename, "-4");
+				
+				if(array_contains(general_varnames, variablename))
+					continue;
+				
+				add_variable_general(variablename, "-4");
 			}
 			else{
 				if (array_contains(globalvar_names, variablename))
