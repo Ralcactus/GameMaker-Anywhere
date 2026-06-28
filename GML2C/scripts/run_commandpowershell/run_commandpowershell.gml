@@ -18,9 +18,9 @@ function run_commandpowershell(destination, command) {
     show_debug_message("RUN: " + REALCOMMAND);
     var process = ProcessExecuteAsync(REALCOMMAND);
 
-    while (!CompletionStatusFromExecutedProcess(process)) {
+    /*while (!CompletionStatusFromExecutedProcess(process)) {
         sleep(10);
-    }
+    }*/
 
     return process;
 }
