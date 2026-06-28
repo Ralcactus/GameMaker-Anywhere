@@ -1,7 +1,7 @@
 global.copysprite = true;
 if(os_type == os_windows)
 {
-    global.OutputDrive = "C:\\";
+    global.OutputDrive = "C:/";
 }
 else if(os_type == os_linux || os_type == os_macosx)
 {

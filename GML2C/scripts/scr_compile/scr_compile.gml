@@ -8,7 +8,15 @@ function scr_compileSETUP(){
 		}
 	
 		var devkit_path = environment_get_variable("DEVKITPRO");
-		if (!directory_exists(devkit_path + "/portlibs/3ds/") && (global.export_mode == "CIA" || global.export_mode == "3DSX")){
+		var _3DSPortlibs = false;
+		
+		if (os_type == os_windows)
+			_3DSPortlibs = directory_exists(global.OutputDrive + "devkitPro\\portlibs\\3ds\\");
+		
+		if (os_type == os_linux)
+			_3DSPortlibs = directory_exists(devkit_path + "/portlibs/3ds/");
+		
+		if (!_3DSPortlibs && (global.export_mode == "CIA" || global.export_mode == "3DSX")){
 			show_message("DevKitPro 3DS portlibs are not installed!");
 			exit;
 		}
