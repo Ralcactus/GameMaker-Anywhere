@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include <string.h>
+#include "../variable_handler.h"
+#include <variant>
+#include <vector>
 
 //3ds
 #ifdef __3DS__

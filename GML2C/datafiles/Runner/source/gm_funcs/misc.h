@@ -1,4 +1,7 @@
 #include <stdbool.h>
+#include "../variable_handler.h"
+#include <variant>
+#include <vector>
 
 extern float view0_camXPos;
 extern float view0_camYPos;
@@ -11,6 +14,7 @@ extern float room_width;
 extern float room_height;
 extern bool MarkedForClose;
 extern float fps;
+extern Object* CurrentObjectRunning;
 
 #pragma once
 #define noone -4

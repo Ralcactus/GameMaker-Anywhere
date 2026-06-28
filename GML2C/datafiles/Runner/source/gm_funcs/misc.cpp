@@ -5,11 +5,16 @@
 #include <string.h>
 #include <stdbool.h>
 #include "misc.h"
+#include "../variable_handler.h"
+#include <variant>
+#include <vector>
 
 float view0_camXPos = 0;
 float view0_camYPos = 0;
 float view0_camWidth = 1366;
 float view0_camHeight = 768;
+
+Object* CurrentObjectRunning = NULL;
 
 #pragma region //camera funcs
 void camera_set_view_pos(int viewID, float _x, float _y){

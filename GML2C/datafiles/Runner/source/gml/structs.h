@@ -48,11 +48,6 @@ typedef struct{
     Frames* frames;
 } GMSprite;
 
-typedef struct{
-    GMSprite* sprite;
-    bool persistent, solid, visible;
-} Object;
-
 enum LayerType {
     LAYER_BACKGROUND = 0,
     LAYER_INSTANCE = 1,

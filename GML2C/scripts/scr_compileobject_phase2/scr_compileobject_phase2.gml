@@ -87,6 +87,7 @@ function scr_compileobject_phase2(spr_name, create_code, step_code, draw_code){
 	//RUN THE EVENTS
 	file_text_write_string(file, "	//printf(\"RUNNING OBJECT: " + safe_name + "\\n\");\n");
 	file_text_write_string(file, "	bool found = false;\n");
+	file_text_write_string(file, "	CurrentObjectRunning = self;\n");
 	file_text_write_string(file, "	for(size_t j = 0; j < vector_"+safe_name+".size(); j++){\n");
 	file_text_write_string(file, "		if(vector_"+safe_name+"[j].GetVar(varId_id) == NEWID){\n");
 	file_text_write_string(file, "			found = true;\n")
