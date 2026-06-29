@@ -135,6 +135,12 @@ function scr_compileMIDDLE2(){
 		if (global.export_mode == "WII")
 			directory_create(destination + "/output/TheGame/");
 		show_debug_message("before compile");
+
+		//write the builtin variables to the variable handler
+		
+		init_builtin_variables();
+		scr_write_variables_builtin();
+		
 		scr_compile();
 		show_debug_message("after compile");
 	}

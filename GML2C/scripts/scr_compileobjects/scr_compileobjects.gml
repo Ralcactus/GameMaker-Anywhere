@@ -63,7 +63,6 @@ function scr_compileobjects(){
 	    }
 	}
 	
-	init_builtin_variables(spr_name);
 	scr_write_customvariables(create_code);
 	scr_write_customvariables(step_code);
 	scr_write_customvariables(draw_code);

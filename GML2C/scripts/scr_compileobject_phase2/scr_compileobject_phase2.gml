@@ -111,7 +111,7 @@ function scr_compileobject_phase2(spr_name, create_code, step_code, draw_code){
 	//define variables
 	//file_text_write_string(variable_handler, "struct " + safe_name + "_variableholder {\n");
 	
-	scr_write_variables_general(variable_handler);
+	scr_write_variables_custom(variable_handler);
 	
 	/*file_text_write_string(variable_handler, "};\n");
 	file_text_write_string(variable_handler, "extern std::vector<" + safe_name + "_variableholder> vector_" + safe_name + ";\n");*/

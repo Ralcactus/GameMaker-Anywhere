@@ -1,3 +1,4 @@
+//write the global variable struct
 function scr_write_global_variables(){
 	var variable_handler = file_text_open_append(destination + "source/variable_handler.h");
 	file_text_write_string(variable_handler, "struct global_bleh {\n");

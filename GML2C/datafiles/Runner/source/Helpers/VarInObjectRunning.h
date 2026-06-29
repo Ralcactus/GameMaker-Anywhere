@@ -1,6 +1,4 @@
-//citro2d has this declared already lol
-#undef function
-
+//This lets other files acsess the currently running objects variables (much better then manually doing this in the compiler each time :3)
 #include "customfuncs.h"
 #include <stdbool.h>
 #include <stdio.h>
@@ -17,8 +15,4 @@
 #include "../variable_handler.h"
 #include <variant>
 #include "../Helpers/other.h"
-#include "../Helpers/VarInObjectRunning.h"
-
-#define function void
-
 
