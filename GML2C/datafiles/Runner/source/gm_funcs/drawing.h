@@ -29,17 +29,18 @@ extern unsigned int drawcolor;
 
 //funcs
 //draw stuff
-void draw_sprite(int sprite_index, int subimg, float draw_x, float draw_y);
-void draw_sprite_ext(int sprite_index, int subimg, float draw_x, float draw_y, float scale_x, float scale_y, float rotation, float color, float alpha);
+void draw_sprite(int draw_sprite, int subimg, float draw_x, float draw_y);
+void draw_sprite_ext(int draw_sprite, int subimg, float draw_x, float draw_y, float scale_x, float scale_y, float rotation, float color, float alpha);
 void drawing_init();
 void scr_endframe();
 void draw_text(float _x, float _y, const char* text);
 void draw_set_colour(int color);
 void draw_set_color(int color);
-int sprite_get_width(int sprite_index);
-int sprite_get_height(int sprite_index);
-int sprite_get_xoffset(int sprite_index);
-int sprite_get_yoffset(int sprite_index);
+int sprite_get_width(int draw_sprite);
+int sprite_get_height(int draw_sprite);
+int sprite_get_xoffset(int draw_sprite);
+int sprite_get_yoffset(int draw_sprite);
+void draw_self();
 
 //3DS
 #ifdef __3DS__

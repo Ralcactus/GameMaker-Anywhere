@@ -6,6 +6,7 @@
 #include <malloc.h>
 #include <math.h>
 #include "get_spriteinfo.h"
+#include "../Helpers/VarInObjectRunning.h"
 
 unsigned int drawcolor = c_white;
 
@@ -40,23 +41,23 @@ unsigned int drawcolor = c_white;
 
     //subimg, color and alpha are stubs!
     //Also rotation is a little weird idk how to fix it
-    void draw_sprite(int sprite_index, int subimg, float draw_x, float draw_y){
-        if (sprite_index == -1)
+    void draw_sprite(int draw_sprite, int subimg, float draw_x, float draw_y){
+        if (draw_sprite == -1)
             return;
 
         C2D_Sprite sprite;
-        C2D_SpriteFromSheet(&sprite, spriteSheet, sprite_index);
-        C2D_SpriteSetPos(&sprite, draw_x-sprite_get_xoffset(sprite_index), draw_y-sprite_get_yoffset(sprite_index));
+        C2D_SpriteFromSheet(&sprite, spriteSheet, draw_sprite);
+        C2D_SpriteSetPos(&sprite, draw_x-sprite_get_xoffset(draw_sprite), draw_y-sprite_get_yoffset(draw_sprite));
         C2D_DrawSprite(&sprite);
     }
     
-    void draw_sprite_ext(int sprite_index, int subimg, float draw_x, float draw_y, float scale_x, float scale_y, float rotation, float color, float alpha){
-        if (sprite_index == -1)
+    void draw_sprite_ext(int draw_sprite, int subimg, float draw_x, float draw_y, float scale_x, float scale_y, float rotation, float color, float alpha){
+        if (draw_sprite == -1)
             return;
 
         C2D_Sprite sprite;
-        C2D_SpriteFromSheet(&sprite, spriteSheet, sprite_index);
-        C2D_SpriteSetPos(&sprite, draw_x-sprite_get_xoffset(sprite_index)*scale_x, draw_y-sprite_get_yoffset(sprite_index)*scale_y);
+        C2D_SpriteFromSheet(&sprite, spriteSheet, draw_sprite);
+        C2D_SpriteSetPos(&sprite, draw_x-sprite_get_xoffset(draw_sprite)*scale_x, draw_y-sprite_get_yoffset(draw_sprite)*scale_y);
         C2D_SpriteSetScale(&sprite, scale_x, scale_y);
         C2D_SpriteSetRotation(&sprite, rotation);
         C2D_DrawSprite(&sprite);
@@ -189,61 +190,61 @@ unsigned int drawcolor = c_white;
         fb ^= 1;
     }
 
-    void draw_sprite(int sprite_index, int subimg, float draw_x, float draw_y){
+    void draw_sprite(int draw_sprite, int subimg, float draw_x, float draw_y){
         GXTexObj localTex;
-        if (TPL_GetTexture(&spriteTPL, sprite_index, &localTex) != 0)
+        if (TPL_GetTexture(&spriteTPL, draw_sprite, &localTex) != 0)
             return;
 
         GX_LoadTexObj(&localTex, GX_TEXMAP0);
         GX_Begin(GX_TRIANGLESTRIP, GX_VTXFMT0, 4);
 
-        int realsprite_width = sprite_get_width(sprite_index);
-        int realsprite_height = sprite_get_height(sprite_index);
+        int realsprite_width = sprite_get_width(draw_sprite);
+        int realsprite_height = sprite_get_height(draw_sprite);
 
         //Draw top Left
-        GX_Position2f32(draw_x-sprite_get_xoffset(sprite_index), draw_y-sprite_get_yoffset(sprite_index));
+        GX_Position2f32(draw_x-sprite_get_xoffset(draw_sprite), draw_y-sprite_get_yoffset(draw_sprite));
         GX_TexCoord2f32(0, 0);
 
         //Draw top Right
-        GX_Position2f32(draw_x+realsprite_width-1-sprite_get_xoffset(sprite_index), draw_y-sprite_get_yoffset(sprite_index));
+        GX_Position2f32(draw_x+realsprite_width-1-sprite_get_xoffset(draw_sprite), draw_y-sprite_get_yoffset(draw_sprite));
         GX_TexCoord2f32(1, 0);
 
         //Draw bottom Left
-        GX_Position2f32(draw_x-sprite_get_xoffset(sprite_index), draw_y+realsprite_height-1-sprite_get_yoffset(sprite_index));
+        GX_Position2f32(draw_x-sprite_get_xoffset(draw_sprite), draw_y+realsprite_height-1-sprite_get_yoffset(draw_sprite));
         GX_TexCoord2f32(0, 1);
 
         //Draw bottom Right
-        GX_Position2f32(draw_x+realsprite_width-1-sprite_get_xoffset(sprite_index), draw_y+realsprite_height-1-sprite_get_yoffset(sprite_index)); 
+        GX_Position2f32(draw_x+realsprite_width-1-sprite_get_xoffset(draw_sprite), draw_y+realsprite_height-1-sprite_get_yoffset(draw_sprite)); 
         GX_TexCoord2f32(1, 1);
 
         GX_End();
     }
     
-    void draw_sprite_ext(int sprite_index, int subimg, float draw_x, float draw_y, float scale_x, float scale_y, float rotation, float color, float alpha){ 
+    void draw_sprite_ext(int draw_sprite, int subimg, float draw_x, float draw_y, float scale_x, float scale_y, float rotation, float color, float alpha){ 
         GXTexObj localTex;
-        if (TPL_GetTexture(&spriteTPL, sprite_index, &localTex) != 0)
+        if (TPL_GetTexture(&spriteTPL, draw_sprite, &localTex) != 0)
             return;
 
         GX_LoadTexObj(&localTex, GX_TEXMAP0);
         GX_Begin(GX_TRIANGLESTRIP, GX_VTXFMT0, 4);
 
-        int realsprite_width = sprite_get_width(sprite_index)*scale_x;
-        int realsprite_height = sprite_get_height(sprite_index)*scale_y;
+        int realsprite_width = sprite_get_width(draw_sprite)*scale_x;
+        int realsprite_height = sprite_get_height(draw_sprite)*scale_y;
 
         //Draw top Left
-        GX_Position2f32(draw_x-sprite_get_xoffset(sprite_index)*scale_x, draw_y-sprite_get_yoffset(sprite_index)*scale_y);
+        GX_Position2f32(draw_x-sprite_get_xoffset(draw_sprite)*scale_x, draw_y-sprite_get_yoffset(draw_sprite)*scale_y);
         GX_TexCoord2f32(0, 0);
 
         //Draw top Right
-        GX_Position2f32(draw_x+realsprite_width-1-sprite_get_xoffset(sprite_index)*scale_x, draw_y-sprite_get_yoffset(sprite_index)*scale_y);
+        GX_Position2f32(draw_x+realsprite_width-1-sprite_get_xoffset(draw_sprite)*scale_x, draw_y-sprite_get_yoffset(draw_sprite)*scale_y);
         GX_TexCoord2f32(1, 0);
 
         //Draw bottom Left
-        GX_Position2f32(draw_x-sprite_get_xoffset(sprite_index)*scale_x, draw_y+realsprite_height-1-sprite_get_yoffset(sprite_index)*scale_y);
+        GX_Position2f32(draw_x-sprite_get_xoffset(draw_sprite)*scale_x, draw_y+realsprite_height-1-sprite_get_yoffset(draw_sprite)*scale_y);
         GX_TexCoord2f32(0, 1);
 
         //Draw bottom Right
-        GX_Position2f32(draw_x+realsprite_width-1-sprite_get_xoffset(sprite_index)*scale_x, draw_y+realsprite_height-1-sprite_get_yoffset(sprite_index)*scale_y); 
+        GX_Position2f32(draw_x+realsprite_width-1-sprite_get_xoffset(draw_sprite)*scale_x, draw_y+realsprite_height-1-sprite_get_yoffset(draw_sprite)*scale_y); 
         GX_TexCoord2f32(1, 1);
 
         GX_End();
@@ -264,17 +265,21 @@ void draw_set_colour(int color){
 }
 
 
-int sprite_get_width(int sprite_index){
-    return SpriteWidths[sprite_index];
+int sprite_get_width(int draw_sprite){
+    return SpriteWidths[draw_sprite];
 }
-int sprite_get_height(int sprite_index){
-    return SpriteHeights[sprite_index];
+int sprite_get_height(int draw_sprite){
+    return SpriteHeights[draw_sprite];
 }
 
-int sprite_get_xoffset(int sprite_index){
-    return SpriteOriginX[sprite_index];
+int sprite_get_xoffset(int draw_sprite){
+    return SpriteOriginX[draw_sprite];
 }
-int sprite_get_yoffset(int sprite_index){
-    return SpriteOriginY[sprite_index];
+int sprite_get_yoffset(int draw_sprite){
+    return SpriteOriginY[draw_sprite];
+}
+
+void draw_self(){
+    draw_sprite_ext(sprite_index, image_index, x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha);
 }
 #pragma endregion
