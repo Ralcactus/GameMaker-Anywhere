@@ -30,6 +30,10 @@ function scr_compileSETUP(){
     all_sprites = [];
     all_objects = [];
 	globalvar_names = [];
+	general_varnames = [];
+	general_vardefaults = [];
+	varname_written = [];
+	vardefault_written = [];
 	yyfile = noone;
 	_id = noone;
 	currentsprite_count = -1;
