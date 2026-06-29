@@ -47,7 +47,6 @@
     {"id":{"name":"scr_bleh","path":"scripts/scr_bleh/scr_bleh.yy",},},
     {"id":{"name":"scr_ralseiplayer","path":"scripts/scr_ralseiplayer/scr_ralseiplayer.yy",},},
     {"id":{"name":"spr_familyguy","path":"sprites/spr_familyguy/spr_familyguy.yy",},},
-    {"id":{"name":"spr_funfact","path":"sprites/spr_funfact/spr_funfact.yy",},},
     {"id":{"name":"spr_hint","path":"sprites/spr_hint/spr_hint.yy",},},
     {"id":{"name":"spr_pizzy","path":"sprites/spr_pizzy/spr_pizzy.yy",},},
     {"id":{"name":"spr_ralsei_doctor","path":"sprites/spr_ralsei_doctor/spr_ralsei_doctor.yy",},},

@@ -339,7 +339,7 @@ endef
 #---------------------------------------------------------------------------------
 $(TOPDIR)/$(GFXBUILD)/%.t3x $(TOPDIR)/$(BUILD)/%.h : $(TOPDIR)/$(GRAPHICS)/%.t3s
 	@echo $(notdir $<)
-	@$(TEX3DS) --atlas "$(dir $<)"*.png -H "$(TOPDIR)/$(BUILD)/$*.h" -d "$(TOPDIR)/$(BUILD)/$*.d" -o "$(TOPDIR)/$(GFXBUILD)/$*.t3x"
+	@$(TEX3DS) -i "$<" -H "$(TOPDIR)/$(BUILD)/$*.h" -d "$(TOPDIR)/$(BUILD)/$*.d" -o "$(TOPDIR)/$(GFXBUILD)/$*.t3x"
 	
 -include $(DEPSDIR)/*.d
 
