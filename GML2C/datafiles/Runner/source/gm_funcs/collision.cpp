@@ -2,10 +2,10 @@
 #include <string.h>
 #include "drawing.h"
 #include "misc.h"
-#include "get_spriteinfo.h"
 
 //helper funcs
 int get_current_object_touching(int x, int y, float xscale, float yscale, int sprite_index, int selfid){
+    /*
     if (sprite_index < 0)
         return 0;
 
@@ -42,7 +42,7 @@ int get_current_object_touching(int x, int y, float xscale, float yscale, int sp
     C2D_DrawLine(boundingbox_right, boundingbox_bottom, C2D_Color32(255, 0, 0, 255), boundingbox_left, boundingbox_bottom, C2D_Color32(255, 0, 0, 255), line_thick, 0.0f);
     C2D_DrawLine(boundingbox_left, boundingbox_bottom, C2D_Color32(255, 0, 0, 255), boundingbox_left, boundingbox_top, C2D_Color32(255, 0, 0, 255), line_thick, 0.0f);
     */
-
+    
     return noone;
 }
 
