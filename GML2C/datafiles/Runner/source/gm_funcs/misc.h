@@ -43,6 +43,11 @@ enum AudioLFOType{
     Triangle
 };
 
+#define display_landscape 0
+#define display_portrait 1
+#define display_landscape_flipped 2
+#define display_portrait_flipped 3
+
 //OS
 //custom
 #define os_3ds 100
@@ -116,6 +121,8 @@ bool show_question(const char* message);
 bool code_is_compiled();
 float display_get_width();
 float display_get_height();
+int display_get_orientation();
+float display_get_frequency();
 char* string(float value);
 void show_debug_message(const char* message);
 void show_error(const char* message, bool abort);
