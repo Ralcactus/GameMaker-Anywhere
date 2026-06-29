@@ -28,7 +28,7 @@ function scr_ralseiplayer(){
 		room_goto(Room2);
 	}
 
-	show_debug_message(string(global.teh));
+	//show_debug_message(string(global.teh));
 
 	x += hsp;
 	y += vsp;
