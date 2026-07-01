@@ -87,6 +87,7 @@ enum AudioLFOType{
 
 //camera_ funcs
 void camera_set_view_pos(int viewID, float _x, float _y);
+void camera_set_view_size(int viewID, float _width, float _height);
 float camera_get_view_width(int viewID);
 float camera_get_view_height(int viewID);
 float camera_get_view_x(int viewID);

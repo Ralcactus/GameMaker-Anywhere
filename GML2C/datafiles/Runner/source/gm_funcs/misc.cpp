@@ -22,6 +22,11 @@ void camera_set_view_pos(int viewID, float _x, float _y){
     view0_camYPos = _y;
 }
 
+void camera_set_view_size(int viewID, float _width, float _height){
+    view0_camWidth = _width;
+    view0_camHeight = _height;
+}
+
 float camera_get_view_width(int viewID){
     return view0_camWidth;
 }
