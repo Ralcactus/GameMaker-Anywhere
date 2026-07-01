@@ -16,8 +16,8 @@
 #include "../custom_funcs/customfuncs.h"
 #include "../variable_handler.h"
 #include <variant>
-#include "../Helpers/other.h"
-#include "../Helpers/VarInObjectRunning.h"
+#include "../helpers/other.h"
+#include "../helpers/var_in_object_running.h"
 
 #define function void
 

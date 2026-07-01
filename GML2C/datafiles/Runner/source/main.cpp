@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 #include "gm_funcs/input.h"
-#include "Helpers/other.h"
-#include "Helpers/file_manage.h"
+#include "helpers/other.h"
+#include "helpers/file_manage.h"
 #include "gm_funcs/drawing.h"
 #include "gm_funcs/misc.h"
 #include "room_handler.h"

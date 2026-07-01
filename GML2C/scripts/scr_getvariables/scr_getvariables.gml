@@ -60,12 +60,12 @@ function scr_write_variables_custom(file){
 		array_push(varname_written, general_varnames[i]);
 	}
 	
-	//add to VarInObjectRunning (for other script files like custom scripts or funcs that need variables in them like draw_self)
-	var VarInObjectRunning = file_text_open_append(destination + "source/Helpers/VarInObjectRunning.h");
+	//add to var_in_object_running (for other script files like custom scripts or funcs that need variables in them like draw_self)
+	var var_in_object_running = file_text_open_append(destination + "source/helpers/var_in_object_running.h");
 	for (var i = 0; i < array_length(general_varnames); i++){
-		file_text_write_string(VarInObjectRunning, "#define " + general_varnames[i] + " CurrentObjectRunning->GetVar(varId_" + general_varnames[i] + ")\n");
+		file_text_write_string(var_in_object_running, "#define " + general_varnames[i] + " CurrentObjectRunning->GetVar(varId_" + general_varnames[i] + ")\n");
 	}
-	file_text_close(VarInObjectRunning);
+	file_text_close(var_in_object_running);
 }
 
 function scr_write_variables_builtin(){
@@ -77,12 +77,12 @@ function scr_write_variables_builtin(){
 	}
 	file_text_close(variable_handler);
 	
-	//add to VarInObjectRunning (for other script files like custom scripts or funcs that need variables in them like draw_self)
-	var VarInObjectRunning = file_text_open_append(destination + "source/Helpers/VarInObjectRunning.h");
+	//add to var_in_object_running (for other script files like custom scripts or funcs that need variables in them like draw_self)
+	var var_in_object_running = file_text_open_append(destination + "source/helpers/var_in_object_running.h");
 	for (var i = 0; i < array_length(var_names); i++){
-		file_text_write_string(VarInObjectRunning, "#define " + var_names[i] + " CurrentObjectRunning->GetVar(varId_" + var_names[i] + ")\n");
+		file_text_write_string(var_in_object_running, "#define " + var_names[i] + " CurrentObjectRunning->GetVar(varId_" + var_names[i] + ")\n");
 	}
-	file_text_close(VarInObjectRunning);
+	file_text_close(var_in_object_running);
 		
 }
 

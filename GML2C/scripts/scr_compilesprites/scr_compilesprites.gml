@@ -27,7 +27,7 @@ function scr_compilesprites(){
 	file_text_write_string(file, "// Sprite: " + yyfile.name + "\n\n");
 			
 	//Frames
-	var frame_array_name = "spr_" + safe_name + "_frames";
+	var frame_array_name = safe_name + "_frames";
 
 	//Write array
 	file_text_write_string(file, "static Frames " + frame_array_name + "[] = {\n");
@@ -90,7 +90,7 @@ function scr_compilesprites(){
 
 	//Sprite thingie
 	file_text_write_string(file,
-	"GMSprite spr_" + safe_name + " = {\n" +
+	"GMSprite " + safe_name + " = {\n" +
 	"    .location = \"sprites/" + yyfile.name + "/\",\n" +
 	"    .width = " + string(yyfile.width) + ",\n" +
 	"    .height = " + string(yyfile.height) + ",\n" +

@@ -14,5 +14,5 @@
 #include "../custom_funcs/customfuncs.h"
 #include "../variable_handler.h"
 #include <variant>
-#include "../Helpers/other.h"
+#include "../helpers/other.h"
 

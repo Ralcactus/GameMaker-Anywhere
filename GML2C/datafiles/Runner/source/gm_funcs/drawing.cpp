@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <malloc.h>
 #include <math.h>
-#include "../Helpers/VarInObjectRunning.h"
+#include "../helpers/var_in_object_running.h"
 
 unsigned int drawcolor = c_white;
 
