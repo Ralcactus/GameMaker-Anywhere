@@ -265,17 +265,21 @@ void draw_set_colour(int color){
 
 
 int sprite_get_width(int draw_sprite){
-    return sprite_width;
+    //return sprite_width;
+    return 0;
 }
 int sprite_get_height(int draw_sprite){
-    return sprite_height;
+    //return sprite_height;
+    return 0;
 }
 
 int sprite_get_xoffset(int draw_sprite){
-    return sprite_xoffset;
+    //return sprite_xoffset;
+    return 0;
 }
 int sprite_get_yoffset(int draw_sprite){
-    return sprite_yoffset;
+    //return sprite_yoffset;
+    return 0;
 }
 
 void draw_self(){
