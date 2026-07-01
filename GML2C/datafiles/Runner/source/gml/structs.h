@@ -1,3 +1,5 @@
+#pragma once
+
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
@@ -46,6 +48,8 @@ typedef struct{
     bboxType;
     
     Frames* frames;
+    
+    int ID;
 } GMSprite;
 
 enum LayerType {

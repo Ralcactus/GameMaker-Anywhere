@@ -12,7 +12,7 @@ function scr_compilesprites(){
 		}
 	}
 	
-	var file = file_text_open_write(destination + "source/sprites/" + safe_name + ".cpp");
+	var file = file_text_open_write(destination + "source/sprites/" + safe_name + ".h");
     show_debug_message("Sprite: " + yyfile.name);
     var spriteoutput;
 			
@@ -90,14 +90,14 @@ function scr_compilesprites(){
 
 	//Sprite thingie
 	file_text_write_string(file,
-	"GMSprite " + safe_name + " = {\n" +
+	"static GMSprite " + safe_name + "INFO = {\n" +
 	"    .location = \"sprites/" + yyfile.name + "/\",\n" +
 	"    .width = " + string(yyfile.width) + ",\n" +
 	"    .height = " + string(yyfile.height) + ",\n" +
 	"    .originX = " + string(yyfile.sequence.xorigin) + ",\n" +
 	"    .originY = " + string(yyfile.sequence.yorigin) + ",\n" +
-	"    .fps = " + string(yyfile.sequence.playbackSpeed) + ",\n" +
 	"    .frameSpd = " + string(yyfile.sequence.playbackSpeedType) + ",\n" +
+	"    .fps = " + string(yyfile.sequence.playbackSpeed) + ",\n" +
 	"    .maskLeft = " + string(yyfile.bbox_left) + ",\n" +
 	"    .maskTop = " + string(yyfile.bbox_top) + ",\n" +
 	"    .maskRight = " + string(yyfile.bbox_right) + ",\n" +
@@ -105,13 +105,15 @@ function scr_compilesprites(){
 	"    .type = " + colType + ",\n" +
 	"    .bboxType = " + bboxt + ",\n" +
 	"    .frames = " + frame_array_name + ",\n" +
+	"    .ID = " + string(currentsprite_count) + ",\n" +
 	"};\n");
-			
+
 	file_text_close(file);
             
-	var spriteidh = file_text_open_append(destination + "source/sprite_toid.h");
-	file_text_write_string(spriteidh, "#define " + yyfile.name + " " + string(currentsprite_count) + "\n");
-	file_text_close(spriteidh);
+	var init_sprites = file_text_open_append(destination + "source/helpers/init_sprites.h");
+	file_text_write_string(init_sprites, "#include \"../sprites/" + safe_name + ".h\"\n");	
+	file_text_write_string(init_sprites, "#define " + safe_name + " " + safe_name + "INFO.ID" + "\n");	
+	file_text_close(init_sprites);
 	
     currentsprite_count++;
 }

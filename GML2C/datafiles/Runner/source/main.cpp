@@ -8,6 +8,7 @@
 #include "room_handler.h"
 #include "sprite_toid.h"
 #include "room_toid.h"
+#include "init_sprites.h"
 
 #ifdef __wii__
     #include <gccore.h>

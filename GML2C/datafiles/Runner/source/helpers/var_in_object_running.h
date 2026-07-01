@@ -1,4 +1,5 @@
 //This lets other files acsess the currently running objects variables (much better then manually doing this in the compiler each time :3)
+#include "../gml/structs.h"
 #include "customfuncs.h"
 #include <stdbool.h>
 #include <stdio.h>
