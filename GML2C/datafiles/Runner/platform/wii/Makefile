@@ -109,7 +109,7 @@ export OUTPUT	:=	$(CURDIR)/output/TheGame/$(TARGET)
 #---------------------------------------------------------------------------------
 $(BUILD):
 	@[ -d $@ ] || mkdir -p $@
-	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/platform/wii/Makefile
+	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/platform/wii/makefile
 
 #---------------------------------------------------------------------------------
 clean:

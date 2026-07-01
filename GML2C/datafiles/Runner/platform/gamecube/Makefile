@@ -104,7 +104,7 @@ export OUTPUT	:=	$(CURDIR)/output/$(TARGET)
 #---------------------------------------------------------------------------------
 $(BUILD):
 	@[ -d $@ ] || mkdir -p $@
-	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/platform/gamecube/Makefile
+	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/platform/gamecube/makefile
 
 #---------------------------------------------------------------------------------
 clean:
