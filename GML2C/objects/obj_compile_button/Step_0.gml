@@ -1,3 +1,6 @@
+if (global.DisableMenu)
+	exit;
+
 if (instance_position(mouse_x, mouse_y, id) && mouse_check_button_pressed(mb_left)){
 	if (global.selected_yyp == "")
 		show_message("Please select a project file!");

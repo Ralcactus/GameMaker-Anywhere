@@ -8,3 +8,4 @@ if (CompletionStatusFromExecutedProcess(compile_powershell_window) && logging ==
 	
 	logging = false;
 }
+

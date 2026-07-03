@@ -1,3 +1,6 @@
+if (global.DisableMenu)
+	exit;
+
 if (active){
     var filtered = "";
     for (var i = 1; i <= string_length(keyboard_string); i++){

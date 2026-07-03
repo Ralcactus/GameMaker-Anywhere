@@ -1,3 +1,6 @@
+if (global.DisableMenu)
+	exit;
+	
 if (instance_position(mouse_x, mouse_y, id)){
 	image_blend = c_gray;
 

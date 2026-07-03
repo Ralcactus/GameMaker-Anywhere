@@ -14,7 +14,7 @@ extern float room_width;
 extern float room_height;
 extern bool MarkedForClose;
 extern float fps;
-extern bool interpolate_pixels;
+extern int interpolate_pixels;
 extern Object* CurrentObjectRunning;
 
 #pragma once

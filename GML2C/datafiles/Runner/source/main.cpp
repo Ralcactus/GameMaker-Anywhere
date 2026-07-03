@@ -19,8 +19,8 @@ unsigned int bgcolor = 0xFF000000;
 int view_camera[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 bool MarkedForClose = false;
 
-bool interpolate_pixels = true;
-bool Interpolate_pixels_enabled = false;
+int interpolate_pixels = 0;
+int Interpolate_pixels_enabled = 0;
 
 float fps = 0;
 
@@ -70,15 +70,15 @@ int main(){
 
             //interpolate pixels
             if (spriteSheet != nullptr) {
-                if (interpolate_pixels && !Interpolate_pixels_enabled){
+                if (interpolate_pixels == 1 && Interpolate_pixels_enabled == 0){
                     C2D_Image img = C2D_SpriteSheetGetImage(spriteSheet, 0);
                     C3D_TexSetFilter(img.tex, GPU_LINEAR, GPU_LINEAR);
-                    Interpolate_pixels_enabled = true;
+                    Interpolate_pixels_enabled = 1;
                 }
-                else if (!interpolate_pixels && Interpolate_pixels_enabled){
+                else if (interpolate_pixels != 1 && Interpolate_pixels_enabled == 1){
                     C2D_Image img = C2D_SpriteSheetGetImage(spriteSheet, 0);
                     C3D_TexSetFilter(img.tex, GPU_NEAREST, GPU_NEAREST);
-                    Interpolate_pixels_enabled = false;
+                    Interpolate_pixels_enabled = 0;
                 }
             }
 

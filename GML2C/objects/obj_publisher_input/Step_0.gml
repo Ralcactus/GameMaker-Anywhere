@@ -1,3 +1,6 @@
+if (global.DisableMenu)
+	exit;
+
 if (active){
 	global.publisher = keyboard_string;
 }

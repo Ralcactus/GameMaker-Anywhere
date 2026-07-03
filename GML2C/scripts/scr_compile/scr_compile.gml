@@ -155,8 +155,7 @@ function scr_compileMIDDLE2(){
 //This is the script that creates creates the code files and copys sprite data
 function scr_compile()
 {
-	//create sprites.t3s
-	
+	//create sprite list
 	directory_create(destination + "/gfx/");
 	show_debug_message("create dir");
 
@@ -171,6 +170,18 @@ function scr_compile()
 		textures_dolfile = file_text_open_write(destination + "/gfx/" + "textures.scf");
 		currentsprite_count+=1;
 	}
+
+	//apply settings
+	var mainc_buf = buffer_load(destination + "source/main.cpp");
+	var mainc_str = buffer_read(mainc_buf, buffer_string);
+	buffer_delete(mainc_buf);
+		
+	//actually write the settings
+	mainc_str = string_replace_all(mainc_str, "interpolate_pixels = 0", "interpolate_pixels = " + string(global.SmoothPixels));
+		
+	var mainc_write = file_text_open_write(destination + "source/main.cpp");
+	file_text_write_string(mainc_write, mainc_str);
+	file_text_close(mainc_write);
 
     //json parse
     var yypbuffer = buffer_load(global.selected_yyp);

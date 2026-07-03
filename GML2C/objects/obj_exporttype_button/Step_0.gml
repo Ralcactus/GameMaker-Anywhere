@@ -1,3 +1,6 @@
+if (global.DisableMenu)
+	exit;
+
 if (curt.dd) return;
 var create_dd = function() {
 	var cu = curt.cu,

@@ -1,3 +1,5 @@
+scr_init();
+
 global.copysprite = true;
 if(os_type == os_windows)
 {

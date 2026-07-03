@@ -1,3 +1,6 @@
+if (global.DisableMenu)
+	exit;
+
 if (active){
 	if (keyboard_string != "")
 		global.selected_yyp = keyboard_string;

@@ -1,3 +1,6 @@
+if (global.DisableMenu)
+	exit;
+
 if (mouse_wheel_up())
 	texty+=50;	
 	

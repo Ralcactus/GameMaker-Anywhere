@@ -1,3 +1,6 @@
+if (global.DisableMenu)
+	exit;
+
 if (active){
 	global.game_name = keyboard_string;
 }
