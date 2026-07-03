@@ -19,6 +19,9 @@ unsigned int bgcolor = 0xFF000000;
 int view_camera[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 bool MarkedForClose = false;
 
+bool interpolate_pixels = true;
+bool Interpolate_pixels_enabled = false;
+
 float fps = 0;
 
 #ifdef __3DS__
@@ -64,7 +67,21 @@ int main(){
     while (LoopOS){
         #ifdef __3DS__
             scr_startframe(top);
-            
+
+            //interpolate pixels
+            if (spriteSheet != nullptr) {
+                if (interpolate_pixels && !Interpolate_pixels_enabled){
+                    C2D_Image img = C2D_SpriteSheetGetImage(spriteSheet, 0);
+                    C3D_TexSetFilter(img.tex, GPU_LINEAR, GPU_LINEAR);
+                    Interpolate_pixels_enabled = true;
+                }
+                else if (!interpolate_pixels && Interpolate_pixels_enabled){
+                    C2D_Image img = C2D_SpriteSheetGetImage(spriteSheet, 0);
+                    C3D_TexSetFilter(img.tex, GPU_NEAREST, GPU_NEAREST);
+                    Interpolate_pixels_enabled = false;
+                }
+            }
+
             //get fps
             u64 now = svcGetSystemTick();
             fps = (float)SYSCLOCK_ARM11 / (float)(now - lastTick);

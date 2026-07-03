@@ -285,4 +285,19 @@ int sprite_get_yoffset(int draw_sprite){
 void draw_self(){
     draw_sprite_ext(sprite_index, image_index, x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha);
 }
+
+//tex filtering
+void gpu_set_texfilter(bool yesno){
+    interpolate_pixels = yesno;
+}
+void gpu_set_tex_filter(bool yesno){
+    gpu_set_texfilter(yesno);
+}
+bool gpu_get_texfilter(){
+    return interpolate_pixels;
+}
+bool gpu_get_tex_filter(){
+    return gpu_get_texfilter();
+}
+
 #pragma endregion

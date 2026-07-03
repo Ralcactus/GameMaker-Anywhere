@@ -41,6 +41,8 @@ int sprite_get_height(int draw_sprite);
 int sprite_get_xoffset(int draw_sprite);
 int sprite_get_yoffset(int draw_sprite);
 void draw_self();
+void gpu_set_texfilter(bool yesno);
+bool gpu_get_texfilter();
 
 //3DS
 #ifdef __3DS__
