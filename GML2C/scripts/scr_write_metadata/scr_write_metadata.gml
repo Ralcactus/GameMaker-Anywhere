@@ -24,7 +24,7 @@ function scr_write_metadata(){
 	//WII
 	if (global.export_mode == "WII"){
 		//app info
-		var metadataxml = file_text_open_write(destination + "/output/TheGame/meta.xml");
+		var metadataxml = file_text_open_write(destination + "/output/" + global.game_name + "/meta.xml");
 		file_text_write_string(metadataxml, 
 		"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n"
 		+ "<app version=\"1\">\n"
@@ -36,7 +36,7 @@ function scr_write_metadata(){
 		+ "</app>\n");
 		file_text_close(metadataxml);
 		
-		file_copy(working_directory + "Other/wii_icon.png", destination + "output/TheGame/icon.png")
+		file_copy(working_directory + "Other/wii_icon.png", destination + "output/" + global.game_name + "/icon.png")
 	}
 	
 

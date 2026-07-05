@@ -137,7 +137,7 @@ function scr_compileMIDDLE2(){
 		directory_create(destination + "/source/sprites/");	
 		directory_create(destination + "/output/");
 		if (global.export_mode == "WII")
-			directory_create(destination + "/output/TheGame/");
+			directory_create(destination + "/output/"+global.game_name);
 		show_debug_message("before compile");
 
 		//write the builtin variables to the variable handler
