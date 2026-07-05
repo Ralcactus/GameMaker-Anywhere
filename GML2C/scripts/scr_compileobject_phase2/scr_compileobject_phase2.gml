@@ -87,8 +87,7 @@ function scr_compileobject_phase2(spr_name, create_code, step_code, draw_code){
 	
 	//RUN THE EVENTS
 	file_text_write_string(file, "	//printf(\"RUNNING OBJECT: " + safe_name + "\\n\");\n");
-	file_text_write_string(file, "	bool found = false;\n");
-	file_text_write_string(file, "	CurrentObjectRunning = self;\n");
+	file_text_write_string(file, "	bool found = false;\n");;
 	file_text_write_string(file, "	for(size_t j = 0; j < vector_"+safe_name+".size(); j++){\n");
 	file_text_write_string(file, "		if(vector_"+safe_name+"[j].GetVar(varId_id) == NEWID){\n");
 	file_text_write_string(file, "			found = true;\n")
@@ -99,6 +98,7 @@ function scr_compileobject_phase2(spr_name, create_code, step_code, draw_code){
 	file_text_write_string(file, "		"+safe_name+"_precreate(NEWX, NEWY, NEWXSCALE, NEWYSCALE, NEWID);\n");
 	file_text_write_string(file, "	for(size_t j = 0; j < vector_" + safe_name + ".size(); j++){\n");
 	file_text_write_string(file, "		self = &vector_" + safe_name + "[j];\n");
+	file_text_write_string(file, "		CurrentObjectRunning = self;\n");
 	file_text_write_string(file, "		" + safe_name + "_step();\n");
 	file_text_write_string(file, "		" + safe_name + "_draw();\n\n");
 	file_text_write_string(file, "	}\n");
