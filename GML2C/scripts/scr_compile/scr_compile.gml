@@ -231,6 +231,7 @@ function scr_compile()
 	
 	
 	show_debug_message("CHECKPOINT 3.5");
+	scr_write_sprite_info();
 	show_debug_message("CHECKPOINT 4");
 	scr_write_metadata();
 	show_debug_message("CHECKPOINT 5");

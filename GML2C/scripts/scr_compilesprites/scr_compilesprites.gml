@@ -1,7 +1,5 @@
 function scr_compilesprites(){
 	var safe_name = sanitize_filename(yyfile.name);
-	var sprwidth = 0;
-	var sprheight = 0;
 	
     show_debug_message("Sprite: " + yyfile.name);
     var spriteoutputDIR = destination + "/gfx/";
@@ -17,6 +15,10 @@ function scr_compilesprites(){
 		file_copy(filename_dir(global.selected_yyp) + "/sprites/" + yyfile.name + "/" + frame_name + ".png", spriteoutputDIR + frame_name + ".png");
 		show_debug_message("Copied!");
 		
+		show_debug_message("Saving sprite info...");
+		scr_savesprite_info(frame_name);
+		show_debug_message("Saved!");
+		
 		//T3S sprite list
 		if (global.export_mode == "3DSX" || global.export_mode == "CIA")
 			file_text_write_string(t3s_file, frame_name + ".png\n");
@@ -31,4 +33,21 @@ function scr_compilesprites(){
 	file_text_close(init_sprites);
 	
     currentsprite_count++;
+}
+
+function scr_savesprite_info(frame_name){
+	var sprite = sprite_add(filename_dir(global.selected_yyp) + "/sprites/" + yyfile.name + "/" + frame_name + ".png", 0, false, false, 0, 0);
+	var sprwidth = sprite_get_width(sprite);
+	var sprheight = sprite_get_height(sprite);
+	array_push(global.SpriteWidths, sprwidth);
+	array_push(global.SpriteHeights, sprheight);
+	array_push(global.SpriteOriginX, yyfile.sequence.xorigin);
+	array_push(global.SpriteOriginY, yyfile.sequence.yorigin);
+		
+	//collide box
+	array_push(global.SpriteBoxTOP, yyfile.bbox_top);
+	array_push(global.SpriteBoxBOTTOM, yyfile.bbox_bottom);
+	array_push(global.SpriteBoxLEFT, yyfile.bbox_left);
+	array_push(global.SpriteBoxRIGHT, yyfile.bbox_right);
+	sprite_delete(sprite);	
 }

@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <malloc.h>
 #include <math.h>
+#include "../helpers/get_spriteinfo.h"
 #include "../helpers/var_in_object_running.h"
 
 unsigned int drawcolor = c_white;
@@ -265,21 +266,17 @@ void draw_set_colour(int color){
 
 
 int sprite_get_width(int draw_sprite){
-    //return sprite_width;
-    return 0;
+    return SpriteWidths[draw_sprite];
 }
 int sprite_get_height(int draw_sprite){
-    //return sprite_height;
-    return 0;
+    return SpriteHeights[draw_sprite];
 }
 
 int sprite_get_xoffset(int draw_sprite){
-    //return sprite_xoffset;
-    return 0;
+    return SpriteOriginX[draw_sprite];
 }
 int sprite_get_yoffset(int draw_sprite){
-    //return sprite_yoffset;
-    return 0;
+    return SpriteOriginY[draw_sprite];
 }
 
 void draw_self(){
