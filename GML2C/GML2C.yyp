@@ -134,6 +134,7 @@
     {"id":{"name":"spr_basicico","path":"sprites/spr_basicico/spr_basicico.yy",},},
     {"id":{"name":"spr_checkbox","path":"sprites/spr_checkbox/spr_checkbox.yy",},},
     {"id":{"name":"spr_compile_button","path":"sprites/spr_compile_button/spr_compile_button.yy",},},
+    {"id":{"name":"spr_debug","path":"sprites/spr_debug/spr_debug.yy",},},
     {"id":{"name":"spr_generate_titleid","path":"sprites/spr_generate_titleid/spr_generate_titleid.yy",},},
     {"id":{"name":"spr_log","path":"sprites/spr_log/spr_log.yy",},},
     {"id":{"name":"spr_logo","path":"sprites/spr_logo/spr_logo.yy",},},

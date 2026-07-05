@@ -31,6 +31,23 @@ function(){
 	DestroySettings = true;
 });
 
+//debug runner button
+create_button(400, 50, spr_debug, 
+function(){
+	show_message("PICK A FOLDER CONTAINING WHERE A CUSTOM \"RUNNER\" IS");
+	var folder = get_directory("");
+	if (!file_exists(folder + "/makefile/")){
+		var choice = show_question("This doesn't seem to be a correct runner folder, proceed anyways?");
+		
+		if (choice == false)
+			exit;
+	}
+	
+	obj_compiler.runnerfolder = folder;
+	
+	
+});
+
 
 function create_option(name, variable){
 	array_push(SettingsNames, name);
