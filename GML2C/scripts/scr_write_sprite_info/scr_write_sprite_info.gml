@@ -82,9 +82,5 @@ function scr_write_sprite_info(){
 	var real_ObjectIDS_array = string_replace(string_replace(string(ObjectIDS), "[", "{"), "]", "}");
 	file_text_write_string(spriteinfoC, "int otherobject_id[] = " + string(real_ObjectIDS_array) + ";\n");
 	
-	var real_objectoid_array = string_replace(string_replace(global.ObjectIdOBJECT, "[", "{"), "]", "}");
-	real_objectoid_array = string_replace_all(real_objectoid_array, "\"", "");
-	file_text_write_string(spriteinfoC, "int IDtoObject[] = " + string(real_objectoid_array) + ";\n");
-	
 	file_text_close(spriteinfoC);
 }

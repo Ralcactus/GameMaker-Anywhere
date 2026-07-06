@@ -45,7 +45,7 @@ function scr_compileobject_phase2(spr_name, create_code, step_code, draw_code){
 	file_text_write_string(file, "}\n\n");
 	//step
 	file_text_write_string(file, "void " + safe_name + "_step() {\n");
-	file_text_write_string(file, step_code + "\n" + "objectid_collided = get_current_object_touching(x, y, image_xscale, image_yscale, sprite_index, (int)id);\n");
+	file_text_write_string(file, step_code + "\n" + "draw_boundbox();\n");
 	file_text_write_string(file, "}\n");
 	//draw
 	file_text_write_string(file, "void " + safe_name + "_draw() {\n");
