@@ -10,6 +10,7 @@ function scr_compilesprites(){
     for (var f = 0; f < array_length(yyfile.frames); f++) {
         var frame_name = yyfile.frames[f].name;
         array_push(sprite_frames, frame_name);
+		currentsprite_count++;
 
 		show_debug_message("Copying sprite frame: " + frame_name);
 		file_copy(filename_dir(global.selected_yyp) + "/sprites/" + yyfile.name + "/" + frame_name + ".png", spriteoutputDIR + frame_name + ".png");
@@ -27,6 +28,7 @@ function scr_compilesprites(){
 		if (global.export_mode == "GAMECUBE" || global.export_mode == "WII")
 			file_text_write_string(textures_dolfile, "<filepath=" + frame_name + ".png" + " id=\"" + yyfile.name + "FSDSDFFDGIOJHDFIOHEFAMILYGUY2DDD" + "\" colfmt=6 />\n"); //for the sprite name, were just gonna use the custom defines so i just made it strange
     }
+	currentsprite_count--;
 
 	var init_sprites = file_text_open_append(destination + "source/helpers/init_sprites.h");	
 	file_text_write_string(init_sprites, "#define " + safe_name + " " + string(currentsprite_count) + "\n");	
