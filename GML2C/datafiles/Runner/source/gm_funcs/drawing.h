@@ -29,8 +29,8 @@ extern unsigned int drawcolor;
 
 //funcs
 //draw stuff
-void draw_sprite(int draw_sprite, int subimg, float draw_x, float draw_y);
-void draw_sprite_ext(int draw_sprite, int subimg, float draw_x, float draw_y, float scale_x, float scale_y, float rotation, float color, float alpha);
+void draw_sprite(int draw_sprite, float subimg, float draw_x, float draw_y);
+void draw_sprite_ext(int draw_sprite, float subimg, float draw_x, float draw_y, float scale_x, float scale_y, float rotation, float color, float alpha);
 void drawing_init();
 void scr_endframe();
 void draw_text(float _x, float _y, const char* text);

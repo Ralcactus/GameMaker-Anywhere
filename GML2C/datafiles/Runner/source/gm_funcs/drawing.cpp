@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <malloc.h>
 #include <math.h>
+#include <string>
 #include "../helpers/get_spriteinfo.h"
 #include "../helpers/var_in_object_running.h"
 
@@ -41,22 +42,17 @@ unsigned int drawcolor = c_white;
 
     //subimg, color and alpha are stubs!
     //Also rotation is a little weird idk how to fix it
-    void draw_sprite(int draw_sprite, int subimg, float draw_x, float draw_y){
-        if (draw_sprite == -1)
-            return;
-
-        C2D_Sprite sprite;
-        C2D_SpriteFromSheet(&sprite, spriteSheet, draw_sprite);
-        C2D_SpriteSetPos(&sprite, draw_x-sprite_get_xoffset(draw_sprite), draw_y-sprite_get_yoffset(draw_sprite));
-        C2D_DrawSprite(&sprite);
+    void draw_sprite(int draw_sprite, float subimg, float draw_x, float draw_y){
+        draw_sprite_ext(draw_sprite, subimg, draw_x, draw_y, 1, 1, 0, c_white, 1);
     }
     
-    void draw_sprite_ext(int draw_sprite, int subimg, float draw_x, float draw_y, float scale_x, float scale_y, float rotation, float color, float alpha){
+    void draw_sprite_ext(int draw_sprite, float subimg, float draw_x, float draw_y, float scale_x, float scale_y, float rotation, float color, float alpha){
         if (draw_sprite == -1)
             return;
 
         C2D_Sprite sprite;
-        C2D_SpriteFromSheet(&sprite, spriteSheet, draw_sprite);
+        C2D_SpriteFromSheet(&sprite, spriteSheet, draw_sprite-round(subimg));
+        //printf("%s\n", std::string(string(draw_sprite-round(subimg-2))).c_str());
         C2D_SpriteSetPos(&sprite, draw_x-sprite_get_xoffset(draw_sprite)*scale_x, draw_y-sprite_get_yoffset(draw_sprite)*scale_y);
         C2D_SpriteSetScale(&sprite, scale_x, scale_y);
         C2D_SpriteSetRotation(&sprite, rotation);

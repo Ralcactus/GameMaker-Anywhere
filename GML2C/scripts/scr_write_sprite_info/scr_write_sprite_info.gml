@@ -82,5 +82,8 @@ function scr_write_sprite_info(){
 	var real_ObjectIDS_array = string_replace(string_replace(string(ObjectIDS), "[", "{"), "]", "}");
 	file_text_write_string(spriteinfoC, "int otherobject_id[] = " + string(real_ObjectIDS_array) + ";\n");
 	
+	var realspriteframecount_array = string_replace(string_replace(global.SpriteFrameCount, "[", "{"), "]", "}");
+	file_text_write_string(spriteinfoC, "int SpriteFrameCount[] = " + string(realspriteframecount_array) + ";\n");
+	
 	file_text_close(spriteinfoC);
 }

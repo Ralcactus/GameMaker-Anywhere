@@ -36,6 +36,8 @@ global.SpriteBoxLEFT = [];
 global.SpriteBoxRIGHT = [];
 
 global.ObjectIdOBJECT = [];
+global.SpriteFrameCount = [];
+
 currentobject_count = -1;
 object_count = 0;
 general_varnames = [];

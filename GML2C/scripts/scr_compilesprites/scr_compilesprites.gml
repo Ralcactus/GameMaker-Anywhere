@@ -28,8 +28,9 @@ function scr_compilesprites(){
 		if (global.export_mode == "GAMECUBE" || global.export_mode == "WII")
 			file_text_write_string(textures_dolfile, "<filepath=" + frame_name + ".png" + " id=\"" + yyfile.name + "FSDSDFFDGIOJHDFIOHEFAMILYGUY2DDD" + "\" colfmt=6 />\n"); //for the sprite name, were just gonna use the custom defines so i just made it strange
     }
+	scr_savesprite_info(yyfile.frames[0].name);
 	currentsprite_count--;
-
+	
 	var init_sprites = file_text_open_append(destination + "source/helpers/init_sprites.h");	
 	file_text_write_string(init_sprites, "#define " + safe_name + " " + string(currentsprite_count) + "\n");	
 	file_text_close(init_sprites);
@@ -45,7 +46,8 @@ function scr_savesprite_info(frame_name){
 	array_push(global.SpriteHeights, sprheight);
 	array_push(global.SpriteOriginX, yyfile.sequence.xorigin);
 	array_push(global.SpriteOriginY, yyfile.sequence.yorigin);
-		
+	array_push(global.SpriteFrameCount, array_length(yyfile.frames)-1);
+	
 	//collide box
 	array_push(global.SpriteBoxTOP, yyfile.bbox_top);
 	array_push(global.SpriteBoxBOTTOM, yyfile.bbox_bottom);

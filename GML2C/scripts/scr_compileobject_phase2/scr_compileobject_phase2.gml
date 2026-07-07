@@ -20,6 +20,7 @@ function scr_compileobject_phase2(spr_name, create_code, step_code, draw_code){
 	file_text_write_string(file, "#include \"../helpers/init_sprites.h\"\n");
 	file_text_write_string(file, "#include <variant>\n");
 	file_text_write_string(file, "#include <vector>\n\n");
+	file_text_write_string(file, "#include <string>\n\n");
 	/*file_text_write_string(file, "std::vector<" + safe_name + "_variableholder> vector_" + safe_name + ";\n");
 	file_text_write_string(file, "static " + safe_name + "_variableholder* self; \n");*/
 	file_text_write_string(file, "std::vector<Object> vector_" + safe_name + ";\n");
@@ -45,12 +46,12 @@ function scr_compileobject_phase2(spr_name, create_code, step_code, draw_code){
 	file_text_write_string(file, "}\n\n");
 	//step
 	file_text_write_string(file, "void " + safe_name + "_step() {\n");
-	//file_text_write_string(file, step_code + "\n" + "draw_boundbox();\n");
+	file_text_write_string(file, step_code + "\n" + "//draw_boundbox();\n");
 	file_text_write_string(file, "}\n");
 	//draw
 	file_text_write_string(file, "void " + safe_name + "_draw() {\n");
 	if (draw_code == "")
-		file_text_write_string(file, "draw_sprite_ext(sprite_index, 0, x, y, image_xscale, image_yscale, 0, 0, 1);\n"); //change this to draw_self() later
+		file_text_write_string(file, "draw_self();\n"); //change this to draw_self() later
 	else
 		file_text_write_string(file, draw_code + "\n");
 	file_text_write_string(file, "}\n\n");
@@ -103,6 +104,11 @@ function scr_compileobject_phase2(spr_name, create_code, step_code, draw_code){
 	file_text_write_string(file, "		" + safe_name + "_draw();\n\n");
 	file_text_write_string(file, "	}\n");
 
+	file_text_write_string(file, "	image_index+=0.33;\n");
+	file_text_write_string(file, "	if (image_index >= SpriteFrameCount[sprite_index]){\n");
+	file_text_write_string(file, "		image_index = 0;\n");
+	file_text_write_string(file, "	}\n");
+	
 	file_text_write_string(file, "}\n\n");
 	file_text_close(file);
 
