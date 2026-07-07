@@ -2,6 +2,8 @@
 #include "../variable_handler.h"
 #include <variant>
 #include <vector>
+#include <cmath>
+#include <math.h>
 
 extern float view0_camXPos;
 extern float view0_camYPos;
@@ -131,7 +133,10 @@ void show_error(const char* message, bool abort);
 float clamp(float value, float min, float max);
 float sign(float number);
 
+float gm_lerp(float value, float to_goto, float speed);
+#define lerp gm_lerp
+
 #if __3DS__
     //wii and gamecube already have this lol
-    float lerp(float value, float to_goto, float speed);
+    
 #endif

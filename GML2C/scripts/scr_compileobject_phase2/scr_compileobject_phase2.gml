@@ -6,6 +6,7 @@ function scr_compileobject_phase2(spr_name, create_code, step_code, draw_code){
 	file_text_write_string(file, "#include <stdbool.h>\n");
 	file_text_write_string(file, "#include <stdio.h>\n");
 	file_text_write_string(file, "#include <string.h>\n");
+	file_text_write_string(file, "#include <math.h>\n");
 	file_text_write_string(file, "#include \"../sprite_toid.h\"\n");
 	file_text_write_string(file, "#include \"../gm_funcs/drawing.h\"\n");
 	file_text_write_string(file, "#include \"../gm_funcs/input.h\"\n");

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
 #include "gm_funcs/input.h"
 #include "helpers/other.h"
 #include "helpers/file_manage.h"
@@ -15,6 +16,10 @@
     #include <wiiuse/wpad.h>
 #endif
 
+#if defined(__gamecube__) || defined(__wii__)
+    #include <ogc/lwp_watchdog.h>
+#endif
+
 unsigned int bgcolor = 0xFF000000;
 int view_camera[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 bool MarkedForClose = false;
@@ -25,6 +30,10 @@ int Interpolate_pixels_enabled = 0;
 float fps = 0;
 
 #ifdef __3DS__
+    u64 lastTick = 0;
+#endif
+
+#if defined(__gamecube__) || defined(__wii__)
     u64 lastTick = 0;
 #endif
 
@@ -51,11 +60,13 @@ int main(){
 
     #ifdef __gamecube__
         PAD_Init();
+        lastTick = gettick();
     #endif
 
     #ifdef __wii__
         WPAD_Init();
         WPAD_SetDataFormat(WPAD_CHAN_0, WPAD_FMT_BTNS_ACC_IR);
+        lastTick = gettick();
     #endif
 
 
@@ -90,6 +101,10 @@ int main(){
 
         #if defined(__gamecube__) || defined(__wii__)
             scr_startframe();
+
+            u32 now = gettick();
+            fps = round((float)(TB_TIMER_CLOCK * 1000) / (float)(now - lastTick));
+            lastTick = now;
         #endif
 
         #ifdef __wii__

@@ -166,6 +166,10 @@ float sign(float number){
         return 0;
 }
 
+//wii and gamecube already have these lol
+float lerp(float value, float to_goto, float speed){
+    return value + speed * (to_goto - value);
+}
 
 #pragma endregion
 
@@ -192,10 +196,7 @@ float sign(float number){
             game_end();
     }
 
-    //wii and gamecube already have these lol
-    float lerp(float value, float to_goto, float speed){
-        return value + speed * (to_goto - value);
-    }
+
 #endif
 
 //gamecube and wii

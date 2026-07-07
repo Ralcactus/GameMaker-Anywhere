@@ -14,7 +14,7 @@ if (CompletionStatusFromExecutedProcess(compile_powershell_window) && logging ==
 	}
 
 	if (global.export_mode == "WII"){
-		file_rename(destination+"/output/boot.dol", destination+"/output/" + global.game_name + "/" + global.game_name+".dol");
+		file_rename(destination+"/output/boot.dol", destination+"/output/" + global.game_name + "/" + "boot.dol");
 		file_delete(destination + "/output/boot.elf/");
 	}
 	

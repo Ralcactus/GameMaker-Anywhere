@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
 #include "../sprite_toid.h"
 #include "../gm_funcs/drawing.h"
 #include "../gm_funcs/input.h"
