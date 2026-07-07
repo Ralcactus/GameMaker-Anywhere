@@ -52,6 +52,8 @@ function scr_compileSETUP(){
 	global.SpriteBoxRIGHT = [];
 	global.ObjectIdOBJECT = [];
 	global.SpriteFrameCount = [];
+	global.SpriteAnimTimer = [];
+	global.SpriteAnimSpeedType = [];
 
 	if (directory_exists(destination)){
 		// delete the old build

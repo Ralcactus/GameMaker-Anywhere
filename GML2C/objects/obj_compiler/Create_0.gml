@@ -37,6 +37,8 @@ global.SpriteBoxRIGHT = [];
 
 global.ObjectIdOBJECT = [];
 global.SpriteFrameCount = [];
+global.SpriteAnimTimer = [];
+global.SpriteAnimSpeedType = [];
 
 currentobject_count = -1;
 object_count = 0;

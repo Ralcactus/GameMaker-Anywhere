@@ -103,8 +103,12 @@ function scr_compileobject_phase2(spr_name, create_code, step_code, draw_code){
 	file_text_write_string(file, "		" + safe_name + "_step();\n");
 	file_text_write_string(file, "		" + safe_name + "_draw();\n\n");
 	file_text_write_string(file, "	}\n");
-
-	file_text_write_string(file, "	image_index+=0.33;\n");
+	
+	file_text_write_string(file, "	if (SpriteAnimSpeedType[sprite_index] == 0){\n");
+	file_text_write_string(file, "		image_index+=SpriteAnimTimer[sprite_index]/fps;\n");
+	file_text_write_string(file, "	}\n");
+	file_text_write_string(file, "	else\n");
+	file_text_write_string(file, "		image_index+=SpriteAnimTimer[sprite_index];\n");
 	file_text_write_string(file, "	if (image_index >= SpriteFrameCount[sprite_index]){\n");
 	file_text_write_string(file, "		image_index = 0;\n");
 	file_text_write_string(file, "	}\n");

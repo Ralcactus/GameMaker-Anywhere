@@ -85,5 +85,11 @@ function scr_write_sprite_info(){
 	var realspriteframecount_array = string_replace(string_replace(global.SpriteFrameCount, "[", "{"), "]", "}");
 	file_text_write_string(spriteinfoC, "int SpriteFrameCount[] = " + string(realspriteframecount_array) + ";\n");
 	
+	var realSpriteAnimTimer_array = string_replace(string_replace(global.SpriteAnimTimer, "[", "{"), "]", "}");
+	file_text_write_string(spriteinfoC, "int SpriteAnimTimer[] = " + string(realSpriteAnimTimer_array) + ";\n");
+	
+	var realSpriteAnimSpeedType_array = string_replace(string_replace(global.SpriteAnimSpeedType, "[", "{"), "]", "}");
+	file_text_write_string(spriteinfoC, "int SpriteAnimSpeedType[] = " + string(realSpriteAnimSpeedType_array) + ";\n");
+	
 	file_text_close(spriteinfoC);
 }

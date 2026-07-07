@@ -42,16 +42,19 @@ function scr_savesprite_info(frame_name){
 	var sprite = sprite_add(filename_dir(global.selected_yyp) + "/sprites/" + yyfile.name + "/" + frame_name + ".png", 0, false, false, 0, 0);
 	var sprwidth = sprite_get_width(sprite);
 	var sprheight = sprite_get_height(sprite);
+	sprite_delete(sprite);	
+	
 	array_push(global.SpriteWidths, sprwidth);
 	array_push(global.SpriteHeights, sprheight);
 	array_push(global.SpriteOriginX, yyfile.sequence.xorigin);
 	array_push(global.SpriteOriginY, yyfile.sequence.yorigin);
 	array_push(global.SpriteFrameCount, array_length(yyfile.frames)-1);
+	array_push(global.SpriteAnimTimer, yyfile.sequence.playbackSpeed);
+	array_push(global.SpriteAnimSpeedType, yyfile.sequence.playbackSpeedType);
 	
 	//collide box
 	array_push(global.SpriteBoxTOP, yyfile.bbox_top);
 	array_push(global.SpriteBoxBOTTOM, yyfile.bbox_bottom);
 	array_push(global.SpriteBoxLEFT, yyfile.bbox_left);
 	array_push(global.SpriteBoxRIGHT, yyfile.bbox_right);
-	sprite_delete(sprite);	
 }

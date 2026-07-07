@@ -84,7 +84,7 @@ int main(){
 
             //get fps
             u64 now = svcGetSystemTick();
-            fps = (float)SYSCLOCK_ARM11 / (float)(now - lastTick);
+            fps = round((float)SYSCLOCK_ARM11 / (float)(now - lastTick));
             lastTick = now;
         #endif
 

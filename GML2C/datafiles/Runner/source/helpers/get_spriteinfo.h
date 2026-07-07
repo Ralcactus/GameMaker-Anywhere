@@ -23,3 +23,5 @@ extern int otherobject_id[];
 extern int object_count;
 extern int IDtoObject[];
 extern int SpriteFrameCount[];
+extern int SpriteAnimTimer[];
+extern int SpriteAnimSpeedType[];
