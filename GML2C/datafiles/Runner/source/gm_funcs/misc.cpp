@@ -74,6 +74,10 @@ bool window_get_fullscreen(){
 void window_set_fullscreen(bool fullscreen){
     //No
 }
+
+void window_set_size(int width, int height){
+    //No
+}
 #pragma endregion
 
 #pragma region //rooms

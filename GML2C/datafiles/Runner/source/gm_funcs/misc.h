@@ -104,6 +104,7 @@ bool window_has_focus();
 void window_post_message();
 bool window_get_fullscreen();
 void window_set_fullscreen(bool fullscreen);
+void window_set_size(int width, int height);
 
 //game_ funcs
 void game_end();
