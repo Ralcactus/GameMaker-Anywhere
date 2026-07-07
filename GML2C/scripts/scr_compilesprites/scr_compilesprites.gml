@@ -26,7 +26,7 @@ function scr_compilesprites(){
 
 		//SCF sprite list
 		if (global.export_mode == "GAMECUBE" || global.export_mode == "WII")
-			file_text_write_string(textures_dolfile, "<filepath=" + frame_name + ".png" + " id=\"" + yyfile.name + "FSDSDFFDGIOJHDFIOHEFAMILYGUY2DDD" + "\" colfmt=6 />\n"); //for the sprite name, were just gonna use the custom defines so i just made it strange
+			file_text_write_string(textures_dolfile, "<filepath=" + frame_name + ".png" + " id=\"" + yyfile.name + "FSDSDFFDGIOJHDFIOHEFAMILYGUY2DDD"+string(irandom(100))+string(f) + "\" colfmt=6 />\n"); //for the sprite name, were just gonna use the custom defines so i just made it strange
     }
 	scr_savesprite_info(yyfile.frames[0].name);
 	currentsprite_count--;

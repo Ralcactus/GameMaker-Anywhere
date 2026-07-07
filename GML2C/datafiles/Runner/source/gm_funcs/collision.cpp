@@ -8,19 +8,21 @@
 
 //helper funcs
 void draw_boundbox(){
-    if (sprite_index < 0)
-        return;
+    #ifdef __3DS__
+        if (sprite_index < 0)
+            return;
 
-    //draw bounding box
-    int line_thick = 6;
-    int boundingbox_left = x + (SpriteCollideLEFT[sprite_index] - sprite_get_xoffset(sprite_index)) * (double)image_xscale;
-    int boundingbox_right = x + (SpriteCollideRIGHT[sprite_index] - sprite_get_xoffset(sprite_index)) * (double)image_xscale;
-    int boundingbox_top = y + (SpriteCollideTOP[sprite_index] - sprite_get_yoffset(sprite_index)) * (double)image_yscale;
-    int boundingbox_bottom = y + (SpriteCollideBOTTOM[sprite_index] - sprite_get_yoffset(sprite_index)) * (double)image_yscale;
-    C2D_DrawLine(boundingbox_left, boundingbox_top, C2D_Color32(255, 0, 0, 255), boundingbox_right, boundingbox_top, C2D_Color32(255, 0, 0, 255), line_thick, 0.0f);
-    C2D_DrawLine(boundingbox_right, boundingbox_top, C2D_Color32(255, 0, 0, 255), boundingbox_right, boundingbox_bottom, C2D_Color32(255, 0, 0, 255), line_thick, 0.0f);
-    C2D_DrawLine(boundingbox_right, boundingbox_bottom, C2D_Color32(255, 0, 0, 255), boundingbox_left, boundingbox_bottom, C2D_Color32(255, 0, 0, 255), line_thick, 0.0f);
-    C2D_DrawLine(boundingbox_left, boundingbox_bottom, C2D_Color32(255, 0, 0, 255), boundingbox_left, boundingbox_top, C2D_Color32(255, 0, 0, 255), line_thick, 0.0f);
+        //draw bounding box
+        int line_thick = 6;
+        int boundingbox_left = x + (SpriteCollideLEFT[sprite_index] - sprite_get_xoffset(sprite_index)) * (double)image_xscale;
+        int boundingbox_right = x + (SpriteCollideRIGHT[sprite_index] - sprite_get_xoffset(sprite_index)) * (double)image_xscale;
+        int boundingbox_top = y + (SpriteCollideTOP[sprite_index] - sprite_get_yoffset(sprite_index)) * (double)image_yscale;
+        int boundingbox_bottom = y + (SpriteCollideBOTTOM[sprite_index] - sprite_get_yoffset(sprite_index)) * (double)image_yscale;
+        C2D_DrawLine(boundingbox_left, boundingbox_top, C2D_Color32(255, 0, 0, 255), boundingbox_right, boundingbox_top, C2D_Color32(255, 0, 0, 255), line_thick, 0.0f);
+        C2D_DrawLine(boundingbox_right, boundingbox_top, C2D_Color32(255, 0, 0, 255), boundingbox_right, boundingbox_bottom, C2D_Color32(255, 0, 0, 255), line_thick, 0.0f);
+        C2D_DrawLine(boundingbox_right, boundingbox_bottom, C2D_Color32(255, 0, 0, 255), boundingbox_left, boundingbox_bottom, C2D_Color32(255, 0, 0, 255), line_thick, 0.0f);
+        C2D_DrawLine(boundingbox_left, boundingbox_bottom, C2D_Color32(255, 0, 0, 255), boundingbox_left, boundingbox_top, C2D_Color32(255, 0, 0, 255), line_thick, 0.0f);
+    #endif
 }
 
 //the gm funcs

@@ -52,7 +52,6 @@ unsigned int drawcolor = c_white;
 
         C2D_Sprite sprite;
         C2D_SpriteFromSheet(&sprite, spriteSheet, draw_sprite-round(subimg));
-        //printf("%s\n", std::string(string(draw_sprite-round(subimg-2))).c_str());
         C2D_SpriteSetPos(&sprite, draw_x-sprite_get_xoffset(draw_sprite)*scale_x, draw_y-sprite_get_yoffset(draw_sprite)*scale_y);
         C2D_SpriteSetScale(&sprite, scale_x, scale_y);
         C2D_SpriteSetRotation(&sprite, rotation);
@@ -186,39 +185,13 @@ unsigned int drawcolor = c_white;
         fb ^= 1;
     }
 
-    void draw_sprite(int draw_sprite, int subimg, float draw_x, float draw_y){
-        GXTexObj localTex;
-        if (TPL_GetTexture(&spriteTPL, draw_sprite, &localTex) != 0)
-            return;
-
-        GX_LoadTexObj(&localTex, GX_TEXMAP0);
-        GX_Begin(GX_TRIANGLESTRIP, GX_VTXFMT0, 4);
-
-        int realsprite_width = sprite_get_width(draw_sprite);
-        int realsprite_height = sprite_get_height(draw_sprite);
-
-        //Draw top Left
-        GX_Position2f32(draw_x-sprite_get_xoffset(draw_sprite), draw_y-sprite_get_yoffset(draw_sprite));
-        GX_TexCoord2f32(0, 0);
-
-        //Draw top Right
-        GX_Position2f32(draw_x+realsprite_width-1-sprite_get_xoffset(draw_sprite), draw_y-sprite_get_yoffset(draw_sprite));
-        GX_TexCoord2f32(1, 0);
-
-        //Draw bottom Left
-        GX_Position2f32(draw_x-sprite_get_xoffset(draw_sprite), draw_y+realsprite_height-1-sprite_get_yoffset(draw_sprite));
-        GX_TexCoord2f32(0, 1);
-
-        //Draw bottom Right
-        GX_Position2f32(draw_x+realsprite_width-1-sprite_get_xoffset(draw_sprite), draw_y+realsprite_height-1-sprite_get_yoffset(draw_sprite)); 
-        GX_TexCoord2f32(1, 1);
-
-        GX_End();
+    void draw_sprite(int draw_sprite, float subimg, float draw_x, float draw_y){
+        draw_sprite_ext(draw_sprite, subimg, draw_x, draw_y, 1, 1, 0, c_white, 1);
     }
     
-    void draw_sprite_ext(int draw_sprite, int subimg, float draw_x, float draw_y, float scale_x, float scale_y, float rotation, float color, float alpha){ 
+    void draw_sprite_ext(int draw_sprite, float subimg, float draw_x, float draw_y, float scale_x, float scale_y, float rotation, float color, float alpha){ 
         GXTexObj localTex;
-        if (TPL_GetTexture(&spriteTPL, draw_sprite, &localTex) != 0)
+        if (TPL_GetTexture(&spriteTPL, draw_sprite-round(subimg), &localTex) != 0)
             return;
 
         GX_LoadTexObj(&localTex, GX_TEXMAP0);
