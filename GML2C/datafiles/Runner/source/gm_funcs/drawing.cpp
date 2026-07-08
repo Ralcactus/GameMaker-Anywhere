@@ -205,15 +205,15 @@ unsigned int drawcolor = c_white;
         GX_TexCoord2f32(0, 0);
 
         //Draw top Right
-        GX_Position2f32(draw_x+realsprite_width-1-sprite_get_xoffset(draw_sprite)*scale_x, draw_y-sprite_get_yoffset(draw_sprite)*scale_y);
+        GX_Position2f32(draw_x+realsprite_width-sprite_get_xoffset(draw_sprite)*scale_x, draw_y-sprite_get_yoffset(draw_sprite)*scale_y);
         GX_TexCoord2f32(1, 0);
 
         //Draw bottom Left
-        GX_Position2f32(draw_x-sprite_get_xoffset(draw_sprite)*scale_x, draw_y+realsprite_height-1-sprite_get_yoffset(draw_sprite)*scale_y);
+        GX_Position2f32(draw_x-sprite_get_xoffset(draw_sprite)*scale_x, draw_y+realsprite_height-sprite_get_yoffset(draw_sprite)*scale_y);
         GX_TexCoord2f32(0, 1);
 
         //Draw bottom Right
-        GX_Position2f32(draw_x+realsprite_width-1-sprite_get_xoffset(draw_sprite)*scale_x, draw_y+realsprite_height-1-sprite_get_yoffset(draw_sprite)*scale_y); 
+        GX_Position2f32(draw_x+realsprite_width-sprite_get_xoffset(draw_sprite)*scale_x, draw_y+realsprite_height-sprite_get_yoffset(draw_sprite)*scale_y); 
         GX_TexCoord2f32(1, 1);
 
         GX_End();
