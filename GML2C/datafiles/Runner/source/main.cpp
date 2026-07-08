@@ -10,10 +10,16 @@
 #include "sprite_toid.h"
 #include "room_toid.h"
 #include "init_sprites.h"
+#include "gm_funcs/audio.h"
 
 #ifdef __wii__
     #include <gccore.h>
     #include <wiiuse/wpad.h>
+#endif
+
+#ifdef __3DS__
+    #include <opusfile.h>
+    #include <3ds.h>
 #endif
 
 #if defined(__gamecube__) || defined(__wii__)
@@ -46,13 +52,16 @@ float room_height = 0;
 int main(){
     //variable init
     room_first = room;
-    
+
     #ifdef __3DS__
         gfxInitDefault();
         C3D_Init(C3D_DEFAULT_CMDBUF_SIZE);
         C2D_Init(C2D_DEFAULT_MAX_OBJECTS);
         C2D_Prepare();
         romfsInit();
+        ndspInit();
+        audioInit();
+        LightEvent_Init(&s_event, RESET_ONESHOT);
         consoleInit(GFX_BOTTOM, NULL);
         lastTick = svcGetSystemTick();
         C3D_RenderTarget* top = C2D_CreateScreenTarget(GFX_TOP, GFX_LEFT);
@@ -115,7 +124,7 @@ int main(){
         gamepad_scanner();
         scr_handleroom(room);
         scr_endframe();
-        
+
         if (MarkedForClose)
             break;
     }

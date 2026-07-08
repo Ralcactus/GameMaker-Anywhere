@@ -36,6 +36,7 @@
     {"link":"io.gamemaker.gm_filter_tintfilter-1.0.0","name":"io.gamemaker.gm_filter_tintfilter-1.0.0","path":"io.gamemaker.gm_filter_tintfilter-1.0.0.yyp",},
   ],
   "IncludedFiles":[
+    {"$GMIncludedFile":"","%Name":"ffmpeg.exe","CopyToMask":-1,"filePath":"datafiles/Other","name":"ffmpeg.exe","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"wii_icon.png","CopyToMask":-1,"filePath":"datafiles/Other","name":"wii_icon.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":".gitattributes","CopyToMask":-1,"filePath":"datafiles/Runner","name":".gitattributes","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"launch.json","CopyToMask":-1,"filePath":"datafiles/Runner/.vscode","name":"launch.json","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
@@ -118,7 +119,8 @@
     {"id":{"name":"scr_compileobjects","path":"scripts/scr_compileobjects/scr_compileobjects.yy",},},
     {"id":{"name":"scr_compileroom_phase2","path":"scripts/scr_compileroom_phase2/scr_compileroom_phase2.yy",},},
     {"id":{"name":"scr_compilerooms","path":"scripts/scr_compilerooms/scr_compilerooms.yy",},},
-    {"id":{"name":"scr_compilescript","path":"scripts/scr_compilescript/scr_compilescript.yy",},},
+    {"id":{"name":"scr_compilescripts","path":"scripts/scr_compilescripts/scr_compilescripts.yy",},},
+    {"id":{"name":"scr_compilesounds","path":"scripts/scr_compilesounds/scr_compilesounds.yy",},},
     {"id":{"name":"scr_compilesprites","path":"scripts/scr_compilesprites/scr_compilesprites.yy",},},
     {"id":{"name":"scr_ctype","path":"scripts/scr_ctype/scr_ctype.yy",},},
     {"id":{"name":"scr_getvariables","path":"scripts/scr_getvariables/scr_getvariables.yy",},},

@@ -1,4 +1,4 @@
-function scr_compilescript(){
+function scr_compilescripts(){
 	if (!global.copycode)
 		exit;
 	

@@ -1,5 +1,10 @@
 scr_init();
 
+if (!file_exists(working_directory+"/other/ffmpeg.exe")){
+	show_message("ERROR\nffmpeg was not found in the \"other\" folder, please add it!");
+	game_end();
+}
+
 global.copysprite = true;
 if(os_type == os_windows)
 {

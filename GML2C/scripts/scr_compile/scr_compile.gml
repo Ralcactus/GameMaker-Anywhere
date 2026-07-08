@@ -215,11 +215,15 @@ function scr_compile()
 			show_debug_message("sprites!!!");
 			scr_compilesprites();
 		}
+		
         if (yyfile.resourceType == "GMObject") //asset is a object!
 			scr_compileobjects();
 			
         if (yyfile.resourceType == "GMScript") //asset is a script!
-			scr_compilescript();
+			scr_compilescripts();
+			
+        if (yyfile.resourceType == "GMSound") //asset is a sound!
+			scr_compilesounds();
     }
 	show_debug_message("compiled resources");
 	

@@ -1,5 +1,12 @@
 #include <stdbool.h>
 
+#ifdef __3DS__
+    #include <opusfile.h>
+    #include <3ds.h>
+    extern OggOpusFile *opusFile;
+    extern Thread threadId;
+#endif
+
 void audio_listener_position(float x, float y, float z);
 void audio_listener_velocity(float x, float y, float z);
 void audio_listener_orientation(float lookat_x, float lookat_y, float lookat_z, float up_x, float up_y, float up_z);

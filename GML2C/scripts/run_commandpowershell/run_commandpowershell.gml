@@ -3,7 +3,7 @@ function sleep(ms) {
     while (current_time - start < ms) {}
 }
 
-function run_commandpowershell(destination, command) {
+function run_commandpowershell(destination, command, Async = true) {
     var REALCOMMAND;
 
     if (os_type == os_windows) {
@@ -16,11 +16,13 @@ function run_commandpowershell(destination, command) {
     }
 
     show_debug_message("RUN: " + REALCOMMAND);
-    var process = ProcessExecuteAsync(REALCOMMAND);
-
-    /*while (!CompletionStatusFromExecutedProcess(process)) {
-        sleep(10);
-    }*/
+	
+	var process;
+	
+	if (Async)
+		process = ProcessExecuteAsync(REALCOMMAND);
+	else
+		process = ProcessExecute(REALCOMMAND);
 
     return process;
 }
