@@ -8,11 +8,10 @@ function scr_compileroom_phase2(packed_layers){
 	show_debug_message("close file");
 
 	//i don't think this works with more then 1 asset layer!
-	var asset_layer_index = -1;
+	var asset_layer_index = [];
 	for (var k = 0; k < array_length(packed_layers); k++){
 	    if (packed_layers[k].type == "GMRAssetLayer"){
-	        asset_layer_index = k;
-	        break;
+			array_push(asset_layer_index, k);
 	    }
 	}
 	show_debug_message("asset layer");
@@ -57,15 +56,15 @@ function scr_compileroom_phase2(packed_layers){
 	}
 	show_debug_message("instance layers: " + string(object_layer_index));
 
-	var asset_layer = safe_name + "_asset_" + string(asset_layer_index);
 	var background_layer = safe_name + "_bg_" + string(bg_layer_index);
 	
-	var assetdraw_loop = "";
+	var assetdraw_loop = [];
 	var bg_color_applycode = "";
 	
-	if (asset_layer_index != -1){
-		assetdraw_loop = "	for (int i = 0; i < " + asset_layer + ".assetCount; i++)\n" +
-						 "		draw_sprite_ext(" + asset_layer  + "_data" + "[i].sprite, 0, " + asset_layer  + "_data" + "[i].x, " + asset_layer  + "_data" + "[i].y, " + asset_layer  + "_data" + "[i].scaleX, " + asset_layer  + "_data" + "[i].scaleY, " + asset_layer  + "_data" + "[i].rotation, 0, 1);\n\n";
+	for (var i = 0; i < array_length(asset_layer_index); ++i) {
+		var asset_layer = safe_name + "_asset_" + string(i);
+		array_push(assetdraw_loop,  "	for (int i = 0; i < " + asset_layer + ".assetCount; i++)\n" +
+						"		draw_sprite_ext(" + asset_layer  + "_data" + "[i].sprite, 0, " + asset_layer  + "_data" + "[i].x, " + asset_layer  + "_data" + "[i].y, " + asset_layer  + "_data" + "[i].scaleX, " + asset_layer  + "_data" + "[i].scaleY, " + asset_layer  + "_data" + "[i].rotation, 0, 1);\n\n");
 	}
 	
 	if (bg_layer_index != -1){
@@ -80,7 +79,11 @@ function scr_compileroom_phase2(packed_layers){
 	file_text_write_string(roomcfile, "\n" + got_funcs + "\n");
 	file_text_write_string(roomcfile, "void scr_runroom_" + yyfile.name + "(){\n");
 	file_text_write_string(roomcfile, "   //printf(\"RUNNING ROOM " + yyfile.name + "\\n\");\n\n");
-	file_text_write_string(roomcfile, assetdraw_loop);
+	
+	for (var i = 0; i < array_length(assetdraw_loop); ++i) {
+		file_text_write_string(roomcfile, assetdraw_loop[i]);
+	}
+	
 	file_text_write_string(roomcfile, "   if (" + yyfile.name + "_views[0].visible == 1){\n");
 	file_text_write_string(roomcfile, "       view0_camWidth = " + yyfile.name + "_views[0].camWidth;\n");
 	file_text_write_string(roomcfile, "       view0_camHeight = " + yyfile.name + "_views[0].camHeight;\n");
