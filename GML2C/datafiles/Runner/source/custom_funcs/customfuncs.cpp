@@ -21,6 +21,6 @@
 #include "../helpers/var_in_object_running.h"
 #include "../helpers/init_sprites.h"
 
-#define function void
+#define function GMvar
 
 

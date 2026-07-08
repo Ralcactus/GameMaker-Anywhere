@@ -15,7 +15,7 @@
 #include "../variable_handler.h"
 #include <variant>
 
-#define function void
+#define function GMvar
 #define argument0 int bleh0
 #define argument1 int bleh1
 #define argument2 int bleh2
