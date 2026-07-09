@@ -136,4 +136,5 @@ float sign(float number);
 float lengthdir_y(float len, float dir);
 float lengthdir_x(float len, float dir);
 float gm_lerp(float value, float to_goto, float speed);
+int alarm_get(int alarm_id);
 #define lerp gm_lerp

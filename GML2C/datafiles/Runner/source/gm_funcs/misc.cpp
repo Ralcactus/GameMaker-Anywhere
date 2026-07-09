@@ -188,6 +188,11 @@ float lengthdir_x(float len, float dir){
     return len * cos(dir * (M_PI / 180));
 }
 
+//STUB
+int alarm_get(int alarm_id){
+    return -1;
+}
+
 
 #pragma endregion
 

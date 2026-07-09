@@ -8,6 +8,7 @@
 #include <string>
 #include "../helpers/get_spriteinfo.h"
 #include "../helpers/var_in_object_running.h"
+#include "../helpers/get_spriteinfo.h"
 
 unsigned int drawcolor = c_white;
 
@@ -268,7 +269,7 @@ bool gpu_get_tex_filter(){
 }
 
 int sprite_get_number(int sprite){
-    return SpriteNumbers[sprite];
+    return SpriteFrameCount[sprite];
 }
 
 #pragma endregion

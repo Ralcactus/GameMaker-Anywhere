@@ -2,11 +2,12 @@
 #include <algorithm>
 #include <variant>
 #include <cstdint>
+#include <memory>
 
 #pragma once
 
 struct GMvar{
-    std::variant<const char*, bool, float, int> value;
+    std::variant<const char*, bool, float, int, std::shared_ptr<std::vector<GMvar>>> value;
 
     //type init
     GMvar() : value(0) {};
@@ -24,14 +25,12 @@ struct GMvar{
 
             if constexpr (std::is_same_v<T, int>)
                 return static_cast<float>(val);
-            else if constexpr (std::is_same_v<T, bool>){
-                if (val)
-                    return 1.0f;
-                else
-                    return 0.0f;
-            }
+            else if constexpr (std::is_same_v<T, bool>)
+                return val ? 1.0f : 0.0f;
             else if constexpr (std::is_same_v<T, const char*>)
                 return 0.0f;
+            else if constexpr (std::is_same_v<T, std::shared_ptr<std::vector<GMvar>>>)
+                return 0.0f; // arrays don't convert to a number
             else
                 return val;
         }, value);
@@ -48,11 +47,13 @@ struct GMvar{
             using T = std::decay_t<decltype(val)>;
             if constexpr (std::is_same_v<T, bool>)
                 return val;
-            if constexpr (std::is_same_v<T, int>)
+            else if constexpr (std::is_same_v<T, int>)
                 return val != 0;
-            if constexpr (std::is_same_v<T, float>)
+            else if constexpr (std::is_same_v<T, float>)
                 return val != 0.0f;
-            if constexpr (std::is_same_v<T, const char*>)
+            else if constexpr (std::is_same_v<T, const char*>)
+                return val != nullptr;
+            else // array
                 return val != nullptr;
         }, value);
     }
@@ -74,17 +75,28 @@ struct GMvar{
     GMvar& operator= (const GMvar& other) { value = other.value; return *this; }
 
     //adding, subtracting, multiplying and dividing
-    GMvar operator+ (float o) const { return GMvar{(float)*this + o}; } // +
-    GMvar operator- (float o) const { return GMvar{(float)*this - o}; } // -
-    GMvar operator* (float o) const { return GMvar{(float)*this * o}; } // *
-    GMvar operator/ (float o) const { return GMvar{(float)*this / o}; } // /
+    // +
+    GMvar operator+ (float o) const { return GMvar{(float)*this + o}; } 
+    GMvar operator+(const GMvar& o) const { return GMvar {(float)*this + (float)o}; }
+
+    // -
+    GMvar operator- (float o) const { return GMvar{(float)*this - o}; } 
+    GMvar operator-(const GMvar& o) const { return GMvar {(float)*this - (float)o}; }
+
+    // *
+    GMvar operator* (float o) const { return GMvar{(float)*this * o}; } 
+    GMvar operator*(const GMvar& o) const { return GMvar {(float)*this * (float)o}; }
+
+    // /
+    GMvar operator/ (float o) const { return GMvar{(float)*this / o}; } 
+    GMvar operator/(const GMvar& o) const { return GMvar {(float)*this / (float)o}; }
+
     GMvar operator++ (int) { GMvar tmp(*this); value = (float)*this + 1; return tmp; } // ++
     GMvar operator-- (int) { GMvar tmp(*this); value = (float)*this - 1; return tmp; } // --
     GMvar& operator+= (float o) { value = (float)*this + o; return *this; } // +=
     GMvar& operator-= (float o) { value = (float)*this - o; return *this; } // -=
     GMvar& operator*= (float o) { value = (float)*this * o; return *this; } // *=
     GMvar& operator/= (float o) { value = (float)*this / o; return *this; } // /=
-
 
     //checking the variable
     bool operator== (float o) const { return (float)*this == o; }
@@ -93,6 +105,26 @@ struct GMvar{
     bool operator> (float o) const { return (float)*this > o; }
     bool operator<= (float o) const { return (float)*this <= o; }
     bool operator>= (float o) const { return (float)*this >= o; }
+
+    //array access — lazily promotes scalar -> array on first write, like GML
+    GMvar& operator[](int i) {
+        if (!std::holds_alternative<std::shared_ptr<std::vector<GMvar>>>(value))
+            value = std::make_shared<std::vector<GMvar>>();
+
+        auto& arr = *std::get<std::shared_ptr<std::vector<GMvar>>>(value);
+        if ((int)arr.size() <= i) arr.resize(i + 1);
+        return arr[i];
+    }
+
+    const GMvar& operator[](int i) const {
+        static const GMvar undefined;
+        if (!std::holds_alternative<std::shared_ptr<std::vector<GMvar>>>(value))
+            return undefined;
+
+        auto& arr = *std::get<std::shared_ptr<std::vector<GMvar>>>(value);
+        if (i < 0 || i >= (int)arr.size()) return undefined;
+        return arr[i];
+    }
 };
 
 inline GMvar operator+ (float o, const GMvar& v) { return v + o; }

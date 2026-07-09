@@ -10,7 +10,13 @@ function init_builtin_variables(){
 	add_variable("sprite_index", "-4");	
 	add_variable("image_xscale", "1");
 	add_variable("image_yscale", "1");
-	
+	add_variable("sprite_xoffset", "0");
+	add_variable("sprite_yoffset", "0");
+	add_variable("image_index", "0");
+
+	//alarm
+	add_variable("alarm", "-1");
+
 	//stubs (you can read and write to these but they do nothing)
 	//General Variables
 	add_variable("id", "-4");
@@ -39,12 +45,9 @@ function init_builtin_variables(){
 	//Sprite Properties
 	add_variable("sprite_width", "0");
 	add_variable("sprite_height", "0");
-	add_variable("sprite_xoffset", "0");
-	add_variable("sprite_yoffset", "0");
 	add_variable("image_alpha", "0");	
 	add_variable("image_angle", "0");
 	add_variable("image_blend", "0");
-	add_variable("image_index", "0");
 	add_variable("image_number", "0");
 	add_variable("image_speed", "0");
 }

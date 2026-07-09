@@ -74,6 +74,24 @@ function scr_compileobject_phase2(spr_name, create_code, step_code, draw_code){
 	file_text_write_string(file, "inst.GetVar(varId_image_xscale) = NEWXSCALE;\n");
 	file_text_write_string(file, "inst.GetVar(varId_image_yscale) = NEWYSCALE;\n");
 	file_text_write_string(file, "inst.GetVar(varId_id) = NEWID;\n");
+	
+	//Probably should've made this a for loop... oh well!
+	/*
+	UNCOMMENT WHEN ARRAYS WORK!!
+	file_text_write_string(file, "alarm[0] = -1;\n");
+	file_text_write_string(file, "alarm[1] = -1;\n");
+	file_text_write_string(file, "alarm[2] = -1;\n");
+	file_text_write_string(file, "alarm[3] = -1;\n");
+	file_text_write_string(file, "alarm[4] = -1;\n");
+	file_text_write_string(file, "alarm[5] = -1;\n");
+	file_text_write_string(file, "alarm[6] = -1;\n");
+	file_text_write_string(file, "alarm[7] = -1;\n");
+	file_text_write_string(file, "alarm[8] = -1;\n");
+	file_text_write_string(file, "alarm[9] = -1;\n");
+	file_text_write_string(file, "alarm[10] = -1;\n");
+	file_text_write_string(file, "alarm[11] = -1;\n");
+	*/
+	
 	file_text_write_string(file, "vector_" + safe_name + ".push_back(inst);\n");
 	file_text_write_string(file, "self = &vector_" + safe_name + ".back();\n");
 	file_text_write_string(file, safe_name + "_config();\n");
