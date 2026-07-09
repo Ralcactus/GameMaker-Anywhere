@@ -74,14 +74,17 @@ struct GMvar{
     GMvar& operator= (const GMvar& other) { value = other.value; return *this; }
 
     //adding, subtracting, multiplying and dividing
-    GMvar operator+ (float o) const { return GMvar{(float)*this + o}; }
-    GMvar operator- (float o) const { return GMvar{(float)*this - o}; }
-    GMvar operator* (float o) const { return GMvar{(float)*this * o}; }
-    GMvar operator/ (float o) const { return GMvar{(float)*this / o}; }
-    GMvar& operator+= (float o) { value = (float)*this + o; return *this; }
-    GMvar& operator-= (float o) { value = (float)*this - o; return *this; }
-    GMvar& operator*= (float o) { value = (float)*this * o; return *this; }
-    GMvar& operator/= (float o) { value = (float)*this / o; return *this; }
+    GMvar operator+ (float o) const { return GMvar{(float)*this + o}; } // +
+    GMvar operator- (float o) const { return GMvar{(float)*this - o}; } // -
+    GMvar operator* (float o) const { return GMvar{(float)*this * o}; } // *
+    GMvar operator/ (float o) const { return GMvar{(float)*this / o}; } // /
+    GMvar operator++ (int) { GMvar tmp(*this); value = (float)*this + 1; return tmp; } // ++
+    GMvar operator-- (int) { GMvar tmp(*this); value = (float)*this - 1; return tmp; } // --
+    GMvar& operator+= (float o) { value = (float)*this + o; return *this; } // +=
+    GMvar& operator-= (float o) { value = (float)*this - o; return *this; } // -=
+    GMvar& operator*= (float o) { value = (float)*this * o; return *this; } // *=
+    GMvar& operator/= (float o) { value = (float)*this / o; return *this; } // /=
+
 
     //checking the variable
     bool operator== (float o) const { return (float)*this == o; }

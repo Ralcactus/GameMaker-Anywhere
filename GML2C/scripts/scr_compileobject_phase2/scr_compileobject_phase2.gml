@@ -29,8 +29,10 @@ function scr_compileobject_phase2(spr_name, create_code, step_code, draw_code){
 	file_text_write_string(file, "static int " + safe_name + "_call_index = 0;\n");
 	file_text_write_string(file, "static int objectid_collided = 0;\n");
 		
-	for (var i = 0; i < array_length(var_names); i += 1)
-		file_text_write_string(file, "#define " + var_names[i] + " " + "self->GetVar(varId_" + string(var_names[i]) + ")\n");
+	for (var i = 0; i < array_length(var_names); i += 1){
+		if (!isDigit(var_names[i]))
+			file_text_write_string(file, "#define " + var_names[i] + " " + "self->GetVar(varId_" + string(var_names[i]) + ")\n");
+	}
 	
 	#region EVENTS
 	//config
