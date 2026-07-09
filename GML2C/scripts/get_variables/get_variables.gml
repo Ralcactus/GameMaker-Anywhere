@@ -28,6 +28,18 @@ function scr_write_customvariables(code, only_global = false){
 			while (highlight > 1 && valid_variablename(string_char_at(code, highlight - 1))){
 				highlight--;
 			}
+			
+			//check if its not a temp variable (eg: var bleh = 4)
+			var temp_highlight = variable_clone(highlight);
+			temp_highlight--;
+			while (string_char_at(code, temp_highlight) == " "){
+				temp_highlight--;
+			}			
+
+			if (string_char_at(code, temp_highlight) == "r" && string_char_at(code, temp_highlight-1) == "a" && string_char_at(code, temp_highlight-2) == "v"){
+				show_debug_message("IS VAR, SKIPPING!");
+				continue;
+			}
 
 			//go forward until finding the full name
 			var variablename = "";
@@ -37,7 +49,7 @@ function scr_write_customvariables(code, only_global = false){
 					
 				variablename += string_char_at(code, j);
 			}
-			
+
 			//check if global variable
 			var isglobalvar = false;
 			var pre = "";
