@@ -94,7 +94,7 @@ function scr_compilerooms(i, yyp_json){
 	file_text_write_string(file, "#include \"../gm_funcs/drawing.h\"\n");
 	file_text_write_string(file, "#include \"../gm_funcs/misc.h\"\n");
 	file_text_write_string(file, "#include \"../gm_funcs/audio.h\"\n");
-	file_text_write_string(file, "#include \"../helpers/init_sprites.h\"\n\n");
+	file_text_write_string(file, "#include \"../helpers/asset_toid.h\"\n\n");
 
 	show_debug_message("write file header: " + yyfile.name);
 
@@ -352,7 +352,7 @@ function scr_compilerooms(i, yyp_json){
 	show_debug_message("write room handler: " + yyfile.name);
 	
 	var roomto_idh = file_text_open_append(destination + "source/helpers/asset_toid.h");
-	file_text_write_string(roomto_idh, "#define " + yyfile.name + " " + string(roomid_count) + "\n");
+	file_text_write_string(roomto_idh, "#define " + yyfile.name + " " + string(roomid_count) + " //Room\n");
 	roomid_count += 1;
 	file_text_close(roomto_idh);
 }

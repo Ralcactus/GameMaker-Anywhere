@@ -78,9 +78,10 @@ function scr_compileobjects(){
 	file_text_close(file);
 	
 	scr_compileobject_phase2(spr_name, create_code, step_code, draw_code);
+	currentobject_count--;
 	
 	var spriteidh = file_text_open_append(destination + "source/helpers/asset_toid.h");
-	file_text_write_string(spriteidh, "#define " + yyfile.name + " " + string(currentobject_count*-1) + "\n");
+	file_text_write_string(spriteidh, "#define " + yyfile.name + " " + string(currentobject_count) + " //Object\n");
 	file_text_close(spriteidh);
 	
     currentobject_count++;

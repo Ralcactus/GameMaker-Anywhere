@@ -37,6 +37,7 @@ function scr_compileSETUP(){
 	yyfile = noone;
 	_id = noone;
 	currentsprite_count = -1;
+	currentsound_count = -1;
 	t3s_file = noone;
 	roomid_count = 0;
 	object_count = 0;

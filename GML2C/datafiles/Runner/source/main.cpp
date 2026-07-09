@@ -8,7 +8,7 @@
 #include "gm_funcs/misc.h"
 #include "room_handler.h"
 #include "helpers/asset_toid.h"
-#include "init_sprites.h"
+#include "asset_toid.h"
 #include "gm_funcs/audio.h"
 
 #ifdef __wii__

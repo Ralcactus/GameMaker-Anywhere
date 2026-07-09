@@ -18,7 +18,7 @@
 #include <variant>
 #include "../helpers/other.h"
 #include "../helpers/var_in_object_running.h"
-#include "../helpers/init_sprites.h"
+#include "../helpers/asset_toid.h"
 
 #define function GMvar
 

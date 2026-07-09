@@ -13,4 +13,9 @@ function scr_compilesounds(){
 
 	run_commandpowershell(destination+"/romfs/audio/", working_directory + "other/ffmpeg.exe -y -i TheSound.ogg -c:a libopus -b:a 128k TheSound.opus", false);
 	file_delete(destination+"/romfs/audio/TheSound.ogg");
+	
+	var spriteidh = file_text_open_append(destination + "source/helpers/asset_toid.h");
+	file_text_write_string(spriteidh, "#define " + yyfile.name + " " + string(currentsound_count) + " //Sound\n");
+	file_text_close(spriteidh);
+	currentsound_count++;
 }

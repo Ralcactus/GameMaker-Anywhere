@@ -30,9 +30,9 @@ function scr_compilesprites(){
     }
 	currentsprite_count--;
 	
-	var init_sprites = file_text_open_append(destination + "source/helpers/init_sprites.h");	
-	file_text_write_string(init_sprites, "#define " + safe_name + " " + string(currentsprite_count) + "\n");	
-	file_text_close(init_sprites);
+	var asset_toid = file_text_open_append(destination + "source/helpers/asset_toid.h");	
+	file_text_write_string(asset_toid, "#define " + safe_name + " " + string(currentsprite_count) + " //Sprite\n");	
+	file_text_close(asset_toid);
 	
     currentsprite_count++;
 }
