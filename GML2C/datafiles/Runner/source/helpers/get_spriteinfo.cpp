@@ -3,6 +3,5 @@
 #include "gm_funcs/drawing.h"
 #include "room_handler.h"
 #include "misc.h"
-#include "room_toid.h"
-#include "sprite_toid.h"
+#include "helpers/asset_toid.h"
 //all the info is written in the compiler

@@ -7,8 +7,7 @@
 #include "gm_funcs/drawing.h"
 #include "gm_funcs/misc.h"
 #include "room_handler.h"
-#include "sprite_toid.h"
-#include "room_toid.h"
+#include "helpers/asset_toid.h"
 #include "init_sprites.h"
 #include "gm_funcs/audio.h"
 

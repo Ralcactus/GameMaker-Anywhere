@@ -90,11 +90,10 @@ function scr_compilerooms(i, yyp_json){
 	file_text_write_string(file, "#include <stdbool.h>\n");
 	file_text_write_string(file, "#include <stdio.h>\n");
 	file_text_write_string(file, "#include <string.h>\n");
-	file_text_write_string(file, "#include \"../sprite_toid.h\"\n");
+	file_text_write_string(file, "#include \"../helpers/asset_toid.h\"\n");
 	file_text_write_string(file, "#include \"../gm_funcs/drawing.h\"\n");
 	file_text_write_string(file, "#include \"../gm_funcs/misc.h\"\n");
 	file_text_write_string(file, "#include \"../gm_funcs/audio.h\"\n");
-	file_text_write_string(file, "#include \"../sprite_toid.h\"\n");
 	file_text_write_string(file, "#include \"../helpers/init_sprites.h\"\n\n");
 
 	show_debug_message("write file header: " + yyfile.name);
@@ -283,7 +282,7 @@ function scr_compilerooms(i, yyp_json){
 	}
 
 	//WRITE ROOM STRUCT
-	file_text_write_string(file, "GMRoom " + safe_name + " = {\n");
+	file_text_write_string(file, "GMRoom " + safe_name + "_INFO" + " = {\n");
 	file_text_write_string(file, string(i) + ",\n");
 	file_text_write_string(file, "\"" + yyfile.name + "\",\n");
 	file_text_write_string(file, string(yyfile.roomSettings.Width) + ",\n");
@@ -352,7 +351,7 @@ function scr_compilerooms(i, yyp_json){
 	file_text_close(room_handlefile_write);
 	show_debug_message("write room handler: " + yyfile.name);
 	
-	var roomto_idh = file_text_open_append(destination + "source/room_toid.h");
+	var roomto_idh = file_text_open_append(destination + "source/helpers/asset_toid.h");
 	file_text_write_string(roomto_idh, "#define " + yyfile.name + " " + string(roomid_count) + "\n");
 	roomid_count += 1;
 	file_text_close(roomto_idh);

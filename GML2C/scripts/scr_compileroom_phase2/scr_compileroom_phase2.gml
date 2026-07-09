@@ -88,11 +88,11 @@ function scr_compileroom_phase2(packed_layers){
 	file_text_write_string(roomcfile, "       view0_camWidth = " + yyfile.name + "_views[0].camWidth;\n");
 	file_text_write_string(roomcfile, "       view0_camHeight = " + yyfile.name + "_views[0].camHeight;\n");
 	file_text_write_string(roomcfile, "   }\n   else{\n");
-	file_text_write_string(roomcfile, "       view0_camWidth = " + yyfile.name + ".width;\n");
-	file_text_write_string(roomcfile, "       view0_camHeight = " + yyfile.name + ".height;\n");
+	file_text_write_string(roomcfile, "       view0_camWidth = " + yyfile.name+"_INFO" + ".width;\n");
+	file_text_write_string(roomcfile, "       view0_camHeight = " + yyfile.name+"_INFO" + ".height;\n");
 	file_text_write_string(roomcfile, "   }\n\n");
-	file_text_write_string(roomcfile, "   room_width = " + yyfile.name + ".width;\n");
-	file_text_write_string(roomcfile, "   room_height = " + yyfile.name + ".height;\n");
+	file_text_write_string(roomcfile, "   room_width = " + yyfile.name+"_INFO" + ".width;\n");
+	file_text_write_string(roomcfile, "   room_height = " + yyfile.name+"_INFO" + ".height;\n");
 	file_text_write_string(roomcfile, bg_color_applycode);
 	file_text_write_string(roomcfile, object_scripts);
 	file_text_write_string(roomcfile, "}\n");

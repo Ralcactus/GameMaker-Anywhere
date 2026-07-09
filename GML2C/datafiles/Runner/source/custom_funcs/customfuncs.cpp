@@ -6,11 +6,10 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
-#include "../sprite_toid.h"
 #include "../gm_funcs/drawing.h"
 #include "../gm_funcs/input.h"
 #include "../gm_funcs/input.h"
-#include "../room_toid.h"
+#include "../helpers/asset_toid.h"
 #include "../gm_funcs/misc.h"
 #include "../gm_funcs/collision.h"
 #include "../gm_funcs/audio.h"
