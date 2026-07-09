@@ -84,8 +84,9 @@
         {"$GMExtensionFunction":"","%Name":"widget_get_canceled","argCount":0,"args":[],"documentation":"","externalName":"widget_get_canceled","help":"widget_get_canceled()","hidden":false,"kind":1,"name":"widget_get_canceled","resourceType":"GMExtensionFunction","resourceVersion":"2.0","returnType":2,},
       ],"init":"","kind":1,"name":"libdlgmod.dll","origname":"extensions\\DialogModule.dll","ProxyFiles":[
         {"$GMProxyFile":"","%Name":"libdlgmod.dylib","name":"libdlgmod.dylib","resourceType":"GMProxyFile","resourceVersion":"2.0","TargetMask":1,},
-        {"$GMProxyFile":"","%Name":"libdlgmod_arm64.so","name":"libdlgmod_arm64.so","resourceType":"GMProxyFile","resourceVersion":"2.0","TargetMask":7,},
         {"$GMProxyFile":"","%Name":"libdlgmod.so","name":"libdlgmod.so","resourceType":"GMProxyFile","resourceVersion":"2.0","TargetMask":7,},
+        {"$GMProxyFile":"","%Name":"libdlgmod_arm.so","name":"libdlgmod_arm64.so","resourceType":"GMProxyFile","resourceVersion":"2.0","TargetMask":7,},
+        {"$GMProxyFile":"","%Name":"libdlgmod_arm64.so","name":"libdlgmod_arm64.so","resourceType":"GMProxyFile","resourceVersion":"2.0","TargetMask":7,},
       ],"resourceType":"GMExtensionFile","resourceVersion":"2.0","uncompress":false,"usesRunnerInterface":false,},
     {"$GMExtensionFile":"v1","%Name":"libdlgmod.zip","constants":[],"copyToTargets":0,"filename":"libdlgmod.zip","final":"","functions":[],"init":"","kind":4,"name":"libdlgmod.zip","origname":"","ProxyFiles":[],"resourceType":"GMExtensionFile","resourceVersion":"2.0","uncompress":false,"usesRunnerInterface":false,},
     {"$GMExtensionFile":"v1","%Name":"libdlgmod.gml","constants":[],"copyToTargets":194,"filename":"libdlgmod.gml","final":"","functions":[
