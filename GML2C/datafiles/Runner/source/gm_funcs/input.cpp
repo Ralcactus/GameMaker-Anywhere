@@ -313,6 +313,25 @@ float gamepad_button_deadzone_0 = 0.5;
 
 #endif
 
+#pragma region //keyboard funcs (may need to be changed if a platform uses a keyboard)
+bool keyboard_check(int key){
+    return false;
+}
+
+bool keyboard_check_pressed(int key){
+    return false;
+}
+
+bool keyboard_check_released(int key){
+    return false;
+}
+
+bool keyboard_check_direct(int key){
+    return false;
+}
+
+#pragma endregion
+
 #pragma region //globals
 
 //funcs

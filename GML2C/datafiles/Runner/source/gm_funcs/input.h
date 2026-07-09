@@ -68,6 +68,69 @@
     bool gamepad_button_check_released(int pad, u32 Button);
 #endif
 
+#pragma region //Keyboard (may need to be changed if some random platform uses a keyboard lol)
+    bool keyboard_check(int key);
+    bool keyboard_check_pressed(int key);
+    bool keyboard_check_released(int key);
+    bool keyboard_check_direct(int key);
+    
+    #define vk_nokey 0
+    #define vk_anykey 1
+    #define vk_left 37
+    #define vk_right 39
+    #define vk_up 38
+    #define vk_down 40
+    #define vk_enter 13
+    #define vk_escape 27
+    #define vk_space 32
+    #define vk_shift 16
+    #define vk_control 17
+    #define vk_alt 18
+    #define vk_backspace 8
+    #define vk_tab 9
+    #define vk_home 36
+    #define vk_end 35
+    #define vk_delete 46
+    #define vk_insert 45
+    #define vk_pageup 33
+    #define vk_pagedown 34
+    #define vk_pause 19
+    #define vk_printscreen 44
+    #define vk_f1 112
+    #define vk_f2 113
+    #define vk_f3 114
+    #define vk_f4 115
+    #define vk_f5 116
+    #define vk_f6 117
+    #define vk_f7 118
+    #define vk_f8 119
+    #define vk_f9 120
+    #define vk_f10 121
+    #define vk_f11 122
+    #define vk_f12 123
+    #define vk_numpad0 96
+    #define vk_numpad1 97
+    #define vk_numpad2 98
+    #define vk_numpad3 99
+    #define vk_numpad4 100
+    #define vk_numpad5 101
+    #define vk_numpad6 102
+    #define vk_numpad7 103
+    #define vk_numpad8 104
+    #define vk_numpad9 105
+    #define vk_multiply 106
+    #define vk_divide 111
+    #define vk_add 107
+    #define vk_subtract 109
+    #define vk_decimal 110
+    #define vk_lshift 160
+    #define vk_lcontrol 162
+    #define vk_lalt 164
+    #define vk_rshift 161
+    #define vk_rcontrol 163
+    #define vk_ralt 165
+#pragma endregion
+
 #pragma region //globals
 //vars
 extern float mouse_x;
