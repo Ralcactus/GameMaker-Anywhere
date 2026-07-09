@@ -95,6 +95,11 @@ struct GMvar{
     bool operator>= (float o) const { return (float)*this >= o; }
 };
 
+inline GMvar operator+ (float o, const GMvar& v) { return v + o; }
+inline GMvar operator- (float o, const GMvar& v) { return GMvar{o - (float)v}; }
+inline GMvar operator* (float o, const GMvar& v) { return v * o; }
+inline GMvar operator/ (float o, const GMvar& v) { return GMvar{o / (float)v}; }
+
 struct VarNode{
     uint16_t vId;
     GMvar value;
