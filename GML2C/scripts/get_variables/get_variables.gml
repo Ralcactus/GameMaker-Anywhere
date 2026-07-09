@@ -58,7 +58,7 @@ function scr_write_customvariables(code, only_global = false){
 
 				add_variable(variablename, "-4");
 				
-				if(array_contains(general_varnames, variablename))
+				if(array_contains(general_varnames, variablename) || isDigit(variablename))
 					continue;
 				
 				add_variable_general(variablename, "-4");
