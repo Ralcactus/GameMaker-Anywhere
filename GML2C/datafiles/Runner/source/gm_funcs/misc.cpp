@@ -176,10 +176,18 @@ float sign(float number){
         return 0;
 }
 
-//wii and gamecube already have these lol
 float lerp(float value, float to_goto, float speed){
     return value + speed * (to_goto - value);
 }
+
+float lengthdir_y(float len, float dir){
+    return len * sin(dir * (M_PI / 180));
+}
+
+float lengthdir_x(float len, float dir){
+    return len * cos(dir * (M_PI / 180));
+}
+
 
 #pragma endregion
 

@@ -133,11 +133,7 @@ void show_debug_message(const char* message);
 void show_error(const char* message, bool abort);
 float clamp(float value, float min, float max);
 float sign(float number);
-
+float lengthdir_y(float len, float dir);
+float lengthdir_x(float len, float dir);
 float gm_lerp(float value, float to_goto, float speed);
 #define lerp gm_lerp
-
-#if __3DS__
-    //wii and gamecube already have this lol
-    
-#endif

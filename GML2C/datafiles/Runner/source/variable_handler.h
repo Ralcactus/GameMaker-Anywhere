@@ -121,3 +121,4 @@ struct Object{
     }
 };
 
+#define var GMvar

@@ -267,4 +267,8 @@ bool gpu_get_tex_filter(){
     return gpu_get_texfilter();
 }
 
+int sprite_get_number(int sprite){
+    return SpriteNumbers[sprite];
+}
+
 #pragma endregion

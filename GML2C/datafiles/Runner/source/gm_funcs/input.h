@@ -73,7 +73,8 @@
     bool keyboard_check_pressed(int key);
     bool keyboard_check_released(int key);
     bool keyboard_check_direct(int key);
-    
+    int ord(const char* str);
+
     #define vk_nokey 0
     #define vk_anykey 1
     #define vk_left 37

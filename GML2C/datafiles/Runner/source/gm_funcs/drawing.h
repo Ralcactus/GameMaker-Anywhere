@@ -43,6 +43,7 @@ int sprite_get_yoffset(int draw_sprite);
 void draw_self();
 void gpu_set_texfilter(bool yesno);
 bool gpu_get_texfilter();
+int sprite_get_number(int sprite);
 
 //3DS
 #ifdef __3DS__

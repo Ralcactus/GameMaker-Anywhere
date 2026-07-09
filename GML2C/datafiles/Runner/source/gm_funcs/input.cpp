@@ -330,6 +330,10 @@ bool keyboard_check_direct(int key){
     return false;
 }
 
+int ord(const char* str){
+    return 0;
+}
+
 #pragma endregion
 
 #pragma region //globals
