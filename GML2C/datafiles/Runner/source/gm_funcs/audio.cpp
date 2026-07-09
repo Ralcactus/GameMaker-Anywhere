@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
+#include <string>
+#include <misc.h>
 
 #ifdef __3DS__
     #include <opusfile.h>
@@ -102,7 +104,8 @@ void audio_emitter_bus(int emitter_id, int bus_id){
 
 int audio_play_sound(int soundid, int priority, bool loop){
     int error = 0;
-    opusFile = op_open_file("romfs:/audio/TheSound.opus", &error);
+    opusFile = op_open_file(("romfs:/audio/" + std::to_string(soundid) + ".opus").c_str(), &error);
+    
     if (error != 0 || opusFile == NULL) {
         printf("Failed to open opus file: %d\n", error);
     }

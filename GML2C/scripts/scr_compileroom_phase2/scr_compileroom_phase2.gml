@@ -62,7 +62,7 @@ function scr_compileroom_phase2(packed_layers){
 	var bg_color_applycode = "";
 	
 	for (var i = 0; i < array_length(asset_layer_index); ++i) {
-		var asset_layer = safe_name + "_asset_" + string(i);
+		var asset_layer = safe_name + "_asset_" + string(i+1);
 		array_push(assetdraw_loop,  "	for (int i = 0; i < " + asset_layer + ".assetCount; i++)\n" +
 						"		draw_sprite_ext(" + asset_layer  + "_data" + "[i].sprite, 0, " + asset_layer  + "_data" + "[i].x, " + asset_layer  + "_data" + "[i].y, " + asset_layer  + "_data" + "[i].scaleX, " + asset_layer  + "_data" + "[i].scaleY, " + asset_layer  + "_data" + "[i].rotation, 0, 1);\n\n");
 	}

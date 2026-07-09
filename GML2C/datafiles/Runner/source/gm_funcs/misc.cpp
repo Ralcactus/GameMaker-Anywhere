@@ -141,9 +141,15 @@ float display_get_frequency(){
     return 60; //I'll change this if we ever find a console that uses a different thing (actually pal is 50 hmmm, later...)
 }
 
-char* string(float value){
+const char* string(GMvar value){
     static char str[64];
-    snprintf(str, sizeof(str), "%f", value);
+
+if (std::holds_alternative<int>(value.value))
+    snprintf(str, sizeof(str), "%d", std::get<int>(value.value));
+else if (std::holds_alternative<float>(value.value))
+    snprintf(str, sizeof(str), "%f", std::get<float>(value.value));
+
+
     return str;
 }
 

@@ -37,7 +37,7 @@ function scr_compileSETUP(){
 	yyfile = noone;
 	_id = noone;
 	currentsprite_count = -1;
-	currentsound_count = -1;
+	currentsound_count = 0;
 	t3s_file = noone;
 	roomid_count = 0;
 	object_count = 0;
@@ -212,11 +212,8 @@ function scr_compile()
 			scr_compilerooms(i, yyp_json);
 		
         if (yyfile.resourceType == "GMSprite") //asset is a sprite!
-		{
-			show_debug_message("sprites!!!");
 			scr_compilesprites();
-		}
-		
+
         if (yyfile.resourceType == "GMObject") //asset is a object!
 			scr_compileobjects();
 			

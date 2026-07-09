@@ -128,7 +128,7 @@ float display_get_width();
 float display_get_height();
 int display_get_orientation();
 float display_get_frequency();
-char* string(float value);
+const char* string(GMvar value);
 void show_debug_message(const char* message);
 void show_error(const char* message, bool abort);
 float clamp(float value, float min, float max);
