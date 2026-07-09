@@ -1,0 +1,26 @@
+{
+  "$GMSound":"v2",
+  "%Name":"mu_GirlNextDoor",
+  "audioGroupId":{
+    "name":"audiogroup_default",
+    "path":"audiogroups/audiogroup_default",
+  },
+  "bitDepth":1,
+  "channelFormat":0,
+  "compression":0,
+  "compressionQuality":4,
+  "conversionMode":0,
+  "duration":53.581383,
+  "exportDir":"",
+  "name":"mu_GirlNextDoor",
+  "parent":{
+    "name":"Sounds",
+    "path":"folders/Sounds.yy",
+  },
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"mu_GirlNextDoor.ogg",
+  "volume":1.0,
+}

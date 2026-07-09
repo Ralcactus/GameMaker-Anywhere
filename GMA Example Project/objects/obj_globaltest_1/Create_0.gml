@@ -1,0 +1,1 @@
+global.mario = 0;
