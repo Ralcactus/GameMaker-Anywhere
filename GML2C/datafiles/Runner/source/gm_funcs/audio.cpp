@@ -9,10 +9,10 @@
 #ifdef __3DS__
     #include <opusfile.h>
     #include <3ds.h>
-#endif
 
-OggOpusFile *opusFile = NULL;
-Thread threadId = NULL;
+    OggOpusFile *opusFile = NULL;
+    Thread threadId = NULL;
+#endif
 
 void audio_listener_position(float x, float y, float z){
     //so empty...
@@ -102,25 +102,6 @@ void audio_emitter_bus(int emitter_id, int bus_id){
     //so empty...
 }
 
-int audio_play_sound(int soundid, int priority, bool loop){
-    int error = 0;
-    opusFile = op_open_file(("romfs:/audio/" + std::to_string(soundid) + ".opus").c_str(), &error);
-    
-    if (error != 0 || opusFile == NULL) {
-        printf("Failed to open opus file: %d\n", error);
-    }
-
-    ndspSetCallback(audioCallback, NULL);
-    int32_t priority_BLEH = 0x30;
-    svcGetThreadPriority(&priority_BLEH, CUR_THREAD_HANDLE);
-    priority_BLEH -= 1;
-    priority_BLEH = priority_BLEH < 0x18 ? 0x18 : priority_BLEH;
-    priority_BLEH = priority_BLEH > 0x3F ? 0x3F : priority_BLEH;
-    threadId = threadCreate(audioThread, opusFile, 32 * 1024, priority_BLEH, -1, false);
-
-    return 0;
-}
-
 int audio_play_sound_on(int emitter_id, int soundid, bool loop, float priority, float gain, float offset, float pitch, float listener_mask){
     return 0;
 }
@@ -133,3 +114,33 @@ int audio_play_sound_ext(float WHATHOW_I_DONT_KNOW_WHERE_HUHH){
     return 0;
 }
 
+
+
+#ifdef __3DS__
+    int audio_play_sound(int soundid, int priority, bool loop){
+        int error = 0;
+        opusFile = op_open_file(("romfs:/audio/" + std::to_string(soundid) + ".opus").c_str(), &error);
+        
+        if (error != 0 || opusFile == NULL) {
+            printf("Failed to open opus file: %d\n", error);
+            return -1;
+        }
+
+        ndspSetCallback(audioCallback, NULL);
+        int32_t priority_BLEH = 0x30;
+        svcGetThreadPriority(&priority_BLEH, CUR_THREAD_HANDLE);
+        priority_BLEH -= 1;
+        priority_BLEH = priority_BLEH < 0x18 ? 0x18 : priority_BLEH;
+        priority_BLEH = priority_BLEH > 0x3F ? 0x3F : priority_BLEH;
+        threadId = threadCreate(audioThread, opusFile, 32 * 1024, priority_BLEH, -1, false);
+
+        return soundid;
+    }
+#endif
+
+#if defined(__gamecube__) || defined(__wii__)
+    int audio_play_sound(int soundid, int priority, bool loop){
+        //No
+        return -1;
+    }
+#endif
