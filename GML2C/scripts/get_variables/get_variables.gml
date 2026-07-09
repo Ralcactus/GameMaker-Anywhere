@@ -1,0 +1,100 @@
+function scr_write_customvariables(code, only_global = false){
+	for (var i = 1; i < string_length(code); i += 1){
+		var cursor = string_char_at(code, i);
+		
+		//found =, check its not a ==
+		if (cursor == "=" && is_seto(code, i)){
+			show_debug_message("found a set thing!");
+			var highlight = 0;
+			
+			//go back until no longer on the =
+			var cursor2 = string_char_at(code, i-1);
+			while (cursor2 == "="){
+				cursor2 = string_char_at(code, i-highlight)
+				highlight++;	
+			}
+			
+			//find the first letter of the variable
+			highlight = i;
+			while (!valid_variablename(cursor2)){
+				highlight--;
+				cursor2 = string_char_at(code, highlight)
+			}
+			
+			
+			
+			//get the full variable name
+			//get to the back
+			while (highlight > 1 && valid_variablename(string_char_at(code, highlight - 1))){
+				highlight--;
+			}
+			
+			//check if its not a temp variable (eg: var bleh = 4)
+			var temp_highlight = variable_clone(highlight);
+			temp_highlight--;
+			while (string_char_at(code, temp_highlight) == " "){
+				temp_highlight--;
+			}			
+
+			if (string_char_at(code, temp_highlight) == "r" && string_char_at(code, temp_highlight-1) == "a" && string_char_at(code, temp_highlight-2) == "v"){
+				show_debug_message("IS VAR, SKIPPING!");
+				continue;
+			}
+
+			//go forward until finding the full name
+			var variablename = "";
+			for (var j = highlight; j < i; j++){
+			    if (!valid_variablename(string_char_at(code, j)))
+					break;
+					
+				variablename += string_char_at(code, j);
+			}
+
+			//check if global variable
+			var isglobalvar = false;
+			var pre = "";
+			for (var k = highlight - 7; k < highlight; k++) {
+				if (k < 1)
+					continue;
+				pre += string_char_at(code, k);
+			}
+
+			if (string_copy(pre, string_length(pre), 1) == "."){
+				if (string_copy(pre, 1, 6) == "global")
+					isglobalvar = true;
+			}
+
+			if (!isglobalvar){
+				if (array_contains(var_names, variablename))
+					continue;
+
+				add_variable(variablename, "-4");
+				
+				if(array_contains(general_varnames, variablename) || isDigit(variablename))
+					continue;
+				
+				add_variable_general(variablename, "-4");
+			}
+			else{
+				if (array_contains(globalvar_names, variablename))
+					continue;
+				
+				array_push(globalvar_names, variablename);
+			}
+			
+			//show_message(variablename)
+		}
+	}
+	
+	if (only_global == false)
+		scr_write_customvariables(code, true);
+}
+
+function valid_variablename(letter){
+	return (isAlpha(letter) || isDigit(letter) || letter == "_")
+}
+
+function is_seto(code, i){
+	return (string_char_at(code, i+1) != "=" && string_char_at(code, i-1) != "=" && string_char_at(code, i+1) != ">" &&
+	string_char_at(code, i+1) != "<" && string_char_at(code, i-1) != "+" && string_char_at(code, i-1) != "-")
+}

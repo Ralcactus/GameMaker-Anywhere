@@ -1,0 +1,1 @@
+global.DisableMenu = false;

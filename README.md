@@ -4,7 +4,7 @@
 
 ## Info
 <p align="left">
-A work in progress open source port of gamemaker to several consoles (3ds only currently) using devkitpro and C.
+A work in progress open source port of gamemaker to several consoles using devkitpro and C++.
 https://discord.gg/cc2YA2pChU
 </p>
 
@@ -14,29 +14,20 @@ https://discord.gg/cc2YA2pChU
   <img src="Github assets/example.gif" alt="The example gif" width="600" />
 </p>
 
-## Current Progress
-Feel free to contribute! (i really need the help...)
+## How does this work?
+Rather then our old approach (interpreting gml directly) it converts it to C syntax and the C project has the functions and variables to make it run! (A little simplified)
 
-### Complete
-- Setting, adding, subtracting, and multiplying X and Y on objects
-- Room width and height
-- Room background colors
-- Object and Asset drawing
-- Room changing
+## Currently supported
+Check out the [wiki](https://github.com/Ralcactus/GameMaker-Anywhere/wiki/Currently-added-features) to see what you can use!
+<br>(also current consoles are wii, gamecube, and 3ds!) <br>
 
-### Todo (sorted from most to least needed)
-- Custom variables
-- Port to other platforms
-- And a bunch more...
-
-## compiling
-compiling is currently only recommended with the test project, anything else is almost guaranteed not to work! (for now)
-
-1. Open the gamemaker project in the folder "GMA_Compiler"
-2. Select the yyp you'd like to compile
-3. Give it a Game Name, Title ID, and Publisher (all don't do anything currently!)
-4. Select your export mode and select export
-5. Go to the path "C:\GM_Anywhere\Runner\output\\" and inside should be your exported build! (if not give it a second!)
+## contributing
+Quick tutorial on editing the project: <br>
+Open the compiler (GML2C.yyp) in gamemaker, this compiles the sprites, code, object, etc to the C++ project. That C++ project is stored in the datafiles\Runner folder.
+For adding new functions, add it to the gm_funcs files in the appropriate type. So a timer function would go in misc, rumble in input, etc
+When you actually wanna test your changes, compile the GML2C project and compile it. Do not compile the c++ project from the datafiles directly!
+<br><br>
+If you wanna add a new export platform: Don't!<br>Later on more platforms will be allowed, but as of currently we don't wanna deal with editing like 10 different platforms at once
 
 ## Credits
 Meet the team!
@@ -45,3 +36,4 @@ Meet the team!
 - Loaf (Logo designer)
 - Finlay (coder)
 - Samuel Venable (GameMaker extension developer)
+- Feel free to contribute! (we really need the help...)
