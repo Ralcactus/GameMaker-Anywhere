@@ -27,8 +27,22 @@ function scr_write_sprite_info(){
 	var realspriteframecount_array = string_replace(string_replace(global.SpriteFrameCount, "[", "{"), "]", "}");
 	file_text_write_string(spriteinfoC, "int SpriteFrameCount[] = " + string(realspriteframecount_array) + ";\n");
 	
-	var realSpriteAnimTimer_array = string_replace(string_replace(global.SpriteAnimTimer, "[", "{"), "]", "}");
-	file_text_write_string(spriteinfoC, "int SpriteAnimTimer[] = " + string(realSpriteAnimTimer_array) + ";\n");
+	
+	//sprite playback timer (has section to convert floats to have f in them)
+	file_text_write_string(spriteinfoC, "float SpriteAnimTimer[] = {");
+	var towrite = "";
+	for (var i = 0; i < array_length(global.SpriteAnimTimer); ++i) {
+		var insert = string(global.SpriteAnimTimer[i]);
+		
+		if (global.SpriteAnimTimer[i] != floor(global.SpriteAnimTimer[i]))
+			insert+="f";
+
+		towrite += string(insert) + ",";
+	}
+	towrite = string_delete(towrite, string_length(towrite), 1);
+	file_text_write_string(spriteinfoC, towrite + "};\n");
+	
+	
 	
 	var realSpriteAnimSpeedType_array = string_replace(string_replace(global.SpriteAnimSpeedType, "[", "{"), "]", "}");
 	file_text_write_string(spriteinfoC, "int SpriteAnimSpeedType[] = " + string(realSpriteAnimSpeedType_array) + ";\n");

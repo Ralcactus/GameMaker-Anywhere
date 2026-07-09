@@ -6,22 +6,19 @@
 #include "helpers/asset_toid.h"
 //all the info is written in the compiler
 
-extern int otherobject_x[];
-extern int otherobject_y[];
-extern int otherobject_xscale[];
-extern int otherobject_yscale[];
+//sprite info
 extern int SpriteWidths[];
 extern int SpriteHeights[];
 extern int SpriteOriginX[];
 extern int SpriteOriginY[];
+
+//bounding box info
 extern int SpriteCollideTOP[];
 extern int SpriteCollideBOTTOM[];
 extern int SpriteCollideLEFT[];
 extern int SpriteCollideRIGHT[];
-extern int otherobject_sprite[];
-extern int otherobject_id[];
-extern int object_count;
-extern int IDtoObject[];
+
+//sprite animation info
 extern int SpriteFrameCount[];
-extern int SpriteAnimTimer[];
+extern float SpriteAnimTimer[];
 extern int SpriteAnimSpeedType[];
