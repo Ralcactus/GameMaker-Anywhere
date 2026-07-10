@@ -32,18 +32,18 @@ function scr_compileobjects(){
 
 	if (global.copycode == true){
 	    if (file_exists(createpath)) {
-			create_code = syntax_convert(create_code, createpath);
+			create_code = syntax_convert(createpath);
 	        show_debug_message(create_code);
 
 	    }
             
 	    if (file_exists(steppath)) {
-			step_code = syntax_convert(step_code, steppath);
+			step_code = syntax_convert(steppath);
 	        show_debug_message(step_code);
 	    }
                   
 	    if (file_exists(drawpath)) {
-			draw_code = syntax_convert(draw_code, drawpath);
+			draw_code = syntax_convert(drawpath);
 	        show_debug_message(draw_code);
 	    }
 	}
