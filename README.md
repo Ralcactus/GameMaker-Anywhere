@@ -30,10 +30,12 @@ When you actually wanna test your changes, compile the GML2C project and compile
 If you wanna add a new export platform: Don't!<br>Later on more platforms will be allowed, but as of currently we don't wanna deal with editing like 10 different platforms at once
 
 ## Credits
-Meet the team!
-- Ralcactus (coder and creator)
-- FoxFore (coder)
+### Contributors
+- [Ralcactus](https://github.com/Ralcactus) (coder and creator)
+- [FoxFore](https://github.com/FoxFore32x) (coder)
 - Loaf (Logo designer)
-- Finlay (coder)
-- Samuel Venable (GameMaker extension developer)
-- Feel free to contribute! (we really need the help...)
+- [Samuel Venable](https://github.com/samuelvenable) (GameMaker extension developer)
+- [Feel free to contribute!](https://c.tenor.com/-VG9cLwSYTcAAAAd/tenor.gif) (we really need the help...)
+### Resources used
+- [Pizzaandy](https://github.com/Pizzaandy) for the [Gobo](https://github.com/Pizzaandy/Gobo) app (A gml code cleaner)
+- [Samuel Venable](https://github.com/samuelvenable) for the [xprocess](https://github.com/samuelvenable/xProcess-GMExtension) and [filesystem](https://github.com/samuelvenable/FileManager-GMExtension) gms2 extensions! 
