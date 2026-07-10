@@ -21,6 +21,7 @@ extern Object* CurrentObjectRunning;
 
 #pragma once
 #define noone -4
+#define undefined NULL
 
 //enums
 enum AudioEffectType{

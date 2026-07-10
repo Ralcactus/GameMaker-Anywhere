@@ -23,7 +23,15 @@ if (CompletionStatusFromExecutedProcess(compile_powershell_window) && logging ==
 		file_delete(destination + "/output/Runner.elf/");
 	}
 
-	run_commandpowershell(destination+"/output/", "explorer .")
+	var bleh = run_commandpowershell(destination+"/output/", "explorer .")
+
+	FreeExecutedProcessStandardOutput(bleh);
+	FreeExecutedProcessStandardInput(bleh);
+	FreeExecutedProcessStandardOutput(compile_powershell_window);
+	FreeExecutedProcessStandardInput(compile_powershell_window);
+	compile_powershell_window = -4;
+
+	
 	
 	logging = false;
 }

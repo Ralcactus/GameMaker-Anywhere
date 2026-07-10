@@ -32,33 +32,18 @@ function scr_compileobjects(){
 
 	if (global.copycode == true){
 	    if (file_exists(createpath)) {
-	        var createinside_buffer = buffer_load(createpath);
-			if (buffer_get_size(createinside_buffer) > 0)
-				create_code = buffer_read(createinside_buffer, buffer_string);
-	        buffer_delete(createinside_buffer);
-			create_code = syntax_convert(create_code, safe_name);
-		
+			create_code = syntax_convert(createpath);
 	        show_debug_message(create_code);
 
 	    }
             
 	    if (file_exists(steppath)) {
-	        var createinside_buffer = buffer_load(steppath);
-			if (buffer_get_size(createinside_buffer) > 0)
-				step_code = buffer_read(createinside_buffer, buffer_string);
-	        buffer_delete(createinside_buffer);
-			step_code = syntax_convert(step_code, safe_name);
-			
+			step_code = syntax_convert(steppath);
 	        show_debug_message(step_code);
 	    }
                   
 	    if (file_exists(drawpath)) {
-	        var createinside_buffer = buffer_load(drawpath);
-			if (buffer_get_size(createinside_buffer) > 0)
-				draw_code = buffer_read(createinside_buffer, buffer_string);
-	        buffer_delete(createinside_buffer);
-			draw_code = syntax_convert(draw_code, safe_name);
-		
+			draw_code = syntax_convert(drawpath);
 	        show_debug_message(draw_code);
 	    }
 	}

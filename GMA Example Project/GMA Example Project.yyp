@@ -42,7 +42,6 @@
     {"id":{"name":"General_test","path":"rooms/General_test/General_test.yy",},},
     {"id":{"name":"Global_test","path":"rooms/Global_test/Global_test.yy",},},
     {"id":{"name":"Sound_test","path":"rooms/Sound_test/Sound_test.yy",},},
-    {"id":{"name":"scr_ralseiplayer","path":"scripts/scr_ralseiplayer/scr_ralseiplayer.yy",},},
     {"id":{"name":"mu_GirlNextDoor","path":"sounds/mu_GirlNextDoor/mu_GirlNextDoor.yy",},},
     {"id":{"name":"mu_NoelleHouse","path":"sounds/mu_NoelleHouse/mu_NoelleHouse.yy",},},
     {"id":{"name":"spr_kris_down","path":"sprites/spr_kris_down/spr_kris_down.yy",},},

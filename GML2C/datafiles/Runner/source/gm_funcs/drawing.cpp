@@ -9,6 +9,7 @@
 #include "../helpers/get_spriteinfo.h"
 #include "../helpers/var_in_object_running.h"
 #include "../helpers/get_spriteinfo.h"
+#include "../gm_funcs/misc.h"
 
 unsigned int drawcolor = c_white;
 
@@ -30,8 +31,12 @@ unsigned int drawcolor = c_white;
         C2D_SceneBegin(screen_target);
 
         //size and pos
-        C2D_ViewScale(400 / view0_camWidth, 240 / view0_camHeight);
-        C2D_ViewTranslate(-view0_camXPos, -view0_camYPos);
+        float scaleX = 400.0f / view0_camWidth;
+        float scaleY = 240.0f / view0_camHeight;
+        float scale = (scaleX < scaleY) ? scaleX : scaleY;
+
+        C2D_ViewScale(scale, scale);
+        C2D_ViewTranslate(-view0_camXPos + (400.0f/scale - view0_camWidth) / 2.0f, -view0_camYPos + (240.0f/scale - view0_camHeight) / 2.0f);
     }
 
     void scr_endframe(){

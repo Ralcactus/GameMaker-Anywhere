@@ -1,14 +1,10 @@
-//TODO:
-//finish == convert
-//add ; convert
-
-function syntax_convert(originalcode, obj_name){
-	for (var i = 1; i <= string_length(originalcode); i++)
-	{
-		var char_code = string_char_at(originalcode, i);
-
-		originalcode = scr_ifbracket_convert(i, char_code, originalcode);
-	}
+function syntax_convert(gmlfile_path){
+	var newcode = "";
 	
-	return originalcode; 
+	//run through gobo (cleans code up by adding ";" "if (bleh == true)" etc)
+	newcode = gobo_cleaner(gmlfile_path);
+
+	//here will be for c++ speciifc stuff like decimals with "0.2f"
+
+	return newcode; 
 }
