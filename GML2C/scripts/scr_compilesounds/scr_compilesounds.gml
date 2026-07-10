@@ -19,7 +19,11 @@ function scr_compilesounds(){
 			sleep(10);
 		}
 
-		run_commandpowershell(destination+"/romfs/audio/", working_directory + "other/ffmpeg.exe -y -i TEMPOGG.ogg -c:a libopus -b:a 128k " + string(currentsound_count) + ".opus", false);
+		var pid = run_commandpowershell(destination+"/romfs/audio/", working_directory + "other/ffmpeg.exe -y -i TEMPOGG.ogg -c:a libopus -b:a 128k " + string(currentsound_count) + ".opus", false);
+		FreeExecutedProcessStandardOutput(pid);
+		FreeExecutedProcessStandardInput(pid);
+		pid = 0;
+  
 		file_delete(destination+"/romfs/audio/TEMPOGG.ogg");
 	}
 	else{

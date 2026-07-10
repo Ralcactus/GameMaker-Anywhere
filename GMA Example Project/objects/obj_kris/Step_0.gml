@@ -7,7 +7,7 @@ else
 	
 if (gamepad_button_check(4, gp_padu)) //up
 	moveV = -1;
-else if (gamepad_button_check(4, gp_padd)) //down
+else if gamepad_button_check(4, gp_padd) //down (notice how no brackets around the if? gobo syntax conversion :drool:)
 	moveV = 1;
 else
 	moveV = 0;
