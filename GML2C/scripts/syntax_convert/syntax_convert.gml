@@ -1,5 +1,6 @@
-function syntax_convert(newcode, gmlfile_path){
-
+function syntax_convert(gmlfile_path){
+	var newcode = "";
+	
 	//run through gobo (cleans code up by adding ";" "if (bleh == true)" etc)
 	newcode = gobo_cleaner(gmlfile_path);
 

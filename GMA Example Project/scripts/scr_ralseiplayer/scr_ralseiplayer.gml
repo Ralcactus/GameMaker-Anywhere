@@ -1,3 +1,3 @@
-function scr_bleh(){
+function scr_bleh (){
 	return true;
 }
