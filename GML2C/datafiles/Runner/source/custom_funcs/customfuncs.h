@@ -1,3 +1,5 @@
+#pragma once
+
 //citro2d has this declared already lol
 #undef function
 
