@@ -11,7 +11,7 @@ function scr_compilescripts(){
 	var gml_code = syntax_convert(filename_dir(global.selected_yyp) + "/scripts/" + yyfile.name + "/" + yyfile.name + ".gml");
 	gml_code = write_arg_convert(gml_code);
 	file_text_write_string(customfuncsCPP, gml_code + "\n");
-	scr_write_customvariables(gml_code, true);
+	scr_write_customvariables(gml_code);
 	
 	//h file
 	var pos = string_pos("function", gml_code);

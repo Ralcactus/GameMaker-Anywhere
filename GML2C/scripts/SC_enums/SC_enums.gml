@@ -28,10 +28,14 @@ function SC_enums(code){
 			temp_pos++;
 		}
 		temp_pos++; //actually go down to the next line
+		
 		code = string_insert("	GMvar", code, temp_pos);
 	
 		//insert the rest of the types
 		while (string_char_at(code, temp_pos) != "}"){
+			if (temp_pos > string_length(code))
+				break;
+				
 			if (string_char_at(code, temp_pos) == ","){
 				code = string_delete(code, temp_pos, 1);
 				code = string_insert(";", code, temp_pos);
@@ -40,10 +44,11 @@ function SC_enums(code){
 					temp_pos++;
 					
 				temp_pos++; //actually go down to the next line
-				if (string_char_at(code, temp_pos) != "}")
+				if (string_char_at(code, temp_pos) != "}"){
 					code = string_insert("	GMvar", code, temp_pos);
-					code = string_delete(code, temp_pos+6, 1)
-					code = string_insert(" ", code, temp_pos+6)
+					code = string_delete(code, temp_pos+6, 1);
+					code = string_insert(" ", code, temp_pos+6);
+				}
 			}
 			
 			if (string_char_at(code, temp_pos-1) != "}"){
