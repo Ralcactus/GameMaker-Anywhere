@@ -62,7 +62,7 @@ function SC_enums(code){
 
 		var miscH = file_text_open_append(destination + "source/variable_handler.h");
 		file_text_write_string(miscH, bleh+"\n");
-		file_text_write_string(miscH, "extern " + enumName + sillyinsert + " " + enumName + ";\n");
+		file_text_write_string(miscH, "inline " + enumName + sillyinsert + " " + enumName + ";\n");
 		file_text_close(miscH);
 
 		pos = string_pos("enum", code);
