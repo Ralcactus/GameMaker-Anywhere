@@ -294,11 +294,38 @@ int draw_get_valign(int type){
 }
 
 void draw_sprite_tiled_ext(int draw_sprite, float subimg, float draw_x, float draw_y, float scale_x, float scale_y, float color, float alpha){
-    draw_sprite_ext(draw_sprite, subimg, draw_x, draw_y, scale_x, scale_y, 0, color, alpha);
+    int width = sprite_get_width(draw_sprite) * scale_x;
+    int height = sprite_get_height(draw_sprite) * scale_y;
+
+    int LayerCount = 0;
+    int ColumnCount = 0;
+    int WidthCount = 0;
+    int HeightCount = 0;
+
+    int columns = (view0_camWidth - draw_x) / width + 2;
+    int rows = (view0_camHeight - draw_y) / height + 2;
+    
+    for (int i = 0; i < columns * rows; ++i) {
+        draw_sprite_ext(draw_sprite, subimg, draw_x+width*ColumnCount, draw_y+height*LayerCount, scale_x, scale_y, 0, color, alpha);
+
+        ColumnCount += 1;
+        WidthCount+=width; //add the sprite width to the width count
+        
+        if (WidthCount >= view0_camWidth-draw_x){
+            LayerCount+=1;
+            HeightCount+=height; //add the sprite height to the height count
+            WidthCount = 0;
+            ColumnCount = 0;
+        }       
+
+        if (HeightCount >= view0_camHeight-draw_y+height){
+            break;
+        }
+	}
 }
 
 void draw_sprite_tiled(int draw_sprite, float subimg, float draw_x, float draw_y){
-    draw_sprite_ext(draw_sprite, subimg, draw_x, draw_y, 1, 1, 0, c_white, 1);
+    draw_sprite_tiled_ext(draw_sprite, subimg, draw_x, draw_y, 1, 1, c_white, 1);
 }
 
 void draw_set_font(int font){
