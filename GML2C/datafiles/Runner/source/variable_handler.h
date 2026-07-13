@@ -3,6 +3,7 @@
 #include <variant>
 #include <cstdint>
 #include <memory>
+#include <string>
 
 #pragma once
 
@@ -76,8 +77,29 @@ struct GMvar{
 
     //adding, subtracting, multiplying and dividing
     // +
-    GMvar operator+ (float o) const { return GMvar{(float)*this + o}; } 
-    GMvar operator+(const GMvar& o) const { return GMvar {(float)*this + (float)o}; }
+    //Holds float or int
+    GMvar operator+(float o) const{
+        if (std::holds_alternative<float>(value) || std::holds_alternative<int>(value)){
+            return GMvar {(float)*this + o};
+        }
+    }
+
+    //Holds string
+    GMvar operator+(const char* o) const{
+        if (std::holds_alternative<const char*>(value)){
+            return GMvar {(std::string((const char*)*this) + o).c_str()};
+        }
+    }
+
+    //Holds GMvar
+    GMvar operator+(const GMvar& o) const{
+        if (std::holds_alternative<const char*>(value) && std::holds_alternative<const char*>(o.value)){
+            return GMvar{ (std::string((const char*)*this) + (const char*)o).c_str() };
+        }
+        if ((std::holds_alternative<float>(value) || std::holds_alternative<int>(value)) && (std::holds_alternative<float>(o.value) || std::holds_alternative<int>(o.value))){
+            return GMvar {(float)*this + (float)o};
+        }
+    }
 
     // -
     GMvar operator- (float o) const { return GMvar{(float)*this - o}; } 
@@ -91,6 +113,7 @@ struct GMvar{
     GMvar operator/ (float o) const { return GMvar{(float)*this / o}; } 
     GMvar operator/(const GMvar& o) const { return GMvar {(float)*this / (float)o}; }
 
+    
     GMvar operator++ (int) { GMvar tmp(*this); value = (float)*this + 1; return tmp; } // ++
     GMvar operator-- (int) { GMvar tmp(*this); value = (float)*this - 1; return tmp; } // --
     GMvar& operator+= (float o) { value = (float)*this + o; return *this; } // +=
@@ -105,26 +128,6 @@ struct GMvar{
     bool operator> (float o) const { return (float)*this > o; }
     bool operator<= (float o) const { return (float)*this <= o; }
     bool operator>= (float o) const { return (float)*this >= o; }
-
-    //array access — lazily promotes scalar -> array on first write, like GML
-    GMvar& operator[](int i) {
-        if (!std::holds_alternative<std::shared_ptr<std::vector<GMvar>>>(value))
-            value = std::make_shared<std::vector<GMvar>>();
-
-        auto& arr = *std::get<std::shared_ptr<std::vector<GMvar>>>(value);
-        if ((int)arr.size() <= i) arr.resize(i + 1);
-        return arr[i];
-    }
-
-    const GMvar& operator[](int i) const {
-        static const GMvar undefined;
-        if (!std::holds_alternative<std::shared_ptr<std::vector<GMvar>>>(value))
-            return undefined;
-
-        auto& arr = *std::get<std::shared_ptr<std::vector<GMvar>>>(value);
-        if (i < 0 || i >= (int)arr.size()) return undefined;
-        return arr[i];
-    }
 };
 
 inline GMvar operator+ (float o, const GMvar& v) { return v + o; }

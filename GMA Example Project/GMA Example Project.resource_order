@@ -17,6 +17,7 @@
     {"name":"Timelines","order":8,"path":"folders/Timelines.yy",},
   ],
   "ResourceOrderSettings":[
+    {"name":"obj_babykris","order":5,"path":"objects/obj_babykris/obj_babykris.yy",},
     {"name":"obj_globaltest_1","order":2,"path":"objects/obj_globaltest_1/obj_globaltest_1.yy",},
     {"name":"obj_globaltest_2","order":3,"path":"objects/obj_globaltest_2/obj_globaltest_2.yy",},
     {"name":"obj_kris","order":4,"path":"objects/obj_kris/obj_kris.yy",},
@@ -24,6 +25,7 @@
     {"name":"General_test","order":2,"path":"rooms/General_test/General_test.yy",},
     {"name":"Global_test","order":1,"path":"rooms/Global_test/Global_test.yy",},
     {"name":"mu_GirlNextDoor","order":1,"path":"sounds/mu_GirlNextDoor/mu_GirlNextDoor.yy",},
+    {"name":"spr_babykris","order":7,"path":"sprites/spr_babykris/spr_babykris.yy",},
     {"name":"spr_kris_down","order":2,"path":"sprites/spr_kris_down/spr_kris_down.yy",},
     {"name":"spr_kris_side","order":3,"path":"sprites/spr_kris_side/spr_kris_side.yy",},
     {"name":"spr_kris_up","order":4,"path":"sprites/spr_kris_up/spr_kris_up.yy",},

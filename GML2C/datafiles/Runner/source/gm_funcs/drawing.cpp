@@ -277,4 +277,32 @@ int sprite_get_number(int sprite){
     return SpriteFrameCount[sprite];
 }
 
+void draw_set_halign(int type){
+    //NOTHING, EMPTY, STUPID!!!
+}
+
+void draw_set_valign(int type){
+    //NOTHING, EMPTY, STUPID!!!
+}
+
+int draw_get_halign(int type){
+    return 0;
+}
+
+int draw_get_valign(int type){
+    return 0;
+}
+
+void draw_sprite_tiled_ext(int draw_sprite, float subimg, float draw_x, float draw_y, float scale_x, float scale_y, float color, float alpha){
+    draw_sprite_ext(draw_sprite, subimg, draw_x, draw_y, scale_x, scale_y, 0, color, alpha);
+}
+
+void draw_sprite_tiled(int draw_sprite, float subimg, float draw_x, float draw_y){
+    draw_sprite_ext(draw_sprite, subimg, draw_x, draw_y, 1, 1, 0, c_white, 1);
+}
+
+void draw_set_font(int font){
+    //NOTHING, EMPTY, STUPID!!!
+}
+
 #pragma endregion

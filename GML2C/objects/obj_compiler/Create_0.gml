@@ -62,6 +62,7 @@ yyfile = noone;
 _id = noone;
 currentsprite_count = 0;
 currentsound_count = 0;
+currentfont_count = 0;
 t3s_file = noone;
 textures_dolfile = noone;
 roomid_count = 0;

@@ -2,6 +2,7 @@
 #include <string.h>
 
 #pragma once
+//Built in colours
 #define c_black 4278190080
 #define c_white 4294967295
 #define c_red 4294901760
@@ -21,6 +22,18 @@
 #define c_dkgray 4282400832
 #define c_ltgray 4290822336
 #define c_silver 4290822336
+
+//Draw aligns
+//Horizontal
+#define fa_left 0
+#define fa_center 2
+#define fa_right 2
+//Vertical
+#define fa_top 0
+#define fa_middle 2
+#define fa_bottom 2
+
+#define GM_runtime_version "0.0.0"
 
 //variables
 extern unsigned int bgcolor;
@@ -44,6 +57,15 @@ void draw_self();
 void gpu_set_texfilter(bool yesno);
 bool gpu_get_texfilter();
 int sprite_get_number(int sprite);
+void draw_sprite_tiled_ext(int draw_sprite, float subimg, float draw_x, float draw_y, float scale_x, float scale_y, float color, float alpha);
+void draw_set_font(int font);
+void draw_sprite_tiled(int draw_sprite, float subimg, float draw_x, float draw_y);
+
+//aligns
+void draw_set_halign(int type);
+void draw_set_valign(int type);
+int draw_get_halign(int type);
+int draw_get_valign(int type);
 
 //3DS
 #ifdef __3DS__

@@ -122,6 +122,7 @@
     {"id":{"name":"SC_enums","path":"scripts/SC_enums/SC_enums.yy",},},
     {"id":{"name":"scr_compile","path":"scripts/scr_compile/scr_compile.yy",},},
     {"id":{"name":"scr_compilecommand","path":"scripts/scr_compilecommand/scr_compilecommand.yy",},},
+    {"id":{"name":"scr_compilefonts","path":"scripts/scr_compilefonts/scr_compilefonts.yy",},},
     {"id":{"name":"scr_compileobject_phase2","path":"scripts/scr_compileobject_phase2/scr_compileobject_phase2.yy",},},
     {"id":{"name":"scr_compileobjects","path":"scripts/scr_compileobjects/scr_compileobjects.yy",},},
     {"id":{"name":"scr_compileroom_phase2","path":"scripts/scr_compileroom_phase2/scr_compileroom_phase2.yy",},},

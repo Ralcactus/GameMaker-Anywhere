@@ -38,6 +38,7 @@ function scr_compileSETUP(){
 	_id = noone;
 	currentsprite_count = -1;
 	currentsound_count = 0;
+	currentfont_count = 0;
 	t3s_file = noone;
 	roomid_count = 0;
 	object_count = 0;
@@ -222,6 +223,9 @@ function scr_compile()
 			
         if (yyfile.resourceType == "GMSound") //asset is a sound!
 			scr_compilesounds();
+			
+        if (yyfile.resourceType == "GMFont") //asset is a font!
+			scr_compilefonts();
     }
 	show_debug_message("compiled resources");
 	

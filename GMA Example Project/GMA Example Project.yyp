@@ -35,6 +35,7 @@
   },
   "name":"GMA Example Project",
   "resources":[
+    {"id":{"name":"obj_babykris","path":"objects/obj_babykris/obj_babykris.yy",},},
     {"id":{"name":"obj_globaltest_1","path":"objects/obj_globaltest_1/obj_globaltest_1.yy",},},
     {"id":{"name":"obj_globaltest_2","path":"objects/obj_globaltest_2/obj_globaltest_2.yy",},},
     {"id":{"name":"obj_kris","path":"objects/obj_kris/obj_kris.yy",},},
@@ -44,6 +45,7 @@
     {"id":{"name":"Sound_test","path":"rooms/Sound_test/Sound_test.yy",},},
     {"id":{"name":"mu_GirlNextDoor","path":"sounds/mu_GirlNextDoor/mu_GirlNextDoor.yy",},},
     {"id":{"name":"mu_NoelleHouse","path":"sounds/mu_NoelleHouse/mu_NoelleHouse.yy",},},
+    {"id":{"name":"spr_babykris","path":"sprites/spr_babykris/spr_babykris.yy",},},
     {"id":{"name":"spr_kris_down","path":"sprites/spr_kris_down/spr_kris_down.yy",},},
     {"id":{"name":"spr_kris_side","path":"sprites/spr_kris_side/spr_kris_side.yy",},},
     {"id":{"name":"spr_kris_up","path":"sprites/spr_kris_up/spr_kris_up.yy",},},
