@@ -13,6 +13,7 @@
 #include "../gm_funcs/misc.h"
 #include "../gm_funcs/collision.h"
 #include "../gm_funcs/audio.h"
+#include "../gm_funcs/filesystem.h"
 #include "../custom_funcs/customfuncs.h"
 #include "../variable_handler.h"
 #include <variant>

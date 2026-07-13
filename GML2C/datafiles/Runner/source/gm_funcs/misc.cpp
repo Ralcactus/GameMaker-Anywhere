@@ -13,6 +13,7 @@ float view0_camXPos = 0;
 float view0_camYPos = 0;
 float view0_camWidth = 1366;
 float view0_camHeight = 768;
+int os_type = CURRENT_OS;
 
 Object* CurrentObjectRunning = NULL;
 

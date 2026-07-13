@@ -63,6 +63,8 @@
     {"$GMIncludedFile":"","%Name":"collision.h","CopyToMask":-1,"filePath":"datafiles/Runner/source/gm_funcs","name":"collision.h","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"drawing.cpp","CopyToMask":-1,"filePath":"datafiles/Runner/source/gm_funcs","name":"drawing.cpp","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"drawing.h","CopyToMask":-1,"filePath":"datafiles/Runner/source/gm_funcs","name":"drawing.h","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"filesystem.cpp","CopyToMask":-1,"filePath":"datafiles/Runner/source/gm_funcs","name":"filesystem.cpp","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"filesystem.h","CopyToMask":-1,"filePath":"datafiles/Runner/source/gm_funcs","name":"filesystem.h","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"input.cpp","CopyToMask":-1,"filePath":"datafiles/Runner/source/gm_funcs","name":"input.cpp","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"input.h","CopyToMask":-1,"filePath":"datafiles/Runner/source/gm_funcs","name":"input.h","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"misc.cpp","CopyToMask":-1,"filePath":"datafiles/Runner/source/gm_funcs","name":"misc.cpp","resourceType":"GMIncludedFile","resourceVersion":"2.0",},

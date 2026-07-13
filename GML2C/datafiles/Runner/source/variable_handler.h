@@ -43,7 +43,7 @@ struct GMvar{
     }
 
     //convert to bool
-    operator bool() const{
+    explicit operator bool() const{
         return std::visit([](auto&& val) -> bool {
             using T = std::decay_t<decltype(val)>;
             if constexpr (std::is_same_v<T, bool>)

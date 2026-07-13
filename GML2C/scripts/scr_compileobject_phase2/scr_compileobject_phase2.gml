@@ -14,6 +14,7 @@ function scr_compileobject_phase2(spr_name, create_code, step_code, draw_code){
 	file_text_write_string(file, "#include \"../gm_funcs/misc.h\"\n");
 	file_text_write_string(file, "#include \"../gm_funcs/collision.h\"\n");
 	file_text_write_string(file, "#include \"../gm_funcs/audio.h\"\n");
+	file_text_write_string(file, "#include \"../gm_funcs/filesystem.h\"\n");
 	file_text_write_string(file, "#include \"../custom_funcs/customfuncs.h\"\n");
 	file_text_write_string(file, "#include \"../variable_handler.h\"\n");
 	file_text_write_string(file, "#include \"../helpers/get_spriteinfo.h\"\n");
