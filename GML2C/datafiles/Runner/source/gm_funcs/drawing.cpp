@@ -46,7 +46,7 @@ unsigned int drawcolor = c_white;
         C3D_FrameEnd(0);
     }
 
-    //subimg, color and alpha are stubs!
+    //color and alpha are stubs!
     //Also rotation is a little weird idk how to fix it
     void draw_sprite(int draw_sprite, float subimg, float draw_x, float draw_y){
         draw_sprite_ext(draw_sprite, subimg, draw_x, draw_y, 1, 1, 0, c_white, 1);
@@ -57,8 +57,8 @@ unsigned int drawcolor = c_white;
             return;
 
         C2D_Sprite sprite;
-        C2D_SpriteSetCenter(&sprite, sprite_get_xoffset(draw_sprite)/(float)sprite_get_width(draw_sprite), sprite_get_yoffset(draw_sprite)/(float)sprite_get_height(draw_sprite));
         C2D_SpriteFromSheet(&sprite, spriteSheet, draw_sprite-round(subimg));
+        C2D_SpriteSetCenter(&sprite, sprite_get_xoffset(draw_sprite)/(float)sprite_get_width(draw_sprite), sprite_get_yoffset(draw_sprite)/(float)sprite_get_height(draw_sprite));
         C2D_SpriteSetPos(&sprite, draw_x, draw_y);
         C2D_SpriteSetScale(&sprite, scale_x, scale_y);
         C2D_SpriteSetRotation(&sprite, rotation);
@@ -304,7 +304,7 @@ void draw_sprite_tiled_ext(int draw_sprite, float subimg, float draw_x, float dr
 
     int columns = (view0_camWidth - draw_x) / width + 2;
     int rows = (view0_camHeight - draw_y) / height + 2;
-    
+
     for (int i = 0; i < columns * rows; ++i) {
         draw_sprite_ext(draw_sprite, subimg, draw_x+width*ColumnCount, draw_y+height*LayerCount, scale_x, scale_y, 0, color, alpha);
 
