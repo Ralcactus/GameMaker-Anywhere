@@ -12,7 +12,6 @@
 #include "gm_funcs/audio.h"
 
 #ifdef __wii__
-    #include <gccore.h>
     #include <wiiuse/wpad.h>
 #endif
 
@@ -22,6 +21,7 @@
 #endif
 
 #if defined(__gamecube__) || defined(__wii__)
+    #include <gccore.h>
     #include <ogc/lwp_watchdog.h>
 #endif
 

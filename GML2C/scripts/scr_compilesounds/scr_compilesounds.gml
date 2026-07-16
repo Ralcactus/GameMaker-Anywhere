@@ -13,18 +13,42 @@ function scr_compilesounds(){
 	if (filename_ext(soundpath) == ".ogg"){
 		show_debug_message("File format is ogg");
 		
-		file_copy(soundpath, destination+"/romfs/audio/TEMPOGG.ogg")
+		var pid;
+		if (global.export_mode == "3DSX" || global.export_mode == "CIA"){
+			file_copy(soundpath, destination+"/romfs/audio/TEMPOGG.ogg")
 	
-		if (!file_exists(destination+"/romfs/audio/TEMPOGG.ogg")){
-			sleep(10);
+			if (!file_exists(destination+"/romfs/audio/TEMPOGG.ogg")){
+				sleep(10);
+			}
+		
+			if (os_type == os_windows){
+				pid = run_commandpowershell(destination+"/romfs/audio/", working_directory + "other/ffmpeg.exe -y -i TEMPOGG.ogg -c:a libopus -b:a 128k " + string(currentsound_count) + ".opus", false);
+			} else if (os_type == os_linux || os_type == os_macosx) {
+				pid = run_commandpowershell(destination+"/romfs/audio/", "ffmpeg -y -i TEMPOGG.ogg -c:a libopus -b:a 128k " + string(currentsound_count) + ".opus", false);
+			}
 		}
-
-		var pid = run_commandpowershell(destination+"/romfs/audio/", working_directory + "other/ffmpeg.exe -y -i TEMPOGG.ogg -c:a libopus -b:a 128k " + string(currentsound_count) + ".opus", false);
+		if (global.export_mode == "GAMECUBE" || global.export_mode == "WII"){
+			file_copy(soundpath, destination+"/data/TEMPOGG.ogg")
+	
+			if (!file_exists(destination+"/data/TEMPOGG.ogg")){
+				sleep(10);
+			}
+			
+			if (os_type == os_windows){
+				pid = run_commandpowershell(destination+"/data/", working_directory + "other/ffmpeg.exe -y -i TEMPOGG.ogg -c:a libopus -b:a 128k " + string(currentsound_count) + ".ogg", false);
+			} else if (os_type == os_linux || os_type == os_macosx) {
+				pid = run_commandpowershell(destination+"/data/", "ffmpeg -y -i TEMPOGG.ogg -c:a libopus -b:a 128k " + string(currentsound_count) + ".ogg", false);
+			}
+		}
 		FreeExecutedProcessStandardOutput(pid);
 		FreeExecutedProcessStandardInput(pid);
 		pid = 0;
   
-		file_delete(destination+"/romfs/audio/TEMPOGG.ogg");
+		if (global.export_mode == "3DSX" || global.export_mode == "CIA")
+			file_delete(destination+"/romfs/audio/TEMPOGG.ogg");
+			
+		if (global.export_mode == "GAMECUBE" || global.export_mode == "WII")
+			file_delete(destination+"/data/sounds/TEMPOGG.ogg");
 	}
 	else{
 		show_debug_message("UNKNOWN SOUND FILE FORMAT :(")	

@@ -1,17 +1,21 @@
 scr_init();
 
-if (!file_exists(working_directory+"/other/ffmpeg.exe")){
-	show_message("ERROR\nffmpeg was not found in the \"other\" folder, please add it!");
-	game_end();
-}
-
 global.copysprite = true;
 if(os_type == os_windows)
 {
+	if (!file_exists(working_directory+"/other/ffmpeg.exe")){
+		show_message("ERROR\nffmpeg was not found in the \"other\" folder, please add it!");
+		game_end();
+	}
+
     global.OutputDrive = "C:/";
 }
 else if(os_type == os_linux || os_type == os_macosx)
 {
+	if (!file_exists("/usr/bin/ffmpeg")){
+		show_message("ERROR\nffmpeg was not found in the \"usr/bin/ffmpeg\" folder, please add it!");
+		game_end();
+	}
     global.OutputDrive = "/tmp/";
 }
 else
