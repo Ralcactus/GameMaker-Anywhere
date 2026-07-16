@@ -11,14 +11,7 @@ function gobo_cleaner(gmlfile_path){
 	if (os_type == os_windows){
 		gobo = run_commandpowershell("C:/", working_directory+"Other/gobo.exe --write-stdout --skip-write '" + gmlfile_path + "'", false); //run gobo
 	} else if (os_type == os_linux || os_type == os_macosx) {
-	    var gobo_path = working_directory + "other/gobo";
-	    var gobo_dir = working_directory + "other";
-
-	    gobo = run_commandpowershell(
-	        gobo_dir,
-	        "chmod +x './gobo' && './gobo' --write-stdout --skip-write '" + gmlfile_path + "'",
-	        false
-	    );
+	    gobo = run_commandpowershell("/tmp/", "chmod +x '" +  working_directory + "other/gobo" + "' && '" + working_directory + "other/gobo" + "' --write-stdout --skip-write '" + gmlfile_path + "'", false);
 }
 	var output = ExecutedProcessReadFromStandardOutput(gobo); //read the output
 	var startingpoint = string_length("Formatting " + filename_name(gmlfile_path))+4; //find the starting formatting start text and +4 to skip the "l..."
