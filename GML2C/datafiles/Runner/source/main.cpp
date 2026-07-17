@@ -22,6 +22,7 @@
 
 #if defined(__gamecube__) || defined(__wii__)
     #include <gccore.h>
+    #include <asndlib.h>
     #include <ogc/lwp_watchdog.h>
 #endif
 
@@ -77,6 +78,9 @@ int main(){
         lastTick = gettick();
     #endif
 
+    #if defined(__gamecube__) || defined(__wii__)
+        ASND_Init();
+    #endif
 
     drawing_init();
     

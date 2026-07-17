@@ -15,10 +15,6 @@
 #endif
 
 #if defined(__gamecube__) || defined(__wii__)
-    #include <gccore.h>
-    #include <asndlib.h>
-
-    #include "../oggplayer.h"
     #include "../include_audio.h"
 #endif
 
@@ -148,19 +144,19 @@ int audio_play_sound_ext(float WHATHOW_I_DONT_KNOW_WHERE_HUHH){
 
 #if defined(__gamecube__) || defined(__wii__)
     int audio_play_sound(int soundid, int priority, bool loop){
-
-        if(ogg_refs[soundid] == NULL || ogg_refs_size[soundid] == NULL) {
-            printf("Sound ID %d not found or size is NULL\n", soundid);
+        if (soundid < 0) {
+            printf("Invalid sound ID: %d\n", soundid);
             return -1;
         }
 
-        if(StatusOgg() == OGG_STATUS_RUNNING) {
+        /*if(StatusOgg() == OGG_STATUS_RUNNING) {
             StopOgg();
-        }
+        }*/
         
-        if(StatusOgg() != OGG_STATUS_RUNNING){
+        //uncommenting these for now
+        //if(StatusOgg() != OGG_STATUS_RUNNING){
             PlayOgg(ogg_refs[soundid], ogg_refs_size[soundid], 0, loop ? OGG_INFINITE_TIME : OGG_ONE_TIME);
-        }
+        //}
 
         return soundid;
     }
