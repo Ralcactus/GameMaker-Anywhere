@@ -48,7 +48,7 @@ function scr_compilesounds(){
 			file_delete(destination+"/romfs/audio/TEMPOGG.ogg");
 			
 		if (global.export_mode == "GAMECUBE" || global.export_mode == "WII")
-			file_delete(destination+"/data/sounds/TEMPOGG.ogg");
+			file_delete(destination+"/data/TEMPOGG.ogg");
 	}
 	else{
 		show_debug_message("UNKNOWN SOUND FILE FORMAT :(")	
