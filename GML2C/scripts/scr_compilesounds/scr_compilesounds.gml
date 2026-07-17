@@ -35,9 +35,9 @@ function scr_compilesounds(){
 			}
 			
 			if (os_type == os_windows){
-				pid = run_commandpowershell(destination+"/data/", working_directory + "other/ffmpeg.exe -y -i TEMPOGG.ogg -c:a libopus -b:a 128k " + string(currentsound_count) + ".ogg", false);
+				pid = run_commandpowershell(destination+"/data/", working_directory + "other/ffmpeg.exe -y -i TEMPOGG.ogg -c:a libvorbis -ar 44100 -b:a 192k " + string(currentsound_count) + ".ogg", false);
 			} else if (os_type == os_linux || os_type == os_macosx) {
-				pid = run_commandpowershell(destination+"/data/", "ffmpeg -y -i TEMPOGG.ogg -c:a libopus -b:a 128k " + string(currentsound_count) + ".ogg", false);
+				pid = run_commandpowershell(destination+"/data/", "ffmpeg -y -i TEMPOGG.ogg -c:a libvorbis -ar 44100 -b:a 192k " + string(currentsound_count) + ".ogg", false);
 			}
 		}
 		FreeExecutedProcessStandardOutput(pid);
