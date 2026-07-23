@@ -23,7 +23,7 @@ include $(DEVKITPPC)/wii_rules
 TARGET		:=	boot
 BUILD		:=	build
 SOURCES		:=	source source/helpers source/rooms source/objects source/gm_funcs source/custom_funcs
-DATA		:=
+DATA		:=	data
 TEXTURES	:=	gfx
 INCLUDES	:=  source source/helpers source/rooms source/objects source/gm_funcs source/custom_funcs
 
@@ -39,13 +39,13 @@ LDFLAGS	=	-g $(MACHDEP) -Wl,-Map,$(notdir $@).map
 #---------------------------------------------------------------------------------
 # any extra libraries we wish to link with the project
 #---------------------------------------------------------------------------------
-LIBS	:=	-lwiiuse -lbte -logc -lm
+LIBS	:=	-lvorbisidec -logg -lasnd -lwiiuse -lbte -logc -lm
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
 # include and lib
 #---------------------------------------------------------------------------------
-LIBDIRS	:=
+LIBDIRS	:= $(PORTLIBS)
 
 #---------------------------------------------------------------------------------
 # no real need to edit anything past this point unless you need to add additional
@@ -137,6 +137,14 @@ $(OFILES_SOURCES) : $(HFILES)
 #---------------------------------------------------------------------------------
 	@echo $(notdir $<)
 	$(bin2o)
+
+#---------------------------------------------------------------------------------
+# This rule links in binary data with the .ogg extension
+#---------------------------------------------------------------------------------
+%_ogg.h %.ogg.o	:	%.ogg
+#---------------------------------------------------------------------------------
+	@echo $(notdir $<)
+	@$(bin2o)
 
 #---------------------------------------------------------------------------------
 %.tpl.o	%_tpl.h :	%.tpl

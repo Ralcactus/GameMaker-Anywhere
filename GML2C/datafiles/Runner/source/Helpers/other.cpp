@@ -130,8 +130,10 @@
 
 //gamecube and wii
 #if defined(__gamecube__) || defined(__wii__)
+
+    #include "../oggplayer.h"
     void ExitApplication()
     {
-        //so empty...
+        StopOgg();
     }
 #endif

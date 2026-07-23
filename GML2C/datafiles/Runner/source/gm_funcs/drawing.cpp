@@ -46,7 +46,7 @@ unsigned int drawcolor = c_white;
         C3D_FrameEnd(0);
     }
 
-    //subimg, color and alpha are stubs!
+    //color and alpha are stubs!
     //Also rotation is a little weird idk how to fix it
     void draw_sprite(int draw_sprite, float subimg, float draw_x, float draw_y){
         draw_sprite_ext(draw_sprite, subimg, draw_x, draw_y, 1, 1, 0, c_white, 1);
@@ -57,8 +57,8 @@ unsigned int drawcolor = c_white;
             return;
 
         C2D_Sprite sprite;
-        C2D_SpriteSetCenter(&sprite, sprite_get_xoffset(draw_sprite)/(float)sprite_get_width(draw_sprite), sprite_get_yoffset(draw_sprite)/(float)sprite_get_height(draw_sprite));
         C2D_SpriteFromSheet(&sprite, spriteSheet, draw_sprite-round(subimg));
+        C2D_SpriteSetCenter(&sprite, sprite_get_xoffset(draw_sprite)/(float)sprite_get_width(draw_sprite), sprite_get_yoffset(draw_sprite)/(float)sprite_get_height(draw_sprite));
         C2D_SpriteSetPos(&sprite, draw_x, draw_y);
         C2D_SpriteSetScale(&sprite, scale_x, scale_y);
         C2D_SpriteSetRotation(&sprite, rotation);
@@ -275,6 +275,61 @@ bool gpu_get_tex_filter(){
 
 int sprite_get_number(int sprite){
     return SpriteFrameCount[sprite];
+}
+
+void draw_set_halign(int type){
+    //NOTHING, EMPTY, STUPID!!!
+}
+
+void draw_set_valign(int type){
+    //NOTHING, EMPTY, STUPID!!!
+}
+
+int draw_get_halign(int type){
+    return 0;
+}
+
+int draw_get_valign(int type){
+    return 0;
+}
+
+void draw_sprite_tiled_ext(int draw_sprite, float subimg, float draw_x, float draw_y, float scale_x, float scale_y, float color, float alpha){
+    int width = sprite_get_width(draw_sprite) * scale_x;
+    int height = sprite_get_height(draw_sprite) * scale_y;
+
+    int LayerCount = 0;
+    int ColumnCount = 0;
+    int WidthCount = 0;
+    int HeightCount = 0;
+
+    int columns = (view0_camWidth - draw_x) / width + 2;
+    int rows = (view0_camHeight - draw_y) / height + 2;
+
+    for (int i = 0; i < columns * rows; ++i) {
+        draw_sprite_ext(draw_sprite, subimg, draw_x+width*ColumnCount, draw_y+height*LayerCount, scale_x, scale_y, 0, color, alpha);
+
+        ColumnCount += 1;
+        WidthCount+=width; //add the sprite width to the width count
+        
+        if (WidthCount >= view0_camWidth-draw_x){
+            LayerCount+=1;
+            HeightCount+=height; //add the sprite height to the height count
+            WidthCount = 0;
+            ColumnCount = 0;
+        }       
+
+        if (HeightCount >= view0_camHeight-draw_y+height){
+            break;
+        }
+	}
+}
+
+void draw_sprite_tiled(int draw_sprite, float subimg, float draw_x, float draw_y){
+    draw_sprite_tiled_ext(draw_sprite, subimg, draw_x, draw_y, 1, 1, c_white, 1);
+}
+
+void draw_set_font(int font){
+    //NOTHING, EMPTY, STUPID!!!
 }
 
 #pragma endregion

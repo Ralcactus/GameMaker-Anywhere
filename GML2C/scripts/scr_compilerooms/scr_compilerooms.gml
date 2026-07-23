@@ -94,6 +94,7 @@ function scr_compilerooms(i, yyp_json){
 	file_text_write_string(file, "#include \"../gm_funcs/drawing.h\"\n");
 	file_text_write_string(file, "#include \"../gm_funcs/misc.h\"\n");
 	file_text_write_string(file, "#include \"../gm_funcs/audio.h\"\n");
+	file_text_write_string(file, "#include \"../gm_funcs/filesystem.h\"\n");
 	file_text_write_string(file, "#include \"../helpers/asset_toid.h\"\n\n");
 
 	show_debug_message("write file header: " + yyfile.name);

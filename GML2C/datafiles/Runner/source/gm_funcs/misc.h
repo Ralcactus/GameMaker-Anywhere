@@ -68,18 +68,21 @@ enum AudioLFOType{
 #define os_ps5 22
 #define os_xboxseriesxs 23
 #define os_gdk 23
+#define os_operagx 24
+#define os_android 4
+#define os_ios 3
 #define os_switch 21
 #define os_switch2 25
 #define os_unknown -1
 
 #ifdef __3DS__
-    #define os_type os_3ds //3ds
+    #define CURRENT_OS os_3ds //3ds
 #elif defined(__gamecube__)
-    #define os_type os_gamecube //gamecube
+    #define CURRENT_OS os_gamecube //gamecube
 #elif defined(__wii__)
-    #define os_type os_wii //wii
+    #define CURRENT_OS os_wii //wii
 #else
-    #define os_type os_unknown //tf are you running?
+    #define CURRENT_OS os_unknown //tf are you running?
 #endif
 
 #ifdef __3DS__
@@ -88,6 +91,7 @@ enum AudioLFOType{
     #define LoopOS SYS_MainLoop()
 #endif
 
+extern int os_type;
 
 //camera_ funcs
 void camera_set_view_pos(int viewID, float _x, float _y);

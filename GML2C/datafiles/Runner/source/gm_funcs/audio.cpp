@@ -14,6 +14,10 @@
     Thread threadId = NULL;
 #endif
 
+#if defined(__gamecube__) || defined(__wii__)
+    #include "../include_audio.h"
+#endif
+
 void audio_listener_position(float x, float y, float z){
     //so empty...
 }
@@ -140,7 +144,20 @@ int audio_play_sound_ext(float WHATHOW_I_DONT_KNOW_WHERE_HUHH){
 
 #if defined(__gamecube__) || defined(__wii__)
     int audio_play_sound(int soundid, int priority, bool loop){
-        //No
-        return -1;
+        if (soundid < 0) {
+            printf("Invalid sound ID: %d\n", soundid);
+            return -1;
+        }
+
+        /*if(StatusOgg() == OGG_STATUS_RUNNING) {
+            StopOgg();
+        }*/
+        
+        //uncommenting these for now
+        //if(StatusOgg() != OGG_STATUS_RUNNING){
+            PlayOgg(ogg_refs[soundid], ogg_refs_size[soundid], 0, loop ? OGG_INFINITE_TIME : OGG_ONE_TIME);
+        //}
+
+        return soundid;
     }
 #endif

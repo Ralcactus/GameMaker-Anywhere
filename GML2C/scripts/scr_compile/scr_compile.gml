@@ -9,15 +9,41 @@ function scr_compileSETUP(){
 	
 		var devkit_path = environment_get_variable("DEVKITPRO");
 		var _3DSPortlibs = false;
+		var _GCNPortlibs = false;
+		var _WIIPortlibs = false;
+		var _PPCPortlibs = false;
 		
-		if (os_type == os_windows)
+		if (os_type == os_windows){
 			_3DSPortlibs = directory_exists(global.OutputDrive + "devkitPro\\portlibs\\3ds\\");
+			_GCNPortlibs = directory_exists(global.OutputDrive + "devkitPro\\portlibs\\gamecube\\");
+			_WIIPortlibs = directory_exists(global.OutputDrive + "devkitPro\\portlibs\\wii\\");
+			_PPCPortlibs = directory_exists(global.OutputDrive + "devkitPro\\portlibs\\ppc\\");
+		}
 		
-		if (os_type == os_linux)
+		if (os_type == os_linux){
 			_3DSPortlibs = directory_exists(devkit_path + "/portlibs/3ds/");
+			_GCNPortlibs = directory_exists(devkit_path + "/portlibs/gamecube/");
+			_WIIPortlibs = directory_exists(devkit_path + "/portlibs/wii/");
+			_PPCPortlibs = directory_exists(devkit_path + "/portlibs/ppc/");
+		}
 		
 		if (!_3DSPortlibs && (global.export_mode == "CIA" || global.export_mode == "3DSX")){
 			show_message("DevKitPro 3DS portlibs are not installed!");
+			exit;
+		}
+		
+		if (!_GCNPortlibs && (global.export_mode == "GAMECUBE")){
+			show_message("DevKitPro Gamecube portlibs are not installed!");
+			exit;
+		}
+		
+		if (!_WIIPortlibs && (global.export_mode == "WII")){
+			show_message("DevKitPro Wii portlibs are not installed!");
+			exit;
+		}
+		
+		if (!_PPCPortlibs && ((global.export_mode == "GAMECUBE") || (global.export_mode == "WII"))){
+			show_message("DevKitPro PowerPC portlibs are not installed!");
 			exit;
 		}
 	}
@@ -38,6 +64,7 @@ function scr_compileSETUP(){
 	_id = noone;
 	currentsprite_count = -1;
 	currentsound_count = 0;
+	currentfont_count = 0;
 	t3s_file = noone;
 	roomid_count = 0;
 	object_count = 0;
@@ -222,6 +249,9 @@ function scr_compile()
 			
         if (yyfile.resourceType == "GMSound") //asset is a sound!
 			scr_compilesounds();
+			
+        if (yyfile.resourceType == "GMFont") //asset is a font!
+			scr_compilefonts();
     }
 	show_debug_message("compiled resources");
 	
@@ -231,9 +261,9 @@ function scr_compile()
 		show_debug_message("t3s file closed");
 	}
 
-	if (global.export_mode == "GAMECUBE" || global.export_mode == "WII")
+	if (global.export_mode == "GAMECUBE" || global.export_mode == "WII"){
 		file_text_close(textures_dolfile);
-	
+	}
 	
 	show_debug_message("CHECKPOINT 3.5");
 	scr_write_sprite_info();
@@ -243,6 +273,9 @@ function scr_compile()
 	scr_write_global_variables();
 	show_debug_message("CHECKPOINT 6");
 	
+	if (global.export_mode == "GAMECUBE" || global.export_mode == "WII"){
+		scr_compilesounds_phase2();
+	}
 
 	//finsih!!!
 	logging = true;
