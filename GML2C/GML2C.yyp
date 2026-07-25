@@ -36,6 +36,7 @@
     {"link":"io.gamemaker.gm_filter_tintfilter-1.0.0","name":"io.gamemaker.gm_filter_tintfilter-1.0.0","path":"io.gamemaker.gm_filter_tintfilter-1.0.0.yyp",},
   ],
   "IncludedFiles":[
+    {"$GMIncludedFile":"","%Name":"ffmpeg.exe","CopyToMask":-1,"filePath":"datafiles/Other","name":"ffmpeg.exe","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"gobo","CopyToMask":-1,"filePath":"datafiles/Other","name":"gobo","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"gobo.exe","CopyToMask":-1,"filePath":"datafiles/Other","name":"gobo.exe","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"wii_icon.png","CopyToMask":-1,"filePath":"datafiles/Other","name":"wii_icon.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
