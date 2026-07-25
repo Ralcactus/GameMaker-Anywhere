@@ -11,7 +11,7 @@ function scr_compilesounds(){
 	
 	//File is ogg
 	if (filename_ext(soundpath) == ".ogg"){
-		convert_ogg();
+		convert_ogg(soundpath);
 	}
 	else{
 		show_debug_message("UNKNOWN SOUND FILE FORMAT :(")	
@@ -20,7 +20,7 @@ function scr_compilesounds(){
 	currentsound_count++;
 }
 
-function convert_ogg(){
+function convert_ogg(soundpath){
 	show_debug_message("File format is ogg");
 		
 	var pid;
