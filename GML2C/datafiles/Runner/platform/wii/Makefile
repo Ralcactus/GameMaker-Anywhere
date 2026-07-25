@@ -22,10 +22,10 @@ include $(DEVKITPPC)/wii_rules
 #---------------------------------------------------------------------------------
 TARGET		:=	boot
 BUILD		:=	build
-SOURCES		:=	source source/helpers source/rooms source/objects source/gm_funcs source/custom_funcs
+SOURCES		:=	source source/helpers source/rooms source/objects source/gm_funcs source/custom_funcs source/helpers/wii_gamecube/
 DATA		:=	data
 TEXTURES	:=	gfx
-INCLUDES	:=  source source/helpers source/rooms source/objects source/gm_funcs source/custom_funcs
+INCLUDES	:=  source source/helpers source/rooms source/objects source/gm_funcs source/custom_funcs source/helpers/wii_gamecube/
 
 #---------------------------------------------------------------------------------
 # options for code generation
