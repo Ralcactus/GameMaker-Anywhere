@@ -74,6 +74,21 @@ unsigned int drawcolor = c_white;
         C2D_DrawText(&bleh, C2D_WithColor, _x, _y, 0, 1, 1, C2D_Color32((drawcolor >>  0) & 0xFF, (drawcolor >>  8) & 0xFF, (drawcolor >> 16) & 0xFF, (drawcolor >> 24) & 0xFF));
         C2D_TextBufDelete(buffer);
     }
+    
+    void draw_rectangle(float drawx_1, float drawy_1, float drawx_2, float drawy_2, bool outline){
+    u32 drawcolour = C2D_Color32((drawcolor >>  0) & 0xFF, (drawcolor >>  8) & 0xFF, (drawcolor >> 16) & 0xFF, (drawcolor >> 24) & 0xFF);
+    
+
+    if (!outline){
+        C2D_DrawRectangle(drawx_1, drawy_1, 0.0f, drawx_2 - drawx_1, drawy_2 - drawy_1, drawcolour, drawcolour, drawcolour, drawcolour);
+    }
+    else{
+            C2D_DrawLine(drawx_1, drawy_1, drawcolour, drawx_2, drawy_1, drawcolour, 1.0f, 0.0f);
+            C2D_DrawLine(drawx_2, drawy_1, drawcolour, drawx_2, drawy_2, drawcolour, 1.0f, 0.0f);
+            C2D_DrawLine(drawx_2, drawy_2, drawcolour, drawx_1, drawy_2, drawcolour, 1.0f, 0.0f);
+            C2D_DrawLine(drawx_1, drawy_2, drawcolour, drawx_1, drawy_1, drawcolour, 1.0f, 0.0f);
+        }
+    }
 
 #endif
 
@@ -228,6 +243,10 @@ unsigned int drawcolor = c_white;
 
     void draw_text(float _x, float _y, const char* text){
         //So empty...
+    }
+
+    void draw_rectangle(float drawx_1, float drawy_1, float drawx_2, float drawy_2, bool outline){
+        
     }
 #endif
 

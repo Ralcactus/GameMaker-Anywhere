@@ -4,8 +4,15 @@ global.copysprite = true;
 if(os_type == os_windows)
 {
 	if (!file_exists(working_directory+"/other/ffmpeg.exe")){
-		show_message("ERROR\nffmpeg was not found in the \"other\" folder, please add it!");
-		game_end();
+		var install_question = show_question("ERROR\nffmpeg was not found in the \"other\" folder, would you like to download it?");
+		
+		if (install_question == false)
+			game_end();
+		
+		if (install_question == true){
+			show_message("lmao that isn't added yet get wrecked");
+			game_end();
+		}
 	}
 
     global.OutputDrive = "C:/";

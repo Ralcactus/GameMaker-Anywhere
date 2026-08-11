@@ -15,7 +15,7 @@
 #endif
 
 #if defined(__gamecube__) || defined(__wii__)
-    #include "../include_audio.h"
+    #include "../helpers/wii_gamecube/include_audio.h"
 #endif
 
 void audio_listener_position(float x, float y, float z){

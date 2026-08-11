@@ -131,7 +131,7 @@
 //gamecube and wii
 #if defined(__gamecube__) || defined(__wii__)
 
-    #include "../oggplayer.h"
+    #include "wii_gamecube/oggplayer.h"
     void ExitApplication()
     {
         StopOgg();

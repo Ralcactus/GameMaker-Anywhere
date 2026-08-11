@@ -60,6 +60,7 @@ int sprite_get_number(int sprite);
 void draw_sprite_tiled_ext(int draw_sprite, float subimg, float draw_x, float draw_y, float scale_x, float scale_y, float color, float alpha);
 void draw_set_font(int font);
 void draw_sprite_tiled(int draw_sprite, float subimg, float draw_x, float draw_y);
+void draw_rectangle(float drawx_1, float drawy_1, float drawx_2, float drawy_2, bool outline);
 
 //aligns
 void draw_set_halign(int type);

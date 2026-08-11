@@ -1,5 +1,5 @@
 function scr_compilesounds_phase2(){
-	var inc_audios = file_text_open_append(destination + "source/include_audio.h");
+	var inc_audios = file_text_open_append(destination + "source/helpers/wii_gamecube/include_audio.h");
 	
 	for (var i = 0; i  < currentsound_count; i++) {
 		file_text_write_string(inc_audios, "#include \"" + string(i) + "_ogg.h\"\n");
@@ -7,7 +7,7 @@ function scr_compilesounds_phase2(){
 	
 	file_text_close(inc_audios);
 	
-	var ref_audios = file_text_open_append(destination + "source/include_audio.cpp");
+	var ref_audios = file_text_open_append(destination + "source/helpers/wii_gamecube/include_audio.cpp");
 	
 	file_text_write_string(ref_audios, "const uint8_t *ogg_refs[] = {\n");
 	for (var i = 0; i  < currentsound_count; i++) {
