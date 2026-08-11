@@ -29,6 +29,7 @@
         {"$GMExtensionConstant":"","%Name":"btn_no","hidden":false,"name":"btn_no","resourceType":"GMExtensionConstant","resourceVersion":"2.0","value":"5",},
         {"$GMExtensionConstant":"","%Name":"btn_retry","hidden":false,"name":"btn_retry","resourceType":"GMExtensionConstant","resourceVersion":"2.0","value":"6",},
         {"$GMExtensionConstant":"","%Name":"ws_x11","hidden":false,"name":"ws_x11","resourceType":"GMExtensionConstant","resourceVersion":"2.0","value":"\"X11\"",},
+        {"$GMExtensionConstant":"","%Name":"ws_osascript","hidden":false,"name":"ws_osascript","resourceType":"GMExtensionConstant","resourceVersion":"2.0","value":"\"OSAScript\"",},
       ],"copyToTargets":202375362,"filename":"libdlgmod.dll","final":"","functions":[
         {"$GMExtensionFunction":"","%Name":"show_message","argCount":1,"args":[1,],"documentation":"","externalName":"show_message","help":"show_message(str)","hidden":false,"kind":12,"name":"show_message","resourceType":"GMExtensionFunction","resourceVersion":"2.0","returnType":2,},
         {"$GMExtensionFunction":"","%Name":"show_question","argCount":1,"args":[1,],"documentation":"","externalName":"show_question","help":"show_question(str)","hidden":false,"kind":12,"name":"show_question","resourceType":"GMExtensionFunction","resourceVersion":"2.0","returnType":2,},
