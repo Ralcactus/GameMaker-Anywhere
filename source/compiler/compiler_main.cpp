@@ -94,9 +94,43 @@ bool InitCompiler(){
         return false;
 }
 
+void scr_compilerooms(int i, Json::Value yyp_json){
+    printf("Compiling Room...\n");
+}
+void scr_compilesprites(){
+    printf("Compiling Sprite...\n");
+}
+void scr_compileobjects(){
+    printf("Compiling Object...\n");
+}
+void scr_compilescripts(){
+    printf("Compiling Script...\n");
+}
+void scr_compilesounds(){
+    printf("Compiling Sound...\n");
+}
+void scr_compilefonts(){
+    printf("Compiling Font...\n");
+}
+
 void CompileAssets(Json::Value yyp_json){
+    std::string yypDir = std::string(ProjectYYP);
+    yypDir = yypDir.substr(0, yypDir.find_last_of("/\\"));
+
     for (int i = 0; i < yyp_json["resources"].size(); i++){
         //List Assets
         //printf(yyp_json["resources"][i]["id"]["name"].asCString());
+        
+        Json::Value _id = yyp_json["resources"][i]["id"];
+        Json::Value yyfile = ParseJSON((yypDir + "/" + _id["path"].asString()).c_str());
+        std::string type = yyfile["resourceType"].asString();
+
+        if (type == "GMRoom")   scr_compilerooms(i, yyp_json); //COMPILE ROOM
+        if (type == "GMSprite") scr_compilesprites();          //COMPILE SPRITE
+        if (type == "GMObject") scr_compileobjects();          //COMPILE OBJECTS
+        if (type == "GMScript") scr_compilescripts();          //COMPILE SCRIPTS
+        if (type == "GMSound")  scr_compilesounds();           //COMPILE SOUNDS
+        if (type == "GMFont")   scr_compilefonts();            //COMPILE FONTS
     }
 }
+
