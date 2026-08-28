@@ -10,6 +10,11 @@ using namespace std;
 const char* ProjectYYP = "";
 char RuntimePath[512];
 
+const char* ExportMode = "GAMECUBE";
+int currentsprite_count = 0;
+
+
+//Setup compiler (copy runtime, rest vars, etc)
 bool InitCompiler(){
     //SETUP
     SDL_snprintf(RuntimePath, sizeof(RuntimePath), "%sRuntime", SDL_GetBasePath());
@@ -38,8 +43,10 @@ bool InitCompiler(){
     system("mkdir \"C:/GamemakerAnywhere/Runtime/source/objects\"");
     system("mkdir \"C:/GamemakerAnywhere/Runtime/source/sprites\"");
     system("mkdir \"C:/GamemakerAnywhere/Runtime/output\"");
+    system("mkdir \"C:/GamemakerAnywhere/Runtime/gfx\"");
 
-
+    //Rest vars
+    currentsprite_count = 0;
 
     //Get the yyp
     COMDLG_FILTERSPEC filters[] = {{ L"GameMaker Project", L"*.yyp" }};
@@ -56,6 +63,23 @@ bool InitCompiler(){
 void RunCompiler(){
     if (InitCompiler() == false)
         ShowError("FAILED TO INIT COMPILER!\nCHECK LOG FOR MORE INFO!");
+
+
+        
+	//Create the t3s texture list
+	if (ExportMode == "3DSX" || ExportMode == "CIA"){
+        system("powershell -Command \"New-Item -Path 'C:\\GamemakerAnywhere\\Runtime\\gfx\\sprites.t3s' -Force\"");
+        FILE* T3S = fopen("C:/GamemakerAnywhere/Runtime/gfx/sprites.t3s", "w");
+		fprintf(T3S, "--atlas\n");
+        fclose(T3S);
+	}
+
+    //Create the scf texture list
+	if (ExportMode == "GAMECUBE" || ExportMode == "WII"){
+        system("powershell -Command \"New-Item -Path 'C:\\GamemakerAnywhere\\Runtime\\gfx\\textures.scf' -Force\"");
+	}
+
+    printf("Parsing YYP... Oh wait this isn't done yet!\n")
 
     printf("Nothing here folks!\n");
 }
