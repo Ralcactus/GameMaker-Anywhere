@@ -7,12 +7,44 @@
 #include "../helpers/meta.hpp"
 
 using namespace std;
-
 const char* ProjectYYP = "";
 char RuntimePath[512];
-
 const char* ExportMode = "GAMECUBE";
 int currentsprite_count = 0;
+
+
+//Start the project compilation
+void RunCompiler(){
+    if (InitCompiler() == false)
+        ShowError("FAILED TO INIT COMPILER!\nCHECK LOG FOR MORE INFO!");
+
+
+        
+	//Create the t3s texture list
+	if (ExportMode == "3DSX" || ExportMode == "CIA"){
+        system("powershell -Command \"New-Item -Path 'C:\\GamemakerAnywhere\\Runtime\\gfx\\sprites.t3s' -Force\"");
+        FILE* T3S = fopen("C:/GamemakerAnywhere/Runtime/gfx/sprites.t3s", "w");
+		fprintf(T3S, "--atlas\n");
+        fclose(T3S);
+	}
+
+    //Create the scf texture list
+	if (ExportMode == "GAMECUBE" || ExportMode == "WII"){
+        system("powershell -Command \"New-Item -Path 'C:\\GamemakerAnywhere\\Runtime\\gfx\\textures.scf' -Force\"");
+	}
+
+    //Parse the yyp
+    printf("Parsing YYP...\n");
+    Json::Value yyp_json = ParseJSON(ProjectYYP);
+    printf("Parsed YYP...\n");
+
+    //Print the project name
+    printf("Project Name: %s\n", yyp_json["name"].asCString());
+
+    //The asset compile loop!!
+    CompileAssets(yyp_json);
+}
+
 
 
 //Setup compiler (copy runtime, rest vars, etc)
@@ -60,28 +92,8 @@ bool InitCompiler(){
         return false;
 }
 
-//Start the project compilation
-void RunCompiler(){
-    if (InitCompiler() == false)
-        ShowError("FAILED TO INIT COMPILER!\nCHECK LOG FOR MORE INFO!");
-
-
+void CompileAssets(Json::Value yyp_json){
+    for (int i = 0; i < yyp_json["resources"].size(); i++){
         
-	//Create the t3s texture list
-	if (ExportMode == "3DSX" || ExportMode == "CIA"){
-        system("powershell -Command \"New-Item -Path 'C:\\GamemakerAnywhere\\Runtime\\gfx\\sprites.t3s' -Force\"");
-        FILE* T3S = fopen("C:/GamemakerAnywhere/Runtime/gfx/sprites.t3s", "w");
-		fprintf(T3S, "--atlas\n");
-        fclose(T3S);
-	}
-
-    //Create the scf texture list
-	if (ExportMode == "GAMECUBE" || ExportMode == "WII"){
-        system("powershell -Command \"New-Item -Path 'C:\\GamemakerAnywhere\\Runtime\\gfx\\textures.scf' -Force\"");
-	}
-
-    printf("Parsing YYP...\n");
-    Json::Value yyp_json = ParseJSON(ProjectYYP);
-    printf("Project Name: %s\n", yyp_json["name"].asCString());
+    }
 }
-
