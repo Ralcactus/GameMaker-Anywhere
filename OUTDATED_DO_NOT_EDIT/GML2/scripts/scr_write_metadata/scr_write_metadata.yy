@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_write_metadata",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_write_metadata",
+  "parent":{
+    "name":"compiler",
+    "path":"folders/Scripts/compiler.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

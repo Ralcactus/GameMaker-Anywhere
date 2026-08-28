@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="Github assets/gamemaker_anywhere_logo.png" alt="GameMaker Anywhere logo" width="300" />
+  <img src="gamemaker_anywhere_logo.png" alt="GameMaker Anywhere logo" width="300" />
 </p>
 
 ## Info
@@ -11,7 +11,7 @@ https://discord.gg/cc2YA2pChU
 <br>
 
 <p align="center">
-  <img src="Github assets/example.gif" alt="The example gif" width="600" />
+  <img src="example.gif" alt="The example gif" width="600" />
 </p>
 
 ## How does this work?

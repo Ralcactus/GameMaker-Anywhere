@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"show_debug_message_FREEZE",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"show_debug_message_FREEZE",
+  "parent":{
+    "name":"Scripts",
+    "path":"folders/Scripts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
