@@ -7,13 +7,13 @@ CXX = g++
 
 CXXFLAGS = -I./lib/SDL3/include
 LDFLAGS = -L./lib
-LDLIBS = -lSDL3 -lSDL3_image -lcomdlg32 -lole32 -luuid
+LDLIBS = -lSDL3 -lSDL3_image -lcomdlg32 -lole32 -luuid -ljsoncpp
 
 TARGET = "output/GameMaker Anywhere.exe"
 SRC = source/main.cpp\
 	  source/compiler/compiler_main.cpp\
 	  source/helpers/renderer.cpp\
-	  source/helpers/meta.cpp
+	  source/helpers/meta.cpp\
 
 all:
 	$(CXX) $(CURDIR)/$(SRC) -o $(TARGET) $(CXXFLAGS) $(LDFLAGS) $(LDLIBS)

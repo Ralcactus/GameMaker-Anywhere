@@ -5,6 +5,7 @@
 #include <sys/stat.h>
 #include "../helpers/renderer.hpp"
 #include "../helpers/meta.hpp"
+
 using namespace std;
 
 const char* ProjectYYP = "";
@@ -79,8 +80,8 @@ void RunCompiler(){
         system("powershell -Command \"New-Item -Path 'C:\\GamemakerAnywhere\\Runtime\\gfx\\textures.scf' -Force\"");
 	}
 
-    printf("Parsing YYP... Oh wait this isn't done yet!\n")
-
-    printf("Nothing here folks!\n");
+    printf("Parsing YYP...\n");
+    Json::Value yyp_json = ParseJSON(ProjectYYP);
+    printf("Project Name: %s\n", yyp_json["name"].asCString());
 }
 

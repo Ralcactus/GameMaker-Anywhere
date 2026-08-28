@@ -3,6 +3,39 @@
 #include <shobjidl.h> 
 #include <SDL3/SDL.h>
 #include "renderer.hpp"
+#include <json/json.h>
+
+//Phrase a json file
+Json::Value ParseJSON(const char* path){
+    Json::Value result;
+
+    FILE* fp = fopen(path, "rb");
+    if (!fp) {
+        perror("fopen failed");
+        return result;
+    }
+
+    fseek(fp, 0, SEEK_END);
+    long size = ftell(fp);
+    rewind(fp);
+
+    char* data = (char*)malloc(size + 1);
+    fread(data, 1, size, fp);
+    data[size] = 0;
+    fclose(fp);
+
+    Json::CharReaderBuilder builder;
+    builder["allowTrailingCommas"] = true;
+    std::string errs;
+    std::istringstream stream(data);
+
+    if (!Json::parseFromStream(builder, stream, &result, &errs)) {
+        printf("JSON parse error: %s\n", errs.c_str());
+    }
+
+    free(data);
+    return result;
+}
 
 //Brings up the file picker (to-do, clean up and shrink i just stole this from a microsoft example lol)
 const char* GetFileUI(COMDLG_FILTERSPEC rgSpec[], UINT filterCount){
