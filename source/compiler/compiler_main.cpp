@@ -5,6 +5,8 @@
 #include <sys/stat.h>
 #include "../helpers/renderer.hpp"
 #include "../helpers/meta.hpp"
+#include "compiler_main.hpp"
+#include <json/json.h>
 
 using namespace std;
 const char* ProjectYYP = "";
@@ -94,6 +96,7 @@ bool InitCompiler(){
 
 void CompileAssets(Json::Value yyp_json){
     for (int i = 0; i < yyp_json["resources"].size(); i++){
-        
+        //List Assets
+        //printf(yyp_json["resources"][i]["id"]["name"].asCString());
     }
 }
