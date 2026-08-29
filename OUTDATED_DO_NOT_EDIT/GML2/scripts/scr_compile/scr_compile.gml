@@ -172,7 +172,6 @@ function scr_compileMIDDLE2(){
 		show_debug_message("before compile");
 
 		//write the builtin variables to the variable handler
-		
 		init_builtin_variables();
 		scr_write_variables_builtin();
 		

@@ -8,6 +8,10 @@
 #include "compiler_main.hpp"
 #include <json/json.h>
 
+//Assets
+#include "Asset/RoomCompiler.hpp"
+
+
 using namespace std;
 const char* ProjectYYP = "";
 char RuntimePath[512];
@@ -19,8 +23,6 @@ int currentsprite_count = 0;
 void RunCompiler(){
     if (InitCompiler() == false)
         ShowError("FAILED TO INIT COMPILER!\nCHECK LOG FOR MORE INFO!");
-
-
         
 	//Create the t3s texture list
 	if (ExportMode == "3DSX" || ExportMode == "CIA"){
@@ -94,22 +96,19 @@ bool InitCompiler(){
         return false;
 }
 
-void scr_compilerooms(int i, Json::Value yyp_json){
-    printf("Compiling Room...\n");
-}
-void scr_compilesprites(){
+void scr_compilesprites(Json::Value yyfile){
     printf("Compiling Sprite...\n");
 }
-void scr_compileobjects(){
+void scr_compileobjects(Json::Value yyfile){
     printf("Compiling Object...\n");
 }
-void scr_compilescripts(){
+void scr_compilescripts(Json::Value yyfile){
     printf("Compiling Script...\n");
 }
-void scr_compilesounds(){
+void scr_compilesounds(Json::Value yyfile){
     printf("Compiling Sound...\n");
 }
-void scr_compilefonts(){
+void scr_compilefonts(Json::Value yyfile){
     printf("Compiling Font...\n");
 }
 
@@ -125,12 +124,12 @@ void CompileAssets(Json::Value yyp_json){
         Json::Value yyfile = ParseJSON((yypDir + "/" + _id["path"].asString()).c_str());
         std::string type = yyfile["resourceType"].asString();
 
-        if (type == "GMRoom")   scr_compilerooms(i, yyp_json); //COMPILE ROOM
-        if (type == "GMSprite") scr_compilesprites();          //COMPILE SPRITE
-        if (type == "GMObject") scr_compileobjects();          //COMPILE OBJECTS
-        if (type == "GMScript") scr_compilescripts();          //COMPILE SCRIPTS
-        if (type == "GMSound")  scr_compilesounds();           //COMPILE SOUNDS
-        if (type == "GMFont")   scr_compilefonts();            //COMPILE FONTS
+        if (type == "GMRoom")   scr_compilerooms(yyfile, i, yyp_json); //COMPILE ROOM
+        if (type == "GMSprite") scr_compilesprites(yyfile);            //COMPILE SPRITE
+        if (type == "GMObject") scr_compileobjects(yyfile);            //COMPILE OBJECTS
+        if (type == "GMScript") scr_compilescripts(yyfile);            //COMPILE SCRIPTS
+        if (type == "GMSound")  scr_compilesounds(yyfile);             //COMPILE SOUNDS
+        if (type == "GMFont")   scr_compilefonts(yyfile);              //COMPILE FONTS
     }
 }
 

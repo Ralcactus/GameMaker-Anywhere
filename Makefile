@@ -14,6 +14,7 @@ SRC = source/main.cpp\
 	  source/compiler/compiler_main.cpp\
 	  source/helpers/renderer.cpp\
 	  source/helpers/meta.cpp\
+	  source/compiler/Asset/RoomCompiler.cpp\
 
 all:
 	$(CXX) $(CURDIR)/$(SRC) -o $(TARGET) $(CXXFLAGS) $(LDFLAGS) $(LDLIBS)
