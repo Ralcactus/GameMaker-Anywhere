@@ -46,7 +46,7 @@ void WriteRoomHeader(){
 }
 
 //Compiles the rooms layers into a struct
-void CompileRoomLayers(){
+void CompileRoomLayers(Json::Value yyfile){
     for (int i = 0; i < ARRAYSIZE(yyfile["layers"]); i++){
         printf("Creating layer %i... Wait this isn't finished??\n", i);
     }
@@ -69,7 +69,7 @@ void scr_compilerooms(Json::Value yyfile, int i, Json::Value yyp_json){
     #pragma endregion
 
     //Compiles the rooms layers into a struct
-    CompileRoomLayers();
+    CompileRoomLayers(yyfile);
 
 	//Writes the rooms includes
     WriteRoomHeader();
