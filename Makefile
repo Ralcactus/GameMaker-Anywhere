@@ -16,9 +16,10 @@ SRC = source/main.cpp \
       source/helpers/renderer.cpp \
       source/helpers/meta.cpp \
       source/compiler/Asset/RoomCompiler.cpp \
+      source/compiler/Asset/SpriteCompiler.cpp \
       source/compiler/Variables/HandleVariables.cpp
 
-OBJ = $(SRC:.cpp=.o)
+OBJ = $(patsubst %.cpp,build/%.o,$(SRC))
 
 all: $(TARGET)
 	cp -r Runtime output
@@ -27,13 +28,15 @@ $(TARGET): $(OBJ)
 	@echo "Linking $(TARGET)..."
 	$(CXX) $(OBJ) -o "$(TARGET)" $(LDFLAGS) $(LDLIBS)
 
-%.o: %.cpp
+build/%.o: %.cpp
 	@echo "Compiling $<"
+	@mkdir -p "$(dir $@)"
 	$(CXX) $(CXXFLAGS) -c "$<" -o "$@"
 
 run: all
 	./"$(TARGET)"
 
 clean:
-	rm -f $(TARGET) $(OBJ)
+	rm -f $(TARGET)
+	rm -rf build
 	rm -rf output/Runtime

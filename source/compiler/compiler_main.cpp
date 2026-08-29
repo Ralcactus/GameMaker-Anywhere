@@ -11,6 +11,7 @@
 
 //Assets
 #include "Asset/RoomCompiler.hpp"
+#include "Asset/SpriteCompiler.hpp"
 
 using namespace std;
 const char* ProjectYYP = "";
@@ -97,9 +98,6 @@ bool InitCompiler(){
         return false;
 }
 
-void scr_compilesprites(Json::Value yyfile){
-    printf("Compiling Sprite...\n");
-}
 void scr_compileobjects(Json::Value yyfile){
     printf("Compiling Object...\n");
 }
