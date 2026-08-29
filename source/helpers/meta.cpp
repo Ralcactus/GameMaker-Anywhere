@@ -101,3 +101,54 @@ void File_WriteEnd(const char* FilePath, const char* Message){
     out << str;
     out.close();
 }
+
+void File_WriteLine(const char* FilePath, int Line, const char* Message){
+    std::ifstream in(FilePath);
+    std::vector<std::string> lines;
+    std::string str;
+
+    //Push back until at the line
+    while (std::getline(in, str))
+        lines.push_back(str);
+
+    in.close();
+
+    std::ofstream out(FilePath);
+
+    for (int i = 0; i < lines.size(); i++){
+        if (i == Line)
+            out << Message << "\n";
+
+        out << lines[i] << "\n";
+    }
+
+    out.close();
+}
+
+void File_WriteFirst(const char* FilePath, const char* Message){
+    File_WriteLine(FilePath, 0, Message);
+}
+
+void File_ReplaceLine(const char* FilePath, const char* Find, const char* Message){
+    std::ifstream in(FilePath);
+    std::vector<std::string> lines;
+    std::string line;
+
+    while (std::getline(in, line)){
+        if (line == Find){
+            line = Message;
+        }
+
+        lines.push_back(line);
+    }
+
+    in.close();
+
+    std::ofstream out(FilePath);
+
+    for (const std::string& line : lines){
+        out << line << "\n";
+    }
+
+    out.close();
+}

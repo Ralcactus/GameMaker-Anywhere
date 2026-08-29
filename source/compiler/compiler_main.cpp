@@ -6,19 +6,17 @@
 #include "../helpers/renderer.hpp"
 #include "../helpers/meta.hpp"
 #include "compiler_main.hpp"
+#include "Variables/HandleVariables.hpp"
 #include <json/json.h>
 
 //Assets
 #include "Asset/RoomCompiler.hpp"
-
-
 
 using namespace std;
 const char* ProjectYYP = "";
 char RuntimePath[512];
 const char* ExportMode = "GAMECUBE";
 int currentsprite_count = 0;
-
 
 //Start the project compilation
 void RunCompiler(){
@@ -49,8 +47,6 @@ void RunCompiler(){
     //The asset compile loop!!
     CompileAssets(yyp_json);
 }
-
-
 
 //Setup compiler (copy runtime, rest vars, etc)
 bool InitCompiler(){
@@ -90,6 +86,10 @@ bool InitCompiler(){
     COMDLG_FILTERSPEC filters[] = {{ L"GameMaker Project", L"*.yyp" }};
     ProjectYYP = GetFileUI(filters, ARRAYSIZE(filters));
     printf("Project path: %s\n", ProjectYYP);   
+
+    //GMS vars
+    VarBuiltIn_Init();
+    VarBuiltIn_Write();
 
     if (stat("C:/GamemakerAnywhere", &sb) == 0)
         return true;

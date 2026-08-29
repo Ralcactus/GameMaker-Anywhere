@@ -73,15 +73,14 @@ function scr_compilerooms(i, yyp_json){
 		array_push(packed_layers, layer_out);
 	}
 			
-		array_push(all_rooms, {
-        name: yyfile.name,
-        roomwidth: yyfile.roomSettings.Width,
-        roomheight: yyfile.roomSettings.Height,
+	array_push(all_rooms, {
+	    name: yyfile.name,
+	    roomwidth: yyfile.roomSettings.Width,
+	    roomheight: yyfile.roomSettings.Height,
 		viewsenabled: yyfile.viewSettings.enableViews,
 		viewport0_width: yyfile.views[0].wview,
 		viewport0_height: yyfile.views[0].hview,
-        layers: packed_layers
-
+	    layers: packed_layers
     });
 
 	// Write file header
