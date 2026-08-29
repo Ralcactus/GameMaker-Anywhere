@@ -4,8 +4,10 @@
 #include <SDL3/SDL.h>
 #include "renderer.hpp"
 #include <json/json.h>
+#include <fstream>
+using namespace std;
 
-//Phrase a json file
+//Parse a json file
 Json::Value ParseJSON(const char* path){
     Json::Value result;
 
@@ -87,6 +89,15 @@ const char* GetFileUI(COMDLG_FILTERSPEC rgSpec[], UINT filterCount){
     return "";
 }
 
+//Show a error message
 void ShowError(const char* Message){
     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "ERROR", Message, window);
+}
+
+void File_WriteEnd(const char* FilePath, const char* Message){
+    std::ofstream out;
+    out.open(FilePath, std::ios::app);
+    std::string str = Message;
+    out << str;
+    out.close();
 }

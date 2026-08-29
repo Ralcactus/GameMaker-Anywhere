@@ -12,6 +12,7 @@
 #include "Asset/RoomCompiler.hpp"
 
 
+
 using namespace std;
 const char* ProjectYYP = "";
 char RuntimePath[512];
@@ -26,7 +27,7 @@ void RunCompiler(){
         
 	//Create the t3s texture list
 	if (ExportMode == "3DSX" || ExportMode == "CIA"){
-        system("powershell -Command \"New-Item -Path 'C:\\GamemakerAnywhere\\Runtime\\gfx\\sprites.t3s' -Force\"");
+        system("powershell -Command \"New-Item -Path 'C:/GamemakerAnywhere/Runtime/gfx/sprites.t3s' -Force\"");
         FILE* T3S = fopen("C:/GamemakerAnywhere/Runtime/gfx/sprites.t3s", "w");
 		fprintf(T3S, "--atlas\n");
         fclose(T3S);
@@ -34,7 +35,7 @@ void RunCompiler(){
 
     //Create the scf texture list
 	if (ExportMode == "GAMECUBE" || ExportMode == "WII"){
-        system("powershell -Command \"New-Item -Path 'C:\\GamemakerAnywhere\\Runtime\\gfx\\textures.scf' -Force\"");
+        system("powershell -Command \"New-Item -Path 'C:/GamemakerAnywhere/Runtime/gfx/textures.scf' -Force\"");
 	}
 
     //Parse the yyp

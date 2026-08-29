@@ -6,3 +6,4 @@
 void ShowError(const char* Message);
 const char* GetFileUI(COMDLG_FILTERSPEC rgSpec[], UINT filterCount);
 Json::Value ParseJSON(const char* path);
+void File_WriteEnd(const char* FilePath, const char* Message);
