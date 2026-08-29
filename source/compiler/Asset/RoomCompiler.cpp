@@ -119,6 +119,26 @@ void AddTo_RoomHandler(){
     File_WriteLine(RoomHandler, insert_at + 3, "    }");
 }
 
+//Add to the asset ID list
+void AssetID_Room(){
+	const char* roomto_idh = "C:/GamemakerAnywhere/Runtime/source/helpers/asset_toid.h";
+    char RoomDef[256];
+    snprintf(RoomDef, sizeof(RoomDef), "#define %s %i //Room\n", RoomName, roomid_count);
+	File_WriteEnd(roomto_idh, RoomDef);
+}
+
+//Set the room the game starts in (and increase the room counter)
+void SetDefaultRoom(){
+    if (roomid_count == 0){
+        char NewStartRoom[256];
+        snprintf(NewStartRoom, sizeof(NewStartRoom), "int room = %s;", RoomName);
+        File_ReplaceLine("C:/GamemakerAnywhere/Runtime/source/main.cpp", "int room = -1; //DO NOT CHANGE THIS! GM CHECKS FOR \"-1\" TO EDIT IT TO THE FIRST ROOM!!!",NewStartRoom);
+    }
+
+    //Increase the room count!!
+	roomid_count += 1;
+}
+
 //The actual room compiler
 void scr_compilerooms(Json::Value yyfile, int i, Json::Value yyp_json){
     printf("\nCompiling Room...\n");
@@ -150,16 +170,9 @@ void scr_compilerooms(Json::Value yyfile, int i, Json::Value yyp_json){
     AddTo_RoomHandler();
 
     //Add to the asset ID list
-	const char* roomto_idh = "C:/GamemakerAnywhere/Runtime/source/helpers/asset_toid.h";
-    char RoomDef[256];
-    snprintf(RoomDef, sizeof(RoomDef), "#define %s %i //Room\n", RoomName, roomid_count);
-	File_WriteEnd(roomto_idh, RoomDef);
+    AssetID_Room();
 
-    if (roomid_count == 0){
-        char NewStartRoom[256];
-        snprintf(NewStartRoom, sizeof(NewStartRoom), "int room = %s;", RoomName);
-        File_ReplaceLine("C:/GamemakerAnywhere/Runtime/source/main.cpp", "int room = -1; //DO NOT CHANGE THIS! GM CHECKS FOR \"-1\" TO EDIT IT TO THE FIRST ROOM!!!",NewStartRoom);
-    }
-	roomid_count += 1;
+    //Set the room the game starts in (and increase the room counter)
+    SetDefaultRoom();
 }
 
