@@ -12,12 +12,14 @@
 //Assets
 #include "Asset/RoomCompiler.hpp"
 #include "Asset/SpriteCompiler.hpp"
+#include "Asset/ObjectCompiler.hpp"
 
 using namespace std;
 const char* ProjectYYP = "";
 char RuntimePath[512];
 const char* ExportMode = "3DSX";
 int currentsprite_count = 0;
+int currentobject_count = 0;
 
 //Start the project compilation
 void RunCompiler(){
@@ -98,9 +100,6 @@ bool InitCompiler(){
         return false;
 }
 
-void scr_compileobjects(Json::Value yyfile){
-    printf("Compiling Object...\n");
-}
 void scr_compilescripts(Json::Value yyfile){
     printf("Compiling Script...\n");
 }
@@ -125,7 +124,7 @@ void CompileAssets(Json::Value yyp_json){
 
         if (type == "GMRoom")   scr_compilerooms(yyfile, i, yyp_json); //COMPILE ROOM
         if (type == "GMSprite") scr_compilesprites(yyfile);            //COMPILE SPRITE
-        if (type == "GMObject") scr_compileobjects(yyfile);            //COMPILE OBJECTS
+        if (type == "GMObject") scr_compileobjects(yyfile, _id);            //COMPILE OBJECTS
         if (type == "GMScript") scr_compilescripts(yyfile);            //COMPILE SCRIPTS
         if (type == "GMSound")  scr_compilesounds(yyfile);             //COMPILE SOUNDS
         if (type == "GMFont")   scr_compilefonts(yyfile);              //COMPILE FONTS

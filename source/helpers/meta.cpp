@@ -175,3 +175,47 @@ void File_ReplaceLine(const char* FilePath, const char* Find, const char* Messag
 
     out.close();
 }
+
+char* File_ToChar(const char* path){
+    FILE* file = fopen(path, "rb");
+
+    if (!file)
+        return "";
+
+    fseek(file, 0, SEEK_END);
+    long size = ftell(file);
+    rewind(file);
+
+    char* code = (char*)malloc(size + 1);
+
+    if (!code){
+        fclose(file);
+        return "";
+    }
+
+    fread(code, 1, size, file);
+    code[size] = '\0';
+
+    fclose(file);
+
+    return code;
+}
+
+const char* File_GetDir(const char* filepath){
+    static char dir[1024];
+
+    const char* slash = strrchr(filepath, '/');
+    const char* backslash = strrchr(filepath, '\\');
+
+    if (backslash > slash)
+        slash = backslash;
+
+    if (slash == nullptr)
+        return "";
+
+    int length = slash - filepath;
+
+    snprintf(dir, sizeof(dir), "%.*s", length, filepath);
+
+    return dir;
+}

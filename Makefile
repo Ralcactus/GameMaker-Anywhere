@@ -17,6 +17,7 @@ SRC = source/main.cpp \
       source/helpers/meta.cpp \
       source/compiler/Asset/RoomCompiler.cpp \
       source/compiler/Asset/SpriteCompiler.cpp \
+	  source/compiler/Asset/ObjectCompiler.cpp \
       source/compiler/Variables/HandleVariables.cpp
 
 OBJ = $(patsubst %.cpp,build/%.o,$(SRC))

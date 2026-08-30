@@ -4,6 +4,8 @@
 extern const char* ExportMode;
 extern const char* ProjectYYP;
 extern int currentsprite_count;
+extern int currentobject_count;
+
 void RunCompiler();
 bool InitCompiler();
 void CompileAssets(Json::Value yyp_json);
