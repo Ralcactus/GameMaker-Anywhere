@@ -22,22 +22,7 @@ char drawpath[256];
 
 const char* ObjectName = "";
 
-void scr_compileobject_phase2(Json::Value yyfile, const char* spr_name, const char* create_code, const char* step_code, const char* draw_code){
-	ObjectName = yyfile["name"].asCString();
-    char ObjectFile[256];
-    char ObjectFile_HPP[256];
-
-    snprintf(ObjectFile, sizeof(ObjectFile), "C:/GamemakerAnywhere/Runtime/source/objects/%s.cpp", ObjectName);
-    snprintf(ObjectFile_HPP, sizeof(ObjectFile_HPP), "C:/GamemakerAnywhere/Runtime/source/objects/%s.hpp", ObjectName);
-	
-    //Create the hpp
-    char CppCreate[256];
-    snprintf(CppCreate, sizeof(CppCreate), "powershell -Command \"New-Item -Path 'C:/GamemakerAnywhere/Runtime/source/objects/%s.cpp' -Force\"", ObjectName);
-    char HppCreate[256];
-    snprintf(HppCreate, sizeof(HppCreate), "powershell -Command \"New-Item -Path 'C:/GamemakerAnywhere/Runtime/source/objects/%s.hpp' -Force\"", ObjectName);
-    system(CppCreate);
-    system(HppCreate);
-
+void WriteHeader(const char* ObjectFile){
 	File_WriteEnd(ObjectFile, "#include <stdbool.h>\n");
 	File_WriteEnd(ObjectFile, "#include <stdio.h>\n");
 	File_WriteEnd(ObjectFile, "#include <string.h>\n");
@@ -58,12 +43,9 @@ void scr_compileobject_phase2(Json::Value yyfile, const char* spr_name, const ch
 	File_WriteEnd(ObjectFile, "#include <variant>\n");
 	File_WriteEnd(ObjectFile, "#include <vector>\n\n");
 	File_WriteEnd(ObjectFile, "#include <string>\n\n");
-	File_WriteEnd(ObjectFile, ("std::vector<Object> vector_" + std::string(ObjectName) + ";\n").c_str());
-	File_WriteEnd(ObjectFile, "static Object* self; \n");
-	
-	File_WriteEnd(ObjectFile, ("static int " + std::string(ObjectName) + "_call_index = 0;\n").c_str());
-	File_WriteEnd(ObjectFile, "static int objectid_collided = 0;\n");
+}
 
+void WriteConfig(const char* ObjectFile, const char* spr_name, Json::Value yyfile){
     // config
     File_WriteEnd(ObjectFile, (std::string("void ") + ObjectName + "_config() {\n").c_str());
     File_WriteEnd(ObjectFile, (std::string("sprite_index = ") + spr_name + ";\n").c_str());
@@ -71,19 +53,22 @@ void scr_compileobject_phase2(Json::Value yyfile, const char* spr_name, const ch
     File_WriteEnd(ObjectFile, (std::string("solid = ") + yyfile["solid"].asString() + ";\n").c_str());
     File_WriteEnd(ObjectFile, (std::string("persistent = ") + yyfile["persistent"].asString() + ";\n").c_str());
     File_WriteEnd(ObjectFile, "}\n\n");
+}
 
-    // create
+void WriteCreate(const char* ObjectFile){
     File_WriteEnd(ObjectFile, (std::string("void ") + ObjectName + "_create() {\n").c_str());
     File_WriteEnd(ObjectFile, create_code);
     File_WriteEnd(ObjectFile, "\n}\n\n");
+}
 
-    // step
+void WriteStep(const char* ObjectFile){
     File_WriteEnd(ObjectFile, (std::string("void ") + ObjectName + "_step() {\n").c_str());
     File_WriteEnd(ObjectFile, step_code);
     File_WriteEnd(ObjectFile, "\n//draw_boundbox();\n");
     File_WriteEnd(ObjectFile, "}\n");
+}
 
-    // draw
+void WriteDraw(const char* ObjectFile){
     File_WriteEnd(ObjectFile, (std::string("void ") + ObjectName + "_draw() {\n").c_str());
 
     if (draw_code == NULL || strcmp(draw_code, "") == 0)
@@ -92,8 +77,9 @@ void scr_compileobject_phase2(Json::Value yyfile, const char* spr_name, const ch
         File_WriteEnd(ObjectFile, draw_code);
 
     File_WriteEnd(ObjectFile, "}\n\n");
+}
 
-    // pre-create
+void WritePreCreate(const char* ObjectFile){
     File_WriteEnd(ObjectFile, "#undef x\n");
     File_WriteEnd(ObjectFile, "#undef y\n");
     File_WriteEnd(ObjectFile, "#undef image_xscale\n");
@@ -109,6 +95,41 @@ void scr_compileobject_phase2(Json::Value yyfile, const char* spr_name, const ch
     File_WriteEnd(ObjectFile, "inst.GetVar(varId_image_xscale) = NEWXSCALE;\n");
     File_WriteEnd(ObjectFile, "inst.GetVar(varId_image_yscale) = NEWYSCALE;\n");
     File_WriteEnd(ObjectFile, "inst.GetVar(varId_id) = NEWID;\n");
+}
+
+void WriteEvents(const char* ObjectFile, const char* spr_name, Json::Value yyfile){
+    WriteConfig(ObjectFile, spr_name, yyfile);
+    WriteCreate(ObjectFile);
+    WriteStep(ObjectFile);
+    WriteDraw(ObjectFile);
+    WritePreCreate(ObjectFile);
+}
+
+void scr_compileobject_phase2(Json::Value yyfile, const char* spr_name, const char* create_code, const char* step_code, const char* draw_code){
+	ObjectName = yyfile["name"].asCString();
+
+    //Get object file cpp and hpp file
+    char ObjectFile[256];
+    char ObjectFile_HPP[256];
+    snprintf(ObjectFile, sizeof(ObjectFile), "C:/GamemakerAnywhere/Runtime/source/objects/%s.cpp", ObjectName);
+    snprintf(ObjectFile_HPP, sizeof(ObjectFile_HPP), "C:/GamemakerAnywhere/Runtime/source/objects/%s.hpp", ObjectName);
+	
+    //Create the hpp
+    char CppCreate[256];
+    snprintf(CppCreate, sizeof(CppCreate), "powershell -Command \"New-Item -Path 'C:/GamemakerAnywhere/Runtime/source/objects/%s.cpp' -Force\"", ObjectName);
+    char HppCreate[256];
+    snprintf(HppCreate, sizeof(HppCreate), "powershell -Command \"New-Item -Path 'C:/GamemakerAnywhere/Runtime/source/objects/%s.hpp' -Force\"", ObjectName);
+    system(CppCreate);
+    system(HppCreate);
+
+    WriteHeader(ObjectFile);
+
+	File_WriteEnd(ObjectFile, ("std::vector<Object> vector_" + std::string(ObjectName) + ";\n").c_str());
+	File_WriteEnd(ObjectFile, "static Object* self; \n");
+	File_WriteEnd(ObjectFile, ("static int " + std::string(ObjectName) + "_call_index = 0;\n").c_str());
+	File_WriteEnd(ObjectFile, "static int objectid_collided = 0;\n");
+
+    WriteEvents(ObjectFile, spr_name, yyfile);
 
     /*
     UNCOMMENT WHEN ARRAYS WORK!!
