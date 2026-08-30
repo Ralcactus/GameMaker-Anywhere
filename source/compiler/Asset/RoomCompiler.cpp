@@ -152,7 +152,7 @@ void CompileRoomLayers(Json::Value yyfile){
 
 //Writes the rooms actual room function
 //For example: void scr_runroom_ROOMNAME()
-void WriteRoom_Runner(){
+void WriteRoom_Runner(Json::Value yyfile){
     //Create the func def
     char FuncLine[256] = "";
     snprintf(FuncLine, sizeof(FuncLine), "void scr_runroom_%s()", RoomName);
@@ -191,6 +191,17 @@ void WriteRoom_Runner(){
         File_WriteEnd(RoomFilePath_CPP, ForLoop);
         File_WriteEnd(RoomFilePath_CPP, DrawExt);
     }
+
+    //Set room settings (cam size, room size, etc)
+    File_WriteEnd(RoomFilePath_CPP, ("   if (" + std::string(RoomName) + "_views[0].visible == 1){\n").c_str());
+    File_WriteEnd(RoomFilePath_CPP, ("       view0_camWidth = " + std::string(RoomName) + "_views[0].camWidth;\n").c_str());
+    File_WriteEnd(RoomFilePath_CPP, ("       view0_camHeight = " + std::string(RoomName) + "_views[0].camHeight;\n").c_str());
+    File_WriteEnd(RoomFilePath_CPP, "   }\n   else{\n");
+    File_WriteEnd(RoomFilePath_CPP, ("       view0_camWidth = " + std::string(RoomName) + "_INFO.width;\n").c_str());
+    File_WriteEnd(RoomFilePath_CPP, ("       view0_camHeight = " + std::string(RoomName) + "_INFO.height;\n").c_str());
+    File_WriteEnd(RoomFilePath_CPP, "   }\n\n");
+    File_WriteEnd(RoomFilePath_CPP, ("   room_width = " + std::string(RoomName) + "_INFO.width;\n").c_str());
+    File_WriteEnd(RoomFilePath_CPP, ("   room_height = " + std::string(RoomName) + "_INFO.height;\n").c_str());
 
     //End the funcs
 	File_WriteEnd(RoomFilePath_CPP, "}\n");
@@ -258,6 +269,73 @@ void SetDefaultRoom(){
 	roomid_count += 1;
 }
 
+//Write viewport struct to the room file
+void WriteViewportStruct(Json::Value yyfile){
+	//Viewports
+	std::string view_array_name = std::string(RoomName) + "_views";
+
+	//Views exist?
+	int view_count = 0;
+    view_count = yyfile["views"].size();
+
+	//Write array
+	File_WriteEnd(RoomFilePath_CPP, ("static GMViewPorts " + view_array_name + "[] = {\n").c_str());
+	const char* coma = ",";
+
+	for (int k = 0; k < view_count; k++){
+		Json::Value v = yyfile["views"][k];
+
+		//Safe object reference
+        std::string objref = "0";
+		objref = v["objectId"]["name"].asString();
+		
+		if(k == view_count - 1)
+            coma = "";
+
+        File_WriteEnd(RoomFilePath_CPP, "    {\n");
+        File_WriteEnd(RoomFilePath_CPP, (std::to_string(v["xview"].asInt()) + ",\n").c_str());
+        File_WriteEnd(RoomFilePath_CPP, (std::to_string(v["yview"].asInt()) + ",\n").c_str());
+        File_WriteEnd(RoomFilePath_CPP, (std::to_string(v["wview"].asInt()) + ",\n").c_str());
+        File_WriteEnd(RoomFilePath_CPP, (std::to_string(v["hview"].asInt()) + ",\n").c_str());
+        File_WriteEnd(RoomFilePath_CPP, (std::to_string(v["xport"].asInt()) + ",\n").c_str());
+        File_WriteEnd(RoomFilePath_CPP, (std::to_string(v["yport"].asInt()) + ",\n").c_str());
+        File_WriteEnd(RoomFilePath_CPP, (std::to_string(v["wport"].asInt()) + ",\n").c_str());
+        File_WriteEnd(RoomFilePath_CPP, (std::to_string(v["hport"].asInt()) + ",\n").c_str());
+        File_WriteEnd(RoomFilePath_CPP, (std::to_string(v["hborder"].asInt()) + ",\n").c_str());
+        File_WriteEnd(RoomFilePath_CPP, (std::to_string(v["vborder"].asInt()) + ",\n").c_str());
+        File_WriteEnd(RoomFilePath_CPP, (std::to_string(v["hspeed"].asInt()) + ",\n").c_str());
+        File_WriteEnd(RoomFilePath_CPP, (std::to_string(v["vspeed"].asInt()) + ",\n").c_str());
+        File_WriteEnd(RoomFilePath_CPP, (std::to_string(v["inherit"].asBool()) + ",\n").c_str());
+        File_WriteEnd(RoomFilePath_CPP, (std::to_string(v["visible"].asBool()) + ",\n").c_str());
+        File_WriteEnd(RoomFilePath_CPP, (objref + "\n").c_str());
+        File_WriteEnd(RoomFilePath_CPP, (std::string("    }") + coma + "\n").c_str());
+	}
+
+	File_WriteEnd(RoomFilePath_CPP, "};\n\n");
+}
+
+//Write room info like room size, viewport size, persistent, etc
+void WriteRoom_Metadata(Json::Value yyfile, int i){
+    File_WriteEnd(RoomFilePath_CPP, ("GMRoom " + std::string(RoomName) + "_INFO = {\n").c_str());
+    File_WriteEnd(RoomFilePath_CPP, (std::to_string(i) + ",\n").c_str());
+    File_WriteEnd(RoomFilePath_CPP, ("\"" + yyfile["name"].asString() + "\",\n").c_str());
+    File_WriteEnd(RoomFilePath_CPP, (std::to_string(yyfile["roomSettings"]["Width"].asInt()) + ",\n").c_str());
+    File_WriteEnd(RoomFilePath_CPP, (std::to_string(yyfile["roomSettings"]["Height"].asInt()) + ",\n").c_str());
+    File_WriteEnd(RoomFilePath_CPP, (std::to_string(yyfile["roomSettings"]["persistent"].asBool()) + ",\n").c_str());
+    File_WriteEnd(RoomFilePath_CPP, (std::to_string(yyfile["roomSettings"]["inheritRoomSettings"].asBool()) + ",\n").c_str());
+    File_WriteEnd(RoomFilePath_CPP, (std::to_string(yyfile["viewSettings"]["enableViews"].asBool()) + ",\n").c_str());
+    File_WriteEnd(RoomFilePath_CPP, (std::to_string(yyfile["viewSettings"]["clearDisplayBuffer"].asBool()) + ",\n").c_str());
+    File_WriteEnd(RoomFilePath_CPP, (std::to_string(yyfile["viewSettings"]["clearViewBackground"].asBool()) + ",\n").c_str());
+    File_WriteEnd(RoomFilePath_CPP, (std::to_string(yyfile["viewSettings"]["inheritViewSettings"].asBool()) + ",\n").c_str());
+    File_WriteEnd(RoomFilePath_CPP, (std::to_string(ARRAYSIZE(yyfile["views"])) + ",\n").c_str());
+    File_WriteEnd(RoomFilePath_CPP, (std::to_string(yyfile["physicsSettings"]["inheritPhysicsSettings"].asBool()) + ",\n").c_str());
+    File_WriteEnd(RoomFilePath_CPP, (std::to_string(yyfile["physicsSettings"]["PhysicsWorld"].asBool()) + ",\n").c_str());
+    File_WriteEnd(RoomFilePath_CPP, (std::to_string(yyfile["physicsSettings"]["PhysicsWorldGravityX"].asInt()) + ",\n").c_str());
+    File_WriteEnd(RoomFilePath_CPP, (std::to_string(yyfile["physicsSettings"]["PhysicsWorldGravityY"].asInt()) + ",\n").c_str());
+    File_WriteEnd(RoomFilePath_CPP, (std::to_string(yyfile["physicsSettings"]["PhysicsWorldPixToMetres"].asInt()) + ",\n").c_str());
+    File_WriteEnd(RoomFilePath_CPP, "};\n");
+}
+
 //The actual room compiler
 void scr_compilerooms(Json::Value yyfile, int i, Json::Value yyp_json){
     printf("\nCompiling Room...\n");
@@ -280,12 +358,18 @@ void scr_compilerooms(Json::Value yyfile, int i, Json::Value yyp_json){
     //Writes the rooms includes
     WriteRoomHeader();
 
+    //Write viewport struct to the room file
+    WriteViewportStruct(yyfile);
+
     //Compiles the rooms layers into a struct
     CompileRoomLayers(yyfile);
 
+    //Write room info like room size, viewport size, persistent, etc
+    WriteRoom_Metadata(yyfile, i);
+
     //Writes the rooms actual room function
     //For example: void scr_runroom_ROOMNAME()
-    WriteRoom_Runner();
+    WriteRoom_Runner(yyfile);
 
     //Add to the room runner
     AddTo_RoomHandler();

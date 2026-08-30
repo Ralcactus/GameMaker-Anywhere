@@ -133,7 +133,6 @@ typedef struct{
     bool clearDisplayBuffer;
     bool clearViewBackground;
     bool inheritViewSettings;
-    GMViewPorts* views;
     int viewCount;
 
     //Physics
@@ -142,6 +141,6 @@ typedef struct{
     float pix2met;
     
     //Layers
-    const GMLayer* layers;
-    size_t layerCount;
+    //const GMLayer* layers;
+    //size_t layerCount;
 } GMRoom;
