@@ -11,6 +11,7 @@
 #include "../compiler_main.hpp"
 #include <json/json.h>
 
+#pragma region //Structs
 struct AssetOut {
     Json::Value type;
     std::string sprite;
@@ -32,6 +33,8 @@ struct RoomOut {
     int viewport0_height;
     std::vector<LayerOut> layers;
 };
+#pragma endregion
+
 char RoomFilePath_CPP[256] = "";
 char RoomFilePath_HPP[256] = "";
 char RoomName[256] = "";
@@ -72,48 +75,8 @@ void WriteRoomHeader(){
     printf("Wrote room file header!\n");
 }
 
-//Compiles the rooms layers into a struct
-void CompileRoomLayers(Json::Value yyfile){
-    //Write to the struct
-    for (int i = 0; i < (int)yyfile["layers"].size(); i++){
-        printf("Compiling layer %i\n", i);
-
-		Json::Value _layer = yyfile["layers"][i];
-        LayerOut layer_out = {_layer["resourceType"], 0};
-
-        // Asset layer
-        if (_layer["resourceType"] == "GMRAssetLayer") {
-            for (int j = 0; j < (int)_layer["assets"].size(); j++){
-                Json::Value assetlayer = _layer["assets"][j];
-
-                if (assetlayer["resourceType"] == "GMRSpriteGraphic") {
-                    layer_out.assets.push_back({
-                        .type = assetlayer["resourceType"],
-                        .sprite = assetlayer["spriteId"]["name"].asString(),
-                        .x = assetlayer["x"].asFloat(),
-                        .y = assetlayer["y"].asFloat(),
-                        .scaleX = assetlayer["scaleX"].asFloat(),
-                        .scaleY = assetlayer["scaleY"].asFloat(),
-                        .rotation = assetlayer["rotation"].asFloat(),
-                    });
-                }
-            }
-        }
-
-        packed_layers.push_back(layer_out);
-    }
-
-    //Push the info
-	all_rooms.push_back({
-	    .name = yyfile["name"].asString(),
-	    .roomwidth = yyfile["roomSettings"]["Width"].asInt(),
-	    .roomheight = yyfile["roomSettings"]["Height"].asInt(),
-		.viewsenabled = yyfile["viewSettings"]["enableViews"].asBool(),
-		.viewport0_width = yyfile["views"][0]["wview"].asInt(),
-		.viewport0_height = yyfile["views"][0]["hview"].asInt(),
-	    .layers = packed_layers
-    });
-
+//Write the layers to the room file
+void WriteLayers(){
     //Write to the room file layer structs
 	for (int k = 0; k < (int)packed_layers.size(); k++) {
 		LayerOut& _layer = packed_layers[k];
@@ -147,6 +110,44 @@ void CompileRoomLayers(Json::Value yyfile){
 			File_WriteEnd(RoomFilePath_CPP, "};\n\n");
 		}
 	}
+}
+
+//Create the struct for a asset layer index
+void CreateLayerStruct_ASSET(Json::Value _layer, LayerOut layer_out){
+    if (_layer["resourceType"] == "GMRAssetLayer"){
+        for (int j = 0; j < (int)_layer["assets"].size(); j++){
+            Json::Value assetlayer = _layer["assets"][j];
+
+            if (assetlayer["resourceType"] == "GMRSpriteGraphic") {
+                layer_out.assets.push_back({
+                    .type = assetlayer["resourceType"],
+                    .sprite = assetlayer["spriteId"]["name"].asString(),
+                    .x = assetlayer["x"].asFloat(),
+                    .y = assetlayer["y"].asFloat(),
+                    .scaleX = assetlayer["scaleX"].asFloat(),
+                    .scaleY = assetlayer["scaleY"].asFloat(),
+                    .rotation = assetlayer["rotation"].asFloat(),
+                });
+            }
+        }
+    }
+}
+
+//Compiles the rooms layers into a struct
+void CompileRoomLayers(Json::Value yyfile){
+    //Write to the struct
+    for (int i = 0; i < (int)yyfile["layers"].size(); i++){
+        printf("Compiling layer %i\n", i);
+		Json::Value _layer = yyfile["layers"][i];
+        LayerOut layer_out = {_layer["resourceType"], 0};
+
+        //Create the structs the current layer index
+        CreateLayerStruct_ASSET(_layer, layer_out); //Asset layer
+        packed_layers.push_back(layer_out);
+    }
+
+    //Write the layers to the room file
+    WriteLayers();
 }
 
 //Writes the rooms actual room function
