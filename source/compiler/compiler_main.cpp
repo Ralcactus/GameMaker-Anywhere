@@ -16,7 +16,7 @@
 using namespace std;
 const char* ProjectYYP = "";
 char RuntimePath[512];
-const char* ExportMode = "GAMECUBE";
+const char* ExportMode = "3DSX";
 int currentsprite_count = 0;
 
 //Start the project compilation
@@ -130,5 +130,11 @@ void CompileAssets(Json::Value yyp_json){
         if (type == "GMSound")  scr_compilesounds(yyfile);             //COMPILE SOUNDS
         if (type == "GMFont")   scr_compilefonts(yyfile);              //COMPILE FONTS
     }
+
+    //Finish off compile
+    //Close sprite info brackets
+    //File_WriteLine("C:/GamemakerAnywhere/Runtime/source/helpers/get_spriteinfo.cpp", 11, "]"); //SPRITE WIDTH
+	//File_WriteLine("C:/GamemakerAnywhere/Runtime/source/helpers/get_spriteinfo.cpp", 12, "]"); //SPRITE HEIGHT
+
 }
 

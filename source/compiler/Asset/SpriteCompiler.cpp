@@ -11,6 +11,8 @@
 #include "../compiler_main.hpp"
 #include <json/json.h>
 #include <cstring>
+#define STB_IMAGE_IMPLEMENTATION
+#include "../../stb_image.h"
 
 char SpriteName[256] = "";
 
@@ -43,6 +45,39 @@ void CopyImageFile(std::string frame_name){
     system(CopyCommand);
 }
 
+void scr_savesprite_info(std::string frame_name){
+    char InsertChar[256];
+    int spriteWidth;
+    int spriteHeight;
+    int channels;
+
+    snprintf(InsertChar, sizeof(InsertChar), "C:/GamemakerAnywhere/Runtime/gfx/%s.png", frame_name.c_str());
+    if (!stbi_info(InsertChar, &spriteWidth, &spriteHeight, &channels)) {
+        printf("stbi_info FAILED for: %s\n", InsertChar);
+    }
+    //SPRITE WIDTH
+    snprintf(InsertChar, sizeof(InsertChar), "%i,", spriteWidth);
+    File_AddToEndReplace("C:/GamemakerAnywhere/Runtime/source/helpers/get_spriteinfo.cpp", "int SpriteWidths[", InsertChar);
+
+    //SPRITE HEIGHT
+    snprintf(InsertChar, sizeof(InsertChar), "%i,", spriteHeight);
+    File_AddToEndReplace("C:/GamemakerAnywhere/Runtime/source/helpers/get_spriteinfo.cpp", "int SpriteHeights[", InsertChar);
+
+    /*
+	array_push(global.SpriteOriginX, yyfile.sequence.xorigin);
+	array_push(global.SpriteOriginY, yyfile.sequence.yorigin);
+	array_push(global.SpriteFrameCount, array_length(yyfile.frames)-1);
+	array_push(global.SpriteAnimTimer, yyfile.sequence.playbackSpeed);
+	array_push(global.SpriteAnimSpeedType, yyfile.sequence.playbackSpeedType);
+	
+	//collide box
+	array_push(global.SpriteBoxTOP, yyfile.bbox_top);
+	array_push(global.SpriteBoxBOTTOM, yyfile.bbox_bottom);
+	array_push(global.SpriteBoxLEFT, yyfile.bbox_left);
+	array_push(global.SpriteBoxRIGHT, yyfile.bbox_right);
+    */
+}
+
 void scr_compilesprites(Json::Value yyfile){
     printf("Compiling Sprite...\n");
 
@@ -59,7 +94,7 @@ void scr_compilesprites(Json::Value yyfile){
         CopyImageFile(frame_name);
         
 		printf("Saving sprite info...\n");
-		//scr_savesprite_info(frame_name);
+		scr_savesprite_info(frame_name);
 		printf("Saved!\n");
 		
         //Write to a sprite list (EG: SCF, T3S)
@@ -74,3 +109,4 @@ void scr_compilesprites(Json::Value yyfile){
 	
     currentsprite_count++;
 }
+

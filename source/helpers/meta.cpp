@@ -129,6 +129,29 @@ void File_WriteFirst(const char* FilePath, const char* Message){
     File_WriteLine(FilePath, 0, Message);
 }
 
+void File_AddToEndReplace(const char* FilePath, const char* Find, const char* Message){
+    std::ifstream in(FilePath);
+    std::vector<std::string> lines;
+    std::string str;
+
+    while (std::getline(in, str))
+        lines.push_back(str);
+
+    in.close();
+
+    for (size_t i = 0; i < lines.size(); i++){
+        if (lines[i].find(Find) != std::string::npos){
+            lines[i] += Message;
+            break;
+        }
+    }
+
+    std::ofstream out(FilePath);
+    for (auto& l : lines)
+        out << l << "\n";
+    out.close();
+}
+
 void File_ReplaceLine(const char* FilePath, const char* Find, const char* Message){
     std::ifstream in(FilePath);
     std::vector<std::string> lines;
