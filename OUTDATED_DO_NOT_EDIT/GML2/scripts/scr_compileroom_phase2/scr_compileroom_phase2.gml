@@ -25,7 +25,7 @@ function scr_compileroom_phase2(packed_layers){
 	    }
 	}
 	show_debug_message("bg layer: " + string(bg_layer_index));
-
+	
 	var object_scripts = "";
 	var unique_objects = {};
 	var got_funcs = "";

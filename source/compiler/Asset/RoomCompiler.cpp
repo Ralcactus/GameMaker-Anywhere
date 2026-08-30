@@ -11,10 +11,33 @@
 #include "../compiler_main.hpp"
 #include <json/json.h>
 
+struct AssetOut {
+    Json::Value type;
+    std::string sprite;
+    float x, y, scaleX, scaleY, rotation;
+};
+
+struct LayerOut {
+    Json::Value type;
+    int depth;
+    std::vector<AssetOut> assets;
+};
+
+struct RoomOut {
+    std::string name;
+    int roomwidth;
+    int roomheight;
+    bool viewsenabled;
+    int viewport0_width;
+    int viewport0_height;
+    std::vector<LayerOut> layers;
+};
 char RoomFilePath_CPP[256] = "";
 char RoomFilePath_HPP[256] = "";
 char RoomName[256] = "";
 int roomid_count = 0;
+std::vector<LayerOut> packed_layers = {};
+std::vector<RoomOut> all_rooms;
 
 //Create the file where the room data will be written to (called in scr_compilerooms)
 void CreateRoomFile(const char* RoomName){
@@ -51,14 +74,85 @@ void WriteRoomHeader(){
 
 //Compiles the rooms layers into a struct
 void CompileRoomLayers(Json::Value yyfile){
-    for (int i = 0; i < ARRAYSIZE(yyfile["layers"]); i++){
-        printf("Creating layer %i... Wait this isn't finished??\n", i);
+    //Write to the struct
+    for (int i = 0; i < (int)yyfile["layers"].size(); i++){
+        printf("Compiling layer %i\n", i);
+
+		Json::Value _layer = yyfile["layers"][i];
+        LayerOut layer_out = {_layer["resourceType"], 0};
+
+        // Asset layer
+        if (_layer["resourceType"] == "GMRAssetLayer") {
+            for (int j = 0; j < (int)_layer["assets"].size(); j++){
+                Json::Value assetlayer = _layer["assets"][j];
+
+                if (assetlayer["resourceType"] == "GMRSpriteGraphic") {
+                    layer_out.assets.push_back({
+                        .type = assetlayer["resourceType"],
+                        .sprite = assetlayer["spriteId"]["name"].asString(),
+                        .x = assetlayer["x"].asFloat(),
+                        .y = assetlayer["y"].asFloat(),
+                        .scaleX = assetlayer["scaleX"].asFloat(),
+                        .scaleY = assetlayer["scaleY"].asFloat(),
+                        .rotation = assetlayer["rotation"].asFloat(),
+                    });
+                }
+            }
+        }
+
+        packed_layers.push_back(layer_out);
     }
+
+    //Push the info
+	all_rooms.push_back({
+	    .name = yyfile["name"].asString(),
+	    .roomwidth = yyfile["roomSettings"]["Width"].asInt(),
+	    .roomheight = yyfile["roomSettings"]["Height"].asInt(),
+		.viewsenabled = yyfile["viewSettings"]["enableViews"].asBool(),
+		.viewport0_width = yyfile["views"][0]["wview"].asInt(),
+		.viewport0_height = yyfile["views"][0]["hview"].asInt(),
+	    .layers = packed_layers
+    });
+
+    //Write to the room file layer structs
+	for (int k = 0; k < (int)packed_layers.size(); k++) {
+		LayerOut& _layer = packed_layers[k];
+
+		if (_layer.type == "GMRAssetLayer") {
+		    std::string cname = std::string(RoomName) + "_asset_" + std::to_string(k);
+
+            char AssetLayerStruct[256] = "";
+            snprintf(AssetLayerStruct, sizeof(AssetLayerStruct), "static LayerAssets %s_data[] = {\n", cname.c_str());
+		    File_WriteEnd(RoomFilePath_CPP, AssetLayerStruct);
+
+                for (int j = 0; j < (int)_layer.assets.size(); j++) {
+                    AssetOut& asset = _layer.assets[j];
+
+                    File_WriteEnd(RoomFilePath_CPP, "    { ");
+                    File_WriteEnd(RoomFilePath_CPP, (std::to_string(asset.x) + ", ").c_str());
+                    File_WriteEnd(RoomFilePath_CPP, (std::to_string(asset.y) + ", ").c_str());
+                    File_WriteEnd(RoomFilePath_CPP, (std::to_string(asset.rotation) + ", ").c_str());
+                    File_WriteEnd(RoomFilePath_CPP, (std::to_string(asset.scaleX) + ", ").c_str());
+                    File_WriteEnd(RoomFilePath_CPP, (std::to_string(asset.scaleY) + ", ").c_str());
+                    File_WriteEnd(RoomFilePath_CPP, (asset.sprite + " },\n").c_str());
+                }
+
+		    File_WriteEnd(RoomFilePath_CPP, "};\n\n");
+
+		    int count = (int)_layer.assets.size();
+
+		    File_WriteEnd(RoomFilePath_CPP, ("static GMLayerAsset " + cname + " = {\n").c_str());
+			File_WriteEnd(RoomFilePath_CPP, (cname + "_data,\n").c_str());
+			File_WriteEnd(RoomFilePath_CPP, (std::to_string(count) + "\n").c_str());
+			File_WriteEnd(RoomFilePath_CPP, "};\n\n");
+		}
+	}
 }
 
 //Writes the rooms actual room function
 //For example: void scr_runroom_ROOMNAME()
 void WriteRoom_Runner(){
+    //Create the func def
     char FuncLine[256] = "";
     snprintf(FuncLine, sizeof(FuncLine), "void scr_runroom_%s()", RoomName);
 
@@ -70,10 +164,34 @@ void WriteRoom_Runner(){
     File_WriteEnd(RoomFilePath_HPP, FuncLine);
     File_WriteEnd(RoomFilePath_HPP, ";\n");
 
+    //Debug running room text
     char printf_name[256] = "";
     snprintf(printf_name, sizeof(printf_name), "    printf(\"RUNNING ROOM: %s\\n\");\n", RoomName);
     File_WriteEnd(RoomFilePath_CPP, printf_name);
 
+    //Draw asset layer
+    std::vector<int> asset_layer_index;
+    for (int k = 0; k < (int)packed_layers.size(); k++){
+        if (packed_layers[k].type == "GMRAssetLayer"){
+            asset_layer_index.push_back(k);
+        }
+    }
+
+    for (int i = 0; i < (int)asset_layer_index.size(); ++i) {
+        char asset_layer[256] = "";
+        snprintf(asset_layer, sizeof(asset_layer), "%s_asset_%i", RoomName, i+1);
+
+        char ForLoop[256] = "";
+        snprintf(ForLoop, sizeof(ForLoop), "	for (int i = 0; i < %s.assetCount; i++)\n", asset_layer);
+
+        char DrawExt[256] = "";
+        snprintf(DrawExt, sizeof(DrawExt), "        draw_sprite_ext(%s_data[i].sprite, 0, %s_data[i].x, %s_data[i].y, %s_data[i].scaleX, %s_data[i].scaleY, %s_data[i].rotation, 0, 1);\n\n", asset_layer, asset_layer, asset_layer, asset_layer, asset_layer, asset_layer);
+
+        File_WriteEnd(RoomFilePath_CPP, ForLoop);
+        File_WriteEnd(RoomFilePath_CPP, DrawExt);
+    }
+
+    //End the funcs
 	File_WriteEnd(RoomFilePath_CPP, "}\n");
 }
 
@@ -145,6 +263,8 @@ void scr_compilerooms(Json::Value yyfile, int i, Json::Value yyp_json){
 
     //Init
     #pragma region 
+    packed_layers = {};
+    
     //Print room name
     snprintf(RoomName, sizeof(RoomName), "%s", yyfile["name"].asString().c_str());
     printf("Room Name: %s\n", RoomName);
@@ -156,11 +276,11 @@ void scr_compilerooms(Json::Value yyfile, int i, Json::Value yyp_json){
     CreateRoomFile(RoomName);
     #pragma endregion
 
+    //Writes the rooms includes
+    WriteRoomHeader();
+
     //Compiles the rooms layers into a struct
     CompileRoomLayers(yyfile);
-
-	//Writes the rooms includes
-    WriteRoomHeader();
 
     //Writes the rooms actual room function
     //For example: void scr_runroom_ROOMNAME()
