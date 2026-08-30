@@ -58,7 +58,7 @@ unsigned int drawcolor = c_white;
 
         C2D_Sprite sprite;
         C2D_SpriteFromSheet(&sprite, spriteSheet, draw_sprite-round(subimg));
-        C2D_SpriteSetCenter(&sprite, sprite_get_xoffset(draw_sprite)/(float)sprite_get_width(draw_sprite), sprite_get_yoffset(draw_sprite)/(float)sprite_get_height(draw_sprite));
+        //C2D_SpriteSetCenter(&sprite, sprite_get_xoffset(draw_sprite)/(float)sprite_get_width(draw_sprite), sprite_get_yoffset(draw_sprite)/(float)sprite_get_height(draw_sprite));
         C2D_SpriteSetPos(&sprite, draw_x, draw_y);
         C2D_SpriteSetScale(&sprite, scale_x, scale_y);
         C2D_SpriteSetRotation(&sprite, rotation);
@@ -261,17 +261,17 @@ void draw_set_colour(int color){
 
 
 int sprite_get_width(int draw_sprite){
-    return SpriteWidths[draw_sprite];
+    return SpriteWidths[draw_sprite+1];
 }
 int sprite_get_height(int draw_sprite){
-    return SpriteHeights[draw_sprite];
+    return SpriteHeights[draw_sprite+1];
 }
 
 int sprite_get_xoffset(int draw_sprite){
-    return SpriteOriginX[draw_sprite];
+    return SpriteOriginX[draw_sprite+1];
 }
 int sprite_get_yoffset(int draw_sprite){
-    return SpriteOriginY[draw_sprite];
+    return SpriteOriginY[draw_sprite+1];
 }
 
 void draw_self(){

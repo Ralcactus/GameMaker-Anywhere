@@ -133,8 +133,8 @@ void CompileAssets(Json::Value yyp_json){
 
     //Finish off compile
     //Close sprite info brackets
-    //File_WriteLine("C:/GamemakerAnywhere/Runtime/source/helpers/get_spriteinfo.cpp", 11, "]"); //SPRITE WIDTH
-	//File_WriteLine("C:/GamemakerAnywhere/Runtime/source/helpers/get_spriteinfo.cpp", 12, "]"); //SPRITE HEIGHT
+    File_WriteLine("C:/GamemakerAnywhere/Runtime/source/helpers/get_spriteinfo.cpp", 11, "};"); //SPRITE WIDTH
+	File_WriteLine("C:/GamemakerAnywhere/Runtime/source/helpers/get_spriteinfo.cpp", 12+1, "};"); //SPRITE HEIGHT
 
 }
 

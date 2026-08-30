@@ -113,7 +113,7 @@ void WriteLayers(){
 }
 
 //Create the struct for a asset layer index
-void CreateLayerStruct_ASSET(Json::Value _layer, LayerOut layer_out){
+void CreateLayerStruct_ASSET(Json::Value _layer, LayerOut& layer_out){
     if (_layer["resourceType"] == "GMRAssetLayer"){
         for (int j = 0; j < (int)_layer["assets"].size(); j++){
             Json::Value assetlayer = _layer["assets"][j];

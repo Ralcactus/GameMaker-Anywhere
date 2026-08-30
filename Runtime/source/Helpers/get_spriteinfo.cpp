@@ -8,8 +8,8 @@
 //DO NOT TOUCH ANY OF THE LINE POSITIONS FOR ANYTHING BELOW, THE COMPILER WRITES EVERYTHING TO SPECIFIC LINES!
 
 //sprite info
-int SpriteWidths[] = {
-int SpriteHeights[] = {
+int SpriteWidths[] = {0
+int SpriteHeights[] = {0
 int SpriteOriginX[] = {};
 int SpriteOriginY[] = {};
 

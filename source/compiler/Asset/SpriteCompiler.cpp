@@ -56,7 +56,7 @@ void scr_savesprite_info(std::string frame_name){
         printf("stbi_info FAILED for: %s\n", InsertChar);
     }
     //SPRITE WIDTH
-    snprintf(InsertChar, sizeof(InsertChar), "%i,", spriteWidth);
+    snprintf(InsertChar, sizeof(InsertChar), ",%i", spriteWidth);
     File_AddToEndReplace("C:/GamemakerAnywhere/Runtime/source/helpers/get_spriteinfo.cpp", "int SpriteWidths[", InsertChar);
 
     //SPRITE HEIGHT
