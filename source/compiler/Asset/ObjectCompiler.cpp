@@ -131,23 +131,6 @@ void scr_compileobject_phase2(Json::Value yyfile, const char* spr_name, const ch
 
     WriteEvents(ObjectFile, spr_name, yyfile);
 
-    /*
-    UNCOMMENT WHEN ARRAYS WORK!!
-
-    File_WriteEnd(ObjectFile, "alarm[0] = -1;\n");
-    File_WriteEnd(ObjectFile, "alarm[1] = -1;\n");
-    File_WriteEnd(ObjectFile, "alarm[2] = -1;\n");
-    File_WriteEnd(ObjectFile, "alarm[3] = -1;\n");
-    File_WriteEnd(ObjectFile, "alarm[4] = -1;\n");
-    File_WriteEnd(ObjectFile, "alarm[5] = -1;\n");
-    File_WriteEnd(ObjectFile, "alarm[6] = -1;\n");
-    File_WriteEnd(ObjectFile, "alarm[7] = -1;\n");
-    File_WriteEnd(ObjectFile, "alarm[8] = -1;\n");
-    File_WriteEnd(ObjectFile, "alarm[9] = -1;\n");
-    File_WriteEnd(ObjectFile, "alarm[10] = -1;\n");
-    File_WriteEnd(ObjectFile, "alarm[11] = -1;\n");
-    */
-
     File_WriteEnd(ObjectFile, (std::string("vector_") + ObjectName + ".push_back(inst);\n").c_str());
     File_WriteEnd(ObjectFile, (std::string("self = &vector_") + ObjectName + ".back();\n").c_str());
 
@@ -226,6 +209,13 @@ void scr_compileobject_phase2(Json::Value yyfile, const char* spr_name, const ch
     
 }
 
+void AssetID_Object(){
+	const char* roomto_idh = "C:/GamemakerAnywhere/Runtime/source/helpers/asset_toid.h";
+    char RoomDef[256];
+    snprintf(RoomDef, sizeof(RoomDef), "#define %s %i //Object\n", ObjectName, currentobject_count);
+	File_WriteEnd(roomto_idh, RoomDef);
+}
+
 void scr_compileobjects(Json::Value yyfile, Json::Value _id){
     printf("Compiling Object...\n");
 
@@ -264,5 +254,6 @@ void scr_compileobjects(Json::Value yyfile, Json::Value _id){
 	file_text_close(spriteidh);
     */
 
+    AssetID_Object();
     currentobject_count++;
 }

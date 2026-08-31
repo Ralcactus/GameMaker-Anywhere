@@ -18,10 +18,16 @@ struct AssetOut {
     float x, y, scaleX, scaleY, rotation;
 };
 
+struct InstanceOut {
+    std::string object;
+    float x, y, scaleX, scaleY, rotation;
+};
+
 struct LayerOut {
     Json::Value type;
     int depth;
     std::vector<AssetOut> assets;
+    std::vector<InstanceOut> instance;
 };
 
 struct RoomOut {
@@ -109,6 +115,36 @@ void WriteLayers(){
 			File_WriteEnd(RoomFilePath_CPP, (std::to_string(count) + "\n").c_str());
 			File_WriteEnd(RoomFilePath_CPP, "};\n\n");
 		}
+
+		if (_layer.type == "GMRInstanceLayer") {
+		    std::string cname = std::string(RoomName) + "_asset_" + std::to_string(k);
+
+            char InstanceLayerStruct[256] = "";
+            snprintf(InstanceLayerStruct, sizeof(InstanceLayerStruct), "static LayerInstances %s_data[] = {\n", cname.c_str());
+		    File_WriteEnd(RoomFilePath_CPP, InstanceLayerStruct);
+
+                for (int j = 0; j < (int)_layer.instance.size(); j++) {
+                    InstanceOut& instance = _layer.instance[j];
+
+                    File_WriteEnd(RoomFilePath_CPP, "    { ");
+                    File_WriteEnd(RoomFilePath_CPP, (std::to_string(instance.x) + ", ").c_str());
+                    File_WriteEnd(RoomFilePath_CPP, (std::to_string(instance.y) + ", ").c_str());
+                    File_WriteEnd(RoomFilePath_CPP, (std::to_string(instance.rotation) + ", ").c_str());
+                    File_WriteEnd(RoomFilePath_CPP, (std::to_string(instance.scaleX) + ", ").c_str());
+                    File_WriteEnd(RoomFilePath_CPP, (std::to_string(instance.scaleY) + ", ").c_str());
+                    File_WriteEnd(RoomFilePath_CPP, (instance.object + ", ").c_str());
+                    File_WriteEnd(RoomFilePath_CPP, (std::to_string(100000+currentobject_count) + " },\n").c_str());
+                }
+
+		    File_WriteEnd(RoomFilePath_CPP, "};\n\n");
+
+		    int count = (int)_layer.instance.size();
+
+		    File_WriteEnd(RoomFilePath_CPP, ("static GMLayerInstance " + cname + " = {\n").c_str());
+			File_WriteEnd(RoomFilePath_CPP, (cname + "_data,\n").c_str());
+			File_WriteEnd(RoomFilePath_CPP, (std::to_string(count) + "\n").c_str());
+			File_WriteEnd(RoomFilePath_CPP, "};\n\n");
+		}
 	}
 }
 
@@ -133,6 +169,23 @@ void CreateLayerStruct_ASSET(Json::Value _layer, LayerOut& layer_out){
     }
 }
 
+void CreateLayerStruct_INSTANCE(Json::Value _layer, LayerOut& layer_out){
+    if (_layer["resourceType"] == "GMRInstanceLayer"){
+        for (int j = 0; j < (int)_layer["instances"].size(); j++){
+            Json::Value instlayer = _layer["instances"][j];
+
+            layer_out.instance.push_back({
+                .object = instlayer["objectId"]["name"].asString(),
+                .x = instlayer["x"].asFloat(),
+                .y = instlayer["y"].asFloat(),
+                .scaleX = instlayer["scaleX"].asFloat(),
+                .scaleY = instlayer["scaleY"].asFloat(),
+                .rotation = instlayer["rotation"].asFloat(),
+            });
+        }
+    }
+}
+
 //Compiles the rooms layers into a struct
 void CompileRoomLayers(Json::Value yyfile){
     //Write to the struct
@@ -143,6 +196,7 @@ void CompileRoomLayers(Json::Value yyfile){
 
         //Create the structs the current layer index
         CreateLayerStruct_ASSET(_layer, layer_out); //Asset layer
+        CreateLayerStruct_INSTANCE(_layer, layer_out); //Instance layer
         packed_layers.push_back(layer_out);
     }
 
@@ -150,9 +204,55 @@ void CompileRoomLayers(Json::Value yyfile){
     WriteLayers();
 }
 
+void BuildObjectRunEvents(std::string& got_funcs, std::string& object_scripts){
+    got_funcs = "";
+    object_scripts = "";
+    std::vector<std::string> unique_objects;
+
+    for (int k = 0; k < (int)packed_layers.size(); k++){
+        if (packed_layers[k].type == "GMRInstanceLayer"){
+            std::string cname = std::string(RoomName) + "_asset_" + std::to_string(k);
+            std::vector<InstanceOut>& instances = packed_layers[k].instance;
+
+            for (int j = 0; j < (int)instances.size(); j++){
+                std::string datastruct = cname + "_data[" + std::to_string(j) + "]";
+                std::string obj = instances[j].object;
+
+                object_scripts += "	" + obj + "_runevents(" +
+                    datastruct + ".x, " +
+                    datastruct + ".y, " +
+                    datastruct + ".scaleX, " +
+                    datastruct + ".scaleY, " +
+                    datastruct + ".id" + ");\n";
+
+                bool already_seen = false;
+                for (int m = 0; m < (int)unique_objects.size(); m++){
+                    if (unique_objects[m] == obj){
+                        already_seen = true;
+                        break;
+                    }
+                }
+
+                if (!already_seen){
+                    unique_objects.push_back(obj);
+                    got_funcs += "extern void " + obj + "_runevents(float, float, float, float, float);\n";
+                    got_funcs += "extern void " + obj + "_reset_frame();\n";
+                    object_scripts = "\t" + obj + "_reset_frame();\n" + object_scripts;
+                }
+            }
+        }
+    }
+}
+
 //Writes the rooms actual room function
 //For example: void scr_runroom_ROOMNAME()
 void WriteRoom_Runner(Json::Value yyfile){
+    std::string got_funcs, object_scripts;
+    BuildObjectRunEvents(got_funcs, object_scripts);
+
+    //Write extern decls before the function
+    File_WriteEnd(RoomFilePath_CPP, ("\n" + got_funcs + "\n").c_str());
+
     //Create the func def
     char FuncLine[256] = "";
     snprintf(FuncLine, sizeof(FuncLine), "void scr_runroom_%s()", RoomName);
@@ -202,6 +302,8 @@ void WriteRoom_Runner(Json::Value yyfile){
     File_WriteEnd(RoomFilePath_CPP, "   }\n\n");
     File_WriteEnd(RoomFilePath_CPP, ("   room_width = " + std::string(RoomName) + "_INFO.width;\n").c_str());
     File_WriteEnd(RoomFilePath_CPP, ("   room_height = " + std::string(RoomName) + "_INFO.height;\n").c_str());
+
+    File_WriteEnd(RoomFilePath_CPP, object_scripts.c_str());
 
     //End the funcs
 	File_WriteEnd(RoomFilePath_CPP, "}\n");
